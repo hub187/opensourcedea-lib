@@ -106,21 +106,6 @@ public class LibraryTest {
 	
 	
 	
-	@Test
-	public void Debug2() {
-		DEAProblem ProbDEA = new DEAProblem(5, 2);
-		
-		ProbDEA.setDMUName("Magasin 1", 0);
-		ProbDEA.setDMUName("Magasin 2", 1);
-		
-		ProbDEA.setVariableType(DEAVariableType.Input, 0);
-		
-	
-		ProbDEA.solve();
-		
-		
-		
-	}
 	
 	
 }
