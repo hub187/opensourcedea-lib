@@ -24,6 +24,9 @@ package dea;
 
 public class Rank {
 	
+	/* This code is a modification of the Quicksort code that can be found at:
+	 * http://www.algolist.net/Algorithms/Sorting/Quicksort */
+	
 	public static int[] GetRanks(double[] ArrayToSort, boolean LowestIsZero) {
 		
 		//Copy original Array to avoid messing with external data
