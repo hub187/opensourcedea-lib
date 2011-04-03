@@ -11,6 +11,9 @@ import dea.enums.*;
 
 public class LibraryTest {
 	
+	/* If this Unit Test fails, please read the instructions in the
+	 * Lpsolve class.*/
+	
 	DEAProblem tester = new DEAProblem(7, 3);
 	static String[] TestDMUNames = new String[7];
 	static String[] TestVariableNames = new String [3];
