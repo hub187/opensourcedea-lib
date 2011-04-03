@@ -30,6 +30,16 @@ import dea.enums.*;
 
 public class Lpsolve {
 	
+	/* In order for this code to run, you need to install lpsolve on your machine.
+	 * As the correct dlls and the lpsolve jar wrapper is already on your machine (if you checked out the source correctly
+	 * they should be in src\linearSolver\lpsolve), you simply need to add the lpsolve55j.jar to your buildpath.
+	 * On Eclipse, you can do this by
+	 * => right clicking on your project,
+	 * => selecting Properties (you can also select your project in the package explorer and press Alt + Enter),
+	 * => clicking on the libraries tabs,
+	 * => clicking on Add External JARs,
+	 * => browsing to the lpsolve55j.jar and clicking OK.*/
+	
 	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) {
 	
 		//The Solution object which will be returned
