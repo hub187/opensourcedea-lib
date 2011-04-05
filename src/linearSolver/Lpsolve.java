@@ -27,18 +27,40 @@ import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
 import dea.enums.*;
 
+/* This class deals with the calls to the lpsolve solver (linear problem solver).
+ * It is essential to use a linear solver in order to solve DEA problems.*/
 
 public class Lpsolve {
 	
-	/* In order for this code to run, you need to install lpsolve on your machine.
-	 * As the correct dlls and the lpsolve jar wrapper is already on your machine (if you checked out the source correctly
-	 * they should be in src\linearSolver\lpsolve), you simply need to add the lpsolve55j.jar to your buildpath.
-	 * On Eclipse, you can do this by
-	 * => right clicking on your project,
-	 * => selecting Properties (you can also select your project in the package explorer and press Alt + Enter),
-	 * => clicking on the libraries tabs,
-	 * => clicking on Add External JARs,
-	 * => browsing to the lpsolve55j.jar and clicking OK.*/
+	/* INSTALLATION INSTRUCTIONS
+	 * In order for this code to run, you need to install lpsolve on your machine.
+	 * As the correct dlls and the lpsolve jar wrapper are already on your machine (if you checked out the source correctly
+	 * they should be in src\linearSolver\lpsolve), you simply need to:
+	 * 
+	 * 1) Move or copy the two .dll (resp. lpsolve55.dll and lpsolve55j.dll) to:
+	 * 		- C:\Windows\System32 on Windows machines
+	 * 		- /usr/local/lib on linux/GNU machines
+	 * 
+	 * 2) add the lpsolve55j.jar to your buildpath.
+	 * 
+	 * 
+	 * On Eclipse, you can add a .jar to a program as follows:
+	 * 1) right clicking on your project,
+	 * 2) selecting Properties (you can also select your project in the package explorer and press Alt + Enter),
+	 * 3) clicking on the libraries tabs,
+	 * 4) clicking on Add External JARs,
+	 * 5) browsing to the lpsolve55j.jar and clicking OK.*/
+	
+	
+	/* The solveLPProblem method is called with all the element required to define a Linear Problem, i.e.:
+	 * 1) an ArrayList of double[] for the constraints
+	 * 2) a double[] for the objective function
+	 * 3) a double[] for the Right Hand Side
+	 * 4) a optimisation direction (min or max)
+	 * 
+	 * The method returns a solution object. See the SolverResults class for more information on this object.
+	 * 
+	 * */	
 	
 	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) {
 	
