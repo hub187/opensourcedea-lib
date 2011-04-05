@@ -59,7 +59,6 @@ public class Lpsolve {
 	 * 4) a optimisation direction (min or max)
 	 * 
 	 * The method returns a solution object. See the SolverResults class for more information on this object.
-	 * 
 	 * */	
 	
 	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) {
