@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="UnitTests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="D:/Programs Files Extended/Eclipse/DeaSolver/src/linearSolver/lpsolve/lpsolve55j.jar"/>
+	<classpathentry kind="lib" path="D./src/linearSolver/lpsolve/lpsolve55j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
