@@ -41,7 +41,8 @@ public class Lpsolve {
 	 * 		- C:\Windows\System32 on Windows machines
 	 * 		- /usr/local/lib on linux/GNU machines
 	 * 
-	 * 2) add the lpsolve55j.jar to your buildpath.
+	 * 2) You should not have to add lpsolve55j.jar to your buildpath as 
+	 * the .classpath file for this project should already point to it.
 	 * 
 	 * 
 	 * On Eclipse, you can add a .jar to a program as follows:
