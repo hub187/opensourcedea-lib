@@ -107,17 +107,16 @@ public class DEAProblem {
 	
 	/**
 	 * Returns the Model Type of the DEA Problem (e.g. CCR, SBM...)
-	 * @see DEAModelType
+	 * @return DEAModelType The Model Type of the DEA Problem
 	 */
 	public DEAModelType getModelType()
 	{
 		return _ModelType;
 	}
+	
 	/**
 	 * Sets the type DEA Problem Model (e.g. CCR, SBM...)
 	 * @param ModelType The DEA Problem type.
-	 * @see DEAModelType
-	 * 
 	 */
 	public void setModelType(DEAModelType ModelType)
 	{
@@ -126,26 +125,41 @@ public class DEAProblem {
 
 
 	/**
-	 * 
-	 * @return Model Orientation (i.e. InputOriented or OutputOriented
+	 * Gets the Model Orientation of the DEA Problem.
+	 * @return Model Orientation (i.e. InputOriented or OutputOriented)
 	 */
 	public DEAModelOrientation getModelOrientation()
 	{
 		return _ModelOrientation;
 	}
+	
+	/**
+	 * Sets the Model Orientation of the DEA problem (e.g. InputOriented)
+	 * @param ModelOrientation The Model Orientation of the DEA Problem.
+	 */
 	public void setModelOrientation(DEAModelOrientation ModelOrientation)
 	{
 		_ModelOrientation = ModelOrientation;
 	}
 	
-	//Methods to access/set _DMUNames
+
+	/**
+	 * Gets the Names of the DEA Problem DMUs
+	 * @return DMUName A String[] of the DMU Names.
+	 */
 	public String[] getDMUNames()
 	{
 		return _DMUName;
 	}
-	public String getDMUName(int Pos)
+	
+	/**
+	 * Gets the name of a specific DMU (specified by position in the DMUName Array).
+	 * @param DMUNumber The number of the DMU (position) in the Array.
+	 * @return DMUName The DMU name of the specific DMU at the position specified.
+	 */
+	public String getDMUName(int DMUNumber)
 	{
-		return _DMUName[Pos];
+		return _DMUName[DMUNumber];
 	}
 	public void setDMUNames(String[] DMUName)
 	{
