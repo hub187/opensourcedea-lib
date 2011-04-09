@@ -125,7 +125,10 @@ public class DEAProblem {
 	}
 
 
-	//Methods to access/set _ModelOrientation
+	/**
+	 * 
+	 * @return Model Orientation (i.e. InputOriented or OutputOriented
+	 */
 	public DEAModelOrientation getModelOrientation()
 	{
 		return _ModelOrientation;
