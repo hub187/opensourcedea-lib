@@ -29,13 +29,26 @@ import dea.models.CCR;
 import dea.Rank;
 
 
+/**
+ *@author Hubert Virtos
+ * <p>
+ * Instances of this class are DEA Problems. A DEA Problem Object can hold all the information necessary to define a DEA Problem.
+ * <p>
+ * This class needs be instantiated in order to:
+ * <ul>
+ * <li>Define the DEA Problem (e.g. Model type, Variable Names, Variable types, Model orientation, Data matrix)</li>
+ * <li>Solve the DEA Problem</li>
+ * <li>Retrieve the DEA Problem solution</li>
+ * </ul>
+ * 
+ * */
 public class DEAProblem {
 	
 	 //////////////////////////////////////////////////////////////////////////
 	//				Properties of the DEAProblem Object						//
    //////////////////////////////////////////////////////////////////////////
 	
-	//Building the model
+
 	private DEAModelType _ModelType;
 	private String[] _DMUName;
 	private DEAModelOrientation _ModelOrientation;
@@ -47,20 +60,30 @@ public class DEAProblem {
 	public DEAPSolution Solution;
 	
 	
-	
+	/**
+	 * 
+	 * @param NbDMUs The number of DMUs in the DEA problem to solve.
+	 * @param NbVariables The number of variables in the DEA Problem to solve.
+	 */
 	public DEAProblem(int NbDMUs, int NbVariables) {
 		Solution = new DEAPSolution(NbDMUs, NbVariables);
 	}
 	
+
 	public class DEAPSolution {
 		
 		//Storing the solution
-		public  double[] Objectives;
+		public double[] Objectives;
 		public double[] [] Lambdas;
 		public double[] [] Slacks;
 		public double[] [] Weights;
 		public double[] [] Projections;
 		
+		/**
+		 * 
+		 * @param NbDMUs The number of DMUs in the DEA problem to solve.
+		 * @param NbVariables The number of variables in the DEA Problem to solve.
+		 */
 		public DEAPSolution (int NbDMUs, int NbVariables) {
 			
 			/*The solution Attributes will be put one by one at each solver optimisation (for each DMU).
@@ -72,10 +95,6 @@ public class DEAProblem {
 			Projections = new double[NbDMUs] [NbVariables];
 		}
 		
-//		public double[] Objectives {
-//			set {_Objectives = value}
-//		}
-
 	}
 	
 	
@@ -84,14 +103,22 @@ public class DEAProblem {
    //////////////////////////////////////////////////////////////////////////
 	
 	
-	/* These Get Set methods are currently not useful at present
-	 * but code will be added in those methods at a later stage.*/
+
 	
-	//Methods to access/set _ModelType
+	/**
+	 * Returns the Model Type of the DEA Problem (e.g. CCR, SBM...)
+	 * @see DEAModelType
+	 */
 	public DEAModelType getModelType()
 	{
 		return _ModelType;
 	}
+	/**
+	 * Sets the type DEA Problem Model (e.g. CCR, SBM...)
+	 * @param ModelType The DEA Problem type.
+	 * @see DEAModelType
+	 * 
+	 */
 	public void setModelType(DEAModelType ModelType)
 	{
 		_ModelType = ModelType;
