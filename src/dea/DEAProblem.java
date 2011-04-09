@@ -70,7 +70,7 @@ public class DEAProblem {
 	}
 	
 
-	public class DEAPSolution {
+	public static class DEAPSolution {
 		
 		//Storing the solution
 		public double[] Objectives;
@@ -106,7 +106,7 @@ public class DEAProblem {
 
 	
 	/**
-	 * Returns the Model Type of the DEA Problem (e.g. CCR, SBM...)
+	 * Returns Model Type of the DEA Problem (e.g. CCR, SBM...)
 	 * @return DEAModelType The Model Type of the DEA Problem
 	 */
 	public DEAModelType getModelType()
@@ -115,7 +115,7 @@ public class DEAProblem {
 	}
 	
 	/**
-	 * Sets the type DEA Problem Model (e.g. CCR, SBM...)
+	 * Sets type of DEA Problem Model (e.g. CCR, SBM...)
 	 * @param ModelType The DEA Problem type.
 	 */
 	public void setModelType(DEAModelType ModelType)
@@ -125,7 +125,7 @@ public class DEAProblem {
 
 
 	/**
-	 * Gets the Model Orientation of the DEA Problem.
+	 * Gets Model Orientation of the DEA Problem.
 	 * @return Model Orientation (i.e. InputOriented or OutputOriented)
 	 */
 	public DEAModelOrientation getModelOrientation()
@@ -144,7 +144,7 @@ public class DEAProblem {
 	
 
 	/**
-	 * Gets the Names of the DEA Problem DMUs
+	 * Gets Names of the DEA Problem DMUs
 	 * @return DMUName A String[] of the DMU Names.
 	 */
 	public String[] getDMUNames()
@@ -153,7 +153,7 @@ public class DEAProblem {
 	}
 	
 	/**
-	 * Gets the name of a specific DMU (specified by position in the DMUName Array).
+	 * Gets name of a specific DMU (specified by position in the DMUName Array).
 	 * @param DMUNumber The number of the DMU (position) in the Array.
 	 * @return DMUName The DMU name of the specific DMU at the position specified.
 	 */
@@ -161,35 +161,71 @@ public class DEAProblem {
 	{
 		return _DMUName[DMUNumber];
 	}
+	
+	/**
+	 * Sets DMU Names of all DMUs
+	 * @param DMUName The String[] of the DMU Names.
+	 */
 	public void setDMUNames(String[] DMUName)
 	{
 		_DMUName = DMUName;
 	}
-	public void setDMUName(String DMUName, int Pos)
+	
+	/**
+	 * Sets a DMU Name for the the DMU Number specified.
+	 * @param DMUName The Name of the DMU.
+	 * @param DMUNumber The DMU Number (position in the array) where to put the name.
+	 */
+	public void setDMUName(String DMUName, int DMUNumber)
 	{
-		_DMUName[Pos] = DMUName;
+		_DMUName[DMUNumber] = DMUName;
 	}
 
 	
-	//Methods to access/set _VariableNames
+	/**
+	 * Gets the String[] of the Variable Names.
+	 * @return VariableName A String[] of the variable names.
+	 */
 	public String[] getVariableNames()
 	{
 		return _VariableName;
 	}
-	public String getVariableName(int Pos)
+	
+	/**
+	 * Returns the variable name for a specific variable.
+	 * @param VariableNumber The Variable Number in the variable array.
+	 * @return The variable name for a specific variable specified.
+	 */
+	public String getVariableName(int VariableNumber)
 	{
-		return _VariableName[Pos];
+		return _VariableName[VariableNumber];
 	}
+	
+	/**
+	 * Sets all the Variable names.
+	 * @param VariableName A String[] of Variable Names.
+	 */
 	public void setVariableNames(String[] VariableName)
 	{
 		_VariableName = VariableName;
 	}
-	public void setVariableName(String VariableName, int Pos)
+	
+	/**
+	 * Sets the name of the variable at position VariableNumber in the Variable Names Array.
+	 * @param VariableName The Name of the Variable.
+	 * @param VariableNumber The Variable position in the Variable Array.
+	 */
+	public void setVariableName(String VariableName, int VariableNumber)
 	{
-		_VariableName[Pos] = VariableName;
+		_VariableName[VariableNumber] = VariableName;
 	}
 	
-	//Methods to access/set _VariableType
+	
+	/**
+	 * Returns an array of VariableTypes.
+	 * @return An array of variable types.
+	 * @see DEAVariableType
+	 */
 	public DEAVariableType[] getVariableTypes()
 	{
 		return _VariableType;
