@@ -1,10 +1,12 @@
-package dea;
+package tests;
 
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.BeforeClass;
+
+import dea.DEAProblem;
 import dea.enums.*;
 
 public class DEAProblemTest {
