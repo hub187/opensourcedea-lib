@@ -25,7 +25,7 @@ package linearSolver;
 import java.util.ArrayList;
 import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
-import dea.enums.*;
+import dea.SolverObjDirection;
 
 /**
  * This class deals with the calls to the lpsolve library and is used to solve linear problem.

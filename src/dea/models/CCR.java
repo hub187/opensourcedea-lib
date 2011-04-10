@@ -23,7 +23,8 @@
 package dea.models;
 
 import dea.DEAProblem;
-import dea.enums.*;
+import dea.DEAVariableType;
+import dea.SolverObjDirection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import linearSolver.*;

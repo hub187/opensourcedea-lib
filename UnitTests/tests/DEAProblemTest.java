@@ -6,7 +6,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.BeforeClass;
 
+import dea.DEAModelOrientation;
+import dea.DEAModelType;
 import dea.DEAProblem;
+import dea.DEAVariableType;
 import dea.enums.*;
 
 public class DEAProblemTest {

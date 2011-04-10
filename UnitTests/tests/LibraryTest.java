@@ -7,7 +7,10 @@ import static org.junit.Assert.assertArrayEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import dea.DEAModelOrientation;
+import dea.DEAModelType;
 import dea.DEAProblem;
+import dea.DEAVariableType;
 import dea.enums.*;
 
 

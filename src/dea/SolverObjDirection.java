@@ -1,4 +1,4 @@
-package dea.enums;
+package dea;
 
 
 /**
