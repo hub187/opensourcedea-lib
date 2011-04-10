@@ -20,7 +20,7 @@
     @version 0.1 2011-02-04
 */
 
-package dea.models;
+package deaModels;
 
 import dea.DEAProblem;
 import dea.DEAVariableType;
@@ -35,7 +35,7 @@ import linearSolver.*;
  * The class implementing the CCR model.
  *
  *<p>
- *The Model is as follows:
+ *The linear problem of the Model is as follows:
  *<p>
  * <center>
  * <table border = "1">
@@ -101,10 +101,11 @@ import linearSolver.*;
  * </tr>
  * </table>
  * </center>
- * 
+ * <p>
  *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
  *  (e.g. -Inputi 1 being the ith input of DMU1).
- * @author goldfish
+ * <p>
+ * @author Hubert Virtos
  *
  */
 public  class CCR {

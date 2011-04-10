@@ -3,8 +3,8 @@ package dea;
 
 /**
  * An enum of the possible optimisation direction (e.g. MAX/MIN).
- * 
- * @author goldfish
+ * <p>
+ * @author Hubert Virtos
  *
  */
 public enum SolverObjDirection {

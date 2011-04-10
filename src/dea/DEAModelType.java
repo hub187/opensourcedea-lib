@@ -3,8 +3,8 @@ package dea;
 
 /**
  * An enum of the possible Model Types (e.g. CCR...).
- * 
- * @author goldfish
+ * <p>
+ * @author Hubert Virtos
  *
  */
 public enum DEAModelType {

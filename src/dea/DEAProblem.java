@@ -25,7 +25,7 @@ package dea;
 
 //import java.util.Arrays;
 import utils.Rank;
-import dea.models.CCR;
+import deaModels.*;
 
 
 /**
@@ -69,10 +69,14 @@ public class DEAProblem {
 		Solution = new DEAPSolution(NbDMUs, NbVariables);
 	}
 	
-
+	/**
+	 * This class defines a DEA Problem Solution.
+	 * <p>
+	 * @author Hubert Virtos
+	 *
+	 */
 	public static class DEAPSolution {
 		
-		//Storing the solution
 		public double[] Objectives;
 		public double[] [] Lambdas;
 		public double[] [] Slacks;
