@@ -23,7 +23,7 @@
 package linearSolver;
 
 /**
- * This class defines a linear problem Solution. This object is returned by the {@link linearSolver.Lpsolve#solveLPProblem(java.util.ArrayList, double[], double[], dea.enums.SolverObjDirection)} method.
+ * This class defines a linear problem Solution. This object is returned by the {@link linearSolver.Lpsolve#solveLPProblem(java.util.ArrayList, double[], double[], dea.SolverObjDirection)} method.
  * 
  * @author Hubert Virtos
  *
