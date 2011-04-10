@@ -15,9 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
-    
-    @author Hubert Paul Bernard VIRTOS
-    @version 0.1 2011-02-04
 */
 
 package linearSolver;
