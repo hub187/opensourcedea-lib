@@ -24,13 +24,13 @@
 package dea;
 
 //import java.util.Arrays;
+import utils.Rank;
 import dea.enums.*;
 import dea.models.CCR;
-import dea.Rank;
 
 
 /**
- *@author Hubert Virtos
+ *
  * <p>
  * Instances of this class are DEA Problems. A DEA Problem Object can hold all the information necessary to define a DEA Problem.
  * <p>
@@ -40,7 +40,8 @@ import dea.Rank;
  * <li>Solve the DEA Problem</li>
  * <li>Retrieve the DEA Problem solution</li>
  * </ul>
- * 
+ * <p>
+ * @author Hubert Virtos
  * */
 public class DEAProblem {
 	
@@ -125,7 +126,7 @@ public class DEAProblem {
 
 
 	/**
-	 * Gets Model Orientation of the DEA Problem.
+	 * Returns Model Orientation of the DEA Problem.
 	 * @return Model Orientation (i.e. InputOriented or OutputOriented)
 	 */
 	public DEAModelOrientation getModelOrientation()
@@ -144,7 +145,7 @@ public class DEAProblem {
 	
 
 	/**
-	 * Gets Names of the DEA Problem DMUs
+	 * Returns the Names of all the DMUs
 	 * @return DMUName A String[] of the DMU Names.
 	 */
 	public String[] getDMUNames()
@@ -153,7 +154,7 @@ public class DEAProblem {
 	}
 	
 	/**
-	 * Gets name of a specific DMU (specified by position in the DMUName Array).
+	 * Returns the name of a specific DMU.
 	 * @param DMUNumber The number of the DMU (position) in the Array.
 	 * @return DMUName The DMU name of the specific DMU at the position specified.
 	 */
@@ -172,7 +173,7 @@ public class DEAProblem {
 	}
 	
 	/**
-	 * Sets a DMU Name for the the DMU Number specified.
+	 * Returns a DMU Name for the the DMU Number specified.
 	 * @param DMUName The Name of the DMU.
 	 * @param DMUNumber The DMU Number (position in the array) where to put the name.
 	 */
@@ -183,8 +184,8 @@ public class DEAProblem {
 
 	
 	/**
-	 * Gets the String[] of the Variable Names.
-	 * @return VariableName A String[] of the variable names.
+	 * Returns the Variable Names.
+	 * @return A String[] of the VariableName.
 	 */
 	public String[] getVariableNames()
 	{
@@ -224,41 +225,80 @@ public class DEAProblem {
 	/**
 	 * Returns an array of VariableTypes.
 	 * @return An array of variable types.
-	 * @see DEAVariableType
 	 */
 	public DEAVariableType[] getVariableTypes()
 	{
 		return _VariableType;
 	}
-	public DEAVariableType getVariableType(int Pos)
+	
+	/**
+	 * Gets the Variable type of the Variable specified.
+	 * @param VariableNumber The position of the variable in the Variable Array.
+	 * @return The Variable Type of the Variable at the position specified.
+	 */
+	public DEAVariableType getVariableType(int VariableNumber)
 	{
-		return _VariableType[Pos];
+		return _VariableType[VariableNumber];
 	}
+	
+	/**
+	 * Sets the variable type for all the variables.
+	 * @param VariableType An array of DEAVariableType.
+	 */
 	public void setVariableTypes(DEAVariableType[] VariableType)
 	{
 		_VariableType = VariableType;
 	}
-	public void setVariableType(DEAVariableType VariableType, int Pos)
+	
+	/**
+	 * Sets the DEAVariableType for the specified Variable.
+	 * @param VariableType The DEAVariableType of the specified variable.
+	 * @param VariableNumber The position of the variable in the Variable Array.
+	 */
+	public void setVariableType(DEAVariableType VariableType, int VariableNumber)
 	{
-		_VariableType[Pos] = VariableType;
+		_VariableType[VariableNumber] = VariableType;
 	}
 	
-	//Methods to access/set _DataMatrix
+	
+	/**
+	 * Returns the matrix of values.
+	 * @return A double[NbDMUs] [NbVariables] corresponding to all values.
+	 */
 	public double[] [] getDataMatrix()
 	{
 		return _DataMatrix;
 	}
-	public double getDataMatrix(int i, int j)
+	
+	/**
+	 * Returns a specific variable value  from the Data Matrix for the DMU specified.
+	 * @param DMUNumber The number of DMU in the DMU array
+	 * @param VariableNumber The number of the variable in the Variable Array
+	 * @return a double corresponding to the Variable value.
+	 */
+	public double getDataMatrix(int DMUNumber, int VariableNumber)
 	{
-		return _DataMatrix[i] [j];
+		return _DataMatrix[DMUNumber] [VariableNumber];
 	}
+	
+	/**
+	 * Sets the whole Data Matrix.
+	 * @param DataMatrix The double [NbDMUs] [NbVariable] array of the problem values.
+	 */
 	public void setDataMatrix(double[] [] DataMatrix)
 	{
 		_DataMatrix = DataMatrix;
 	}
-	public void setDataMatrix(double Value, int i, int j)
+	
+	/**
+	 * Sets a value for a specific DMU.
+	 * @param Value The specific value to set.
+	 * @param DMUNumber The DMU Number for which to set the value.
+	 * @param VariableNumber The Variable Number for which to set the value.
+	 */
+	public void setDataMatrix(double Value, int DMUNumber, int VariableNumber)
 	{
-		_DataMatrix[i] [j] = Value;
+		_DataMatrix[DMUNumber] [VariableNumber] = Value;
 	}
 	
 	
@@ -266,21 +306,30 @@ public class DEAProblem {
 	//						Mostly Internal Use								//
    //////////////////////////////////////////////////////////////////////////
 	
-	//Method to get Number of DMUs
+	/**
+	 * Gets the number of DMUs in the DEA Problem
+	 * @return The number of DMUs.
+	 */
 	public int getNumberOfDMUs() {
 		int NbDMUs;
 		NbDMUs = _DataMatrix.length;
 		return NbDMUs;
 	}
 	
-	//Method to get number of Variables
+	/**
+	 * Gets the number of Variables in the DEA Problem
+	 * @return The number of Variables.
+	 */
 	public int getNumberOfVariables() {
 		int NbVariables;
 		NbVariables = _DataMatrix[0].length;
 		return NbVariables;
 	}
 	
-	//Method to get the transpose of the DataMatrix
+	/**
+	 * Gets the Transpose of the Data Matrix
+	 * @return A double[] [] corresponding to the transpose of the Data Matrix
+	 */
 	public double [] [] getTranspose() {
 		double [] [] TransposedMatrix = new double [this._DataMatrix[0].length] [this._DataMatrix.length];
 		
@@ -295,7 +344,11 @@ public class DEAProblem {
 	//								Solve Problem							//
    //////////////////////////////////////////////////////////////////////////
 	
-	//Method to solve the DEA problem
+	/**
+	 * Solves the specific DEA Problem.
+	 * <p> The Model needs to have all the required parameters in order for this to work.
+	 * <p> There is no check at present, if the parameters are incorrect, the library will simply crash.
+	 */
 	public void solve() {
 		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
 		switch (this._ModelType) {
@@ -314,80 +367,144 @@ public class DEAProblem {
    //////////////////////////////////////////////////////////////////////////////
 	
 	
-	//Method to access Objective
+	/**
+	 * Returns the Objectives of all the DMUs.
+	 * @return A double[] corresponding to all the DMUs Objectives.
+	 */
 	public double[] getObjectives()
 	{
 		return Solution.Objectives;
 	}
+	
+	/**
+	 * Returns the Objective value for the specified DMU.
+	 * @param DMUNumber The number of the DMU in the Objective Array.
+	 * @return The Objective value for the specified DMU.
+	 */
 	public double getObjective(int DMUNumber)
 	{
 		return Solution.Objectives[DMUNumber];
 	}
 
-	//Method to access Lambdas for a specific DMU
+	
+	/**
+	 * Returns the lambdas of the specified DMU.
+	 * @param DMUNumber The number of the DMU in the Lambda Array.
+	 * @return A double[] corresponding to the Lambdas for the specified DMU.
+	 */
 	public double[] getLambdas(int DMUNumber)
 	{
 		return Solution.Lambdas[DMUNumber];
 	}
-	//Method to access All Lambdas
+	
+	/**
+	 * Returns the lambdas for all DMUs.
+	 * @return A double[DMUNumber] [NumberOfDMUs] corresponding to the lambdas for all the DMUs.
+	 */
 	public double[] [] getLambdas()
 	{
 		return Solution.Lambdas;
 	}
-	//Method to access a specific Lambda for a specific DMU
+	
+	/**
+	 * Returns the Lambda of the specified DMU and Lambda.
+	 * @param DMUNumber The DMU Number
+	 * @param Lambda The Lambda Number
+	 * @return The value of the lambda for the specified DMU and Lambda
+	 */
 	public double getLambdas(int DMUNumber, int Lambda)
 	{
 		return Solution.Lambdas[DMUNumber] [Lambda];
 	}
 	
-	//Method to access Slacks for a specific DMU
+	/**
+	 * Returns the Slacks for the specified DMU.
+	 * @param DMUNumber The number of the DMU.
+	 * @return A double[] corresponding to the slacks for the specified DMU.
+	 */
 	public double[] getSlacks(int DMUNumber)
 	{
 		return Solution.Slacks[DMUNumber];
 	}
-	//Method to access a specific Slack value for a specific DMU
+	
+	/**
+	 * Returns the slack value for the specified DMU and Variable Number.
+	 * @param DMUNumber The number of the DMU
+	 * @param VarNumber The Number of the Variable
+	 * @return The slack value for the specified DMU and Variable Number
+	 */
 	public double getSlacks(int DMUNumber, int VarNumber)
 	{
 		return Solution.Slacks[DMUNumber] [VarNumber];
 	}
-	//Method to access All Slacks
+	
+	/**
+	 * Returns the Slacks for all the DMUs.
+	 * @return A double[NbDMUs] [NbVariables] corresponding to all the slacks for all the DMUs.
+	 */
 	public double[] [] getSlacks()
 	{
 		return Solution.Slacks;
 	}
 	
-	//Method to access Weights for a specific DMU
+	/**
+	 * Returns the weights of the specified DMU.
+	 * @param DMUNumber The Number of the DMU.
+	 * @return A double[] corresponding to the weights for the specified DMU.
+	 */
 	public double[] getWeight(int DMUNumber)
 	{
 		return Solution.Weights[DMUNumber];
 	}
-	//Method to access a specific Weight for a specific DMU
+	
+	/**
+	 * Returns the specific weight value for the specified DMU and Variable number.
+	 * @param DMUNumber The number of the DMU
+	 * @param VarNumber The number of the Variable
+	 * @return A specific weight value.
+	 */
 	public double getWeight(int DMUNumber, int VarNumber)
 	{
 		return Solution.Weights[DMUNumber] [VarNumber];
 	}
-	//Method to access All Weights
+	
+	/**
+	 * Returns the weights for all the DMUs
+	 * @return A double[NbDMUs] [NbVariables] corresponding to the weights of all the DMUs
+	 */
 	public double[] [] getWeight()
 	{
 		return Solution.Weights;
 	}
 	
-	//Method to access Projections for a specific DMU
+	/**
+	 * Returns the projections for the specified DMU.
+	 * @param DMUNumber The number of the DMU
+	 * @return The projections for the specific DMU
+	 */
 	public double[] getProjections(int DMUNumber)
 	{
 		return Solution.Projections[DMUNumber];
 	}
-	//Method to access All Projections
+	
+	/**
+	 * Returns the projections for all the DMU
+	 * @return a double[NbDMUs] [NbVariables] of all the projections
+	 */
 	public double[] [] getProjections()
 	{
 		return Solution.Projections;
 	}
 	
 	
-	/* These methods can only be accessed all at once unlike the previous one which could be accessed value by value.
+	/* These methods only return all the values unlike the previous one which could be accessed value by value.
 	 * This is because it would be inefficient to access the values below individually.*/
 	
-	//Method to access ProjectionsPercentages for a specific DMU
+	/**
+	 * Returns the projection percentages
+	 * @param DMUNumber The DMU Number
+	 * @return A double[] of the projection percentages for the specified DMU
+	 */	
 	public double[] getProjectionPercentages(int DMUNumber)
 	{
 		double[] ProjectionPercentages = new double[this.Solution.Projections[0].length];
@@ -405,7 +522,11 @@ public class DEAProblem {
 		}
 		return ProjectionPercentages;
 	}
-	//Method to access All ProjectionsPercentages
+	
+	/**
+	 * Returns the projection percentages for all DMUs
+	 * @return A double[NbDMUs] [NbVariables] of the projection percentages for all the DMUs.
+	 */	
 	public double[] [] getProjectionPercentages()
 	{
 		
@@ -432,7 +553,11 @@ public class DEAProblem {
 	}
 	
 	
-	//Method to access Ranks
+	/**
+	 * Returns the DMU ranks (based on Objectives value)
+	 * @param LowestIsZero A boolean. If true the lowest value has rank '0'.
+	 * @return A double[] of the ranks.
+	 */
 	public int[] GetDMURanks(boolean LowestIsZero)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of

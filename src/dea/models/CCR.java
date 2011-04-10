@@ -30,9 +30,88 @@ import linearSolver.*;
 
 
 
-
+/**
+ * The class implementing the CCR model.
+ *
+ *<p>
+ *The Model is as follows:
+ *<p>
+ * <center>
+ * <table border = "1">
+ * <tr>
+ * 		<td>Variable</td>
+ * 		<td>Theta</td>
+ * 		<td>Lambda 1</td>
+ * 		<td>...</td>
+ * 		<td>Lambda n</td>
+ * 		<td>Slack 1</td>
+ * 		<td>...</td>
+ * 		<td>Slack p</td>
+ * 		<td>DIR</td>
+ * 		<td>RHS</td>
+ * </tr>
+ * <tr>
+ * 		<td>Obj Coeff</td>
+ * 		<td>1</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td></td>
+ * 		<td></td>
+ * </tr>
+ * <tr>
+ * 		<td>Input 1</td>
+ * 		<td>-Input 1,1</td>
+ * 		<td>Input 1,1</td>
+ * 		<td>...</td>
+ * 		<td>Input 1, n</td>
+ * 		<td>0</td>
+ * 		<td>...</td>
+ * 		<td>0</td>
+ * 		<td>E</td>
+ * 		<td>0</td>
+ * </tr>
+ * <tr>
+ * 		<td>Input i</td>
+ * 		<td>-Input i, 1</td>
+ * 		<td>Input i, 1</td>
+ * 		<td>...</td>
+ * 		<td>Input i, n</td>
+ * 		<td>0</td>
+ * 		<td>...</td>
+ * 		<td>0</td>
+ * 		<td>E</td>
+ * 		<td>0</td>
+ * </tr>
+ * <tr>
+ * 		<td>Ouput p</td>
+ * 		<td>0</td>
+ * 		<td>Output p, 1</td>
+ * 		<td>...</td>
+ * 		<td>Output p, n</td>
+ * 		<td>0</td>
+ * 		<td>...</td>
+ * 		<td>-1</td>
+ * 		<td>E</td>
+ * 		<td>Output p, 1</td>
+ * </tr>
+ * </table>
+ * </center>
+ * 
+ *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
+ *  (e.g. -Inputi 1 being the ith input of DMU1).
+ * @author goldfish
+ *
+ */
 public  class CCR {
 
+	/**
+	 * The method solving the CCR Problem
+	 * @param deaP An instance of DEAProblem
+	 */
 	public static void solveCCR(DEAProblem deaP) {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
@@ -59,7 +138,7 @@ public  class CCR {
 			
 			//Build model for Phase I
 
-			/**
+			/*
 			 * The model is built with an array as follows:
 			 * 
 			 * 	Variable:		Theta	  Lambda 1   .....	  Lambda n      Slack 1  ...  Slack p		DIR		RHS

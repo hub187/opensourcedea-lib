@@ -1,5 +1,11 @@
 package linearSolver;
 
+
+/**
+ * enum listing the possible Solver Return Status.
+ * @author Hubert Virtos
+ *
+ */
 public enum SolverReturnStatus {
 	NA ("Default Return Status."),
 	ModelCreationFailure ("The Linear Problem could not be created"),

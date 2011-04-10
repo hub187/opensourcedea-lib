@@ -3,6 +3,8 @@ package dea;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import utils.Rank;
+
 public class RankTest {
 
 	@Test

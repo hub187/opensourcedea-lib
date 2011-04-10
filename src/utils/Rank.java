@@ -20,13 +20,28 @@
     @version 0.1 2011-02-04
 */
 
-package dea;
+package utils;
 
+/**
+ * 
+ * 
+ * This class only deals with implementing the quicksort algorithm to find the DMU ranks.
+ * <p>
+ * Most of the code is based on the code developed by algolist which can be found below.
+ * <p>
+ * @see <a href="http://www.algolist.net/Algorithms/Sorting/Quicksort">Algolist Quicksort Algorithm Implemetation</a>
+ * <p>
+ * @author Hubert Virtos
+ *
+ */
 public class Rank {
-	
-	/* This code is a modification of the Quicksort code that can be found at:
-	 * http://www.algolist.net/Algorithms/Sorting/Quicksort */
-	
+
+	/**
+	 * Returns the ranks.
+	 * @param ArrayToSort The Array To sort (DMU Objectives)
+	 * @param LowestIsZero A boolean. If true, specifies that the lowest value of the Array is rank '0'.
+	 * @return An int[] with the rank positions.
+	 */
 	public static int[] GetRanks(double[] ArrayToSort, boolean LowestIsZero) {
 		
 		//Copy original Array to avoid messing with external data

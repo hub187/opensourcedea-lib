@@ -22,6 +22,12 @@
 
 package linearSolver;
 
+/**
+ * This class defines a linear problem Solution. This object is returned by the {@link linearSolver.Lpsolve#solveLPProblem(java.util.ArrayList, double[], double[], dea.enums.SolverObjDirection)} method.
+ * 
+ * @author Hubert Virtos
+ *
+ */
 public class SolverResults {
 	public double[] VariableResult; // = new double[NbColumns];
 	public double[] ConstraintResult; //= new double[NbRows];

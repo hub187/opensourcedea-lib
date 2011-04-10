@@ -27,9 +27,13 @@ import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
 import dea.enums.*;
 
-/* This class deals with the calls to the lpsolve solver (linear problem solver).
- * It is essential to use a linear solver in order to solve DEA problems.*/
-
+/**
+ * This class deals with the calls to the lpsolve library and is used to solve linear problem.
+ * It is essential to use a linear solver in order to solve DEA problems.
+ * <p>
+ * @author Hubert Virtos
+ *
+ */
 public class Lpsolve {
 	
 	/* INSTALLATION INSTRUCTIONS
@@ -45,13 +49,14 @@ public class Lpsolve {
 	 * the .classpath file for this project should already point to it.
 	 * 
 	 * 
-	 * On Eclipse, you can add a .jar to a program as follows:
+	 * If you need to check whether the lpsolve55j.jar in isn Eclipse, you can proceed as follows:
 	 * 1) right clicking on your project,
 	 * 2) selecting Properties (you can also select your project in the package explorer and press Alt + Enter),
 	 * 3) clicking on the libraries tabs,
-	 * 4) clicking on Add External JARs,
-	 * 5) browsing to the lpsolve55j.jar and clicking OK.*/
-	
+	 * 4) Check the JARs already attached.
+	 * If none:
+	 * 5) clicking on Add External JARs,
+	 * 6) browsing to the lpsolve55j.jar and clicking OK.*/
 	
 	/* The solveLPProblem method is called with all the element required to define a Linear Problem, i.e.:
 	 * 1) an ArrayList of double[] for the constraints
@@ -61,7 +66,17 @@ public class Lpsolve {
 	 * 
 	 * The method returns a solution object. See the SolverResults class for more information on this object.
 	 * */	
+
 	
+	/**
+	 * The solveLPProblem method solve a Linear Problem. This method is called for each DMU when solving a DEA problem.
+	 * 
+	 * @param Constraints A double[] of the constraint values.
+	 * @param ObjF A double[] of the Objective Function values.
+	 * @param RHS A double[] of the Right Hand Side values
+	 * @param Dir A SolverObjDirection (MIN or MAX)
+	 * @return A SolverResult Object with the solution to the linear problem.
+	 */
 	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) {
 	
 		//The Solution object which will be returned
