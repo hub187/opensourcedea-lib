@@ -10,7 +10,6 @@ import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAVariableType;
-import dea.enums.*;
 
 public class DEAProblemTest {
 
