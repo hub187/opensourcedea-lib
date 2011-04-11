@@ -59,45 +59,45 @@ public class LibraryTest {
 		TestVariableNames[3] = "Sales Profits";
 		
 		//Set up the Data Matrix
-		TestDataMatrix [0] [0] = 4;
-		TestDataMatrix [0] [1] = 3;
-		TestDataMatrix [0] [2] = 1;
-		TestDataMatrix [0] [3] = 1;
+		TestDataMatrix [0] [0] = 411.17;
+		TestDataMatrix [0] [1] = 83;
+		TestDataMatrix [0] [2] = 1877.18;
+		TestDataMatrix [0] [3] = 1345.276;
 		
-		TestDataMatrix [1] [0] = 7;
-		TestDataMatrix [1] [1] = 3;
-		TestDataMatrix [1] [2] = 1;
-		TestDataMatrix [1] [3] = 1;		
+		TestDataMatrix [1] [0] = 1023.92;
+		TestDataMatrix [1] [1] = 84;
+		TestDataMatrix [1] [2] = 3529.32;
+		TestDataMatrix [1] [3] = 1345.276;		
 		
-		TestDataMatrix [2] [0] = 8;
-		TestDataMatrix [2] [1] = 1;
-		TestDataMatrix [2] [2] = 1;
-		TestDataMatrix [2] [3] = 1;
+		TestDataMatrix [2] [0] = 1537.69;
+		TestDataMatrix [2] [1] = 148;
+		TestDataMatrix [2] [2] = 3923.24;
+		TestDataMatrix [2] [3] = 1007.528;
 		
-		TestDataMatrix [3] [0] = 4;
-		TestDataMatrix [3] [1] = 2;
-		TestDataMatrix [3] [2] = 1;
-		TestDataMatrix [3] [3] = 1;
+		TestDataMatrix [3] [0] = 361;
+		TestDataMatrix [3] [1] = 83;
+		TestDataMatrix [3] [2] = 1250.71;
+		TestDataMatrix [3] [3] = 151.9472;
 		
-		TestDataMatrix [4] [0] = 2;
-		TestDataMatrix [4] [1] = 4;
-		TestDataMatrix [4] [2] = 1;
-		TestDataMatrix [4] [3] = 1;
+		TestDataMatrix [4] [0] = 492.78;
+		TestDataMatrix [4] [1] = 83;
+		TestDataMatrix [4] [2] = 2982.66;
+		TestDataMatrix [4] [3] = 2059.933;
 		
-		TestDataMatrix [5] [0] = 10;
-		TestDataMatrix [5] [1] = 1;
-		TestDataMatrix [5] [2] = 1;
-		TestDataMatrix [5] [3] = 1;
+		TestDataMatrix [5] [0] = 516.64;
+		TestDataMatrix [5] [1] = 83;
+		TestDataMatrix [5] [2] = 3778.31;
+		TestDataMatrix [5] [3] = 3396.074;
 		
-		TestDataMatrix [6] [0] = 3;
-		TestDataMatrix [6] [1] = 7;
-		TestDataMatrix [6] [2] = 1;
-		TestDataMatrix [6] [3] = 1;	
+		TestDataMatrix [6] [0] = 259.3;
+		TestDataMatrix [6] [1] = 85;
+		TestDataMatrix [6] [2] = 3054.6;
+		TestDataMatrix [6] [3] = 2947.036;	
 		
-		TestDataMatrix [7] [0] = 3;
-		TestDataMatrix [7] [1] = 7;
-		TestDataMatrix [7] [2] = 1;
-		TestDataMatrix [7] [3] = 1;	
+		TestDataMatrix [7] [0] = 708.89;
+		TestDataMatrix [7] [1] = 84;
+		TestDataMatrix [7] [2] = 3237.17;
+		TestDataMatrix [7] [3] = 2940.285;	
 
 		TestDataMatrix [8] [0] = 3;
 		TestDataMatrix [8] [1] = 7;
