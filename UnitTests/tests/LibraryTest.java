@@ -13,6 +13,8 @@ import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAVariableType;
 
+import dea.DEAPSolution;
+
 
 
 public class LibraryTest {
@@ -173,21 +175,27 @@ public class LibraryTest {
 
 	}
 	
-	private class DEASolution {
-		
-		double[] Objectives;
-		//double[] Lambdas;
-		
-	}
+
 	
-	public DEASolution GetCCRIResults() {
+	public DEAPSolution GetCCRIResults() {
 		
-		DEASolution CCRISol = new DEASolution();
 		
-		CCRISol.Objectives  = createCCRIObjectives();
+		DEAPSolution CCRISol = new DEAPSolution(20, 4);
 		
+		CCRISol.Objectives  = createCCRIObjectives();		
+		
+		CCRISol.Lambdas = createCCRILambdas();
+		
+		
+		return CCRISol;
+	}
+
+	private double[] [] createCCRILambdas() {
 		
 		List<Lambda> Lambdas = new ArrayList<Lambda>();
+		
+		
+		//Set the lambdas
 		
 		Lambda Lambda = new Lambda();
 		Lambda.setDMUNumber(0);
@@ -207,6 +215,9 @@ public class LibraryTest {
 		Lambda.setLambdaValue(0.153047430701115);
 		Lambdas.add(Lambda);
 		
+		
+		
+		
 		double[] [] LambdasArray = new double[20] [20];
 		
 		Iterator<Lambda> iterator;
@@ -217,8 +228,7 @@ public class LibraryTest {
 			LambdasArray[Lambda.getDMUNumber()] [Lambda.getLambdaNumber()] = Lambda.getLambdaValue();
 		}
 		
-		
-		return CCRISol;
+		return LambdasArray;
 	}
 
 	private double[] createCCRIObjectives() {
@@ -294,7 +304,7 @@ public class LibraryTest {
 		
 		tester.solve();
 		
-		DEASolution CheckedSol = GetCCRIResults();
+		DEAPSolution CheckedSol = GetCCRIResults();
 		
 		double[] ObjectivesToCheck = tester.getObjectives();
 		
