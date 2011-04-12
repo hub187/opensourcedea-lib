@@ -2,6 +2,7 @@ package tests;
 
 
 import static org.junit.Assert.assertArrayEquals;
+import java.util.*;
 //import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
@@ -11,6 +12,7 @@ import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAVariableType;
+
 
 
 public class LibraryTest {
@@ -182,7 +184,48 @@ public class LibraryTest {
 		
 		DEASolution CCRISol = new DEASolution();
 		
+		CCRISol.Objectives  = createCCRIObjectives();
+		
+		
+		List<Lambda> Lambdas = new ArrayList<Lambda>();
+		
+		Lambda Lambda = new Lambda();
+		Lambda.setDMUNumber(0);
+		Lambda.setLambdaNumber(6);
+		Lambda.setLambdaValue(0.292899713106514);
+		Lambdas.add(Lambda);
+		
+		Lambda = new Lambda();
+		Lambda.setDMUNumber(0);
+		Lambda.setLambdaNumber(7);
+		Lambda.setLambdaValue(0.116772146287042);
+		Lambdas.add(Lambda);
+		
+		Lambda = new Lambda();
+		Lambda.setDMUNumber(0);
+		Lambda.setLambdaNumber(12);
+		Lambda.setLambdaValue(0.153047430701115);
+		Lambdas.add(Lambda);
+		
+		double[] [] LambdasArray = new double[20] [20];
+		
+		Iterator<Lambda> iterator;
+		iterator = Lambdas.iterator();
+		
+		while (iterator.hasNext()) {
+			Lambda = iterator.next();
+			LambdasArray[Lambda.getDMUNumber()] [Lambda.getLambdaNumber()] = Lambda.getLambdaValue();
+		}
+		
+		
+		return CCRISol;
+	}
+
+	private double[] createCCRIObjectives() {
+		
 		double[] Objectives = new double[20];
+		
+		
 		Objectives[0] = 0.519434453047034;
 		Objectives[1] = 0.872474445374321;
 		Objectives[2] = 0.549048143682244;
@@ -203,12 +246,33 @@ public class LibraryTest {
 		Objectives[17] = 0.739084603920947;
 		Objectives[18] = 1;
 		Objectives[19] = 0.207079840963623;
+		return Objectives;
+	}
+	
+	
+	private static class Lambda {
+		private int DMUNumber;
+		private int LambdaNumber;
+		private double LambdaValue;
 		
-		           
-		CCRISol.Objectives = Objectives;
-		
-		
-		return CCRISol;
+		public void setDMUNumber(int dMUNumber) {
+			DMUNumber = dMUNumber;
+		}
+		public int getDMUNumber() {
+			return DMUNumber;
+		}
+		public void setLambdaNumber(int lambdaNumber) {
+			LambdaNumber = lambdaNumber;
+		}
+		public int getLambdaNumber() {
+			return LambdaNumber;
+		}
+		public void setLambdaValue(double lambdaValue) {
+			LambdaValue = lambdaValue;
+		}
+		public double getLambdaValue() {
+			return LambdaValue;
+		}
 	}
 	
 	public void BuildDEAProblem(DEAModelType ModelType, DEAModelOrientation ModelOrientation) {
