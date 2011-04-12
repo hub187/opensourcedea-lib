@@ -203,8 +203,10 @@ public  class CCR {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN);
 			
 			//Collect information from Phase I (Theta)
-			deaP.Solution.Objectives[i] = Sol.Objective;
-			deaP.Solution.Weights[i] = Sol.Weights;
+			deaP.setObjective(i, Sol.Objective);
+			//deaP.Solution.Objectives[i] = Sol.Objective;
+			deaP.setWeights(i, Sol.Weights);
+			//deaP.Solution.Weights[i] = Sol.Weights;
 			
 			
 			  /////////////////////////////
@@ -237,19 +239,21 @@ public  class CCR {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS2, SolverObjDirection.MAX);
 			
 			//Collect information from Phase II (Theta)
-			System.arraycopy(Sol.VariableResult, 1, deaP.Solution.Lambdas[i], 0, NbDMUs);
-			System.arraycopy(Sol.VariableResult, NbDMUs + 1, deaP.Solution.Slacks[i], 0, NbVariables);
+			System.arraycopy(Sol.VariableResult, 1, deaP.getLambdas(i)/*deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
+			System.arraycopy(Sol.VariableResult, NbDMUs + 1, deaP.getSlacks(i) /*deaP.Solution.Slacks[i]*/, 0, NbVariables);
 			
 			for (int j = 0; j < NbVariables; j++) {
 				if(deaP.getVariableType(j) == DEAVariableType.Input) {
 					//Projections
-					deaP.Solution.Projections[i] [j] = 
-						deaP.Solution.Objectives[i] * deaP.getDataMatrix(i, j) - deaP.Solution.Slacks[i] [j];
+					deaP.setProjections(i, j, deaP.getObjective(i) * deaP.getDataMatrix(i, j) - deaP.getSlacks(i, j));
+					/*deaP.Solution.Projections[i] [j] = 
+						deaP.Solution.Objectives[i] * deaP.getDataMatrix(i, j) - deaP.Solution.Slacks[i] [j];*/
 				}
 				else {
 					//Projections
-					deaP.Solution.Projections[i] [j] =
-						deaP.getDataMatrix(i, j) + deaP.Solution.Slacks[i] [j];
+					deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
+					/*deaP.Solution.Projections[i] [j] =
+						deaP.getDataMatrix(i, j) + deaP.Solution.Slacks[i] [j];*/
 				}
 			}
 			

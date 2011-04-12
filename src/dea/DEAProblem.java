@@ -24,6 +24,7 @@
 package dea;
 
 //import java.util.Arrays;
+
 import utils.Rank;
 import deaModels.*;
 
@@ -57,7 +58,7 @@ public class DEAProblem {
 	private double [] [] _DataMatrix;
 	
 	//Solution
-	public DEAPSolution Solution;
+	private dea.DEAPSolution _Solution;
 	
 	
 	/**
@@ -66,40 +67,11 @@ public class DEAProblem {
 	 * @param NbVariables The number of variables in the DEA Problem to solve.
 	 */
 	public DEAProblem(int NbDMUs, int NbVariables) {
-		Solution = new DEAPSolution(NbDMUs, NbVariables);
+		_Solution = new DEAPSolution(NbDMUs, NbVariables);
 	}
 	
-	/**
-	 * This class defines a DEA Problem Solution.
-	 * <p>
-	 * @author Hubert Virtos
-	 *
-	 */
-	public static class DEAPSolution {
-		
-		public double[] Objectives;
-		public double[] [] Lambdas;
-		public double[] [] Slacks;
-		public double[] [] Weights;
-		public double[] [] Projections;
-		
-		/**
-		 * 
-		 * @param NbDMUs The number of DMUs in the DEA problem to solve.
-		 * @param NbVariables The number of variables in the DEA Problem to solve.
-		 */
-		public DEAPSolution (int NbDMUs, int NbVariables) {
-			
-			/*The solution Attributes will be put one by one at each solver optimisation (for each DMU).
-			 * The array are initialised here for this reason.*/
-			Objectives = new double[NbDMUs];
-			Lambdas = new double[NbDMUs] [NbDMUs];
-			Slacks = new double[NbDMUs] [NbVariables];
-			Weights = new double[NbDMUs] [NbVariables];
-			Projections = new double[NbDMUs] [NbVariables];
-		}
-		
-	}
+
+
 	
 	
 	 //////////////////////////////////////////////////////////////////////////
@@ -364,10 +336,12 @@ public class DEAProblem {
 	}
 	
 	
+
+
 	
 	 //////////////////////////////////////////////////////////////////////////////
 	//						Get Problem Solution								//
-   //////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////////
 	
 	
 	/**
@@ -376,7 +350,7 @@ public class DEAProblem {
 	 */
 	public double[] getObjectives()
 	{
-		return Solution.Objectives;
+		return _Solution.Objectives;
 	}
 	
 	/**
@@ -386,9 +360,18 @@ public class DEAProblem {
 	 */
 	public double getObjective(int DMUNumber)
 	{
-		return Solution.Objectives[DMUNumber];
+		return _Solution.Objectives[DMUNumber];
 	}
-
+		
+	/**
+	 * Sets the objective value
+	 * @param DMUNumber The DMUNumber to set the Objective value for
+	 * @param ObjValue The Objective value to set.
+	 */
+	public void setObjective(int DMUNumber, double ObjValue) {
+		_Solution.Objectives[DMUNumber] = ObjValue;
+	}
+	
 	
 	/**
 	 * Returns the lambdas of the specified DMU.
@@ -397,7 +380,7 @@ public class DEAProblem {
 	 */
 	public double[] getLambdas(int DMUNumber)
 	{
-		return Solution.Lambdas[DMUNumber];
+		return _Solution.Lambdas[DMUNumber];
 	}
 	
 	/**
@@ -406,7 +389,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getLambdas()
 	{
-		return Solution.Lambdas;
+		return _Solution.Lambdas;
 	}
 	
 	/**
@@ -417,8 +400,9 @@ public class DEAProblem {
 	 */
 	public double getLambdas(int DMUNumber, int Lambda)
 	{
-		return Solution.Lambdas[DMUNumber] [Lambda];
+		return _Solution.Lambdas[DMUNumber] [Lambda];
 	}
+	
 	
 	/**
 	 * Returns the Slacks for the specified DMU.
@@ -427,7 +411,7 @@ public class DEAProblem {
 	 */
 	public double[] getSlacks(int DMUNumber)
 	{
-		return Solution.Slacks[DMUNumber];
+		return _Solution.Slacks[DMUNumber];
 	}
 	
 	/**
@@ -438,7 +422,7 @@ public class DEAProblem {
 	 */
 	public double getSlacks(int DMUNumber, int VarNumber)
 	{
-		return Solution.Slacks[DMUNumber] [VarNumber];
+		return _Solution.Slacks[DMUNumber] [VarNumber];
 	}
 	
 	/**
@@ -447,8 +431,9 @@ public class DEAProblem {
 	 */
 	public double[] [] getSlacks()
 	{
-		return Solution.Slacks;
+		return _Solution.Slacks;
 	}
+	
 	
 	/**
 	 * Returns the weights of the specified DMU.
@@ -457,7 +442,7 @@ public class DEAProblem {
 	 */
 	public double[] getWeight(int DMUNumber)
 	{
-		return Solution.Weights[DMUNumber];
+		return _Solution.Weights[DMUNumber];
 	}
 	
 	/**
@@ -468,7 +453,7 @@ public class DEAProblem {
 	 */
 	public double getWeight(int DMUNumber, int VarNumber)
 	{
-		return Solution.Weights[DMUNumber] [VarNumber];
+		return _Solution.Weights[DMUNumber] [VarNumber];
 	}
 	
 	/**
@@ -477,8 +462,13 @@ public class DEAProblem {
 	 */
 	public double[] [] getWeight()
 	{
-		return Solution.Weights;
+		return _Solution.Weights;
 	}
+	
+	public void setWeights(int DMUNumber, double[] Weights) {
+		_Solution.Weights[DMUNumber] = Weights;
+	}
+	
 	
 	/**
 	 * Returns the projections for the specified DMU.
@@ -487,7 +477,7 @@ public class DEAProblem {
 	 */
 	public double[] getProjections(int DMUNumber)
 	{
-		return Solution.Projections[DMUNumber];
+		return _Solution.Projections[DMUNumber];
 	}
 	
 	/**
@@ -496,7 +486,17 @@ public class DEAProblem {
 	 */
 	public double[] [] getProjections()
 	{
-		return Solution.Projections;
+		return _Solution.Projections;
+	}
+	
+	/**
+	 * Sets the projection value.
+	 * @param DMUNumber The Specific DMUNumber to set the projection for.
+	 * @param VariableNumber The specifc Variable number to set the projection for.
+	 * @param ProjValue The projection value to set.
+	 */
+	public void setProjections(int DMUNumber, int VariableNumber, double ProjValue) {
+		_Solution.Projections[DMUNumber] [VariableNumber] = ProjValue;
 	}
 	
 	
@@ -510,11 +510,11 @@ public class DEAProblem {
 	 */	
 	public double[] getProjectionPercentages(int DMUNumber)
 	{
-		double[] ProjectionPercentages = new double[this.Solution.Projections[0].length];
+		double[] ProjectionPercentages = new double[this._Solution.Projections[0].length];
 		double VariableValue;
 		double[] Projections = this.getProjections(DMUNumber);
 		//Loop through each variable
-		for(int i = 0; i < this.Solution.Projections[0].length; i++) {
+		for(int i = 0; i < this._Solution.Projections[0].length; i++) {
 			VariableValue = this.getDataMatrix(DMUNumber, i);
 			if(this.getVariableType(i) == DEAVariableType.Input) {
 				ProjectionPercentages[i] = (VariableValue -  Projections[i]) / VariableValue * -1;
@@ -534,7 +534,7 @@ public class DEAProblem {
 	{
 		
 		double[] [] ProjectionPercentages =
-			new double[this.getDMUNames().length] [this.Solution.Projections[0].length];
+			new double[this.getDMUNames().length] [this._Solution.Projections[0].length];
 		double VariableValue;
 		double[] Projections; 
 		//Loop through all DMUs
@@ -542,7 +542,7 @@ public class DEAProblem {
 		for(int i = 0; i < this.getDMUNames().length; i++) {
 			Projections = this.getProjections(i);
 			//Loop through each variable
-			for(int j = 0; j < this.Solution.Projections[0].length; j++) {
+			for(int j = 0; j < this._Solution.Projections[0].length; j++) {
 				VariableValue = this.getDataMatrix(i, j);
 				if(this.getVariableType(j) == DEAVariableType.Input) {
 					ProjectionPercentages[i] [j] = (VariableValue -  Projections[j]) / VariableValue * -1;
@@ -566,7 +566,7 @@ public class DEAProblem {
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
-		ranksArray = Rank.GetRanks(this.Solution.Objectives, LowestIsZero);
+		ranksArray = Rank.GetRanks(this._Solution.Objectives, LowestIsZero);
 		return ranksArray;
 
 		
@@ -580,6 +580,9 @@ public class DEAProblem {
 		
 		
 	}
+	
+	
+	
 	
 	//Calculate weighted data
 
