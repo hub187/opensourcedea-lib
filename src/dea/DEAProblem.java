@@ -323,12 +323,15 @@ public class DEAProblem {
 	 * Solves the specific DEA Problem.
 	 * <p> The Model needs to have all the required parameters in order for this to work.
 	 * <p> There is no check at present, if the parameters are incorrect, the library will simply crash.
+	 * <p> The switch in the solve() method call a separate method for each model. Each of these method 
+	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
+	 * methods).
 	 */
 	public void solve() {
 		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
 		switch (this._ModelType) {
-			case CCR: CCR.solveCCR(this);
-			
+			case CCR: this._Solution = CCR.solveCCR(this);
+			 
 		}
 		
 	
@@ -363,16 +366,8 @@ public class DEAProblem {
 		return _Solution.Objectives[DMUNumber];
 	}
 		
-	/**
-	 * Sets the objective value
-	 * @param DMUNumber The DMUNumber to set the Objective value for
-	 * @param ObjValue The Objective value to set.
-	 */
-	public void setObjective(int DMUNumber, double ObjValue) {
-		_Solution.Objectives[DMUNumber] = ObjValue;
-	}
-	
-	
+
+
 	/**
 	 * Returns the lambdas of the specified DMU.
 	 * @param DMUNumber The number of the DMU in the Lambda Array.
@@ -402,6 +397,7 @@ public class DEAProblem {
 	{
 		return _Solution.Lambdas[DMUNumber] [Lambda];
 	}
+	
 	
 	
 	/**
@@ -435,6 +431,7 @@ public class DEAProblem {
 	}
 	
 	
+	
 	/**
 	 * Returns the weights of the specified DMU.
 	 * @param DMUNumber The Number of the DMU.
@@ -465,9 +462,6 @@ public class DEAProblem {
 		return _Solution.Weights;
 	}
 	
-	public void setWeights(int DMUNumber, double[] Weights) {
-		_Solution.Weights[DMUNumber] = Weights;
-	}
 	
 	
 	/**
@@ -489,15 +483,7 @@ public class DEAProblem {
 		return _Solution.Projections;
 	}
 	
-	/**
-	 * Sets the projection value.
-	 * @param DMUNumber The Specific DMUNumber to set the projection for.
-	 * @param VariableNumber The specifc Variable number to set the projection for.
-	 * @param ProjValue The projection value to set.
-	 */
-	public void setProjections(int DMUNumber, int VariableNumber, double ProjValue) {
-		_Solution.Projections[DMUNumber] [VariableNumber] = ProjValue;
-	}
+
 	
 	
 	/* These methods only return all the values unlike the previous one which could be accessed value by value.
@@ -561,7 +547,7 @@ public class DEAProblem {
 	 * @param LowestIsZero A boolean. If true the lowest value has rank '0'.
 	 * @return A double[] of the ranks.
 	 */
-	public int[] GetDMURanks(boolean LowestIsZero)
+	public int[] getDMURanks(boolean LowestIsZero)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/

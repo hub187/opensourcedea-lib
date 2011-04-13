@@ -31,6 +31,7 @@ public class DEAPSolution {
 		Projections = new double[NbDMUs] [NbVariables];
 	}
 	
+
 	
 	
 

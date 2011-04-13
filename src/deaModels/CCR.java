@@ -23,6 +23,7 @@
 package deaModels;
 
 import dea.DEAProblem;
+import dea.DEAPSolution;
 import dea.DEAVariableType;
 import dea.SolverObjDirection;
 import java.util.ArrayList;
@@ -111,10 +112,10 @@ import linearSolver.*;
 public  class CCR {
 
 	/**
-	 * The method solving the CCR Problem
-	 * @param deaP An instance of DEAProblem
+	 * The method solving the CCR Problem.
+	 * @param deaP An instance of DEAProblem.
 	 */
-	public static void solveCCR(DEAProblem deaP) {
+	public static DEAPSolution solveCCR(DEAProblem deaP) {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
@@ -122,6 +123,7 @@ public  class CCR {
 		int NbVariables = deaP.getNumberOfVariables();
 		double [] [] TransposedMatrix = new double [NbVariables] [NbDMUs];
 		TransposedMatrix = deaP.getTranspose();
+		DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
 		
 					
 		
@@ -132,11 +134,13 @@ public  class CCR {
 		 * The problem will consequently be solved for each DMUs for Phase I and
 		 * solved again for each DMUs for Phase II.*/
 		
-		  /////////////////////////////
-		 //		Solve Phase I		//
-		/////////////////////////////
+
 		
 		for (int i = 0; i < NbDMUs; i++) {
+			
+			  /////////////////////////////
+			 //		Solve Phase I		//
+			/////////////////////////////
 			
 			//Build model for Phase I
 
@@ -203,10 +207,8 @@ public  class CCR {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN);
 			
 			//Collect information from Phase I (Theta)
-			deaP.setObjective(i, Sol.Objective);
-			//deaP.Solution.Objectives[i] = Sol.Objective;
-			deaP.setWeights(i, Sol.Weights);
-			//deaP.Solution.Weights[i] = Sol.Weights;
+			ReturnSol.Objectives[i] = Sol.Objective;
+			ReturnSol.Weights[i] = Sol.Weights;
 			
 			
 			  /////////////////////////////
@@ -239,19 +241,20 @@ public  class CCR {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS2, SolverObjDirection.MAX);
 			
 			//Collect information from Phase II (Theta)
-			System.arraycopy(Sol.VariableResult, 1, deaP.getLambdas(i)/*deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
-			System.arraycopy(Sol.VariableResult, NbDMUs + 1, deaP.getSlacks(i) /*deaP.Solution.Slacks[i]*/, 0, NbVariables);
+			System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
+			System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 			
 			for (int j = 0; j < NbVariables; j++) {
 				if(deaP.getVariableType(j) == DEAVariableType.Input) {
 					//Projections
-					deaP.setProjections(i, j, deaP.getObjective(i) * deaP.getDataMatrix(i, j) - deaP.getSlacks(i, j));
+					ReturnSol.Projections[i] [j] = ReturnSol.Objectives[i] * deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
 					/*deaP.Solution.Projections[i] [j] = 
 						deaP.Solution.Objectives[i] * deaP.getDataMatrix(i, j) - deaP.Solution.Slacks[i] [j];*/
 				}
 				else {
 					//Projections
-					deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
+					//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
+					ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
 					/*deaP.Solution.Projections[i] [j] =
 						deaP.getDataMatrix(i, j) + deaP.Solution.Slacks[i] [j];*/
 				}
@@ -260,6 +263,8 @@ public  class CCR {
 			
 			
 		}
+		
+		return ReturnSol;
 
 		
 	}
