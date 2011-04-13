@@ -56,6 +56,7 @@ public class DEAProblem {
 	private String[] _VariableName;
 	private DEAVariableType [] _VariableType;
 	private double [] [] _DataMatrix;
+
 	
 	//Solution
 	private dea.DEAPSolution _Solution;
@@ -334,7 +335,6 @@ public class DEAProblem {
 			 
 		}
 		
-	
 		
 	}
 	
@@ -350,9 +350,11 @@ public class DEAProblem {
 	/**
 	 * Returns the Objectives of all the DMUs.
 	 * @return A double[] corresponding to all the DMUs Objectives.
+	 * @throws DEAExceptions 
 	 */
-	public double[] getObjectives()
+	public double[] getObjectives() //throws DEAExceptions
 	{
+
 		return _Solution.Objectives;
 	}
 	
@@ -568,7 +570,7 @@ public class DEAProblem {
 	}
 	
 	
-	
+
 	
 	//Calculate weighted data
 
