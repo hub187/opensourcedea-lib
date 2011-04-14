@@ -2,7 +2,8 @@ package tests;
 
 
 import static org.junit.Assert.assertArrayEquals;
-import java.util.*;
+import static org.junit.Assert.assertEquals;
+//import java.util.*;
 //import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
@@ -184,51 +185,30 @@ public class LibraryTest {
 		
 		CCRISol.Objectives  = createCCRIObjectives();		
 		
-		CCRISol.Lambdas = createCCRILambdas();
+		CCRISol.Slacks = createCCRISlacks();
 		
 		
 		return CCRISol;
 	}
 
-	private double[] [] createCCRILambdas() {
-		
-		List<Lambda> Lambdas = new ArrayList<Lambda>();
+	private double[] [] createCCRISlacks() {
 		
 		
-		//Set the lambdas
+		double[] [] SlacksArray = new double[20] [4];
 		
-		Lambda Lambda = new Lambda();
-		Lambda.setDMUNumber(0);
-		Lambda.setLambdaNumber(6);
-		Lambda.setLambdaValue(0.292899713106514);
-		Lambdas.add(Lambda);
+		SlacksArray[2] [3] = 809.794354144468;
+		SlacksArray[8] [1] = 1.44515522851532;
+		SlacksArray[9] [1] = 29.460866749061;
 		
-		Lambda = new Lambda();
-		Lambda.setDMUNumber(0);
-		Lambda.setLambdaNumber(7);
-		Lambda.setLambdaValue(0.116772146287042);
-		Lambdas.add(Lambda);
+		SlacksArray[10] [3] = 230.186902567291;
+		SlacksArray[12] [3] = 1013.09272784905;
+		SlacksArray[13] [3] = 65.3499495003992;
+		SlacksArray[14] [2] = 215.807846199549;
+		SlacksArray[17] [2] = 576.331636729437;
+		SlacksArray[19] [1] = 5.38462603660133;
 		
-		Lambda = new Lambda();
-		Lambda.setDMUNumber(0);
-		Lambda.setLambdaNumber(12);
-		Lambda.setLambdaValue(0.153047430701115);
-		Lambdas.add(Lambda);
+		return SlacksArray;
 		
-		
-		
-		
-		double[] [] LambdasArray = new double[20] [20];
-		
-		Iterator<Lambda> iterator;
-		iterator = Lambdas.iterator();
-		
-		while (iterator.hasNext()) {
-			Lambda = iterator.next();
-			LambdasArray[Lambda.getDMUNumber()] [Lambda.getLambdaNumber()] = Lambda.getLambdaValue();
-		}
-		
-		return LambdasArray;
 	}
 
 	private double[] createCCRIObjectives() {
@@ -260,30 +240,7 @@ public class LibraryTest {
 	}
 	
 	
-	private static class Lambda {
-		private int DMUNumber;
-		private int LambdaNumber;
-		private double LambdaValue;
-		
-		public void setDMUNumber(int dMUNumber) {
-			DMUNumber = dMUNumber;
-		}
-		public int getDMUNumber() {
-			return DMUNumber;
-		}
-		public void setLambdaNumber(int lambdaNumber) {
-			LambdaNumber = lambdaNumber;
-		}
-		public int getLambdaNumber() {
-			return LambdaNumber;
-		}
-		public void setLambdaValue(double lambdaValue) {
-			LambdaValue = lambdaValue;
-		}
-		public double getLambdaValue() {
-			return LambdaValue;
-		}
-	}
+
 	
 	public void BuildDEAProblem(DEAModelType ModelType, DEAModelOrientation ModelOrientation) {
 		
@@ -299,17 +256,30 @@ public class LibraryTest {
 	public void TestCCRI() {
 		
 		BuildDEAProblem(DEAModelType.CCR, DEAModelOrientation.InputOriented);
-		
-		
+
 		
 		tester.solve();
 		
 		DEAPSolution CheckedSol = GetCCRIResults();
 		
-		double[] ObjectivesToCheck = tester.getObjectives();
+		//Test Objectives
+		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.000001);
+		
+		//Test Slacks
+		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+			assertArrayEquals(tester.getSlacks(i), CheckedSol.Slacks[i], 0.1);
+		}
+		
+		//int[] ranks = tester.getDMURanks(true);
+		
+		//Test Weighted Inputs = 1
+		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+			assertEquals(tester.getDataMatrix(i, 0) * tester.getWeight(i, 0) + tester.getDataMatrix(i, 1) * tester.getWeight(i, 1),
+					1, 0.00001);
+		}
 		
 		
-		assertArrayEquals(ObjectivesToCheck, CheckedSol.Objectives,0.000001);	
+		
 	}
 	
 	

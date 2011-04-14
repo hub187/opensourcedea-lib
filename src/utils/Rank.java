@@ -58,7 +58,7 @@ public class Rank {
 		
 		if(LowestIsZero != true) {
 			int temp;
-			for(int i = 0; i <= Length / 2; i++) {
+			for(int i = 0; i <= Length; i++) {
 				temp = rankArray[i];
 				rankArray[i] = rankArray[Length - i];
 				rankArray[Length - i] = temp;				
