@@ -35,7 +35,7 @@ public class RankTest {
 	
 	private double[] createArrayToSort() {
 		double[] ArrayToSort = new double[5];
-		ArrayToSort[0] = 6.5;
+		ArrayToSort[0] = 9.58;
 		ArrayToSort[1] = 1.3;
 		ArrayToSort[2] = 4.2;
 		ArrayToSort[3] = 0.24;

@@ -25,11 +25,11 @@ package utils;
 /**
  * 
  * 
- * This class only deals with implementing the quicksort algorithm to find the DMU ranks.
+ * This class only deals with implementing the bubblesort algorithm to find the DMU ranks.
  * <p>
  * Most of the code is based on the code developed by algolist which can be found below.
  * <p>
- * @see <a href="http://www.algolist.net/Algorithms/Sorting/Quicksort">Algolist Quicksort Algorithm Implemetation</a>
+ * @see <a href="http://www.algolist.net/Algorithms/Sorting/Bubble_sort">Algolist Bubble sort Algorithm Implemetation</a>
  * <p>
  * @author Hubert Virtos
  *
@@ -45,25 +45,74 @@ public class Rank {
 	public static int[] GetRanks(double[] ArrayToSort, boolean LowestIsZero) {
 		
 		//Copy original Array to avoid messing with external data
-		double[] WorkArray = ArrayToSort;
+		double[] WorkArray = new double[ArrayToSort.length];
+		System.arraycopy(ArrayToSort, 0, WorkArray, 0, ArrayToSort.length);
 		//Create rank Array (function 'range' in Python)
 		int[] rankArray = new int[ArrayToSort.length];
 		for(int i = 0; i < rankArray.length; i++) {
 			rankArray[i] = i;
 		}
 		
-		quickSort(WorkArray, rankArray, 0, WorkArray.length - 1);
-				
-		int Length = rankArray.length - 1;
 		
-		if(LowestIsZero != true) {
-			int temp;
-			for(int i = 0; i <= Length; i++) {
-				temp = rankArray[i];
-				rankArray[i] = rankArray[Length - i];
-				rankArray[Length - i] = temp;				
-			}
-		}
+	      boolean swapped = true;
+	      int j = 0;
+	      double tmp;
+	      int rankTmp;
+	      while (swapped) {
+	            swapped = false;
+	            j++;
+	            for (int i = 0; i < WorkArray.length - j; i++) {                                       
+	                  if (WorkArray[i] > WorkArray[i + 1]) {                          
+	                        tmp = WorkArray[i];
+	                        WorkArray[i] = WorkArray[i + 1];
+	                        WorkArray[i + 1] = tmp;
+	                        
+	                        rankTmp = rankArray[i];
+	                        rankArray[i] = rankArray[i + 1];
+	                        rankArray[i + 1] = rankTmp;
+	                        swapped = true;
+	                  }
+	            }                
+	      }
+		
+		
+		
+		//quickSort(WorkArray, rankArray, 0, WorkArray.length - 1);
+		
+		
+		
+//		int Length = rankArray.length;
+//		int[] newRankArray = new int[Length];
+//		
+//		for(int i = 0; i < Length - 1; i++) {
+//			if(WorkArray[Length - 1 - i] == WorkArray[Length - 2 - i]) {
+//				for(int j = 0; j < Length; j++) {
+//					if(rankArray[j] >= Length - 1 - i) {
+//						rankArray[j] = rankArray[j] - 1;
+//					}
+//				}
+//			}
+//		}
+		
+//		if(LowestIsZero != true) {
+//			//Needs to swap the ranks within the rankArray
+//			for(int i = 0; i < Length; i++) {
+//				newRankArray[i] = (int)(Length / 2) * 2 - rankArray[i];
+//			}
+//			rankArray = newRankArray;
+//		}
+		
+		//in case we have any equals values, need to make ranks even
+//		for(int i = 0; i < Length; i++) {
+//			if(LowestIsZero != true) {
+//				if(rankArray[Length - i] == rankArray[Length - i - 1]) {
+//					rankArray[i + 1] = rankArray[i];
+//				}
+//			}
+//			else {
+//				
+//			}
+//		}
 		
 		return rankArray;
 		
