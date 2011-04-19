@@ -72,11 +72,16 @@ public class RankTest {
 
 	private int[] createRankResultArray() {
 		int[] resultRankArray = new int[5];
-		resultRankArray[0] = 3;
-		resultRankArray[1] = 1;
+//		resultRankArray[0] = 3;
+//		resultRankArray[1] = 1;
+//		resultRankArray[2] = 2;
+//		resultRankArray[3] = 0;
+//		resultRankArray[4] = 4;
+		resultRankArray[0] = 1;
+		resultRankArray[1] = 3;
 		resultRankArray[2] = 2;
-		resultRankArray[3] = 0;
-		resultRankArray[4] = 4;
+		resultRankArray[3] = 4;
+		resultRankArray[4] = 1;
 		return resultRankArray;
 	}
 	
@@ -88,11 +93,11 @@ public class RankTest {
 //		resultRankArrayInv[3] = 1;
 //		resultRankArrayInv[4] = 3;
 
-		resultRankArrayInv[0] = 1;
-		resultRankArrayInv[1] = 3;
-		resultRankArrayInv[2] = 2;
-		resultRankArrayInv[3] = 4;
-		resultRankArrayInv[4] = 0;
+		resultRankArrayInv[0] = 4;
+		resultRankArrayInv[1] = 2;
+		resultRankArrayInv[2] = 3;
+		resultRankArrayInv[3] = 1;
+		resultRankArrayInv[4] = 4;
 		
 		return resultRankArrayInv;
 	}

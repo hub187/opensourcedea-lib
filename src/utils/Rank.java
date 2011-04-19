@@ -42,47 +42,67 @@ public class Rank {
 	 * @param LowestIsZero A boolean. If true, specifies that the lowest value of the Array is rank '0'.
 	 * @return An int[] with the rank positions.
 	 */
-	public static int[] GetRanks(double[] ArrayToSort, boolean LowestIsZero) {
+	public static int[] GetRanks(double[] ArrayToSort, boolean HighestIsOne) {
 		
 		//Copy original Array to avoid messing with external data
 		double[] WorkArray = new double[ArrayToSort.length];
+		int[] rankArray = new int[ArrayToSort.length];
+		int[] posArray = new int[ArrayToSort.length];
+		int tempRank;
+		int arrLength;
+		
 		System.arraycopy(ArrayToSort, 0, WorkArray, 0, ArrayToSort.length);
 		//Create rank Array (function 'range' in Python)
-		int[] rankArray = new int[ArrayToSort.length];
-		for(int i = 0; i < rankArray.length; i++) {
-			rankArray[i] = i;
+		
+		for(int i = 0; i < posArray.length; i++) {
+			posArray[i] = i;
 		}
 		
 		
-	      boolean swapped = true;
-	      int j = 0;
-	      double tmp;
-	      int rankTmp;
-	      while (swapped) {
-	            swapped = false;
-	            j++;
-	            for (int i = 0; i < WorkArray.length - j; i++) {                                       
-	                  if (WorkArray[i] > WorkArray[i + 1]) {                          
-	                        tmp = WorkArray[i];
-	                        WorkArray[i] = WorkArray[i + 1];
-	                        WorkArray[i + 1] = tmp;
-	                        
-	                        rankTmp = rankArray[i];
-	                        rankArray[i] = rankArray[i + 1];
-	                        rankArray[i + 1] = rankTmp;
-	                        swapped = true;
-	                  }
-	            }                
-	      }
+//		Bubblesort algorithm
+//	      boolean swapped = true;
+//	      int j = 0;
+//	      double tmp;
+//	      int rankTmp;
+//	      while (swapped) {
+//	            swapped = false;
+//	            j++;
+//	            for (int i = 0; i < WorkArray.length - j; i++) {                                       
+//	                  if (WorkArray[i] > WorkArray[i + 1]) {                          
+//	                        tmp = WorkArray[i];
+//	                        WorkArray[i] = WorkArray[i + 1];
+//	                        WorkArray[i + 1] = tmp;
+//	                        
+//	                        rankTmp = rankArray[i];
+//	                        rankArray[i] = rankArray[i + 1];
+//	                        rankArray[i + 1] = rankTmp;
+//	                        swapped = true;
+//	                  }
+//	            }                
+//	      }
 		
 		
+		//Get the positions of each value
+		quickSort(WorkArray, posArray, 0, WorkArray.length - 1);
 		
-		//quickSort(WorkArray, rankArray, 0, WorkArray.length - 1);
+		//
+		tempRank = 1;
+		arrLength = posArray.length;
+		rankArray[posArray[arrLength - 1]] = tempRank;
+		for(int i = 0; i < arrLength - 2 ; i++) {
+			if(WorkArray[arrLength - 1 - i] == WorkArray[arrLength - 2 - i]) {
+				rankArray[posArray[arrLength - 2 - i]] = tempRank;
+			}
+			else {
+				tempRank++;
+				rankArray[posArray[arrLength - 2 - i]] = tempRank;
+			}
+		}
+		tempRank++;
+		rankArray[posArray[0]] = tempRank;
 		
-		
-		
-//		int Length = rankArray.length;
-//		int[] newRankArray = new int[Length];
+		int Length = rankArray.length;
+		int[] newRankArray = new int[Length];
 //		
 //		for(int i = 0; i < Length - 1; i++) {
 //			if(WorkArray[Length - 1 - i] == WorkArray[Length - 2 - i]) {
@@ -94,13 +114,13 @@ public class Rank {
 //			}
 //		}
 		
-//		if(LowestIsZero != true) {
-//			//Needs to swap the ranks within the rankArray
-//			for(int i = 0; i < Length; i++) {
-//				newRankArray[i] = (int)(Length / 2) * 2 - rankArray[i];
-//			}
-//			rankArray = newRankArray;
-//		}
+		if(HighestIsOne != true) {
+			//Needs to swap the ranks within the rankArray (i.e. Highest is no longer one but Array.Length - 1.
+			for(int i = 0; i < Length; i++) {
+				newRankArray[i] = Length - rankArray[i];
+			}
+			rankArray = newRankArray;
+		}
 		
 		//in case we have any equals values, need to make ranks even
 //		for(int i = 0; i < Length; i++) {
