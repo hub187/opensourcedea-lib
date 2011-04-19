@@ -25,7 +25,7 @@ package dea;
 
 //import java.util.Arrays;
 
-import utils.Rank;
+import utils.*;
 import deaModels.*;
 
 
@@ -546,15 +546,16 @@ public class DEAProblem {
 	
 	/**
 	 * Returns the DMU ranks (based on Objectives value)
-	 * @param LowestIsZero A boolean. If true the lowest value has rank '0'.
+	 * @param LowestIsZero A boolean. If true the lowest value has rank '0'. Should generally be 'true'.
+	 * @param typeOfRanking The type of ranking to use. Should generally be 'STANDARD'.
 	 * @return A double[] of the ranks.
 	 */
-	public int[] getDMURanks(boolean LowestIsZero)
+	public int[] getDMURanks(boolean highestIsOne, RankingType typeOfRanking)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
-		ranksArray = Rank.GetRanks(this._Solution.Objectives, LowestIsZero);
+		ranksArray = Rank.getRanks(this._Solution.Objectives, highestIsOne, typeOfRanking);
 		return ranksArray;
 
 		

@@ -39,100 +39,86 @@ public class Rank {
 	/**
 	 * Returns the ranks.
 	 * @param ArrayToSort The Array To sort (DMU Objectives)
-	 * @param LowestIsZero A boolean. If true, specifies that the lowest value of the Array is rank '0'.
+	 * @param HighestIsOne A boolean. If true, specifies that the highest values of the ArrayToSort should be '1' (i.e. first).
 	 * @return An int[] with the rank positions.
 	 */
-	public static int[] GetRanks(double[] ArrayToSort, boolean HighestIsOne) {
+	public static int[] getRanks(double[] arrayToSort, boolean highestIsOne, RankingType TypeOfRanking) {
 		
 		//Copy original Array to avoid messing with external data
-		double[] WorkArray = new double[ArrayToSort.length];
-		int[] rankArray = new int[ArrayToSort.length];
-		int[] posArray = new int[ArrayToSort.length];
-		int tempRank;
-		int arrLength;
+		int arrLength = arrayToSort.length - 1;
+		int tempRank = 1;
+		int incTempRank;
+		double[] workArray = new double[arrLength + 1];
+		int[] rankArray = new int[arrLength + 1];
+		int[] posArray = new int[arrLength + 1];
+		int[] newRankArray = new int[arrLength + 1];
+
+		System.arraycopy(arrayToSort, 0, workArray, 0, arrayToSort.length);
 		
-		System.arraycopy(ArrayToSort, 0, WorkArray, 0, ArrayToSort.length);
-		//Create rank Array (function 'range' in Python)
 		
+		//Create rank Array (function 'range' in Python)		
 		for(int i = 0; i < posArray.length; i++) {
 			posArray[i] = i;
 		}
 		
 		
-//		Bubblesort algorithm
-//	      boolean swapped = true;
-//	      int j = 0;
-//	      double tmp;
-//	      int rankTmp;
-//	      while (swapped) {
-//	            swapped = false;
-//	            j++;
-//	            for (int i = 0; i < WorkArray.length - j; i++) {                                       
-//	                  if (WorkArray[i] > WorkArray[i + 1]) {                          
-//	                        tmp = WorkArray[i];
-//	                        WorkArray[i] = WorkArray[i + 1];
-//	                        WorkArray[i + 1] = tmp;
-//	                        
-//	                        rankTmp = rankArray[i];
-//	                        rankArray[i] = rankArray[i + 1];
-//	                        rankArray[i + 1] = rankTmp;
-//	                        swapped = true;
-//	                  }
-//	            }                
-//	      }
-		
-		
 		//Get the positions of each value
-		quickSort(WorkArray, posArray, 0, WorkArray.length - 1);
+		quickSort(workArray, posArray, 0, workArray.length - 1);
 		
-		//
-		tempRank = 1;
-		arrLength = posArray.length;
-		rankArray[posArray[arrLength - 1]] = tempRank;
-		for(int i = 0; i < arrLength - 2 ; i++) {
-			if(WorkArray[arrLength - 1 - i] == WorkArray[arrLength - 2 - i]) {
-				rankArray[posArray[arrLength - 2 - i]] = tempRank;
-			}
-			else {
+		
+		//Create the rank array (where the highest values have a rank of 1 (first)).
+		switch (TypeOfRanking) {
+			case DENSE: 
+			rankArray[posArray[arrLength ]] = tempRank;
+				for(int i = 0; i < arrLength - 1 ; i++) {
+					if(workArray[arrLength - i] == workArray[arrLength - 1 - i]) {
+						rankArray[posArray[arrLength - 1 - i]] = tempRank;
+					}
+					else {
+						tempRank++;
+						rankArray[posArray[arrLength - 1 - i]] = tempRank;
+					}
+				}
 				tempRank++;
-				rankArray[posArray[arrLength - 2 - i]] = tempRank;
-			}
+				rankArray[posArray[0]] = tempRank;
+			break;
+			case STANDARD: 
+				rankArray[posArray[arrLength ]] = tempRank;
+				incTempRank = tempRank;
+				for(int i = 0; i < arrLength - 1 ; i++) {
+					if(workArray[arrLength - i] == workArray[arrLength - 1 - i]) {
+						rankArray[posArray[arrLength - 1 - i]] = tempRank;
+						incTempRank++;
+					}
+					else {
+						incTempRank++;
+						tempRank = incTempRank;
+						rankArray[posArray[arrLength - 1 - i]] = tempRank;
+					}
+				}
+				tempRank++;
+				rankArray[posArray[0]] = tempRank;
+			break;
 		}
-		tempRank++;
-		rankArray[posArray[0]] = tempRank;
 		
-		int Length = rankArray.length;
-		int[] newRankArray = new int[Length];
-//		
-//		for(int i = 0; i < Length - 1; i++) {
-//			if(WorkArray[Length - 1 - i] == WorkArray[Length - 2 - i]) {
-//				for(int j = 0; j < Length; j++) {
-//					if(rankArray[j] >= Length - 1 - i) {
-//						rankArray[j] = rankArray[j] - 1;
-//					}
-//				}
-//			}
-//		}
-		
-		if(HighestIsOne != true) {
-			//Needs to swap the ranks within the rankArray (i.e. Highest is no longer one but Array.Length - 1.
-			for(int i = 0; i < Length; i++) {
-				newRankArray[i] = Length - rankArray[i];
+
+		//Check whether the ranks need to be reverted (i.e. Highest is no longer one but Array.Length - 1).
+		if(highestIsOne != true) {
+			//Find Maximum
+		    int maximum = rankArray[0];   // start with the first value
+		    for (int i=1; i<rankArray.length; i++) {
+		        if (rankArray[i] > maximum) {
+		            maximum = rankArray[i];   // new maximum
+		        }
+		    }
+			
+		    //Revert rankArray
+			for(int i = 0; i <= arrLength; i++) {
+				newRankArray[i] = maximum + 1 - rankArray[i];
 			}
 			rankArray = newRankArray;
 		}
 		
-		//in case we have any equals values, need to make ranks even
-//		for(int i = 0; i < Length; i++) {
-//			if(LowestIsZero != true) {
-//				if(rankArray[Length - i] == rankArray[Length - i - 1]) {
-//					rankArray[i + 1] = rankArray[i];
-//				}
-//			}
-//			else {
-//				
-//			}
-//		}
 		
 		return rankArray;
 		
@@ -172,4 +158,37 @@ public class Rank {
 	    if (index < right)
             quickSort(arr, rankArray, index, right);
 	}
+
+	
+	
+	/* An equivalent sort method using the bubble sort algorithm. For information purposes only as this is often less
+	 * efficient than the quick sort algorithm.*/
+	
+//	private static void bubble sort(double[] ArrayToSort, int[] rankArray) {
+//		
+//		double[] WorkArray = new double[rankArray.length];
+//		System.arraycopy(ArrayToSort, 0, WorkArray, 0, ArrayToSort.length);
+//		boolean swapped = true;
+//		int j = 0;
+//		double tmp;
+//		int rankTmp;
+//		while (swapped) {
+//		      swapped = false;
+//		      j++;
+//		      for (int i = 0; i < WorkArray.length - j; i++) {                                       
+//		            if (WorkArray[i] > WorkArray[i + 1]) {                          
+//		                  tmp = WorkArray[i];
+//		                  WorkArray[i] = WorkArray[i + 1];
+//		                  WorkArray[i + 1] = tmp;
+//		                  
+//		                  rankTmp = rankArray[i];
+//		                  rankArray[i] = rankArray[i + 1];
+//		                  rankArray[i + 1] = rankTmp;
+//		                  swapped = true;
+//		            }
+//		      }                
+//		}
+//	}
+
+	
 }
