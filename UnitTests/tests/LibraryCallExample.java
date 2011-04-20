@@ -7,7 +7,6 @@ import static org.junit.Assert.assertArrayEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import utils.RankingType;
 import dea.*;
 
 
