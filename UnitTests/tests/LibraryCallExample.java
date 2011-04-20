@@ -111,33 +111,33 @@ public class LibraryCallExample {
 		//Get the solution Objectives
 		double[] Objectives = tester.getObjectives();
 		
-		/* Get the solution Lambdas.
-		 * The first array corresponds to the DMUs.
-		 * The second nested array corresponds to the Lambda values.*/
-		double[] [] Lambdas = tester.getLambdas();
-		
-		/* Get the solution Slacks.
-		 * The first array corresponds to the DMUs.
-		 * The second nested array corresponds to the Slack values.*/
-		double[] [] Slacks = tester.getSlacks();
-		
-		/* Get the solution Projections.
-		 * The first array corresponds to the DMUs.
-		 * The second nested array corresponds to the Projection values.*/
-		double[] [] Projections = tester.getProjections();
-		
-		/* Get the solution Weights.
-		 * The first array corresponds to the DMUs.
-		 * The second nested array corresponds to the Weight values.*/
-		double[] [] Weights = tester.getWeight();
-		
-		/* Get the DMU ranks.
-		 * The boolean confirms that the Highest DMU score is ranked first.
-		 * The STANDARD ranking type confirms that the ranking is standard.
-		 * This means that if they are two DMUs with an efficiency score of 1 both will be ranked first.
-		 * However, the following DMU will only be ranked 3rd as they are two DMUs which score better than it.
-		 * Conversely, a DENSE RankingType will have given the following (3rd) DMU the ranking of second.*/
-		int[] Ranks = tester.getRanks(true, RankingType.STANDARD);
+//		/* Get the solution Lambdas.
+//		 * The first array corresponds to the DMUs.
+//		 * The second nested array corresponds to the Lambda values.*/
+//		double[] [] Lambdas = tester.getLambdas();
+//		
+//		/* Get the solution Slacks.
+//		 * The first array corresponds to the DMUs.
+//		 * The second nested array corresponds to the Slack values.*/
+//		double[] [] Slacks = tester.getSlacks();
+//		
+//		/* Get the solution Projections.
+//		 * The first array corresponds to the DMUs.
+//		 * The second nested array corresponds to the Projection values.*/
+//		double[] [] Projections = tester.getProjections();
+//		
+//		/* Get the solution Weights.
+//		 * The first array corresponds to the DMUs.
+//		 * The second nested array corresponds to the Weight values.*/
+//		double[] [] Weights = tester.getWeight();
+//		
+//		/* Get the DMU ranks.
+//		 * The boolean confirms that the Highest DMU score is ranked first.
+//		 * The STANDARD ranking type confirms that the ranking is standard.
+//		 * This means that if they are two DMUs with an efficiency score of 1 both will be ranked first.
+//		 * However, the following DMU will only be ranked 3rd as they are two DMUs which score better than it.
+//		 * Conversely, a DENSE RankingType will have given the following (3rd) DMU the ranking of second.*/
+//		int[] Ranks = tester.getRanks(true, RankingType.STANDARD);
 		
 		
 		//Get the objective values for the CCR-I model
