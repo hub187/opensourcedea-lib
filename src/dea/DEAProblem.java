@@ -550,7 +550,7 @@ public class DEAProblem {
 	 * @param typeOfRanking The type of ranking to use. Should generally be 'STANDARD'.
 	 * @return A double[] of the ranks.
 	 */
-	public int[] getDMURanks(boolean highestIsOne, RankingType typeOfRanking)
+	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
