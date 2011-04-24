@@ -18,7 +18,7 @@ import dea.DEAPSolution;
 
 
 
-public class LibraryTest {
+public class LibraryTestCCRI {
 	
 	/* If this Unit Test fails, please read the instructions in the
 	 * Lpsolve class.*/
