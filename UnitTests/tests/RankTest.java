@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import dea.Rank;
 import dea.RankingType;
-import utils.*;
 
 public class RankTest {
 	
