@@ -1,4 +1,4 @@
-package utils;
+package dea;
 
 public enum RankingType {
 	STANDARD ("Thus if A ranks ahead of B and C (which compare equal) which are both ranked ahead of D," +
