@@ -1,5 +1,14 @@
 
-This is the GNGPL under which lpsolve is disctributed.
+This is the GNU LGPL under which lpsolve is distributed.
+
+Please not that the JAVA wrapper has been developed by Juergen Ebert.
+
+You can find more information about lpsolve at:
+http://lpsolve.sourceforge.net/5.5/.
+
+You can find more information on the JAVA wrapper at:
+http://lpsolve.sourceforge.net/5.5/Java/README.html.
+
 
 
 GNU LESSER GENERAL PUBLIC LICENSE
