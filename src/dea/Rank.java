@@ -38,11 +38,11 @@ public class Rank {
 
 	/**
 	 * Returns the ranks.
-	 * @param ArrayToSort The Array To sort (DMU Objectives)
+	 * @param arrayToSort The Array To sort (DMU Objectives)
 	 * @param HighestIsOne A boolean. If true, specifies that the highest values of the ArrayToSort should be '1' (i.e. first).
 	 * @return An int[] with the rank positions.
 	 */
-	public static int[] getRanks(double[] arrayToSort, boolean highestIsOne, RankingType TypeOfRanking) {
+	public static int[] getRanks(double[] arrayToSort, boolean HighestIsOne, RankingType TypeOfRanking) {
 		
 		//Copy original Array to avoid messing with external data
 		int arrLength = arrayToSort.length - 1;
@@ -103,7 +103,7 @@ public class Rank {
 		
 
 		//Check whether the ranks need to be reverted (i.e. Highest is no longer one but Array.Length - 1).
-		if(highestIsOne != true) {
+		if(HighestIsOne != true) {
 			//Find Maximum
 		    int maximum = rankArray[0];   // start with the first value
 		    for (int i=1; i<rankArray.length; i++) {

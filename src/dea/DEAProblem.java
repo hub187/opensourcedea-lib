@@ -545,16 +545,16 @@ public class DEAProblem {
 	
 	/**
 	 * Returns the DMU ranks (based on Objectives value)
-	 * @param LowestIsZero A boolean. If true the lowest value has rank '0'. Should generally be 'true'.
+	 * @param HighestIsOne A boolean. If true the highest value has rank '1' (first). Should generally be 'true'.
 	 * @param typeOfRanking The type of ranking to use. Should generally be 'STANDARD'.
 	 * @return A double[] of the ranks.
 	 */
-	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking)
+	public int[] getRanks(boolean HighestIsOne, RankingType typeOfRanking)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
-		ranksArray = Rank.getRanks(this._Solution.Objectives, highestIsOne, typeOfRanking);
+		ranksArray = Rank.getRanks(this._Solution.Objectives, HighestIsOne, typeOfRanking);
 		return ranksArray;
 
 		
