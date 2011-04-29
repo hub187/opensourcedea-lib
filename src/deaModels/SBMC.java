@@ -18,13 +18,13 @@ import linearSolver.*;
  * <table border = "1">
  * <tr>
  * 		<td>Variable</td>
- * 		<td>Theta</td>
+ * 		<td>t</td>
  * 		<td>Lambda 1</td>
  * 		<td>...</td>
  * 		<td>Lambda n</td>
- * 		<td>Slack 1</td>
+ * 		<td>Slack 1 (input)</td>
  * 		<td>...</td>
- * 		<td>Slack p</td>
+ * 		<td>Slack p (output)</td>
  * 		<td>DIR</td>
  * 		<td>RHS</td>
  * </tr>
@@ -34,7 +34,7 @@ import linearSolver.*;
  * 		<td>0</td>
  * 		<td>0</td>
  * 		<td>0</td>
- * 		<td>0</td>
+ * 		<td>-1 / (Input(1,1) * NbOfInputs)</td>
  * 		<td>0</td>
  * 		<td>0</td>
  * 		<td></td>
@@ -42,11 +42,11 @@ import linearSolver.*;
  * </tr>
  * <tr>
  * 		<td>Input 1</td>
- * 		<td>-Input 1,1</td>
  * 		<td>Input 1,1</td>
+ * 		<td>-Input 1,1</td>
  * 		<td>...</td>
- * 		<td>Input 1, n</td>
- * 		<td>0</td>
+ * 		<td>-Input 1, n</td>
+ * 		<td>...</td>
  * 		<td>...</td>
  * 		<td>0</td>
  * 		<td>E</td>
@@ -54,10 +54,10 @@ import linearSolver.*;
  * </tr>
  * <tr>
  * 		<td>Input i</td>
- * 		<td>-Input i, 1</td>
  * 		<td>Input i, 1</td>
+ * 		<td>-Input i, 1</td>
  * 		<td>...</td>
- * 		<td>Input i, n</td>
+ * 		<td>-Input i, n</td>
  * 		<td>0</td>
  * 		<td>...</td>
  * 		<td>0</td>
@@ -66,15 +66,27 @@ import linearSolver.*;
  * </tr>
  * <tr>
  * 		<td>Ouput p</td>
- * 		<td>0</td>
- * 		<td>Output p, 1</td>
+ * 		<td>-Output p, 1</td>
+ * 		<td>-Output p, 1</td>
  * 		<td>...</td>
- * 		<td>Output p, n</td>
+ * 		<td>-Output p, n</td>
  * 		<td>0</td>
  * 		<td>...</td>
  * 		<td>-1</td>
  * 		<td>E</td>
- * 		<td>Output p, 1</td>
+ * 		<td>0</td>
+ * </tr>
+ * <tr>
+ * 		<td>1</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td>...</td>
+ * 		<td>0</td>
+ * 		<td>0</td>
+ * 		<td>...</td>
+ * 		<td>1 /(Output(p,n) * NbOfOutputs)</td>
+ * 		<td>E</td>
+ * 		<td>1</td>
  * </tr>
  * </table>
  * </center>
