@@ -8,5 +8,5 @@ package dea;
  *
  */
 public enum DEAModelType {
-	CCR
+	CCR, SBMC
 }

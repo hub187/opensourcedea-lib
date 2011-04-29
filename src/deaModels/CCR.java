@@ -123,7 +123,7 @@ public  class CCR {
 		int NbDMUs = deaP.getNumberOfDMUs();
 		int NbVariables = deaP.getNumberOfVariables();
 		double [] [] TransposedMatrix = new double [NbVariables] [NbDMUs];
-		TransposedMatrix = deaP.getTranspose();
+		TransposedMatrix = deaP.getTranspose(false);
 		DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
 		
 					
@@ -173,18 +173,21 @@ public  class CCR {
 				
 				//Build the Constraint Matrix
 				double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+				//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
 				if (deaP.getVariableType(j) == DEAVariableType.Input) {
 					ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
 				}
 				else {
 					ConstraintRow[0] = 0;
 				}
+				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);
+				//and slacks
 				if (deaP.getVariableType(j) == DEAVariableType.Input) {
-					ConstraintRow[NbDMUs + 1 + j] = 1;
+					ConstraintRow[NbDMUs + 1 + j] = -1;
 				}
 				else {
-					ConstraintRow[NbDMUs + 1 + j] = -1;
+					ConstraintRow[NbDMUs + 1 + j] = 1;
 				}
 				Constraints.add(ConstraintRow);
 				

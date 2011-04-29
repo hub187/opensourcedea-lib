@@ -292,6 +292,34 @@ public class DEAProblem {
 	}
 	
 	/**
+	 * Gets the number of Outputs of the DEA Problem
+	 * @return The number of Outputs.
+	 */
+	public int getNumberOfOutputs() {
+		int NbOutputs = 0;
+		for(int i = 0; i < _VariableType.length; i++) {
+			if(_VariableType[i] == DEAVariableType.Output) {
+				NbOutputs++;
+			}
+		}
+		return NbOutputs;
+	}
+	
+	/**
+	 * Gets the number of Inputs of the DEA Problem
+	 * @return The number of Inputs.
+	 */
+	public int getNumberOfInputs() {
+		int NbInputs = 0;
+		for(int i = 0; i < _VariableType.length; i++) {
+			if(_VariableType[i] == DEAVariableType.Input) {
+				NbInputs++;
+			}
+		}
+		return NbInputs;
+	}
+	
+	/**
 	 * Gets the number of Variables in the DEA Problem
 	 * @return The number of Variables.
 	 */
@@ -305,12 +333,20 @@ public class DEAProblem {
 	 * Gets the Transpose of the Data Matrix
 	 * @return A double[] [] corresponding to the transpose of the Data Matrix
 	 */
-	public double [] [] getTranspose() {
+	public double [] [] getTranspose(boolean ReturnsNegative) {
 		double [] [] TransposedMatrix = new double [this._DataMatrix[0].length] [this._DataMatrix.length];
 		
-		for (int i = 0; i < this._DataMatrix.length; i++)
-            for (int j = 0; j < this._DataMatrix[0].length; j++)
-                TransposedMatrix[j][i] = this._DataMatrix[i][j];
+		if(ReturnsNegative = false) {
+			for (int i = 0; i < this._DataMatrix.length; i++)
+	            for (int j = 0; j < this._DataMatrix[0].length; j++)
+	                TransposedMatrix[j][i] = this._DataMatrix[i][j];
+		}
+		else {
+			for (int i = 0; i < this._DataMatrix.length; i++)
+	            for (int j = 0; j < this._DataMatrix[0].length; j++)
+	                TransposedMatrix[j][i] = this._DataMatrix[i][j] * -1;
+		}
+				
 		return TransposedMatrix;
 	}
 	
@@ -331,7 +367,8 @@ public class DEAProblem {
 		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
 		switch (this._ModelType) {
 			case CCR: this._Solution = CCR.solveCCR(this);
-			 
+			
+			case SBMC: this._Solution = SBMC.solveSBMC(this);
 		}
 		
 		

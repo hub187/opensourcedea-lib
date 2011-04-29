@@ -105,6 +105,18 @@ public class DEAProblemTest {
 	}
 	
 	@Test
+	public void testSetGetNumberOfOutputs() {
+		tester.setVariableTypes(TestVariableTypes);
+		assertEquals(tester.getNumberOfOutputs(),1,0);
+	}
+	
+	@Test
+	public void testSetGetNumberOfInputs() {
+		tester.setVariableTypes(TestVariableTypes);
+		assertEquals(tester.getNumberOfInputs(),2,0);
+	}
+	
+	@Test
 	public void TestToSeeObjectProperties() {
 		tester.setModelType(DEAModelType.CCR);
 		tester.setDMUNames(TestDMUNames);
