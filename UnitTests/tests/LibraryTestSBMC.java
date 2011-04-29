@@ -102,23 +102,23 @@ public class LibraryTestSBMC {
 		
 		tester.solve();
 		
-		DEAPSolution CheckedSol = GetSBMCResults();
-		
-		//Test Objectives
-		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.0001);
-		
-		//Test Slacks
-		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-			assertArrayEquals(tester.getSlacks(i), CheckedSol.Slacks[i], 0.1);
-		}
-		
-		//int[] ranks = tester.getDMURanks(true);
-		
-		//Test Weighted Inputs = 1
-		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-			assertEquals(tester.getDataMatrix(i, 2) * tester.getWeight(i, 2) + tester.getDataMatrix(i, 3) * tester.getWeight(i, 3),
-					1, 0.0001);
-		}
+//		DEAPSolution CheckedSol = GetSBMCResults();
+//		
+//		//Test Objectives
+//		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.0001);
+//		
+//		//Test Slacks
+//		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+//			assertArrayEquals(tester.getSlacks(i), CheckedSol.Slacks[i], 0.1);
+//		}
+//		
+//		//int[] ranks = tester.getDMURanks(true);
+//		
+//		//Test Weighted Inputs = 1
+//		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+//			assertEquals(tester.getDataMatrix(i, 2) * tester.getWeight(i, 2) + tester.getDataMatrix(i, 3) * tester.getWeight(i, 3),
+//					1, 0.0001);
+//		}
 		
 		
 		

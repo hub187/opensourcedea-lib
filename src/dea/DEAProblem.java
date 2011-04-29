@@ -366,9 +366,9 @@ public class DEAProblem {
 	public void solve() {
 		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
 		switch (this._ModelType) {
-			case CCR: this._Solution = CCR.solveCCR(this);
+			case CCR: this._Solution = CCR.solveCCR(this); break;
 			
-			case SBMC: this._Solution = SBMC.solveSBMC(this);
+			case SBMC: this._Solution = SBMC.solveSBMC(this); break;
 		}
 		
 		
