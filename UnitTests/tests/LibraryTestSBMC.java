@@ -2,7 +2,7 @@ package tests;
 
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
 
@@ -12,6 +12,7 @@ import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAPSolution;
+import dea.RankingType;
 
 
 
@@ -29,60 +30,64 @@ public class LibraryTestSBMC {
 		
 		SBMCSol.Objectives  = createSBMCObjectives();		
 		
-		SBMCSol.Slacks = createSBMCSlacks();
-		
-		
 		return SBMCSol;
 	}
 
-	private double[] [] createSBMCSlacks() {
-		
-		
-		double[] [] SlacksArray = new double[20] [4];
-		
-		SlacksArray[2] [3] = 1474.90591392133;
-		SlacksArray[8] [1] = 2.67778662084071;
-		
-		SlacksArray[9] [1] = 51.94181048433;
-		SlacksArray[10] [3] = 500.847585086953;
-		SlacksArray[12] [3] = 1794.97856609299;
-		SlacksArray[13] [3] = 192.923448690019;
-		SlacksArray[14] [2] = 267.885210838506;
-		SlacksArray[17] [2] = 779.791154722907;
-		SlacksArray[19] [1] = 26.0026568088161;
-		
-		return SlacksArray;
-		
-	}
 
 	private double[] createSBMCObjectives() {
 		
 		double[] Objectives = new double[20];
 		
 		
-		Objectives[0] = 1 / 0.519434453047034;
-		Objectives[1] = 1 / 0.872474445374321;
-		Objectives[2] = 1 / 0.549048143682244;
-		Objectives[3] = 1 / 0.322936931532726;
-		Objectives[4] = 1 / 0.782832225762655;
+		Objectives[0] = 0.433416455031194;
+		Objectives[1] = 0.655740942924697;
+		Objectives[2] = 0.191774112152313;
+		Objectives[3] = 0.0664286665377734;
+		Objectives[4] = 0.631545023036202;
 		Objectives[5] = 1;
 		Objectives[6] = 1;
-		Objectives[7] = 1 / 0.830850567998129;
-		Objectives[8] = 1 / 0.539682742929534;
-		Objectives[9] = 1 / 0.567189831743522;
-		Objectives[10] = 1 / 0.459594713883521;
+		Objectives[7] = 0.717802718554146;
+		Objectives[8] = 0.478929894370442;
+		Objectives[9] = 0.143243925812364;
+		Objectives[10] = 0.00623104440127262;
 		Objectives[11] = 1;
-		Objectives[12] = 1 / 0.564403802355244;
-		Objectives[13] = 1 / 0.338735130146885;
-		Objectives[14] = 1 / 0.805598209487005;
-		Objectives[15] = 1 / 0.65721528448653;
+		Objectives[12] = 0.13400714727165;
+		Objectives[13] = 0.0189248341986655;
+		Objectives[14] = 0.404882233834635;
+		Objectives[15] = 0.451730076717645;
 		Objectives[16] = 1;
-		Objectives[17] = 1 / 0.739084603920947;
+		Objectives[17] = 0.0866211335899279;
 		Objectives[18] = 1;
-		Objectives[19] = 1 / 0.207079840963623;
+		Objectives[19] = 0.0896594379050175;
 		return Objectives;
 	}
 	
+	private int[] createSolRanks() {
+		int[] ranks = new int[20];
+		
+		ranks[0] = 11;
+		ranks[1] = 7;
+		ranks[2] = 13;
+		ranks[3] = 18;
+		ranks[4] = 8;
+		ranks[5] = 1;
+		ranks[6] = 1;
+		ranks[7] = 6;
+		ranks[8] = 9;
+		ranks[9] = 14;
+		ranks[10] = 20;
+		ranks[11] = 1;
+		ranks[12] = 15;
+		ranks[13] = 19;
+		ranks[14] = 12;
+		ranks[15] = 10;
+		ranks[16] = 1;
+		ranks[17] = 17;
+		ranks[18] = 1;
+		ranks[19] = 16;		
+		
+		return ranks;
+	}
 	
 	public void BuildDEAProblem(DEAModelType ModelType, DEAModelOrientation ModelOrientation) {
 		
@@ -102,23 +107,17 @@ public class LibraryTestSBMC {
 		
 		tester.solve();
 		
-//		DEAPSolution CheckedSol = GetSBMCResults();
-//		
-//		//Test Objectives
-//		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.0001);
-//		
-//		//Test Slacks
-//		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-//			assertArrayEquals(tester.getSlacks(i), CheckedSol.Slacks[i], 0.1);
-//		}
+		DEAPSolution CheckedSol = GetSBMCResults();
+		
+		//Test Objectives
+		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.0001);
+		
+		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
+		
 //		
 //		//int[] ranks = tester.getDMURanks(true);
 //		
-//		//Test Weighted Inputs = 1
-//		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-//			assertEquals(tester.getDataMatrix(i, 2) * tester.getWeight(i, 2) + tester.getDataMatrix(i, 3) * tester.getWeight(i, 3),
-//					1, 0.0001);
-//		}
+
 		
 		
 		

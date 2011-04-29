@@ -26,6 +26,7 @@ package dea;
 //import java.util.Arrays;
 
 import deaModels.*;
+import java.util.ArrayList;
 
 
 /**
@@ -584,29 +585,39 @@ public class DEAProblem {
 	 * Returns the DMU ranks (based on Objectives value)
 	 * @param HighestIsOne A boolean. If true the highest value has rank '1' (first). Should generally be 'true'.
 	 * @param typeOfRanking The type of ranking to use. Should generally be 'STANDARD'.
+	 * @param Precision An int value to specify at which decimal place the scores need to be rounded up prior to been ranked.
+	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1 (e.g. 1.00000000000002).
+	 * All precisions between 0 and 16 are taken into account, any other int value would leave the scores unchanged.
 	 * @return A double[] of the ranks.
 	 */
-	public int[] getRanks(boolean HighestIsOne, RankingType typeOfRanking)
+	public int[] getRanks(boolean HighestIsOne, RankingType typeOfRanking, int Precision)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
-		ranksArray = Rank.getRanks(this._Solution.Objectives, HighestIsOne, typeOfRanking);
+		ranksArray = Rank.getRanks(this._Solution.Objectives, HighestIsOne, typeOfRanking, Precision);
 		return ranksArray;
-
-		
-		
-		
-		
-//		char[][][] data=new char[numFiles][][],data1=new char[numFiles][][];
-//		for (int i = 0; i < numFiles; i++) {
-//		data[i]=split(files[i]); //line 1-Reads file into char array
-//		data1[i]=bubbleSort(data[i]);//line 2
-		
-		
+	
 	}
 	
-	
+//	public ArrayList getReferenceSet() {
+//		
+//		ArrayList<String> ReferenceSet = new ArrayList<String>();
+//		ArrayList<int[]> ReferenceSets = new ArrayList<int[]>();
+//		
+//		//loop through all DMUs
+//		for(int i = 0; i < this.getNumberOfDMUs(); i++) {
+//			int ReferenceSet
+//			//loop through all lambdas
+//			for(int j = 0; j < this.getNumberOfDMUs(); j++) {
+//				if(this.getLambdas(i, j) > 0) {
+//					
+//				}
+//			}
+//		}
+//		
+//		return ReferenceSets;
+//	}
 
 	
 	//Calculate weighted data

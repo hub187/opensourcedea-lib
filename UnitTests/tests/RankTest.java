@@ -20,8 +20,8 @@ public class RankTest {
 		int[] resultRankArrayInv = createRankArrayInvSimple();
 
 		
-		assertArrayEquals(Rank.getRanks(ArrayToSort, true, RankingType.DENSE), resultRankArray);
-		assertArrayEquals(Rank.getRanks(ArrayToSort, false, RankingType.DENSE), resultRankArrayInv);
+		assertArrayEquals(Rank.getRanks(ArrayToSort, true, RankingType.DENSE, 14), resultRankArray);
+		assertArrayEquals(Rank.getRanks(ArrayToSort, false, RankingType.DENSE, 14), resultRankArrayInv);
 	}
 
 	@Test
@@ -35,10 +35,10 @@ public class RankTest {
 		int[] resultRankArrayDense = createRankResultArrayComplexHIODense();
 		int[] resultRankArrayStandardHINO = createRankResultArrayComplexHINOStandard();
 		int[] resultRankArrayDenseHINO = createRankResultArrayComplexHINODense();
-		assertArrayEquals(Rank.getRanks(ArrayToSort, true, RankingType.STANDARD), resultRankArrayStandard);
-		assertArrayEquals(Rank.getRanks(ArrayToSort, true, RankingType.DENSE), resultRankArrayDense);
-		assertArrayEquals(Rank.getRanks(ArrayToSort, false, RankingType.STANDARD), resultRankArrayStandardHINO);
-		assertArrayEquals(Rank.getRanks(ArrayToSort, false, RankingType.DENSE), resultRankArrayDenseHINO);
+		assertArrayEquals(Rank.getRanks(ArrayToSort, true, RankingType.STANDARD, 14), resultRankArrayStandard);
+		assertArrayEquals(Rank.getRanks(ArrayToSort, true, RankingType.DENSE, 14), resultRankArrayDense);
+		assertArrayEquals(Rank.getRanks(ArrayToSort, false, RankingType.STANDARD, 14), resultRankArrayStandardHINO);
+		assertArrayEquals(Rank.getRanks(ArrayToSort, false, RankingType.DENSE, 14), resultRankArrayDenseHINO);
 		
 	}
 	

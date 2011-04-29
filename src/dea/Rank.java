@@ -40,9 +40,12 @@ public class Rank {
 	 * Returns the ranks.
 	 * @param arrayToSort The Array To sort (DMU Objectives)
 	 * @param HighestIsOne A boolean. If true, specifies that the highest values of the ArrayToSort should be '1' (i.e. first).
+	 * @param Precision An int value to specify at which decimal place the scores need to be rounded up prior to been ranked.
+	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1 (e.g. 1.00000000000002).
+	 * All precisions between 0 and 16 are taken into account, any other int value would leave the scores unchanged.
 	 * @return An int[] with the rank positions.
 	 */
-	public static int[] getRanks(double[] arrayToSort, boolean HighestIsOne, RankingType TypeOfRanking) {
+	public static int[] getRanks(double[] arrayToSort, boolean HighestIsOne, RankingType TypeOfRanking, int Precision) {
 		
 		//Copy original Array to avoid messing with external data
 		int arrLength = arrayToSort.length - 1;
@@ -52,9 +55,15 @@ public class Rank {
 		int[] rankArray = new int[arrLength + 1];
 		int[] posArray = new int[arrLength + 1];
 		int[] newRankArray = new int[arrLength + 1];
-
+		
+	
 		System.arraycopy(arrayToSort, 0, workArray, 0, arrayToSort.length);
 		
+		if(Precision >= 0 && Precision <=16) {
+			for(int i = 0; i <=arrLength; i++) {
+				workArray[i] = roundToDecimals(workArray[i],Precision);
+			}
+		}
 		
 		//Create rank Array (function 'range' in Python)		
 		for(int i = 0; i < posArray.length; i++) {
@@ -158,7 +167,19 @@ public class Rank {
 	    if (index < right)
             quickSort(arr, rankArray, index, right);
 	}
+	
+	
+	public static double roundToDecimals(double d, int c) {
+//		int temp=(int)((d*Math.pow(10,c)));
+//		return (((double)temp)/Math.pow(10,c));
+		
+		long pow = (long)Math.pow(10, c + 1);
+		double result = d * pow;
+		result = Math.round(result);
+		result = result / pow;
+		return result;
 
+	}
 	
 	
 	/* An equivalent sort method using the bubble sort algorithm. For information purposes only as this is often less

@@ -160,8 +160,31 @@ public class SBMC {
 			SolverResults Sol = new SolverResults();
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN);
 			
-			double x = 0;
+			//Store solution
+			double t = Sol.VariableResult[0];
 			
+			ReturnSol.Objectives[i] = Sol.Objective;
+			for(int j = 0; j < NbVariables; j++) {
+				
+				ReturnSol.Slacks[i][j] = Sol.VariableResult[NbDMUs + 1 + j] / t;
+				
+				if(deaP.getVariableType(j) == DEAVariableType.Input) {
+					ReturnSol.Weights[i][j] = Sol.DualResult[j + 1];
+					ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
+				}
+				else {
+					ReturnSol.Weights[i][j] = Sol.DualResult[j + 1] * -1;
+					ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+				}
+			}
+			
+			for(int j = 0; j < NbDMUs;j++){
+				ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
+			}
+
+
+			
+
 		} //End loop through all DMUs
 		
 		
