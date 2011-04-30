@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
 import dea.SolverObjDirection;
+import dea.SolverReturnStatus;
 
 /**
  * This class deals with the calls to the lpsolve library and is used to solve linear problem.

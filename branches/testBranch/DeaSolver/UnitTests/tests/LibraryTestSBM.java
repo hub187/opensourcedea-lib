@@ -6,7 +6,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import linearSolver.SolverReturnStatus;
 //import static org.junit.Assert.assertEquals;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
@@ -18,6 +17,7 @@ import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAPSolution;
 import dea.RankingType;
+import dea.SolverReturnStatus;
 
 
 

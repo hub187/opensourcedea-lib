@@ -27,6 +27,8 @@ import dea.DEAProblem;
 import dea.DEAPSolution;
 import dea.DEAVariableType;
 import dea.SolverObjDirection;
+import dea.SolverReturnStatus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import linearSolver.*;

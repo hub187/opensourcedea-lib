@@ -3,7 +3,6 @@ package tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import linearSolver.SolverReturnStatus;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
 
@@ -12,6 +11,7 @@ import org.junit.Test;
 import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
+import dea.SolverReturnStatus;
 
 import dea.DEAPSolution;
 
