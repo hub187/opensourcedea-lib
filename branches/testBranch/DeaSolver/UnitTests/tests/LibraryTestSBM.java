@@ -5,6 +5,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+
+import linearSolver.SolverReturnStatus;
 //import static org.junit.Assert.assertEquals;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
@@ -211,6 +213,7 @@ public class LibraryTestSBM {
 		
 		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
 		
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 	}
 	

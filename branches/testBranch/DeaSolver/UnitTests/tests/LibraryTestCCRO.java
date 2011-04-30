@@ -3,6 +3,7 @@ package tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import linearSolver.SolverReturnStatus;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
 
@@ -120,7 +121,8 @@ public class LibraryTestCCRO {
 					1, 0.0001);
 		}
 		
-		
+		//test return status is OK
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 	}
 	

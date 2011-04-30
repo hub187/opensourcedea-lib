@@ -26,6 +26,7 @@ package dea;
 //import java.util.Arrays;
 
 import deaModels.*;
+import linearSolver.SolverReturnStatus;
 import java.util.ArrayList;
 
 
@@ -369,7 +370,7 @@ public class DEAProblem {
 		switch (this._ModelType) {
 			case CCR: this._Solution = CCR.solveCCR(this); break;
 			
-			case SBM: this._Solution = SBMC.solveSBMC(this); break;
+			case SBM: this._Solution = SBM.solveSBM(this); break;
 		}
 		
 		
@@ -383,6 +384,15 @@ public class DEAProblem {
 	//						Get Problem Solution								//
  //////////////////////////////////////////////////////////////////////////////
 	
+	/**
+	 * Returns the DEAProblem optimisation SolverReturnStatus. If only one optimisation for a single DMU did not return a status
+	 * 'an optimal solution was found', the overall optimisation status will not return the status 'OptimalSolutionFound' but 
+	 * instead the corresponding error status (e.g. OptimalSolutionNotfound).
+	 * @return a SolverReturnStatus
+	 */
+	public SolverReturnStatus getOptimisationStatus() {
+		return this._Solution.Status;
+	}
 	
 	/**
 	 * Returns the Objectives of all the DMUs.
@@ -391,7 +401,7 @@ public class DEAProblem {
 	 */
 	public double[] getObjectives() //throws DEAExceptions
 	{
-
+		
 		return _Solution.Objectives;
 	}
 	

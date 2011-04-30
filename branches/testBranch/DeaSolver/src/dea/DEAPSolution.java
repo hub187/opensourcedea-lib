@@ -1,5 +1,7 @@
 package dea;
 
+import linearSolver.SolverReturnStatus;
+
 
 /**
  * This class defines a DEA Problem Solution.
@@ -14,6 +16,7 @@ public class DEAPSolution {
 	public double[] [] Slacks;
 	public double[] [] Weights;
 	public double[] [] Projections;
+	public SolverReturnStatus Status;
 	
 	/**
 	 * 
@@ -29,6 +32,7 @@ public class DEAPSolution {
 		Slacks = new double[NbDMUs] [NbVariables];
 		Weights = new double[NbDMUs] [NbVariables];
 		Projections = new double[NbDMUs] [NbVariables];
+		Status = SolverReturnStatus.NA;
 	}
 	
 

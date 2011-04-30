@@ -223,6 +223,30 @@ public  class CCR {
 				
 			}
 			
+			switch(Sol.Status) {
+			case OptimalSolutionNotfound:
+				ReturnSol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+				break;
+		
+			case UnknownError:
+				ReturnSol.Status = SolverReturnStatus.UnknownError;
+				break;
+			
+			case ModelCreationFailure:
+				ReturnSol.Status = SolverReturnStatus.ModelCreationFailure;
+				break;
+			
+			case OptimalSolutionFound:
+				/* The lpsolve class CANNOT return NA (which is only used for initialisation as default value).
+				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
+				 * save to store a ReturnValue of OptimalSolutionFound*/
+				
+				if(ReturnSol.Status == SolverReturnStatus.NA){
+					ReturnSol.Status = SolverReturnStatus.OptimalSolutionFound;
+				}
+				break;
+		}
+			
 			
 			  /////////////////////////////
 			 //		Solve Phase II		//
@@ -294,6 +318,29 @@ public  class CCR {
 				}
 			}
 			
+			switch(Sol.Status) {
+				case OptimalSolutionNotfound:
+					ReturnSol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+					break;
+			
+				case UnknownError:
+					ReturnSol.Status = SolverReturnStatus.UnknownError;
+					break;
+				
+				case ModelCreationFailure:
+					ReturnSol.Status = SolverReturnStatus.ModelCreationFailure;
+					break;
+				
+				case OptimalSolutionFound:
+					/* The lpsolve class CANNOT return NA (which is only used for initialisation as default value).
+					 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
+					 * save to store a ReturnValue of OptimalSolutionFound*/
+					
+					if(ReturnSol.Status == SolverReturnStatus.NA){
+						ReturnSol.Status = SolverReturnStatus.OptimalSolutionFound;
+					}
+					break;
+			}
 			
 		}
 		
