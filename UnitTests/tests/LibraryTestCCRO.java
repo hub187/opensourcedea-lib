@@ -12,6 +12,7 @@ import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAPSolution;
+import dea.SolverReturnStatus;
 
 
 
@@ -120,7 +121,8 @@ public class LibraryTestCCRO {
 					1, 0.0001);
 		}
 		
-		
+		//test return status is OK
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 	}
 	

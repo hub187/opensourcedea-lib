@@ -19,6 +19,8 @@
 
 package linearSolver;
 
+import dea.SolverReturnStatus;
+
 /**
  * This class defines a linear problem Solution. This object is returned by the {@link linearSolver.Lpsolve#solveLPProblem(java.util.ArrayList, double[], double[], dea.SolverObjDirection)} method.
  * 
@@ -31,7 +33,7 @@ public class SolverResults {
 	public double Objective; //= 0;
 	public double[] DualResult; // = new double[NbColumns + NbRows + 1];
 	public double[] Weights; // = new double[NbRows];
-	SolverReturnStatus Status;
+	public SolverReturnStatus Status;
 	
 	
 	

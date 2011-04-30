@@ -5,6 +5,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+
 //import static org.junit.Assert.assertEquals;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
@@ -16,6 +17,7 @@ import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAPSolution;
 import dea.RankingType;
+import dea.SolverReturnStatus;
 
 
 
@@ -211,6 +213,7 @@ public class LibraryTestSBM {
 		
 		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
 		
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 	}
 	

@@ -11,6 +11,7 @@ import org.junit.Test;
 import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
+import dea.SolverReturnStatus;
 
 import dea.DEAPSolution;
 
@@ -121,6 +122,8 @@ public class LibraryTestCCRI {
 					1, 0.00001);
 		}
 		
+		//test return status is OK
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 		
 	}
