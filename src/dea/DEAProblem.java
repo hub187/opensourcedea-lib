@@ -26,7 +26,7 @@ package dea;
 //import java.util.Arrays;
 
 import deaModels.*;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 
 /**
@@ -600,27 +600,35 @@ public class DEAProblem {
 	
 	}
 	
-//	public ArrayList getReferenceSet() {
-//		
-//		ArrayList<String> ReferenceSet = new ArrayList<String>();
-//		ArrayList<int[]> ReferenceSets = new ArrayList<int[]>();
-//		
-//		//loop through all DMUs
-//		for(int i = 0; i < this.getNumberOfDMUs(); i++) {
-//			int ReferenceSet
-//			//loop through all lambdas
-//			for(int j = 0; j < this.getNumberOfDMUs(); j++) {
-//				if(this.getLambdas(i, j) > 0) {
-//					
-//				}
-//			}
-//		}
-//		
-//		return ReferenceSets;
-//	}
-
+	/**
+	 * Returns the reference set of a DEAProblem solution.
+	 * @return An ArrayList<ArrayList<Integer>> corresponding to each DMU reference set.
+	 */
+	public ArrayList<ArrayList<Integer>> getReferenceSet() {
+		
+		//ArrayList<Integer> ReferenceSet = new ArrayList<Integer>();
+		//ReferenseSet RSDMUs = new ReferenseSet();
+		ArrayList<ArrayList<Integer>> ReferenceSets = new ArrayList<ArrayList<Integer>>();
+		
+		//loop through all DMUs
+		for(int i = 0; i < this.getNumberOfDMUs(); i++) {
+			ArrayList<Integer> tempReferenceSet = new ArrayList<Integer>();
+			//loop through all lambdas
+			for(int j = 0; j < this.getNumberOfDMUs(); j++) {
+				if(this.getLambdas(i, j) > 0) {
+					tempReferenceSet.add(j);
+				}
+			}
+			ReferenceSets.add(tempReferenceSet);
+		}
+		
+		return ReferenceSets;
+	}
+	
 	
 	//Calculate weighted data
 
 
 }
+
+

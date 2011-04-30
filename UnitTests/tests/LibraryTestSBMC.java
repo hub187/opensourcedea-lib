@@ -117,12 +117,15 @@ public class LibraryTestSBMC {
 //		
 //		//int[] ranks = tester.getDMURanks(true);
 //		
+		tester.getReferenceSet();
+		
 
 		
 		
 		
+		
 	}
-	
+
 	
 	
 	
