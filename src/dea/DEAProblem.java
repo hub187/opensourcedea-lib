@@ -369,7 +369,7 @@ public class DEAProblem {
 		switch (this._ModelType) {
 			case CCR: this._Solution = CCR.solveCCR(this); break;
 			
-			case SBMC: this._Solution = SBMC.solveSBMC(this); break;
+			case SBM: this._Solution = SBMC.solveSBMC(this); break;
 		}
 		
 		

@@ -7,5 +7,5 @@ package dea;
  *
  */
 public enum DEAModelOrientation {
-	InputOriented, OutputOriented
+	InputOriented, OutputOriented, NonOriented
 }

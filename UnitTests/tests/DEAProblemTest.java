@@ -2,9 +2,10 @@ package tests;
 
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.BeforeClass;
+
+import java.util.ArrayList;
 
 import dea.DEAModelOrientation;
 import dea.DEAModelType;
@@ -114,6 +115,49 @@ public class DEAProblemTest {
 	public void testSetGetNumberOfInputs() {
 		tester.setVariableTypes(TestVariableTypes);
 		assertEquals(tester.getNumberOfInputs(),2,0);
+	}
+	
+	@Test
+	public void testReferenceSet() {
+		tester.setModelType(DEAModelType.CCR);
+		tester.setDMUNames(TestDMUNames);
+		tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		tester.setVariableNames(TestVariableNames);
+		tester.setVariableTypes(TestVariableTypes);
+		tester.setDataMatrix(TestDataMatrix);
+		
+		tester.solve();
+		
+		assertEquals(getTestReferenceSet(), tester.getReferenceSet());
+
+	}
+	
+	private ArrayList<ArrayList<Integer>> getTestReferenceSet() {
+		ArrayList<ArrayList<Integer>> ReferenceSet = new ArrayList<ArrayList<Integer>>();
+		
+		ArrayList<Integer> Array1 = new ArrayList<Integer>();
+		Array1.add(1);
+		Array1.add(2);
+		ReferenceSet.add(Array1);
+		
+		ArrayList<Integer> Array2 = new ArrayList<Integer>();
+		Array2.add(1);
+		ReferenceSet.add(Array2);
+		
+		ArrayList<Integer> Array3 = new ArrayList<Integer>();
+		Array3.add(2);
+		ReferenceSet.add(Array3);
+		
+		ArrayList<Integer> Array4 = new ArrayList<Integer>();
+		Array4.add(2);
+		ReferenceSet.add(Array4);
+		
+		ArrayList<Integer> Array5 = new ArrayList<Integer>();
+		Array5.add(1);
+		Array5.add(2);
+		ReferenceSet.add(Array5);
+		
+		return ReferenceSet;
 	}
 	
 	@Test
