@@ -12,12 +12,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import dea.DEAModelOrientation;
-import dea.DEAModelType;
-import dea.DEAProblem;
-import dea.DEAPSolution;
-import dea.RankingType;
-import dea.SolverReturnStatus;
+//import dea.DEAModelOrientation;
+import dea.*;
 
 
 
@@ -94,10 +90,10 @@ public class LibraryTestSBM {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(DEAModelType ModelType, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
-		tester.setModelOrientation(ModelOrientation);
+		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableTypes(TestData.createTestDEAVariableTypes());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
@@ -199,7 +195,7 @@ public class LibraryTestSBM {
 	@Test
 	public void TestSBM() {
 		
-		BuildDEAProblem(DEAModelType.SBM, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(DEAModelType.SBM); //, DEAModelOrientation.NonOriented);
 		
 		
 		tester.solve();

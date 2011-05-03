@@ -83,13 +83,13 @@ public class LibraryCallExample {
 				
 		
 		//Set the DEA Problem Model Type (CCR).
-		tester.setModelType(DEAModelType.CCR);
+		tester.setModelType(DEAModelType.CCRI);
 		
 		//Set the DEA Problem DMU Names where TestDMUName is a double[].
 		tester.setDMUNames(TestDMUNames);
 		
 		//Set the DEA problem Model Orientation (Input Oriented).
-		tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		
 		//Set the DEA Problem Variable Names where TestVariableName is a String[].
 		tester.setVariableNames(TestVariableNames);

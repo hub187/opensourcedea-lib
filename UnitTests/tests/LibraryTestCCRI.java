@@ -8,10 +8,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import dea.DEAModelOrientation;
-import dea.DEAModelType;
-import dea.DEAProblem;
-import dea.SolverReturnStatus;
+//import dea.DEAModelOrientation;
+import dea.*;
 
 import dea.DEAPSolution;
 
@@ -86,10 +84,10 @@ public class LibraryTestCCRI {
 	}
 	
 	
-	public void BuildDEAProblem(DEAModelType ModelType, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
-		tester.setModelOrientation(ModelOrientation);
+		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableTypes(TestData.createTestDEAVariableTypes());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
@@ -99,7 +97,7 @@ public class LibraryTestCCRI {
 	@Test
 	public void TestCCRI() {
 		
-		BuildDEAProblem(DEAModelType.CCR, DEAModelOrientation.InputOriented);
+		BuildDEAProblem(DEAModelType.CCRI);
 
 		
 		tester.solve();

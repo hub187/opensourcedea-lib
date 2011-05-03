@@ -8,11 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import dea.DEAModelOrientation;
-import dea.DEAModelType;
-import dea.DEAProblem;
-import dea.DEAPSolution;
-import dea.SolverReturnStatus;
+import dea.*;
 
 
 
@@ -85,10 +81,10 @@ public class LibraryTestCCRO {
 	}
 	
 	
-	public void BuildDEAProblem(DEAModelType ModelType, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
-		tester.setModelOrientation(ModelOrientation);
+		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableTypes(TestData.createTestDEAVariableTypes());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
@@ -98,10 +94,12 @@ public class LibraryTestCCRO {
 	@Test
 	public void TestCCRO() {
 		
-		BuildDEAProblem(DEAModelType.CCR, DEAModelOrientation.OutputOriented);
+		BuildDEAProblem(DEAModelType.CCRO);  //, DEAModelOrientation.OutputOriented);
 		
 		
 		tester.solve();
+		
+		
 		
 		DEAPSolution CheckedSol = GetCCROResults();
 		
@@ -127,7 +125,5 @@ public class LibraryTestCCRO {
 	}
 	
 	
-	
-	
-	
+
 }

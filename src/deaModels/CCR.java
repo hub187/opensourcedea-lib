@@ -22,12 +22,7 @@
 
 package deaModels;
 
-import dea.DEAModelOrientation;
-import dea.DEAProblem;
-import dea.DEAPSolution;
-import dea.DEAVariableType;
-import dea.SolverObjDirection;
-import dea.SolverReturnStatus;
+import dea.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -213,7 +208,7 @@ public  class CCR {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN);
 			
 			//Collect information from Phase I (Theta)
-			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+			if(deaP.getModelType() == DEAModelType.CCRI) {
 				ReturnSol.Objectives[i] = Sol.Objective;
 				ReturnSol.Weights[i] = Sol.Weights;
 			}
@@ -280,7 +275,7 @@ public  class CCR {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS2, SolverObjDirection.MAX);
 			
 			//Collect information from Phase II (Theta)
-			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+			if(deaP.getModelType() == DEAModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
 				System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
 				System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 			}
@@ -293,7 +288,7 @@ public  class CCR {
 				}
 			}
 			
-			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+			if(deaP.getModelType() == DEAModelType.CCRI) {
 				for (int j = 0; j < NbVariables; j++) {
 					if(deaP.getVariableType(j) == DEAVariableType.Input) {
 						//Projections
@@ -319,6 +314,7 @@ public  class CCR {
 					}
 				}
 			}
+			
 			
 			switch(Sol.Status) {
 				case OptimalSolutionNotfound:
@@ -351,7 +347,7 @@ public  class CCR {
 		
 	}
 	
-	
+
 	
 
 }

@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 
 import java.util.ArrayList;
 
-import dea.DEAModelOrientation;
+//import dea.DEAModelOrientation;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAVariableType;
@@ -67,8 +67,8 @@ public class DEAProblemTest {
 
 	@Test
 	public void testSetGetModelType() {
-		tester.setModelType(DEAModelType.CCR);
-		assertSame(tester.getModelType(), DEAModelType.CCR);
+		tester.setModelType(DEAModelType.CCRI);
+		assertSame(tester.getModelType(), DEAModelType.CCRI);
 	}
 	
 	
@@ -79,11 +79,11 @@ public class DEAProblemTest {
 	}
 	
 	
-	@Test
-	public void testSetGetModelOrientation() {
-		tester.setModelOrientation(DEAModelOrientation.InputOriented);
-		assertSame(tester.getModelOrientation(), DEAModelOrientation.InputOriented);
-	}
+//	@Test
+//	public void testSetGetModelOrientation() {
+//		tester.setModelOrientation(DEAModelOrientation.InputOriented);
+//		assertSame(tester.getModelOrientation(), DEAModelOrientation.InputOriented);
+//	}
 
 	
 	@Test
@@ -119,9 +119,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testReferenceSet() {
-		tester.setModelType(DEAModelType.CCR);
+		tester.setModelType(DEAModelType.CCRI);
 		tester.setDMUNames(TestDMUNames);
-		tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
 		tester.setVariableTypes(TestVariableTypes);
 		tester.setDataMatrix(TestDataMatrix);
@@ -162,9 +162,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void TestToSeeObjectProperties() {
-		tester.setModelType(DEAModelType.CCR);
+		tester.setModelType(DEAModelType.CCRI);
 		tester.setDMUNames(TestDMUNames);
-		tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
 		tester.setVariableTypes(TestVariableTypes);
 		tester.setDataMatrix(TestDataMatrix);

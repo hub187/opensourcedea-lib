@@ -52,7 +52,6 @@ public class DEAProblem {
 
 	private DEAModelType _ModelType;
 	private String[] _DMUName;
-	private DEAModelOrientation _ModelOrientation;
 	private String[] _VariableName;
 	private DEAVariableType [] _VariableType;
 	private double [] [] _DataMatrix;
@@ -101,23 +100,23 @@ public class DEAProblem {
 	}
 
 
-	/**
-	 * Returns Model Orientation of the DEA Problem.
-	 * @return Model Orientation (i.e. InputOriented or OutputOriented)
-	 */
-	public DEAModelOrientation getModelOrientation()
-	{
-		return _ModelOrientation;
-	}
-	
-	/**
-	 * Sets the Model Orientation of the DEA problem (e.g. InputOriented)
-	 * @param ModelOrientation The Model Orientation of the DEA Problem.
-	 */
-	public void setModelOrientation(DEAModelOrientation ModelOrientation)
-	{
-		_ModelOrientation = ModelOrientation;
-	}
+//	/**
+//	 * Returns Model Orientation of the DEA Problem.
+//	 * @return Model Orientation (i.e. InputOriented or OutputOriented)
+//	 */
+//	public DEAModelOrientation getModelOrientation()
+//	{
+//		return _ModelOrientation;
+//	}
+//	
+//	/**
+//	 * Sets the Model Orientation of the DEA problem (e.g. InputOriented)
+//	 * @param ModelOrientation The Model Orientation of the DEA Problem.
+//	 */
+//	public void setModelOrientation(DEAModelOrientation ModelOrientation)
+//	{
+//		_ModelOrientation = ModelOrientation;
+//	}
 	
 
 	/**
@@ -367,7 +366,9 @@ public class DEAProblem {
 	public void solve() {
 		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
 		switch (this._ModelType) {
-			case CCR: this._Solution = CCR.solveCCR(this); break;
+			case CCRI: this._Solution = CCR.solveCCR(this); break;
+			
+			case CCRO: this._Solution = CCR.solveCCR(this); break;
 			
 			case SBM: this._Solution = SBM.solveSBM(this); break;
 		}
