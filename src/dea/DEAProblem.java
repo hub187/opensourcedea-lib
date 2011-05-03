@@ -99,24 +99,6 @@ public class DEAProblem {
 		_ModelType = ModelType;
 	}
 
-
-//	/**
-//	 * Returns Model Orientation of the DEA Problem.
-//	 * @return Model Orientation (i.e. InputOriented or OutputOriented)
-//	 */
-//	public DEAModelOrientation getModelOrientation()
-//	{
-//		return _ModelOrientation;
-//	}
-//	
-//	/**
-//	 * Sets the Model Orientation of the DEA problem (e.g. InputOriented)
-//	 * @param ModelOrientation The Model Orientation of the DEA Problem.
-//	 */
-//	public void setModelOrientation(DEAModelOrientation ModelOrientation)
-//	{
-//		_ModelOrientation = ModelOrientation;
-//	}
 	
 
 	/**
