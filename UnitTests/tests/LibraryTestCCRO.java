@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import dea.*;
+import dea.exceptions.DEAException;
 
 
 
@@ -97,7 +98,12 @@ public class LibraryTestCCRO {
 		BuildDEAProblem(DEAModelType.CCRO);  //, DEAModelOrientation.OutputOriented);
 		
 		
-		tester.solve();
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			System.out.println(e.toString());
+		}
 		
 		
 		

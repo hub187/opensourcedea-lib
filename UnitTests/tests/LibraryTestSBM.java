@@ -14,6 +14,7 @@ import org.junit.Test;
 
 //import dea.DEAModelOrientation;
 import dea.*;
+import dea.exceptions.*;
 
 
 
@@ -197,8 +198,12 @@ public class LibraryTestSBM {
 		
 		BuildDEAProblem(DEAModelType.SBM); //, DEAModelOrientation.NonOriented);
 		
-		
-		tester.solve();
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			System.out.println(e.toString());
+		}
 		
 		DEAPSolution CheckedSol = GetSBMCResults();
 		

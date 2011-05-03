@@ -12,6 +12,7 @@ import org.junit.Test;
 import dea.*;
 
 import dea.DEAPSolution;
+import dea.exceptions.DEAException;
 
 
 
@@ -100,7 +101,12 @@ public class LibraryTestCCRI {
 		BuildDEAProblem(DEAModelType.CCRI);
 
 		
-		tester.solve();
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			System.out.println(e.toString());
+		}
 		
 		DEAPSolution CheckedSol = GetCCRIResults();
 		

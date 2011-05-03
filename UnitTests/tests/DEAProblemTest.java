@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAVariableType;
+import dea.exceptions.DEAException;
 
 public class DEAProblemTest {
 
@@ -126,7 +127,12 @@ public class DEAProblemTest {
 		tester.setVariableTypes(TestVariableTypes);
 		tester.setDataMatrix(TestDataMatrix);
 		
-		tester.solve();
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			System.out.println(e.toString());
+		}
 		
 		assertEquals(getTestReferenceSet(), tester.getReferenceSet());
 

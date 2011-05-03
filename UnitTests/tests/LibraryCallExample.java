@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import dea.*;
+import dea.exceptions.DEAException;
 
 
 public class LibraryCallExample {
@@ -104,7 +105,12 @@ public class LibraryCallExample {
 
 		
 		//Solve the DEA Problem
-		tester.solve();
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			System.out.println(e.toString());
+		}
 		
 		
 		//Get the solution Objectives

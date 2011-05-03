@@ -26,6 +26,7 @@ package dea;
 //import java.util.Arrays;
 
 import deaModels.*;
+import dea.exceptions.*;
 import java.util.ArrayList;
 
 
@@ -345,8 +346,12 @@ public class DEAProblem {
 	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
 	 * methods).
 	 */
-	public void solve() {
+	public void solve() throws DEAException {
 		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
+		if(this._DMUName == null) {
+			throw new MissingData();
+		}
+		
 		switch (this._ModelType) {
 			case CCRI: this._Solution = CCR.solveCCR(this); break;
 			
