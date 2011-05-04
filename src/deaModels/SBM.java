@@ -1,10 +1,12 @@
 package deaModels;
 
 import dea.*;
+import dea.DEASolverException;
+import linearSolver.*;
 
 import java.util.ArrayList;
-//import java.util.Arrays;
-import linearSolver.*;
+
+
 
 
 
@@ -102,8 +104,9 @@ public class SBM {
 	/**
 	 * The method solving the CCR Problem.
 	 * @param deaP An instance of DEAProblem.
+	 * @throws DEASolverException 
 	 */
-	public static DEAPSolution solveSBM(DEAProblem deaP) {
+	public static DEAPSolution solveSBM(DEAProblem deaP) throws DEASolverException {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
@@ -168,7 +171,13 @@ public class SBM {
 			} //End loop through all variables (rows of constraint matrix) + 1 row (added constraint)
 			
 			SolverResults Sol = new SolverResults();
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN);
+			
+			try {
+				Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN);
+			}
+			catch (DEASolverException e) {
+				throw e;
+			}
 			
 			//Store solution
 			double t = Sol.VariableResult[0];

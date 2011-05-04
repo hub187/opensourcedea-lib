@@ -112,8 +112,9 @@ public  class CCR {
 	/**
 	 * The method solving the CCR Problem.
 	 * @param deaP An instance of DEAProblem.
+	 * @throws DEASolverException 
 	 */
-	public static DEAPSolution solveCCR(DEAProblem deaP) {
+	public static DEAPSolution solveCCR(DEAProblem deaP) throws DEASolverException {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
@@ -205,8 +206,14 @@ public  class CCR {
 			
 			//Solve
 			SolverResults Sol = new SolverResults();
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN);
 			
+			try {
+				Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN);
+			}
+			catch (DEASolverException e) {
+				throw e;
+			}
+
 			//Collect information from Phase I (Theta)
 			if(deaP.getModelType() == DEAModelType.CCRI) {
 				ReturnSol.Objectives[i] = Sol.Objective;

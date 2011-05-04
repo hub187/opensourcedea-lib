@@ -8,10 +8,7 @@ import org.junit.BeforeClass;
 import java.util.ArrayList;
 
 //import dea.DEAModelOrientation;
-import dea.DEAException;
-import dea.DEAModelType;
-import dea.DEAProblem;
-import dea.DEAVariableType;
+import dea.*;
 
 public class DEAProblemTest {
 
@@ -213,7 +210,7 @@ public class DEAProblemTest {
 			tester.solve();
 		}
 		catch (DEAException e) {
-			assertSame(e.getMessage(), "The number of DMUs does not seem to match. Please check the DMUNames and DataMatrix.");
+			assertSame(e.getMessage(), "The number of DMUs does not seem to match with the data. Please check the DMUNames and DataMatrix.");
 		}
 		
 	}
@@ -237,7 +234,7 @@ public class DEAProblemTest {
 			tester.solve();
 		}
 		catch (DEAException e) {
-			assertSame(e.getMessage(), "The number of variables does not seem to match. Please check the VariableNames, VariableTypes and DataMatrix.");
+			assertSame(e.getMessage(), "The number of variables does not seem to match with the data. Please check the VariableNames, VariableTypes and DataMatrix.");
 		}
 		
 	}

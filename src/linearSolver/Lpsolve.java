@@ -24,9 +24,9 @@ package linearSolver;
 
 import java.util.ArrayList;
 import lpsolve.LpSolve;
-import lpsolve.LpSolveException;
 import dea.SolverObjDirection;
 import dea.SolverReturnStatus;
+import dea.DEASolverException;
 
 /**
  * This class deals with the calls to the lpsolve library and is used to solve linear problem.
@@ -77,8 +77,9 @@ public class Lpsolve {
 	 * @param RHS A double[] of the Right Hand Side values
 	 * @param Dir A SolverObjDirection (MIN or MAX)
 	 * @return A SolverResult Object with the solution to the linear problem.
+	 * @throws Exception 
 	 */
-	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) {
+	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) throws DEASolverException {
 	
 		//The Solution object which will be returned
 		SolverResults Sol = new SolverResults();
@@ -176,10 +177,14 @@ public class Lpsolve {
 	           
 		}
 			
-	    catch (LpSolveException e) {
-	       e.printStackTrace();
-	       Sol.Status = SolverReturnStatus.UnknownError;
+
+	    catch (Exception e) {
+	    	e.printStackTrace();
+	    	Sol.Status = SolverReturnStatus.UnknownError;
+	    	throw new DEASolverException();
+	    	
 	    }
+
 	 
 	    return Sol;
 	}
