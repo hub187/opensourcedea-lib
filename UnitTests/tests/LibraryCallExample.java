@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import dea.*;
-import dea.exceptions.DEAException;
 
 
 public class LibraryCallExample {

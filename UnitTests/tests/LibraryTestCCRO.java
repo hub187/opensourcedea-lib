@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import dea.*;
-import dea.exceptions.DEAException;
 
 
 

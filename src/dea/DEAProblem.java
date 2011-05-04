@@ -26,7 +26,6 @@ package dea;
 //import java.util.Arrays;
 
 import deaModels.*;
-import dea.exceptions.*;
 import java.util.ArrayList;
 
 
@@ -347,10 +346,25 @@ public class DEAProblem {
 	 * methods).
 	 */
 	public void solve() throws DEAException {
-		//Need call a method here to check whether the DEAProblem is correct or not (before calling any DEA model Class
-		if(this._DMUName == null) {
+		/* Checking whether data is OK.
+		 * Checks are too simple to deserve refactoring.*/
+		
+		if(this._DataMatrix == null || this._DMUName == null || this._ModelType == null ||
+				this._VariableName == null || this._VariableType == null) {
+			//MissingData e = new MissingData("some text to describe the error");
 			throw new MissingData();
 		}
+		
+		int lenX = this._DataMatrix[0].length;
+		if(lenX != this._VariableName.length || lenX != this._VariableType.length) {
+			throw new InconsistentNoOfVariables();
+		}
+		
+		int lenY = this._DataMatrix.length;
+		if(lenY != this._DMUName.length) {
+			throw new InconsistentNoOfDMUs();
+		}
+		
 		
 		switch (this._ModelType) {
 			case CCRI: this._Solution = CCR.solveCCR(this); break;

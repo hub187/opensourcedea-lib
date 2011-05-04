@@ -7,7 +7,7 @@ package dea;
  *
  */
 public enum SolverReturnStatus {
-	NA ("Default Return Initialisation Status."),
+	NA ("Model Initialised but not solved."),
 	/* Each solution of an instance of a DEAProblem class is created by default with the 'NA' return status.
 	 * After optimisation, each instance of a DEAProblem class MUST have another status corresponding to the optimisation results.
 	 * This is important as the getWhateverPartOfTheSolution methods will in future test whether a the problem has been solved prior to

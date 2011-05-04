@@ -12,7 +12,6 @@ import org.junit.Test;
 import dea.*;
 
 import dea.DEAPSolution;
-import dea.exceptions.DEAException;
 
 
 
@@ -105,7 +104,11 @@ public class LibraryTestCCRI {
 			tester.solve();
 		}
 		catch (DEAException e) {
+			e.fillInStackTrace();
 			System.out.println(e.toString());
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
+			
 		}
 		
 		DEAPSolution CheckedSol = GetCCRIResults();

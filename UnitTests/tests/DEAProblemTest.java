@@ -8,10 +8,10 @@ import org.junit.BeforeClass;
 import java.util.ArrayList;
 
 //import dea.DEAModelOrientation;
+import dea.DEAException;
 import dea.DEAModelType;
 import dea.DEAProblem;
 import dea.DEAVariableType;
-import dea.exceptions.DEAException;
 
 public class DEAProblemTest {
 
@@ -25,43 +25,47 @@ public class DEAProblemTest {
 	@BeforeClass
 	public static void setUpBeforeClass()
 	{
-		//Set up the DMU Names
-		TestDMUNames[0] = "DMU 1";
-		TestDMUNames[1] = "DMU 2";
-		TestDMUNames[2] = "DMU 3";
-		TestDMUNames[3] = "DMU 4";
-		TestDMUNames[4] = "DMU 5";
+
+			//Set up the DMU Names
+			TestDMUNames[0] = "DMU 1";
+			TestDMUNames[1] = "DMU 2";
+			TestDMUNames[2] = "DMU 3";
+			TestDMUNames[3] = "DMU 4";
+			TestDMUNames[4] = "DMU 5";
+			
+			//Set up the Variable Names
+			TestVariableNames[0] = "Wood";
+			TestVariableNames[1] = "Twigs";
+			TestVariableNames[2] = "Fire";
+			
+			//Set up the Data Matrix
+			TestDataMatrix [0] [0] = 1;
+			TestDataMatrix [0] [1] = 7;
+			TestDataMatrix [0] [2] = 5;
+			
+			TestDataMatrix [1] [0] = 1;
+			TestDataMatrix [1] [1] = 9;
+			TestDataMatrix [1] [2] = 8;
+			
+			TestDataMatrix [2] [0] = 1;
+			TestDataMatrix [2] [1] = 3;
+			TestDataMatrix [2] [2] = 3;
+			
+			TestDataMatrix [3] [0] = 9;
+			TestDataMatrix [3] [1] = 4;
+			TestDataMatrix [3] [2] = 4;
+			
+			TestDataMatrix [4] [0] = 1;
+			TestDataMatrix [4] [1] = 8;
+			TestDataMatrix [4] [2] = 3;
+			
+			//Set up the variable types
+			TestVariableTypes[0] = DEAVariableType.Input;
+			TestVariableTypes[1] = DEAVariableType.Input;
+			TestVariableTypes[2] = DEAVariableType.Output;
+
 		
-		//Set up the Variable Names
-		TestVariableNames[0] = "Wood";
-		TestVariableNames[1] = "Twigs";
-		TestVariableNames[2] = "Fire";
 		
-		//Set up the Data Matrix
-		TestDataMatrix [0] [0] = 1;
-		TestDataMatrix [0] [1] = 7;
-		TestDataMatrix [0] [2] = 5;
-		
-		TestDataMatrix [1] [0] = 1;
-		TestDataMatrix [1] [1] = 9;
-		TestDataMatrix [1] [2] = 8;
-		
-		TestDataMatrix [2] [0] = 1;
-		TestDataMatrix [2] [1] = 3;
-		TestDataMatrix [2] [2] = 3;
-		
-		TestDataMatrix [3] [0] = 9;
-		TestDataMatrix [3] [1] = 4;
-		TestDataMatrix [3] [2] = 4;
-		
-		TestDataMatrix [4] [0] = 1;
-		TestDataMatrix [4] [1] = 8;
-		TestDataMatrix [4] [2] = 3;
-		
-		//Set up the variable types
-		TestVariableTypes[0] = DEAVariableType.Input;
-		TestVariableTypes[1] = DEAVariableType.Input;
-		TestVariableTypes[2] = DEAVariableType.Output;
 	}
 	
 
@@ -177,7 +181,67 @@ public class DEAProblemTest {
 		assertTrue(true);	
 	}
 	
+	@Test
+	public void testMissingDataException() {
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			assertSame(e.getMessage(), "The DEAProblem is missing some data. Please check the DataMatrix, DMUNames, ModelType, VariableNames and VariableTypes.");
+		}
+		
+	}
 
+	
+	
+	
+	@Test
+	public void testMissingDMUCountDiscrepancy() {
+		
+		tester.setModelType(DEAModelType.CCRI);
+		tester.setDMUNames(TestDMUNames);
+		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		tester.setVariableNames(TestVariableNames);
+		tester.setVariableTypes(TestVariableTypes);
+		tester.setDataMatrix(TestDataMatrix);
+		
+		String[] dmuNames = new String[3];
+		tester.setDMUNames(dmuNames);
+		
+		
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			assertSame(e.getMessage(), "The number of DMUs does not seem to match. Please check the DMUNames and DataMatrix.");
+		}
+		
+	}
+	
+	
+	@Test
+	public void testMissingVariableCountDiscrepancy() {
+		
+		tester.setModelType(DEAModelType.CCRI);
+		tester.setDMUNames(TestDMUNames);
+		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		tester.setVariableNames(TestVariableNames);
+		tester.setVariableTypes(TestVariableTypes);
+		tester.setDataMatrix(TestDataMatrix);
+		
+		String[] variableNames = new String[3];
+		tester.setVariableNames(variableNames);
+		
+		
+		try {
+			tester.solve();
+		}
+		catch (DEAException e) {
+			assertSame(e.getMessage(), "The number of variables does not seem to match. Please check the VariableNames, VariableTypes and DataMatrix.");
+		}
+		
+	}
+	
 	
 	
 }

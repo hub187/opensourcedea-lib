@@ -14,7 +14,7 @@ import org.junit.Test;
 
 //import dea.DEAModelOrientation;
 import dea.*;
-import dea.exceptions.*;
+
 
 
 
