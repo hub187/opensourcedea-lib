@@ -98,7 +98,6 @@ public class LibraryTestCCRITestMultiThreading {
 	public void TestCCRITest() {
 		
 		BuildDEAProblem(DEAModelType.CCRITest);
-
 		
 		try {
 			tester.solve();
