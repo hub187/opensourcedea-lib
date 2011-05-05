@@ -365,13 +365,17 @@ public class DEAProblem {
 			throw new InconsistentNoOfDMUs();
 		}
 		
-		
-		switch (this._ModelType) {
-			case CCRI: this._Solution = CCR.solveCCR(this); break;
-			
-			case CCRO: this._Solution = CCR.solveCCR(this); break;
-			
-			case SBM: this._Solution = SBM.solveSBM(this); break;
+		try {
+			switch (this._ModelType) {
+				case CCRI: this._Solution = CCR.solveCCR(this); break;
+				
+				case CCRO: this._Solution = CCR.solveCCR(this); break;
+				
+				case SBM: this._Solution = SBM.solveSBM(this); break;
+			}
+		}
+		catch (DEASolverException e) {
+			throw e;
 		}
 		
 		
