@@ -372,6 +372,8 @@ public class DEAProblem {
 				case CCRO: this._Solution = CCR.solveCCR(this); break;
 				
 				case SBM: this._Solution = SBM.solveSBM(this); break;
+				
+				case CCRITest: this._Solution = CCRTestMultiThreading.solveCCR(this); break;
 			}
 		}
 		catch (DEASolverException e) {
