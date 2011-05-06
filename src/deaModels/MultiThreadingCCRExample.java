@@ -107,7 +107,7 @@ import linearSolver.*;
  * @author Hubert Virtos
  *
  */
-public  class CCRTestMultiThreading {
+public  class MultiThreadingCCRExample {
 
 	/**
 	 * The method solving the CCR Problem.
@@ -133,19 +133,46 @@ public  class CCRTestMultiThreading {
 		 * The problem will consequently be solved for each DMUs for Phase I and
 		 * solved again for each DMUs for Phase II.*/
 		
-
+		ThreadPool testpool = new ThreadPool(2);
 		
 		for (int i = 0; i < NbDMUs; i++) {
 			
-			  createCCRProb(deaP, NbDMUs, NbVariables, TransposedMatrix,
-					ReturnSol, i);
+			testpool.runTask(createTask(i, deaP, NbDMUs, NbVariables, TransposedMatrix, ReturnSol));
+			
+			//  createCCRProb(deaP, NbDMUs, NbVariables, TransposedMatrix, ReturnSol, i);
 			
 		}
+		
+		testpool.join();
 		
 		return ReturnSol;
 
 		
 	}
+	
+	
+	  private static Runnable createTask(final int i, final DEAProblem deaP, final int NbDMUs, final int NbVariables,
+			  final double[][] TransposedMatrix, final DEAPSolution ReturnSol) {
+		    	
+		  return new Runnable() {
+		      
+		    	public void run() {
+		        System.out.println("Task " + i + ": start");
+
+		        // simulate a long-running task
+		        try {
+		        	createCCRProb(deaP, NbDMUs, NbVariables, TransposedMatrix, ReturnSol, i);
+		        }
+		        catch (DEASolverException e2) {
+		        	
+		        }
+
+		        System.out.println("Task " + i + ": end");
+		      }
+		    
+		    };
+	  }
+		    
 
 
 	private static void createCCRProb(DEAProblem deaP, int NbDMUs,
