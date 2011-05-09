@@ -313,12 +313,13 @@ public class DEAProblem {
 	
 	/**
 	 * Gets the Transpose of the Data Matrix
+	 * @param ReturnsNegative A boolean. If true, all values of the TransposedMatrix are timed by -1.
 	 * @return A double[] [] corresponding to the transpose of the Data Matrix
 	 */
 	public double [] [] getTranspose(boolean ReturnsNegative) {
 		double [] [] TransposedMatrix = new double [this._DataMatrix[0].length] [this._DataMatrix.length];
 		
-		if(ReturnsNegative = false) {
+		if(ReturnsNegative == false) {
 			for (int i = 0; i < this._DataMatrix.length; i++)
 	            for (int j = 0; j < this._DataMatrix[0].length; j++)
 	                TransposedMatrix[j][i] = this._DataMatrix[i][j];
@@ -372,6 +373,8 @@ public class DEAProblem {
 				case CCRO: this._Solution = CCR.solveCCR(this); break;
 				
 				case SBM: this._Solution = SBM.solveSBM(this); break;
+				
+				case SBMI: this._Solution = SBMI.solveSBMI(this); break;
 
 			}
 		}

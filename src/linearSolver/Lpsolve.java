@@ -125,6 +125,7 @@ public class Lpsolve {
 	        	LpProb.setObjFnex(NbColumns, ObjF, ColNo);
 	        	
 	        	
+	        	
 	        	//Set Direction
 	        	if (Dir == SolverObjDirection.MAX) {
 	        		LpProb.setMaxim();

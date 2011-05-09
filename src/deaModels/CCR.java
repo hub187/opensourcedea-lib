@@ -121,7 +121,7 @@ public  class CCR {
 		int NbDMUs = deaP.getNumberOfDMUs();
 		int NbVariables = deaP.getNumberOfVariables();
 		double [] [] TransposedMatrix = new double [NbVariables] [NbDMUs];
-		TransposedMatrix = deaP.getTranspose(false);
+		TransposedMatrix = deaP.getTranspose(true); //Want the negative Transposed
 		DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
 		
 					
