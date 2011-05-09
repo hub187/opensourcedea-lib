@@ -192,9 +192,6 @@ public class SBMI {
 		}
 		
 		System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
-//		for(int j = 0; j < NbDMUs;j++){
-//			ReturnSol.Lambdas[i][j] = Sol.VariableResult[j];
-//		}
 		
 		checkSolverStatus(ReturnSol, Sol);
 	}
