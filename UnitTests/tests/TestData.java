@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.ArrayList;
+
 import dea.DEAVariableType;
 
 public class TestData {
