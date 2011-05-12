@@ -636,7 +636,9 @@ public class DEAProblem {
 			ArrayList<Integer> tempReferenceSet = new ArrayList<Integer>();
 			//loop through all lambdas
 			for(int j = 0; j < this.getNumberOfDMUs(); j++) {
-				if(this.getLambdas(i, j) > 0) {
+				if(this.getLambdas(i, j) > 0.00000000001) {
+					/* Might want to add a sensitivity parameter in the getReferenceSet method
+					 * instead of hard-coding it in the > above.*/
 					tempReferenceSet.add(j);
 				}
 			}
