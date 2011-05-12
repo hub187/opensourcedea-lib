@@ -8,26 +8,38 @@ package dea;
  *
  */
 public enum DEAModelType {
-	CCRI ("The Charnes Cooper and Rhodes Model called CCR. This model was first introduced in 1978 and assumes constant RTS."),
-	CCRO ("The Charnes Cooper and Rhodes Model called CCR. This model was first introduced in 1978 and assumes constant RTS."),
-	SBM ("The Slack Based Model first (SBM) introduced by Tone (1997, 2001). The model assumes constant RTS and is non-oriented." +
-			"The model is also both unit invariant in respect to the unit of measurement and monotone decreasing in each" +
-			"input and output slack."),
-	SBMI ("The Input Oriented version of the SBM model assuming Constant RTS.");
+	CCRI ("The Charnes Cooper and Rhodes Model called CCR." +
+			"This model was first introduced in 1978 and assumes constant RTS.", "Input Oriented"),
+	CCRO ("The Charnes Cooper and Rhodes Model called CCR." +
+			"This model was first introduced in 1978 and assumes constant RTS.", "Output Oriented"),
+	SBM ("The Slack Based Model first (SBM) introduced by Tone (1997, 2001). " +
+			"The model assumes constant RTS and is non-oriented." +
+			"The model is also both unit invariant in respect to the unit of measurement and" +
+			"monotone decreasing in each input and output slack.", "Non-Oriented"),
+	SBMI ("The Input Oriented version of the SBM model assuming Constant RTS.", "Input Oriented"),
+	SBMO ("The Ouput Oriented version of the SBM model assuming Constant RTS.", "Output Oriented");
 	
 	
 	private String Description;
+	private String Orientation;
+	private DEAVariableType ModelOrientation;
 	
-	
-	DEAModelType(String Desc) {
+	DEAModelType(String Desc, String Orient) {
 		this.Description = Desc;
+		this.Orientation = Orient;
 	}
+
 	
 	//Method to access _ModelType
-	public String GetStatusDescription()
+	public String getDescription()
 	{
 		return Description;
 	}
+	
+	public String getOrientation() {
+		return Orientation;
+	}
+	
 	
 }
 

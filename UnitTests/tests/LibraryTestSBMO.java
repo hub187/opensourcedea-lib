@@ -18,7 +18,7 @@ import dea.*;
 
 
 
-public class LibraryTestSBMI {
+public class LibraryTestSBMO {
 	
 	/* If this Unit Test fails, please read the instructions in the
 	 * Lpsolve class.*/
@@ -30,63 +30,63 @@ public class LibraryTestSBMI {
 		
 		DEAPSolution SBMCSol = new DEAPSolution(20, 4);
 		
-		SBMCSol.Objectives  = createSBMIObjectives();		
+		SBMCSol.Objectives  = createSBMOObjectives();		
 		
 		return SBMCSol;
 	}
 
 
-	private double[] createSBMIObjectives() {
+	private double[] createSBMOObjectives() {
 		
 		double[] Objectives = new double[20];
 		
 		
-		Objectives[0] = 0.485053421558462;
-		Objectives[1] = 0.684214621325777;
-		Objectives[2] = 0.405470259017482;
-		Objectives[3] = 0.302295376011453;
-		Objectives[4] = 0.717138904136575;
+		Objectives[0] = 0.474691622106158;
+		Objectives[1] = 0.700369387101254;
+		Objectives[2] = 0.199729334370413;
+		Objectives[3] = 0.0753226899284763;
+		Objectives[4] = 0.697242683806256;
 		Objectives[5] = 1;
 		Objectives[6] = 1;
-		Objectives[7] = 0.725880792155402;
-		Objectives[8] = 0.531377253110481;
-		Objectives[9] = 0.393890615572574;
-		Objectives[10] = 0.374336031913962;
+		Objectives[7] = 0.784849181107451;
+		Objectives[8] = 0.479389421563248;
+		Objectives[9] = 0.185960069769944;
+		Objectives[10] = 0.00691638342862426;
 		Objectives[11] = 1;
-		Objectives[12] = 0.400138842637063;
-		Objectives[13] = 0.303136690227086;
-		Objectives[14] = 0.746986522059294;
-		Objectives[15] = 0.55719855115612;
+		Objectives[12] = 0.134166475259275;
+		Objectives[13] = 0.0215334101757831;
+		Objectives[14] = 0.40691982739752;
+		Objectives[15] = 0.500882069903829;
 		Objectives[16] = 1;
-		Objectives[17] = 0.730090905380776;
+		Objectives[17] = 0.0950844869027731;
 		Objectives[18] = 1;
-		Objectives[19] = 0.145890908729517;
+		Objectives[19] = 0.115923957753396;
 		return Objectives;
 	}
 	
 	private int[] createSolRanks() {
 		int[] ranks = new int[20];
 		
-		ranks[0] = 13;
-		ranks[1] = 10;
-		ranks[2] = 14;
-		ranks[3] = 19;
-		ranks[4] = 9;
+		ranks[0] = 11;
+		ranks[1] = 7;
+		ranks[2] = 13;
+		ranks[3] = 18;
+		ranks[4] = 8;
 		ranks[5] = 1;
 		ranks[6] = 1;
-		ranks[7] = 8;
-		ranks[8] = 12;
-		ranks[9] = 16;
-		ranks[10] = 17;
+		ranks[7] = 6;
+		ranks[8] = 10;
+		ranks[9] = 14;
+		ranks[10] = 20;
 		ranks[11] = 1;
 		ranks[12] = 15;
-		ranks[13] = 18;
-		ranks[14] = 6;
-		ranks[15] = 11;
+		ranks[13] = 19;
+		ranks[14] = 12;
+		ranks[15] = 9;
 		ranks[16] = 1;
-		ranks[17] = 7;
+		ranks[17] = 17;
 		ranks[18] = 1;
-		ranks[19] = 20;		
+		ranks[19] = 16;		
 		
 		return ranks;
 	}
@@ -194,9 +194,9 @@ public class LibraryTestSBMI {
 	}
 	
 	@Test
-	public void TestSBMI() {
+	public void TestSBMO() {
 		
-		BuildDEAProblem(DEAModelType.SBMI); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(DEAModelType.SBMO); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();
