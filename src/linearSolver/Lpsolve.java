@@ -134,6 +134,7 @@ public class Lpsolve {
 	        		LpProb.setMinim();
 	        	}
 	        	
+	        	LpProb.setVerbose(0);
 	        	
 	        	//Solve the Linear Problem
 	        	ret = LpProb.solve();

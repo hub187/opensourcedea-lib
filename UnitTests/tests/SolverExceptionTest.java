@@ -83,6 +83,7 @@ public class SolverExceptionTest {
 	double[] ObjF = new double [4];
 	double[] RHS = new double [5]; //RHS Phase I
 	
+	//This will purposely FAIL!
 	try {
 		Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN);
 	}
