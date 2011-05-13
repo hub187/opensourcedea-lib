@@ -47,6 +47,10 @@ public enum DEAModelType {
 	SBMIV ("The Input Oriented version of the SBM model assuming Variable RTS.",
 			DEAModelOrientation.InputOriented,
 			DEAEfficiencyType.MIX,
+			DEAReturnToScale.Variable),
+	SBMOV ("The Ouput Oriented version of the SBM model assuming Variable RTS.",
+			DEAModelOrientation.OutputOriented,
+			DEAEfficiencyType.MIX,
 			DEAReturnToScale.Variable);
 	
 	

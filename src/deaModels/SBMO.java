@@ -39,12 +39,12 @@ public class SBMO {
 		TransposedMatrix = deaP.getTranspose(false);
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
-		
+		double[] ConstraintRow;
 		
 		/* Because the Constraint Matrix is identical for all optimisation,
 		 * let's build it here and re-use it for each optimisation. */
 		for (int j = 0; j < NbVariables; j++) {
-			double[] ConstraintRow = new double[NbDMUs + NbVariables];
+			ConstraintRow = new double[NbDMUs + NbVariables];
 			
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 0, NbDMUs);
@@ -58,6 +58,13 @@ public class SBMO {
 				Constraints.add(ConstraintRow);
 		}
 		
+		if(deaP.getModelType() == DEAModelType.SBMOV) {
+			ConstraintRow = new double[NbDMUs + NbVariables];
+			for(int k = 0; k < NbDMUs; k++) {
+				ConstraintRow[k] = 1;
+			}
+			Constraints.add(ConstraintRow);
+		}
 		
 		/* As the SBM optimisation needs to be ran for all DMUs, 
 		 * the program will loop through all DMUs.*/
@@ -76,7 +83,15 @@ public class SBMO {
 			int NbVariables,  ArrayList<double[]> Constraints, double[][] TransposedMatrix,
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		double[] ObjF = new double [NbDMUs + NbVariables];
-		double[] RHS = new double [NbVariables];
+		double[] RHS;
+		
+		if(deaP.getModelType() == DEAModelType.SBMO) {
+			RHS = new double [NbVariables];
+		}
+		else {
+			RHS = new double [NbVariables + 1];
+			RHS[NbVariables] = 1;
+		}
 		int NbOutputs = deaP.getNumberOfOutputs();
 		
 		
