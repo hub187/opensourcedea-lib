@@ -64,33 +64,33 @@ public class LibraryTestSBMIV {
 		return Objectives;
 	}
 	
-	private int[] createSolRanks() {
-		int[] ranks = new int[20];
-		
-		ranks[0] = 16;
-		ranks[1] = 14;
-		ranks[2] = 1;
-		ranks[3] = 19;
-		ranks[4] = 12;
-		ranks[5] = 1;
-		ranks[6] = 1;
-		ranks[7] = 11;
-		ranks[8] = 15;
-		ranks[9] = 13;
-		ranks[10] = 17;
-		ranks[11] = 1;
-		ranks[12] = 20;
-		ranks[13] = 18;
-		ranks[14] = 8;
-		ranks[15] = 10;
-		ranks[16] = 1;
-		ranks[17] = 9;
-		ranks[18] = 1;
-		ranks[19] = 1;		
-		
-		return ranks;
-	}
-	
+//	private int[] createSolRanks() {
+//		int[] ranks = new int[20];
+//		
+//		ranks[0] = 16;
+//		ranks[1] = 14;
+//		ranks[2] = 1;
+//		ranks[3] = 19;
+//		ranks[4] = 12;
+//		ranks[5] = 1;
+//		ranks[6] = 1;
+//		ranks[7] = 11;
+//		ranks[8] = 15;
+//		ranks[9] = 13;
+//		ranks[10] = 17;
+//		ranks[11] = 1;
+//		ranks[12] = 20;
+//		ranks[13] = 18;
+//		ranks[14] = 8;
+//		ranks[15] = 10;
+//		ranks[16] = 1;
+//		ranks[17] = 9;
+//		ranks[18] = 1;
+//		ranks[19] = 1;		
+//		
+//		return ranks;
+//	}
+//	
 	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
