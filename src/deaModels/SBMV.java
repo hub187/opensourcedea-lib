@@ -11,18 +11,18 @@ import java.util.ArrayList;
 
 
 /**
- * The class implementing the SBM Constant RTS Non Oriented model.
+ * The class implementing the SBM Variable Return To Scale model.
  * @author Hubert Virtos
  *
  */
-public class SBM {
+public class SBMV {
 	
 	/**
 	 * The method solving the SBM Problem.
 	 * @param deaP An instance of DEAProblem.
 	 * @throws DEASolverException 
 	 */
-	public static DEAPSolution solveSBM(DEAProblem deaP) throws DEASolverException {
+	public static DEAPSolution solveSBMV(DEAProblem deaP) throws DEASolverException {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
@@ -38,7 +38,7 @@ public class SBM {
 		
 		for (int i = 0; i < NbDMUs; i++) {
 			
-			createAndSolveSBM(deaP, NbDMUs, NbVariables, TransposedMatrix,
+			createAndSolveSBMV(deaP, NbDMUs, NbVariables, TransposedMatrix,
 					ReturnSol, i);
 			
 
@@ -51,17 +51,17 @@ public class SBM {
 		
 	}
 
-	private static void createAndSolveSBM(DEAProblem deaP, int NbDMUs,
+	private static void createAndSolveSBMV(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix,
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
-		double[] RHS = new double [NbVariables + 1];
+		double[] RHS = new double [NbVariables + 2];
 		
 		ObjF[0] = 1;
 		
 		/* Build the constraint matrix (loop through all variables + one row for extra constraint after
-		 * Fractional => Linear transformation*/
+		 * Fractional => Linear transformation + another for Convexity constraint (e Lambdas = 1)*/
 		for (int j = 0; j <= NbVariables; j++) {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			
@@ -83,7 +83,7 @@ public class SBM {
 				RHS[j] = 0;
 				
 			}
-			else {
+			if(j == NbVariables) {
 				//Last row (added constraint after Fractional => Linear transformation)
 				ConstraintRow[0] = 1;
 				for (int v = 0; v < NbVariables; v++) {
@@ -98,6 +98,10 @@ public class SBM {
 				
 				//Build last row of RHS
 				RHS[j] = 1;
+				
+			}
+			else {
+				//Build convexity constraint
 				
 			}
 			
