@@ -39,7 +39,11 @@ public enum DEAModelType {
 	SBMO ("The Ouput Oriented version of the SBM model assuming Constant RTS.",
 			DEAModelOrientation.OutputOriented,
 			DEAEfficiencyType.MIX,
-			DEAReturnToScale.Constant);
+			DEAReturnToScale.Constant),
+	SBMV ("The Non-Oriented version of the SBM model assuming Variable RTS.",
+			DEAModelOrientation.NonOriented,
+			DEAEfficiencyType.MIX,
+			DEAReturnToScale.Variable);
 	
 	
 	private String Description;

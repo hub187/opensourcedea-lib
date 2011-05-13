@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 /**
- * The class implementing the SBM Constant RTS Non Oriented model.
+ * The class implementing the SBM Constant and Variable RTS Non Oriented model.
  * @author Hubert Virtos
  *
  */
@@ -56,7 +56,14 @@ public class SBM {
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
-		double[] RHS = new double [NbVariables + 1];
+		double[] RHS;
+		//if model is assuming Variable RTS, we need to add an extra row for the convexity constraint
+		if(deaP.getModelType() == DEAModelType.SBM) {
+			RHS = new double [NbVariables + 1];
+		}
+		else {
+			RHS = new double [NbVariables + 2];
+		}
 		
 		ObjF[0] = 1;
 		
@@ -102,6 +109,18 @@ public class SBM {
 			}
 			
 		} //End loop through all variables (rows of constraint matrix) + 1 row (added constraint)
+		
+		
+		if(deaP.getModelType() == DEAModelType.SBMV) {
+			//Build convexity constraint. This is the ONLY difference with the SBMmodel
+			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+			ConstraintRow[0] = 1;
+			for (int k = 1; k <= NbDMUs; k++) {
+				ConstraintRow[k] = -1;
+			}
+			Constraints.add(ConstraintRow);
+		}
+		
 		
 		SolverResults Sol = new SolverResults();
 		
