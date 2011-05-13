@@ -52,6 +52,14 @@ public class SBMI {
 				Constraints.add(ConstraintRow);
 		}
 		
+		if(deaP.getModelType() == DEAModelType.SBMIV) {
+			//Add one row for the convexity constraints
+			double[] ConstraintRow = new double[NbDMUs + NbVariables];
+			for(int k = 0; k < NbDMUs; k++) {
+				ConstraintRow[k] = 1;
+			}
+			Constraints.add(ConstraintRow);
+		}
 		
 		/* As the SBM optimisation needs to be ran for all DMUs, 
 		 * the program will loop through all DMUs.*/
@@ -70,7 +78,15 @@ public class SBMI {
 			int NbVariables,  ArrayList<double[]> Constraints, double[][] TransposedMatrix,
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		double[] ObjF = new double [NbDMUs + NbVariables];
-		double[] RHS = new double [NbVariables];
+		double[] RHS;
+		if(deaP.getModelType() == DEAModelType.SBMI) {
+			RHS = new double[NbVariables];
+		}
+		else {
+			//One extra row for convexity constraint
+			RHS = new double[NbVariables + 1];
+		}
+
 		int NbInputs = deaP.getNumberOfInputs();
 		
 		
@@ -81,6 +97,11 @@ public class SBMI {
 				if(deaP.getVariableType(j) == DEAVariableType.Input){
 					ObjF[NbDMUs + j] = -1 / (TransposedMatrix[j] [i] * NbInputs);
 				}
+		}
+		
+		//Add extra row if Variable RTS
+		if(deaP.getModelType() == DEAModelType.SBMIV) {
+			RHS[NbVariables] = 1;
 		}
 		
 		SolverResults Sol = new SolverResults();
