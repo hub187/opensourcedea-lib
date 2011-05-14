@@ -1,8 +1,8 @@
 package dea;
 
 /**
- * An enum listing the possible DEA Model Orientation (e.g. input oriented).
- * <p>
+ * An enum listing the possible DEA Model Orientations (e.g. input oriented).
+ * </br>
  * @author Hubert Virtos
  *
  */

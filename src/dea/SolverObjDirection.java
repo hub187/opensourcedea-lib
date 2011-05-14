@@ -3,7 +3,7 @@ package dea;
 
 /**
  * An enum of the possible optimisation direction (e.g. MAX/MIN).
- * <p>
+ * </br>
  * @author Hubert Virtos
  *
  */

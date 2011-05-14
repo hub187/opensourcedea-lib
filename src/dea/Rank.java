@@ -28,9 +28,10 @@ package dea;
  * This class only deals with implementing the bubblesort algorithm to find the DMU ranks.
  * <p>
  * Most of the code is based on the code developed by algolist which can be found below.
+ * </p>
  * <p>
  * @see <a href="http://www.algolist.net/Algorithms/Sorting/Bubble_sort">Algolist Bubble sort Algorithm Implemetation</a>
- * <p>
+ * </p>
  * @author Hubert Virtos
  *
  */

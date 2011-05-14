@@ -31,7 +31,7 @@ import linearSolver.*;
 
 
 /**
- * The class implementing the CCR model.
+ * The class implementing the CCR (Input and Output oriented) models.
  *
  *<p>
  *The linear problem of the Model is as follows:
@@ -103,7 +103,7 @@ import linearSolver.*;
  * <p>
  *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
  *  (e.g. -Inputi 1 being the ith input of DMU1).
- * <p>
+ * </p>
  * @author Hubert Virtos
  *
  */

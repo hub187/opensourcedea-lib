@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 
 /**
- * The class implementing the SBMI model.
- * <p>
+ * The class implementing the SBM Input Oriented model (implementing both CRTS and VRTS).
+ * </br>
  * @author Hubert Virtos
  *
  */

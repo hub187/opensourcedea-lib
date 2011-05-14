@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 
 /**
- * The class implementing the SBM Constant and Variable RTS Non Oriented model.
+ * The class implementing the SBM (both CRTS and VRTS) Non Oriented model.
+ * </br>
  * @author Hubert Virtos
  *
  */

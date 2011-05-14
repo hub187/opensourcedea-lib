@@ -2,7 +2,8 @@ package dea;
 
 
 /**
- * enum listing the possible Solver Return Status.
+ * An enum listing the possible Solver Return Status.
+ * </br>
  * @author Hubert Virtos
  *
  */

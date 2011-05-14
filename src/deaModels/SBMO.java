@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 
 /**
- * The class implementing the SBMO model.
+ * The class implementing the SBM Output Oriented model (implementing both CRTS and VRTS).
  * <p>
  * Because the objective 'MIN po = 1 / (1 + (1/s) SUM(Sr+/Yro))' is not linear the 
  * objective used in the calculation is 'MAX 1/p0 = (1 + (1/s) SUM(Sr+/Yro))' which is linear.</p>
  * <p>
- * As a consquence the output slack weight is 1 / (s*Yro) and the model objective is deduced from
+ * As a consequence the output slack weight is 1 / (s*Yro) and the model objective is deduced from
  * the solver objective value as follows: Model Objective = 1 / (1 + SolverObjectiveValue).
  * </p>
  * @author Hubert Virtos

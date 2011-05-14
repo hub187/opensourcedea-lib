@@ -4,7 +4,7 @@ package dea;
 
 /**
  * This class defines a DEA Problem Solution.
- * <p>
+ * </br>
  * @author Hubert Virtos
  *
  */

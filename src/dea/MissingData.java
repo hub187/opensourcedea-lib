@@ -1,5 +1,11 @@
 package dea;
 
+/**
+ * A DEAException thrown when number the DEAProblem has missing data.
+ * </br>
+ * @author Hubert Virtos
+ *
+ */
 public class MissingData extends DEAException {
 	/**
 	 * 

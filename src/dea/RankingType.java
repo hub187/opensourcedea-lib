@@ -1,5 +1,11 @@
 package dea;
 
+/**
+ * An enum listing all the different ranking types (standard or dense) and their corresponding description.
+ * 
+ * @author Hubert Virtos
+ *
+ */
 public enum RankingType {
 	STANDARD ("Thus if A ranks ahead of B and C (which compare equal) which are both ranked ahead of D," +
 			"then A gets ranking number 1 (first), B gets ranking number 2 (joint second)," +

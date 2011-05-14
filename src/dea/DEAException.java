@@ -1,5 +1,11 @@
 package dea;
 
+/**
+ * General DEA Exception used in this library
+ * </br>
+ * @author Hubert Virtos
+ *
+ */
 public class DEAException extends Exception {
 	/**
 	 * 

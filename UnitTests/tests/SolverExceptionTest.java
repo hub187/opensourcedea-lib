@@ -69,7 +69,7 @@ public class SolverExceptionTest {
 	@Test
 	public void testLinearSolverException() {
 	
-//	tester.setModelType(DEAModelType.CCRI);
+	tester.setModelType(DEAModelType.CCRI);
 //	tester.setDMUNames(TestDMUNames);
 //	//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 //	tester.setVariableNames(TestVariableNames);
@@ -82,6 +82,8 @@ public class SolverExceptionTest {
 	ArrayList<double[]> Constraints = new ArrayList<double []>();
 	double[] ObjF = new double [4];
 	double[] RHS = new double [5]; //RHS Phase I
+	
+
 	
 	//This will purposely FAIL!
 	try {

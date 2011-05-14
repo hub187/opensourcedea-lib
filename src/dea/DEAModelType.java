@@ -2,9 +2,9 @@ package dea;
 
 
 /**
- * An enum of the possible Model Types (e.g. CCR...).
+ * An enum of the possible Model Types (e.g. CCR, SBM...).
  * <p>
- * The enum also lists all the model characteristics. These are - amongst others:
+ * The enum lists, for each model, the model characteristics. These are - amongst others:
  * <ul>
  * <li>DEAModelOrientation (e.g. input/output oriented),</li>
  * <li>Efficiency type (e.g. mix or technical),</li>

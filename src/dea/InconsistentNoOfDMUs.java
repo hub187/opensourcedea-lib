@@ -1,5 +1,11 @@
 package dea;
 
+/**
+ * A DEAException extending InconsistentData thrown when number of DMUs do not match between different element of the DEAProblem.
+ * </br>
+ * @author Hubert Virtos
+ *
+ */
 public class InconsistentNoOfDMUs extends InconsistentData {
 
 	/**

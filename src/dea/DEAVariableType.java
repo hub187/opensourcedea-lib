@@ -3,7 +3,7 @@ package dea;
 
 /**
  * An enum of the possible Variable Types (e.g. Input / Output Oriented).
- * <p>
+ * </br>
  * @author Hubert Virtos
  *
  */
