@@ -41,52 +41,52 @@ public class LibraryTestSBMGRS {
 		double[] Objectives = new double[20];
 		
 		
-		Objectives[0] = 0.4337207968687;
+		Objectives[0] = 0.433416455031194;
 		Objectives[1] = 0.655740942924697;
-		Objectives[2] = 1;
-		Objectives[3] = 0.0711847916698139;
-		Objectives[4] = 0.633843170637834;
+		Objectives[2] = 0.202694119860539;
+		Objectives[3] = 0.0694880306719787;
+		Objectives[4] = 0.631545023036202;
 		Objectives[5] = 1;
 		Objectives[6] = 1;
-		Objectives[7] = 0.718162581012847;
+		Objectives[7] = 0.717802718554146;
 		Objectives[8] = 0.478929894370442;
-		Objectives[9] = 0.14541274686293;
-		Objectives[10] = 0.00662837755677064;
+		Objectives[9] = 0.143243925812365;
+		Objectives[10] = 0.00643080773298032;
 		Objectives[11] = 1;
-		Objectives[12] = 0.14246955242863;
-		Objectives[13] = 0.0204266899493119;
-		Objectives[14] = 0.427059536602581;
-		Objectives[15] = 0.489456449809396;
+		Objectives[12] = 0.140393744400076;
+		Objectives[13] = 0.0198346435765732;
+		Objectives[14] = 0.40792722440984;
+		Objectives[15] = 0.472090161717494;
 		Objectives[16] = 1;
-		Objectives[17] = 0.0870188714455836;
+		Objectives[17] = 0.0866211335899282;
 		Objectives[18] = 1;
-		Objectives[19] = 0.9999999999999; //inaccuracy probably caused by solver algos 0.999802949715669;
+		Objectives[19] = 0.183568479036878;
 		return Objectives;
 	}
 	
 	private int[] createSolRanks() {
 		int[] ranks = new int[20];
 		
-		ranks[0] = 13;
-		ranks[1] = 9;
-		ranks[2] = 1;
+		ranks[0] = 11;
+		ranks[1] = 7;
+		ranks[2] = 13;
 		ranks[3] = 18;
-		ranks[4] = 10;
+		ranks[4] = 8;
 		ranks[5] = 1;
 		ranks[6] = 1;
-		ranks[7] = 8;
-		ranks[8] = 12;
+		ranks[7] = 6;
+		ranks[8] = 9;
 		ranks[9] = 15;
 		ranks[10] = 20;
 		ranks[11] = 1;
 		ranks[12] = 16;
 		ranks[13] = 19;
-		ranks[14] = 14;
-		ranks[15] = 11;
+		ranks[14] = 12;
+		ranks[15] = 10;
 		ranks[16] = 1;
 		ranks[17] = 17;
 		ranks[18] = 1;
-		ranks[19] = 1; //Evaluated efficient because better accuracy of solver
+		ranks[19] = 14;
 		
 		return ranks;
 	}

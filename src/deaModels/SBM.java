@@ -146,7 +146,7 @@ public class SBM {
 			ConstraintRow[0] = deaP.getRTSLowerBound();
 			Constraints.add(ConstraintRow);
 			RHS[NbVariables + 1] = 0;
-			SolverEqualityType[NbVariables + 1] = LpSolve.GE;
+			SolverEqualityType[NbVariables + 1] = LpSolve.LE;
 			
 			//Upper Bounds (General RTS)
 			ConstraintRow = new double[NbDMUs + NbVariables + 1];
@@ -154,7 +154,7 @@ public class SBM {
 			ConstraintRow[0] = deaP.getRTSUpperBound();
 			Constraints.add(ConstraintRow);
 			RHS[NbVariables + 2] = 0;
-			SolverEqualityType[NbVariables + 2] = LpSolve.LE;
+			SolverEqualityType[NbVariables + 2] = LpSolve.GE;
 			
 		}
 		
