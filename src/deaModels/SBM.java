@@ -136,18 +136,24 @@ public class SBM {
 		}
 		
 		if(deaP.getModelType() == DEAModelType.SBMGRS) {
-			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+			double[] TempConstraintRow = new double[NbDMUs + NbVariables + 1];
 			for (int k = 1; k <= NbDMUs; k++) {
-				ConstraintRow[k] = 1;
+				TempConstraintRow[k] = -1;
 			}
 			//Lower Bounds (General RTS)
+			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+			System.arraycopy(TempConstraintRow, 1, ConstraintRow, 1, NbDMUs);
+			ConstraintRow[0] = deaP.getRTSLowerBound();
 			Constraints.add(ConstraintRow);
-			RHS[NbVariables + 1] = deaP.getRTSLowerBound();
+			RHS[NbVariables + 1] = 0;
 			SolverEqualityType[NbVariables + 1] = LpSolve.GE;
 			
 			//Upper Bounds (General RTS)
+			ConstraintRow = new double[NbDMUs + NbVariables + 1];
+			System.arraycopy(TempConstraintRow, 1, ConstraintRow, 1, NbDMUs);
+			ConstraintRow[0] = deaP.getRTSUpperBound();
 			Constraints.add(ConstraintRow);
-			RHS[NbVariables + 2] = deaP.getRTSUpperBound();
+			RHS[NbVariables + 2] = 0;
 			SolverEqualityType[NbVariables + 2] = LpSolve.LE;
 			
 		}
