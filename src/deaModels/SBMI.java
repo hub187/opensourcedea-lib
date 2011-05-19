@@ -3,7 +3,7 @@ package deaModels;
 import dea.*;
 import dea.DEASolverException;
 import linearSolver.*;
-
+import lpsolve.LpSolve;
 import java.util.ArrayList;
 
 
@@ -79,12 +79,15 @@ public class SBMI {
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		double[] ObjF = new double [NbDMUs + NbVariables];
 		double[] RHS;
+		int[] SolverEqualityType;
 		if(deaP.getModelType() == DEAModelType.SBMI) {
 			RHS = new double[NbVariables];
+			SolverEqualityType = new int[NbVariables];
 		}
 		else {
 			//One extra row for convexity constraint
 			RHS = new double[NbVariables + 1];
+			SolverEqualityType = new int[NbVariables + 1];
 		}
 
 		int NbInputs = deaP.getNumberOfInputs();
@@ -97,17 +100,19 @@ public class SBMI {
 				if(deaP.getVariableType(j) == DEAVariableType.Input){
 					ObjF[NbDMUs + j] = -1 / (TransposedMatrix[j] [i] * NbInputs);
 				}
+				SolverEqualityType[j] = LpSolve.EQ;
 		}
 		
 		//Add extra row if Variable RTS
 		if(deaP.getModelType() == DEAModelType.SBMIV) {
 			RHS[NbVariables] = 1;
+			SolverEqualityType[NbVariables] = LpSolve.EQ;
 		}
 		
 		SolverResults Sol = new SolverResults();
 		
 		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN);
+			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
 		}
 		catch (DEASolverException e) {
 			throw e;

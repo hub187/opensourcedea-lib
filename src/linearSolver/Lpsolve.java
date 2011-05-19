@@ -79,7 +79,8 @@ public class Lpsolve {
 	 * @return A SolverResult Object with the solution to the linear problem.
 	 * @throws Exception 
 	 */
-	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS, SolverObjDirection Dir) throws DEASolverException {
+	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS,
+			SolverObjDirection Dir, int[] EqType) throws DEASolverException {
 	
 		//The Solution object which will be returned
 		SolverResults Sol = new SolverResults();
@@ -114,7 +115,7 @@ public class Lpsolve {
 	        	
 	        	//Add constraints
 	        	for (int j = 0; j < NbRows; j++) {
-	        		LpProb.addConstraintex(NbColumns, Constraints.get(j), ColNo, LpSolve.EQ, RHS[j]);
+	        		LpProb.addConstraintex(NbColumns, Constraints.get(j), ColNo, EqType[j] /*LpSolve.EQ*/, RHS[j]);
 	        	}
 	        	
 	        	//Set Add Row Mode back to false

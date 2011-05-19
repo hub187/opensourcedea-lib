@@ -27,6 +27,7 @@ import dea.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import linearSolver.*;
+import lpsolve.LpSolve;
 
 
 
@@ -177,7 +178,8 @@ public  class CCR {
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
 		double[] RHS1 = new double [NbVariables]; //RHS Phase I
-		double[] RHS2 = new double [NbVariables]; //RHS Phase II
+		double[] RHS2;// = new double [NbVariables]; //RHS Phase II
+		int[] SolverEqualityType = new int[NbVariables];
 
 		for (int j = 0; j < NbVariables; j++) {
 			
@@ -204,12 +206,14 @@ public  class CCR {
 			Constraints.add(ConstraintRow);
 			
 			
-			//Build RHS
+			//Build RHS & SolverEqualityTypes
 			if (deaP.getVariableType(j) == DEAVariableType.Input) {
 				RHS1[j] = 0;
+				SolverEqualityType[j] = LpSolve.EQ;
 			}
 			else {
 				RHS1[j] = TransposedMatrix[j] [i];
+				SolverEqualityType[j] = LpSolve.EQ;
 			}
 		
 		}
@@ -222,7 +226,7 @@ public  class CCR {
 		SolverResults Sol = new SolverResults();
 		
 		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN);
+			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN, SolverEqualityType);
 		}
 		catch (DEASolverException e) {
 			throw e;
@@ -259,10 +263,16 @@ public  class CCR {
 		ConstraintRow[0] = 1;
 		Constraints.add(ConstraintRow);
 		
-		//Changing RHS
+		//Changing RHS & SolverEqTypes
 		RHS2 = new double[NbVariables + 1];
 		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
 		RHS2[NbVariables] = Sol.Objective;
+		
+		SolverEqualityType = new int[NbVariables + 1];
+		for(int k = 0; k < NbVariables + 1; k++) {
+			SolverEqualityType[k] = LpSolve.EQ;
+		}
+		
 		
 		//Change Objective Function
 		Arrays.fill(ObjF,0);
@@ -271,7 +281,7 @@ public  class CCR {
 		}
 		
 		//Solve the Phase II Problem
-		Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS2, SolverObjDirection.MAX);
+		Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS2, SolverObjDirection.MAX, SolverEqualityType);
 		
 		//Collect information from Phase II (Theta)
 		if(deaP.getModelType() == DEAModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {

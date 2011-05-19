@@ -3,7 +3,7 @@ package deaModels;
 import dea.*;
 import dea.DEASolverException;
 import linearSolver.*;
-
+import lpsolve.LpSolve;
 import java.util.ArrayList;
 
 
@@ -84,13 +84,17 @@ public class SBMO {
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		double[] ObjF = new double [NbDMUs + NbVariables];
 		double[] RHS;
+		int[] SolverEqualityType;
 		
 		if(deaP.getModelType() == DEAModelType.SBMO) {
 			RHS = new double [NbVariables];
+			SolverEqualityType = new int[NbVariables];
 		}
 		else {
 			RHS = new double [NbVariables + 1];
+			SolverEqualityType = new int[NbVariables + 1];
 			RHS[NbVariables] = 1;
+			SolverEqualityType[NbVariables] = LpSolve.EQ;
 		}
 		int NbOutputs = deaP.getNumberOfOutputs();
 		
@@ -102,12 +106,13 @@ public class SBMO {
 				if(deaP.getVariableType(j) == DEAVariableType.Output){
 					ObjF[NbDMUs + j] = 1 / (TransposedMatrix[j] [i] * NbOutputs);
 				}
+				SolverEqualityType[j] = LpSolve.EQ;
 		}
 		
 		SolverResults Sol = new SolverResults();
 		
 		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MAX);
+			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MAX, SolverEqualityType);
 		}
 		catch (DEASolverException e) {
 			throw e;

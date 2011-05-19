@@ -3,7 +3,7 @@ package deaModels;
 import dea.*;
 import dea.DEASolverException;
 import linearSolver.*;
-
+import lpsolve.LpSolve;
 import java.util.ArrayList;
 
 
@@ -56,16 +56,21 @@ public class SBM {
 		/* There is one extra column for the scalar t used during the 
 		 * Fractional to Linear SBM model transformaation.*/
 		double[] ObjF = new double [NbDMUs + NbVariables + 1]; 
+		int[] SolverEqualityType;
 		double[] RHS;
+		
 		//if model is assuming Variable RTS, we need to add an extra row for the convexity constraint
 		if(deaP.getModelType() == DEAModelType.SBM) {
 			RHS = new double [NbVariables + 1];
+			SolverEqualityType = new int [NbVariables + 1];
 		}
 		else if (deaP.getModelType() == DEAModelType.SBMV) {
 			RHS = new double [NbVariables + 2];
+			SolverEqualityType = new int [NbVariables + 2];
 		}
 		else /*if (deaP.getModelType() == DEAModelType.SBMGRS)*/ {
 			RHS = new double [NbVariables + 3];
+			SolverEqualityType = new int [NbVariables + 3];
 		}
 		
 		ObjF[0] = 1;
@@ -91,6 +96,7 @@ public class SBM {
 				
 				//Build RHS
 				RHS[j] = 0;
+				SolverEqualityType[j] = LpSolve.EQ;
 				
 			}
 			else {
@@ -109,6 +115,7 @@ public class SBM {
 				
 				//Build last row of RHS
 				RHS[j] = 1;
+				SolverEqualityType[j] = LpSolve.EQ;
 				
 			}
 			
@@ -125,6 +132,7 @@ public class SBM {
 			}
 			Constraints.add(ConstraintRow);
 			//RHS already 0.
+			SolverEqualityType[NbVariables + 1] = LpSolve.EQ;
 		}
 		
 		if(deaP.getModelType() == DEAModelType.SBMGRS) {
@@ -135,10 +143,13 @@ public class SBM {
 			//Lower Bounds (General RTS)
 			Constraints.add(ConstraintRow);
 			RHS[NbVariables + 1] = deaP.getRTSLowerBound();
+			SolverEqualityType[NbVariables + 1] = LpSolve.GE;
 			
 			//Upper Bounds (General RTS)
 			Constraints.add(ConstraintRow);
 			RHS[NbVariables + 2] = deaP.getRTSUpperBound();
+			SolverEqualityType[NbVariables + 1] = LpSolve.LE;
+			
 		}
 		
 		
@@ -146,7 +157,7 @@ public class SBM {
 		SolverResults Sol = new SolverResults();
 		
 		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN);
+			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
 		}
 		catch (DEASolverException e) {
 			throw e;
