@@ -422,6 +422,8 @@ public class DEAProblem {
 				case SBMO: this._Solution = SBMO.solveSBMO(this); break;
 				
 				case SBMOV: this._Solution = SBMO.solveSBMO(this); break;
+				
+				case SBMGRS: this._Solution = SBM.solveSBM(this); break;
 
 			}
 		}
