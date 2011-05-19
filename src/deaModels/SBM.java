@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class SBM {
 	
 	/**
-	 * The method solving the SBM Problem.
+	 * The method solving the SBM Problems (Constant and Variable RTS).
 	 * @param deaP An instance of DEAProblem.
-	 * @throws DEASolverException 
+	 * @throws DEASolverException
 	 */
 	public static DEAPSolution solveSBM(DEAProblem deaP) throws DEASolverException {
 		
@@ -41,34 +41,36 @@ public class SBM {
 			
 			createAndSolveSBM(deaP, NbDMUs, NbVariables, TransposedMatrix,
 					ReturnSol, i);
-			
-
-			
 
 		} //End loop through all DMUs
-		
-		
 		return ReturnSol;
-		
 	}
 
+
+	
+	
 	private static void createAndSolveSBM(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix,
-			DEAPSolution ReturnSol, int i) throws DEASolverException {
+			DEAPSolution ReturnSol, int i /*DMU Number*/) throws DEASolverException {
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
-		double[] ObjF = new double [NbDMUs + NbVariables + 1];
+		/* There is one extra column for the scalar t used during the 
+		 * Fractional to Linear SBM model transformaation.*/
+		double[] ObjF = new double [NbDMUs + NbVariables + 1]; 
 		double[] RHS;
 		//if model is assuming Variable RTS, we need to add an extra row for the convexity constraint
 		if(deaP.getModelType() == DEAModelType.SBM) {
 			RHS = new double [NbVariables + 1];
 		}
-		else {
+		else if (deaP.getModelType() == DEAModelType.SBMV) {
 			RHS = new double [NbVariables + 2];
+		}
+		else /*if (deaP.getModelType() == DEAModelType.SBMGRS)*/ {
+			RHS = new double [NbVariables + 3];
 		}
 		
 		ObjF[0] = 1;
 		
-		/* Build the constraint matrix (loop through all variables + one row for extra constraint after
+		/* BUILD THE CONTRAINST MATRIX (loop through all variables + one row for extra constraint after
 		 * Fractional => Linear transformation*/
 		for (int j = 0; j <= NbVariables; j++) {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
@@ -92,7 +94,8 @@ public class SBM {
 				
 			}
 			else {
-				//Last row (added constraint after Fractional => Linear transformation)
+				/* Last row (added constraint after Fractional => Linear transformation).
+				 * Necessary for all SBM models*/
 				ConstraintRow[0] = 1;
 				for (int v = 0; v < NbVariables; v++) {
 					if(deaP.getVariableType(v) != DEAVariableType.Input) {
@@ -112,6 +115,7 @@ public class SBM {
 		} //End loop through all variables (rows of constraint matrix) + 1 row (added constraint)
 		
 		
+		//OPTIONAL ROWS
 		if(deaP.getModelType() == DEAModelType.SBMV) {
 			//Build convexity constraint. This is the ONLY difference with the SBMmodel
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
@@ -120,9 +124,25 @@ public class SBM {
 				ConstraintRow[k] = -1;
 			}
 			Constraints.add(ConstraintRow);
+			//RHS already 0.
+		}
+		
+		if(deaP.getModelType() == DEAModelType.SBMGRS) {
+			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+			for (int k = 0; k < NbDMUs; k++) {
+				ConstraintRow[k] = 1;
+			}
+			//Lower Bounds (General RTS)
+			Constraints.add(ConstraintRow);
+			RHS[NbVariables + 1] = deaP.getRTSLowerBound();
+			
+			//Upper Bounds (General RTS)
+			Constraints.add(ConstraintRow);
+			RHS[NbVariables + 2] = deaP.getRTSUpperBound();
 		}
 		
 		
+		//SOLVE PROBLEM
 		SolverResults Sol = new SolverResults();
 		
 		try {
@@ -132,7 +152,9 @@ public class SBM {
 			throw e;
 		}
 		
-		//Store solution
+		
+		
+		//STORE SOLUTION
 		double t = Sol.VariableResult[0];
 		
 		ReturnSol.Objectives[i] = Sol.Objective;

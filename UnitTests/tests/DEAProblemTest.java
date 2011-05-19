@@ -139,6 +139,63 @@ public class DEAProblemTest {
 
 	}
 	
+	@Test
+	public void testSetGetRTSLowerBound() {
+		try {
+		tester.setRTSLowerBound(0.8);
+		}
+		catch (Exception e) {
+			e.getMessage();
+		}
+		assertEquals(tester.getRTSLowerBound(),0.8,0);
+	}
+	
+	@Test
+	public void testSetRTSLowerBoundError() {
+		String testErrorMsg = "";
+		try {
+			tester.setRTSLowerBound(-1);
+			}
+		catch (Exception e) {
+				testErrorMsg = e.getMessage();
+			}
+		assertEquals(testErrorMsg, "Lower Bound must be as follows: 0 <= LowerB <= 1.");
+		
+		try {
+			tester.setRTSLowerBound(2);
+			}
+		catch (Exception e) {
+				testErrorMsg = e.getMessage();
+			}
+		assertEquals(testErrorMsg, "Lower Bound must be as follows: 0 <= LowerB <= 1.");
+			
+	}
+	
+	@Test
+	public void testSetGetRTSUpperBound() {
+		try {
+			tester.setRTSUpperBound(1.2);
+		} catch (InvalidPropertyValue e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(tester.getRTSUpperBound(),1.2,0);
+	}
+	
+	@Test
+	public void testSetRTSUpperBoundError() {
+		String testErrorMsg = "";
+		try {
+			tester.setRTSUpperBound(-1);
+			}
+		catch (Exception e) {
+				testErrorMsg = e.getMessage();
+			}
+		assertEquals(testErrorMsg, "Upper Bound must be greater or equal to 1.");
+					
+	}
+	
+	
 	private ArrayList<ArrayList<Integer>> getTestReferenceSet() {
 		ArrayList<ArrayList<Integer>> ReferenceSet = new ArrayList<ArrayList<Integer>>();
 		

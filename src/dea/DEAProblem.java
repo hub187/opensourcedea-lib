@@ -55,6 +55,8 @@ public class DEAProblem {
 	private String[] _VariableName;
 	private DEAVariableType [] _VariableType;
 	private double [] [] _DataMatrix;
+	private double RTSLowerBound;
+	private double RTSUpperBound;
 
 	
 	//Solution
@@ -75,7 +77,7 @@ public class DEAProblem {
 	
 	
 	 //////////////////////////////////////////////////////////////////////////
-	//								Set Problem								//
+	//								Get / Set Problem						//
    //////////////////////////////////////////////////////////////////////////
 	
 	
@@ -258,6 +260,43 @@ public class DEAProblem {
 		_DataMatrix[DMUNumber] [VariableNumber] = Value;
 	}
 	
+	/**
+	 * Sets the Lower Bound limit for General Return To Scale DEA Models.
+	 * @param LowerB A double corresponding to the General RTS Lower Bound Limit.
+	 */
+	public void setRTSLowerBound(double LowerB) throws InvalidPropertyValue {
+		if(LowerB < 0 || LowerB > 1) {
+			throw new InvalidPropertyValue("Lower Bound must be as follows: 0 <= LowerB <= 1.");
+		}
+		RTSLowerBound = LowerB;
+	}
+	
+	/**
+	 * Gets the Lower Bound limit for General Return To Scale DEA Models.
+	 * @return RTSLowerBound A double corresponding to the General RTS Lower Bound Limit.
+	 */
+	public double getRTSLowerBound() {
+		return RTSLowerBound;
+	}
+	
+	/**
+	 * Sets the Upper Bound limit for General Return To Scale DEA Models.
+	 * @param UpperB A double corresponding to the General RTS Upper Bound Limit.
+	 */
+	public void setRTSUpperBound(double UpperB) throws InvalidPropertyValue {
+		if(UpperB < 1) {
+			throw new InvalidPropertyValue("Upper Bound must be greater or equal to 1.");
+		}
+		RTSUpperBound = UpperB;
+	}
+	
+	/**
+	 * Gets the Upper Bound limit for General Return To Scale DEA Models.
+	 * @return RTSUpperBound A double corresponding to the General RTS Upper Bound Limit.
+	 */
+	public double getRTSUpperBound() {
+		return RTSUpperBound;
+	}
 	
 	 //////////////////////////////////////////////////////////////////////////
 	//						Mostly Internal Use								//
