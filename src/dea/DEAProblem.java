@@ -415,16 +415,17 @@ public class DEAProblem {
 				
 				case SBMV: this._Solution = SBM.solveSBM(this); break;
 				
+				case SBMGRS: this._Solution = SBM.solveSBM(this); break;
+				
 				case SBMI: this._Solution = SBMI.solveSBMI(this); break;
 				
 				case SBMIV: this._Solution = SBMI.solveSBMI(this); break;				
 				
+				case SBMIGRS: this._Solution = SBMI.solveSBMI(this); break;
+				
 				case SBMO: this._Solution = SBMO.solveSBMO(this); break;
 				
 				case SBMOV: this._Solution = SBMO.solveSBMO(this); break;
-				
-				case SBMGRS: this._Solution = SBM.solveSBM(this); break;
-
 			}
 		}
 		catch (DEASolverException e) {

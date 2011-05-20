@@ -61,6 +61,15 @@ public class SBMI {
 			Constraints.add(ConstraintRow);
 		}
 		
+		if(deaP.getModelType() == DEAModelType.SBMIGRS) {
+			double[] ConstraintRow = new double[NbDMUs + NbVariables];
+			for(int k = 0; k < NbDMUs; k++) {
+				ConstraintRow[k] = 1;
+			}
+			Constraints.add(ConstraintRow);
+			Constraints.add(ConstraintRow);
+		}
+		
 		/* As the SBM optimisation needs to be ran for all DMUs, 
 		 * the program will loop through all DMUs.*/
 		
@@ -84,10 +93,15 @@ public class SBMI {
 			RHS = new double[NbVariables];
 			SolverEqualityType = new int[NbVariables];
 		}
-		else {
+		else if (deaP.getModelType() == DEAModelType.SBMIV) {
 			//One extra row for convexity constraint
 			RHS = new double[NbVariables + 1];
 			SolverEqualityType = new int[NbVariables + 1];
+		}
+		else { //In this case the model is DEAModelType.SBMIGRS
+			//Tow extra rows for GRS constraints
+			RHS = new double[NbVariables + 2];
+			SolverEqualityType = new int[NbVariables + 2];
 		}
 
 		int NbInputs = deaP.getNumberOfInputs();
@@ -107,6 +121,17 @@ public class SBMI {
 		if(deaP.getModelType() == DEAModelType.SBMIV) {
 			RHS[NbVariables] = 1;
 			SolverEqualityType[NbVariables] = LpSolve.EQ;
+		}
+		
+		//Add two extra rows if model is SBMIGRS
+		if(deaP.getModelType() == DEAModelType.SBMIGRS) {
+			
+			RHS[NbVariables] = deaP.getRTSLowerBound();
+			SolverEqualityType[NbVariables] = LpSolve.GE;
+			
+			RHS[NbVariables + 1] = deaP.getRTSUpperBound();
+			SolverEqualityType[NbVariables+1] = LpSolve.LE;
+			
 		}
 		
 		SolverResults Sol = new SolverResults();
