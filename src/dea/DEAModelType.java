@@ -60,7 +60,11 @@ public enum DEAModelType {
 	SBMOV ("The Ouput Oriented version of the SBM model assuming Variable RTS.",
 			DEAModelOrientation.OutputOriented,
 			DEAEfficiencyType.MIX,
-			DEAReturnToScale.Variable);
+			DEAReturnToScale.Variable),
+	SBMOGRS ("The Output Oriented version of the SBM model assuming General RTS.",
+			DEAModelOrientation.OutputOriented,
+			DEAEfficiencyType.MIX,
+			DEAReturnToScale.General);
 	
 	
 	private String Description;

@@ -65,6 +65,14 @@ public class SBMO {
 			}
 			Constraints.add(ConstraintRow);
 		}
+		if(deaP.getModelType() == DEAModelType.SBMOGRS) {
+			ConstraintRow = new double[NbDMUs + NbVariables];
+			for(int k = 0; k < NbDMUs; k++) {
+				ConstraintRow[k] = 1;
+			}
+			Constraints.add(ConstraintRow);
+			Constraints.add(ConstraintRow);
+		}
 		
 		/* As the SBM optimisation needs to be ran for all DMUs, 
 		 * the program will loop through all DMUs.*/
@@ -90,16 +98,26 @@ public class SBMO {
 			RHS = new double [NbVariables];
 			SolverEqualityType = new int[NbVariables];
 		}
-		else {
+		else if (deaP.getModelType() == DEAModelType.SBMOV) {
 			RHS = new double [NbVariables + 1];
 			SolverEqualityType = new int[NbVariables + 1];
 			RHS[NbVariables] = 1;
 			SolverEqualityType[NbVariables] = LpSolve.EQ;
 		}
+		else { //deaP.getModelType() == DEAModelType.SBMOGRS
+			RHS = new double [NbVariables + 2];
+			SolverEqualityType = new int[NbVariables + 2];
+			RHS[NbVariables] = deaP.getRTSLowerBound();
+			SolverEqualityType[NbVariables] = LpSolve.GE;
+			RHS[NbVariables + 1] = deaP.getRTSUpperBound();
+			SolverEqualityType[NbVariables + 1] = LpSolve.LE;
+			
+		}
+		
 		int NbOutputs = deaP.getNumberOfOutputs();
 		
 		
-		//Build the RHS
+		//Build the RHS (for the variables, added constraints (convexity, grs... were added before)
 		for (int j = 0; j < NbVariables; j++) {
 				//Build RHS
 				RHS[j] = TransposedMatrix[j] [i];
@@ -130,7 +148,7 @@ public class SBMO {
 			}
 			else {
 				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j); // + ReturnSol.Slacks[i] [j];
+				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i][j]; // + ReturnSol.Slacks[i] [j];
 			}
 		}
 		

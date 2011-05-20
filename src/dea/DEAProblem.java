@@ -426,6 +426,8 @@ public class DEAProblem {
 				case SBMO: this._Solution = SBMO.solveSBMO(this); break;
 				
 				case SBMOV: this._Solution = SBMO.solveSBMO(this); break;
+				
+				case SBMOGRS: this._Solution = SBMO.solveSBMO(this); break;
 			}
 		}
 		catch (DEASolverException e) {

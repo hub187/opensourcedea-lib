@@ -155,7 +155,7 @@ public class SBMI {
 			}
 			else {
 				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j); // + ReturnSol.Slacks[i] [j];
+				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
 			}
 		}
 		
