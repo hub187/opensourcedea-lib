@@ -149,7 +149,10 @@ public class Lpsolve {
 	        	
 	        	//Store Optimisation values
 	        	if (ret == 0) {
-		            
+		            /* In order to optimise the code, it could be possible to return the solver solution
+		             * directly instead of a copy (weight/constraint results, objectives...).
+		             * This was not done for clarity purposes*/
+	        		
 	        		double[] VariableResult = new double[NbColumns];
 	        		double[] ConstraintResult = new double[NbRows];
 	        		double Objective = 0;
