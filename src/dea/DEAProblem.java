@@ -411,6 +411,8 @@ public class DEAProblem {
 				
 				case CCRO: this._Solution = CCR.solveCCR(this); break;
 				
+				case BCCI: this._Solution = BCC.solveBCC(this); break;
+				
 				case SBM: this._Solution = SBM.solveSBM(this); break;
 				
 				case SBMV: this._Solution = SBM.solveSBM(this); break;

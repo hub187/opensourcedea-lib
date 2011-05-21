@@ -32,90 +32,19 @@ import lpsolve.LpSolve;
 
 
 /**
- * The class implementing the CCR (Input and Output oriented) models.
- *
- *<p>
- *The linear problem of the Model is as follows:
- *<p>
- * <center>
- * <table border = "1">
- * <tr>
- * 		<td>Variable</td>
- * 		<td>Theta</td>
- * 		<td>Lambda 1</td>
- * 		<td>...</td>
- * 		<td>Lambda n</td>
- * 		<td>Slack 1</td>
- * 		<td>...</td>
- * 		<td>Slack p</td>
- * 		<td>DIR</td>
- * 		<td>RHS</td>
- * </tr>
- * <tr>
- * 		<td>Obj Coeff</td>
- * 		<td>1</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td></td>
- * 		<td></td>
- * </tr>
- * <tr>
- * 		<td>Input 1</td>
- * 		<td>-Input 1,1</td>
- * 		<td>Input 1,1</td>
- * 		<td>...</td>
- * 		<td>Input 1, n</td>
- * 		<td>0</td>
- * 		<td>...</td>
- * 		<td>0</td>
- * 		<td>E</td>
- * 		<td>0</td>
- * </tr>
- * <tr>
- * 		<td>Input i</td>
- * 		<td>-Input i, 1</td>
- * 		<td>Input i, 1</td>
- * 		<td>...</td>
- * 		<td>Input i, n</td>
- * 		<td>0</td>
- * 		<td>...</td>
- * 		<td>0</td>
- * 		<td>E</td>
- * 		<td>0</td>
- * </tr>
- * <tr>
- * 		<td>Ouput p</td>
- * 		<td>0</td>
- * 		<td>Output p, 1</td>
- * 		<td>...</td>
- * 		<td>Output p, n</td>
- * 		<td>0</td>
- * 		<td>...</td>
- * 		<td>-1</td>
- * 		<td>E</td>
- * 		<td>Output p, 1</td>
- * </tr>
- * </table>
- * </center>
- * <p>
- *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
- *  (e.g. -Inputi 1 being the ith input of DMU1).
- * </p>
+ * The class implementing the BBC (Input and Output oriented) models.
+ * <\br>
  * @author Hubert Virtos
  *
  */
-public  class CCR {
+public  class BCC {
 
 	/**
 	 * The method solving the CCR Problem.
 	 * @param deaP An instance of DEAProblem.
 	 * @throws DEASolverException 
 	 */
-	public static DEAPSolution solveCCR(DEAProblem deaP) throws DEASolverException {
+	public static DEAPSolution solveBCC(DEAProblem deaP) throws DEASolverException {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
@@ -128,9 +57,9 @@ public  class CCR {
 					
 		
 		
-		/* As the CCR optimisation needs to be ran for all DMUs, 
+		/* As the BBC optimisation needs to be ran for all DMUs, 
 		 * the program will loop through all DMUs.
-		 * Also, the CCR model is solved in two phases.
+		 * Also, the BBC model is solved in two phases.
 		 * The problem will consequently be solved for each DMUs for Phase I and
 		 * solved again for each DMUs for Phase II.*/
 		
@@ -138,7 +67,7 @@ public  class CCR {
 		
 		for (int i = 0; i < NbDMUs; i++) {
 			
-			  createAndSolveCCR(deaP, NbDMUs, NbVariables, TransposedMatrix,
+			  createAndSolveBCC(deaP, NbDMUs, NbVariables, TransposedMatrix,
 					ReturnSol, i);
 			
 		}
@@ -149,7 +78,7 @@ public  class CCR {
 	}
 
 
-	private static void createAndSolveCCR(DEAProblem deaP, int NbDMUs,
+	private static void createAndSolveBCC(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix,
 			DEAPSolution ReturnSol, int i) throws DEASolverException {
 		/////////////////////////////
@@ -168,7 +97,7 @@ public  class CCR {
 		 *  DMU1 (input)   -Input1 1  Input1 1   .....     Input1 n       1      ...     0			 E		 0
 		 *  DMUi (input)   -Inputi 1  Inputi 1   .....     Inputi n       0      ...     0			 E		 0
 		 *  DMUp (output)     0	      Outputp 1  .....     Outputp n      0      ...    -1			 E	  Output p 1
-		 * 
+		 *  Convex Const	  0			1		 .....		  1			  0		 ...	 0			 E		 1
 		 * 
 		 *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
 		 *  (e.g. -Inputi 1 being the ith input of DMU1).
@@ -177,44 +106,59 @@ public  class CCR {
 		
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
-		double[] RHS1 = new double [NbVariables]; //RHS Phase I
+		double[] RHS1 = new double [NbVariables + 1]; //RHS Phase I
 		double[] RHS2;// = new double [NbVariables]; //RHS Phase II
-		int[] SolverEqualityType = new int[NbVariables];
+		int[] SolverEqualityType = new int[NbVariables + 1];
 
-		for (int j = 0; j < NbVariables; j++) {
+		for (int j = 0; j <= NbVariables; j++) {
 			
 			//Build Model for each DMU
 			
 			//Build the Constraint Matrix
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
-			if (deaP.getVariableType(j) == DEAVariableType.Input) {
-				ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
+			if(j < NbVariables) {
+				if (deaP.getVariableType(j) == DEAVariableType.Input) {
+					ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
+				}
+				else  {
+					ConstraintRow[0] = 0;
+				}
+				//Copy rest of the data matrix
+				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);
+				//and slacks
+				if (deaP.getVariableType(j) == DEAVariableType.Input) {
+					ConstraintRow[NbDMUs + 1 + j] = -1;
+				}
+				else {
+					ConstraintRow[NbDMUs + 1 + j] = 1;
+				}
 			}
 			else {
-				ConstraintRow[0] = 0;
-			}
-			//Copy rest of the data matrix
-			System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);
-			//and slacks
-			if (deaP.getVariableType(j) == DEAVariableType.Input) {
-				ConstraintRow[NbDMUs + 1 + j] = -1;
-			}
-			else {
-				ConstraintRow[NbDMUs + 1 + j] = 1;
+				//If J = NbVariables, put the convexity constraint
+				for(int k = 1; k <= NbDMUs; k++){
+					ConstraintRow[k] = 1;
+				}
 			}
 			Constraints.add(ConstraintRow);
 			
 			
 			//Build RHS & SolverEqualityTypes
-			if (deaP.getVariableType(j) == DEAVariableType.Input) {
-				RHS1[j] = 0;
-				SolverEqualityType[j] = LpSolve.EQ;
+			if(j < NbVariables) {
+				if (deaP.getVariableType(j) == DEAVariableType.Input) {
+					RHS1[j] = 0;
+					SolverEqualityType[j] = LpSolve.EQ;
+				}
+				else {
+					RHS1[j] = TransposedMatrix[j] [i];
+					SolverEqualityType[j] = LpSolve.EQ;
+				}
 			}
 			else {
-				RHS1[j] = TransposedMatrix[j] [i];
+				RHS1[j] = 1;
 				SolverEqualityType[j] = LpSolve.EQ;
 			}
+			
 		
 		}
 
@@ -233,7 +177,7 @@ public  class CCR {
 		}
 
 		//Collect information from Phase I (Theta)
-		if(deaP.getModelType() == DEAModelType.CCRI) {
+		if(deaP.getModelType() == DEAModelType.BCCI) {
 			ReturnSol.Objectives[i] = Sol.Objective;
 			ReturnSol.Weights[i] = Sol.Weights;
 		}
@@ -264,13 +208,13 @@ public  class CCR {
 		Constraints.add(ConstraintRow);
 		
 		//Changing RHS & SolverEqTypes
-		RHS2 = new double[NbVariables + 1];
+		RHS2 = new double[NbVariables + 2];
 		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-		RHS2[NbVariables] = Sol.Objective;
+		RHS2[NbVariables + 1] = Sol.Objective;
 		
-		SolverEqualityType = new int[NbVariables + 1];
-		for(int k = 0; k < NbVariables + 1; k++) {
-			SolverEqualityType[k] = LpSolve.EQ;
+		SolverEqualityType = new int[NbVariables + 2];
+		for(int j = 0; j < NbVariables + 2; j++) {
+			SolverEqualityType[j] = LpSolve.EQ;
 		}
 		
 		
@@ -289,7 +233,7 @@ public  class CCR {
 		}
 		
 		//Collect information from Phase II (Theta)
-		if(deaP.getModelType() == DEAModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
+		if(deaP.getModelType() == DEAModelType.BCCI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
 			System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
 			System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 		}
@@ -302,7 +246,7 @@ public  class CCR {
 			}
 		}
 		
-		if(deaP.getModelType() == DEAModelType.CCRI) {
+		if(deaP.getModelType() == DEAModelType.BCCI) {
 			for (int j = 0; j < NbVariables; j++) {
 				if(deaP.getVariableType(j) == DEAVariableType.Input) {
 					//Projections

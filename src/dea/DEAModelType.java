@@ -25,6 +25,13 @@ public enum DEAModelType {
 			DEAModelOrientation.OutputOriented,
 			DEAEfficiencyType.TECH,
 			DEAReturnToScale.Constant),
+	BCCI ("The Banker Charnes and Cooper Model called BCC." +
+			"This model was first introduced in 1984 to introduce Variable Returns to Scale (the CCR model" +
+			"only assumed Constant RTS). The only difference with the CCR model is the convexity constraint" +
+			"e*Lambdas = 1 / or uo in the multiplier form.",
+			DEAModelOrientation.InputOriented,
+			DEAEfficiencyType.TECH,
+			DEAReturnToScale.Variable),
 	SBM ("The Slack Based Model first (SBM) introduced by Tone (1997, 2001). " +
 			"The model assumes constant RTS and is non-oriented." +
 			"The model is also both unit invariant in respect to the unit of measurement and" +
