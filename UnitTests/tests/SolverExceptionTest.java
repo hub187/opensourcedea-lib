@@ -68,35 +68,33 @@ public class SolverExceptionTest {
 	
 	@Test
 	public void testLinearSolverException() {
-	
-	tester.setModelType(DEAModelType.CCRI);
-//	tester.setDMUNames(TestDMUNames);
-//	//tester.setModelOrientation(DEAModelOrientation.InputOriented);
-//	tester.setVariableNames(TestVariableNames);
-//	tester.setVariableTypes(TestVariableTypes);
-//	tester.setDataMatrix(TestDataMatrix);
-//	
-//	String[] variableNames = new String[3];
-//	tester.setVariableNames(variableNames);
-	
-	ArrayList<double[]> Constraints = new ArrayList<double []>();
-	double[] ObjF = new double [4];
-	double[] RHS = new double [5]; //RHS Phase I
-	
-	int[] SolvEqType = new int[5];
-//	for(int i = 0; i < 5; i++) {
-//		SolvEqType
-//	}
-	
-	//This will purposely FAIL!
-	try {
-		Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolvEqType);
-	}
-	catch (DEAException e) {
-		assertSame(e.getMessage(), "The linear solver lpsolve encountered an error. This is likely caused by inconsistencies in the data sent to the Lpsolve.solveLPProblem method.");
-	}
-
-	
+		
+		tester.setModelType(DEAModelType.CCRI);
+	//	tester.setDMUNames(TestDMUNames);
+	//	//tester.setModelOrientation(DEAModelOrientation.InputOriented);
+	//	tester.setVariableNames(TestVariableNames);
+	//	tester.setVariableTypes(TestVariableTypes);
+	//	tester.setDataMatrix(TestDataMatrix);
+	//	
+	//	String[] variableNames = new String[3];
+	//	tester.setVariableNames(variableNames);
+		
+		ArrayList<double[]> Constraints = new ArrayList<double []>();
+		double[] ObjF = new double [4];
+		double[] RHS = new double [5]; //RHS Phase I
+		
+		int[] SolvEqType = new int[5];
+	//	for(int i = 0; i < 5; i++) {
+	//		SolvEqType
+	//	}
+		
+		//This will purposely FAIL!
+		try {
+			Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolvEqType);
+		}
+		catch (DEAException e) {
+			assertSame(e.getMessage(), "The linear solver lpsolve encountered an error. This is likely caused by inconsistencies in the data sent to the Lpsolve.solveLPProblem method.");
+		}
 	}
 	
 }

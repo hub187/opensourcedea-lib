@@ -296,6 +296,38 @@ public class DEAProblemTest {
 		
 	}
 	
+	@Test
+	public void testRTSBoundsNotSet() {
+		
+		tester.setModelType(DEAModelType.SBMGRS);
+		tester.setDMUNames(TestDMUNames);
+		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
+		tester.setVariableNames(TestVariableNames);
+		tester.setVariableTypes(TestVariableTypes);
+		tester.setDataMatrix(TestDataMatrix);
+		
+		String[] variableNames = new String[3];
+		tester.setVariableNames(variableNames);
+		
+		
+		for (DEAModelType mt : DEAModelType.values())
+			if(mt == DEAModelType.DRSI || mt == DEAModelType.DRSO ||
+					mt == DEAModelType.GRSI || mt == DEAModelType.GRSO ||
+					mt == DEAModelType.IRSI || mt == DEAModelType.IRSO ||
+					mt == DEAModelType.SBMGRS || mt == DEAModelType.SBMIGRS ||
+					mt == DEAModelType.SBMOGRS) {
+				try {
+					tester.solve();
+				}
+				catch (DEAException e) {
+					assertSame(e.getMessage(), "RTS Bounds not set correctly!");
+				}
+			}
+		
+		
+		
+	}
+	
 	
 	
 }

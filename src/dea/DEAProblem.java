@@ -385,25 +385,9 @@ public class DEAProblem {
 	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
 	 * methods).
 	 */
-	public void solve() throws DEAException, MissingData {
-		/* Checking whether data is OK.
-		 * Checks are too simple to deserve refactoring.*/
+	public void solve() throws DEAException, MissingData, InconsistentNoOfDMUs, InconsistentNoOfVariables {
 		
-		if(this._DataMatrix == null || this._DMUName == null || this._ModelType == null ||
-				this._VariableName == null || this._VariableType == null) {
-			//MissingData e = new MissingData("some text to describe the error");
-			throw new MissingData();
-		}
-		
-		int lenX = this._DataMatrix[0].length;
-		if(lenX != this._VariableName.length || lenX != this._VariableType.length) {
-			throw new InconsistentNoOfVariables();
-		}
-		
-		int lenY = this._DataMatrix.length;
-		if(lenY != this._DMUName.length) {
-			throw new InconsistentNoOfDMUs();
-		}
+		checkDataBeforeSolving();
 		
 		try {
 			switch (this._ModelType) {
@@ -440,10 +424,36 @@ public class DEAProblem {
 		
 		
 	}
-	
-	
 
 
+	private void checkDataBeforeSolving() throws MissingData,
+			InconsistentNoOfVariables, InconsistentNoOfDMUs {
+		if(this._DataMatrix == null || this._DMUName == null || this._ModelType == null ||
+				this._VariableName == null || this._VariableType == null) {
+			//MissingData e = new MissingData("some text to describe the error");
+			throw new MissingData();
+		}
+		
+		int lenX = this._DataMatrix[0].length;
+		if(lenX != this._VariableName.length || lenX != this._VariableType.length) {
+			throw new InconsistentNoOfVariables();
+		}
+		
+		int lenY = this._DataMatrix.length;
+		if(lenY != this._DMUName.length) {
+			throw new InconsistentNoOfDMUs();
+		}
+		
+		if(this.getModelType() == DEAModelType.DRSI || this.getModelType() == DEAModelType.DRSO ||
+				this.getModelType() == DEAModelType.IRSI || this.getModelType() == DEAModelType.IRSO ||
+				this.getModelType() == DEAModelType.GRSI || this.getModelType() == DEAModelType.GRSO ||
+				this.getModelType() == DEAModelType.SBMGRS || this.getModelType() == DEAModelType.SBMOGRS) {
+			if(this.RTSUpperBound == 0) {
+				throw new MissingData("RTS Bounds not set correctly!");
+			}
+		}
+	}
+	
 	
 	 //////////////////////////////////////////////////////////////////////////////
 	//						Get Problem Solution								//

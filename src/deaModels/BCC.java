@@ -88,31 +88,23 @@ public  class BCC {
 		 //		Solve Phase I		//
 		/////////////////////////////
 		
-		//Build model for Phase I
-
-		/*
-		 * The model is built with an array as follows:
-		 * 
-		 * 	Variable:		Theta	  Lambda 1   .....	  Lambda n      Slack 1  ...  Slack p		DIR		RHS
-		 *  
-		 *  Obj Coeff:		  1		     0       .....       0		      0      ...     0			 
-		 *  
-		 *  DMU1 (input)   -Input1 1  Input1 1   .....     Input1 n       1      ...     0			 E		 0
-		 *  DMUi (input)   -Inputi 1  Inputi 1   .....     Inputi n       0      ...     0			 E		 0
-		 *  DMUp (output)     0	      Outputp 1  .....     Outputp n      0      ...    -1			 E	  Output p 1
-		 *  Convex Const	  0			1		 .....		  1			  0		 ...	 0			 E		 1
-		 * 
-		 *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
-		 *  (e.g. -Inputi 1 being the ith input of DMU1).
-		 */
 		
 		
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
-		double[] RHS1 = new double [NbVariables + 1]; //RHS Phase I
-		double[] RHS2;// = new double [NbVariables]; //RHS Phase II
-		int[] SolverEqualityType = new int[NbVariables + 1];
-
+		double[] RHS1;
+		int[] SolverEqualityType;
+		
+		if(deaP.getModelType() == DEAModelType.BCCI ||
+				deaP.getModelType() == DEAModelType.BCCO){
+			RHS1 = new double [NbVariables + 1]; //RHS Phase I
+			SolverEqualityType = new int[NbVariables + 1];
+		}
+		else /* GRS, IRS, DRS, need one extra row for second convexity constraint*/ {
+			RHS1 = new double [NbVariables + 2]; //RHS Phase I
+			SolverEqualityType = new int[NbVariables + 2];
+		}
+		
 		for (int j = 0; j <= NbVariables; j++) {
 			
 			//Build Model for each DMU
@@ -121,7 +113,7 @@ public  class BCC {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
 			if(j < NbVariables) {
-				if(deaP.getModelType() == DEAModelType.BCCI){
+				if(deaP.getModelType() == DEAModelType.BCCI) {
 					if (deaP.getVariableType(j) == DEAVariableType.Input) {
 						ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
 					}
@@ -129,7 +121,7 @@ public  class BCC {
 						ConstraintRow[0] = 0;
 					}
 				}
-				else {
+				else if(deaP.getModelType() == DEAModelType.BCCO) {
 					if (deaP.getVariableType(j) == DEAVariableType.Output) {
 						ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
 					}
@@ -137,6 +129,10 @@ public  class BCC {
 						ConstraintRow[0] = 0;
 					}
 				}
+				else /* GRS, IRS, DRS, need one extra row for second convexity constraint*/ {
+					
+				}
+				
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);
 				//and slacks
@@ -240,7 +236,7 @@ public  class BCC {
 		Constraints.add(ConstraintRow);
 		
 		//Changing RHS & SolverEqTypes
-		RHS2 = new double[NbVariables + 2];
+		double[] RHS2 = new double[NbVariables + 2];
 		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
 		RHS2[NbVariables + 1] = Sol.Objective;
 		
