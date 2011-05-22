@@ -259,8 +259,19 @@ public  class BCC {
 			e1.printStackTrace();
 		}
 		
-		ReturnSol.Weights[i] = Sol.Weights;
-
+		try {
+			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+				ReturnSol.Weights[i] = Sol.Weights;
+			}
+			else {
+				ReturnSol.Weights[i] = new double[Sol.Weights.length];
+				for(int k = 0; k < Sol.Weights.length; k++) {
+					ReturnSol.Weights[i][k] = Sol.Weights[k] * -1;
+				}
+			}
+		} catch (MissingData e1) {
+			e1.printStackTrace();
+		}
 		
 		checkSolverStatus(ReturnSol, Sol);
 		
