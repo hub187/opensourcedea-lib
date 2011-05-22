@@ -311,7 +311,9 @@ public class DEAProblemTest {
 		
 		
 		for (DEAModelType mt : DEAModelType.values())
-			if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
+			if(mt.getDEAReturnToScale() == DEAReturnToScale.General ||
+					mt.getDEAReturnToScale() == DEAReturnToScale.Increasing ||
+					mt.getDEAReturnToScale() == DEAReturnToScale.Decreasing) {
 				try {
 					tester.setModelType(mt);
 					tester.solve();
@@ -320,12 +322,37 @@ public class DEAProblemTest {
 					assertSame(e.getMessage(), "RTS Bounds not set correctly!");
 				}
 			}
-		
-		
-		
 	}
 	
+	@Test
+	public void testGetModelEfficiencyType() {
+		tester.setModelType(DEAModelType.SBM);
+		try {
+			assertSame(tester.getModelEfficiencyType(), DEAEfficiencyType.MIX);
+		} catch (MissingData e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@Test
+	public void testGetModelOrientation() {
+		tester.setModelType(DEAModelType.SBM);
+		try {
+			assertSame(tester.getModelOrientation(), DEAModelOrientation.NonOriented);
+		} catch (MissingData e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGetModelRTS() {
+		tester.setModelType(DEAModelType.SBM);
+		try {
+			assertSame(tester.getModelRTS(), DEAReturnToScale.Constant);
+		} catch (MissingData e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
 

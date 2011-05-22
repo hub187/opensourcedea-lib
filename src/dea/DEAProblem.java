@@ -378,33 +378,58 @@ public class DEAProblem {
 	 * variable in your class directly and access it (otherwise, accessing the methods below would
 	 * create a new DEAModelType each time.*/
 	/**
-	 * This method return the DEA Model Orientation (Input, Output or Non oriented).
+	 * This method return the DEA Model Orientation (Input, Output or Non oriented). This property cannot
+	 * be set as it is a inherent property of the DEAModelType of the DEA Problem. In order to set
+	 * the ModelOrientation property, it is necessary to set the corresponding DEAModelType.
 	 * @return The DEAModelOrientation of the DEA Problem.
+	 * @throws MissingData Thrown if the DEAModelType is not set.
 	 */
-	public DEAModelOrientation getModelOrientation() {
-		DEAModelType mt = this.getModelType();
-		DEAModelOrientation mo = mt.getOrientation();
-		return mo;		
+	public DEAModelOrientation getModelOrientation() throws MissingData {
+		if(this.getModelType() != null) {
+			DEAModelType mt = this.getModelType();
+			DEAModelOrientation mo = mt.getOrientation();
+			return mo;
+		}
+		else {
+			throw new MissingData("The DEA Model Type is not set!");
+		}
+			
 	}
 	
 	/**
-	 * This method return the DEA Model Efficiency Type (e.g. MIX or TECH).
+	 * This method return the DEA Model Efficiency Type (e.g. MIX or TECH). This property cannot
+	 * be set as it is a inherent property of the DEAModelType of the DEA Problem. In order to set
+	 * the ModelEfficiencyType property, it is necessary to set the corresponding DEAModelType.
 	 * @return The DEAEfficiencyType of the DEA Problem.
+	 * @throws MissingData Thrown if the DEAModelType is not set.
 	 */
-	public DEAEfficiencyType getModelEfficiencyType() {
-		DEAModelType mt = this.getModelType();
-		DEAEfficiencyType me = mt.getDEAEfficiencyType();
-		return me;		
+	public DEAEfficiencyType getModelEfficiencyType() throws MissingData {
+		if(this.getModelType() != null) {
+			DEAModelType mt = this.getModelType();
+			DEAEfficiencyType me = mt.getDEAEfficiencyType();
+			return me;
+		}
+		else {
+			throw new MissingData("The DEA Model Type is not set!");
+		}
 	}
 	
 	/**
-	 * This method return the DEA Model RTS Type (e.g. Constant, Variable, Increasing...).
+	 * This method return the DEA Model RTS Type (e.g. Constant, Variable, Increasing...). This property cannot
+	 * be set as it is a inherent property of the DEAModelType of the DEA Problem. In order to set
+	 * the DEAReturnToScale property, it is necessary to set the corresponding DEAModelType.
 	 * @return The DEAReturnToScale of the DEA Problem.
+	 * @throws MissingData Thrown if the DEAModelType is not set. 
 	 */
-	public DEAReturnToScale getModelRTS() {
-		DEAModelType mt = this.getModelType();
-		DEAReturnToScale mrts = mt.getDEAReturnToScale();
-		return mrts;
+	public DEAReturnToScale getModelRTS() throws MissingData {
+		if(this.getModelType() != null) {
+			DEAModelType mt = this.getModelType();
+			DEAReturnToScale mrts = mt.getDEAReturnToScale();
+			return mrts;
+		}
+		else {
+			throw new MissingData("The DEA Model Type is not set!");
+		}
 	}
 	
 	 //////////////////////////////////////////////////////////////////////////
@@ -432,6 +457,18 @@ public class DEAProblem {
 				case BCCI: this._Solution = BCC.solveBCC(this); break;
 				
 				case BCCO: this._Solution = BCC.solveBCC(this); break;
+				
+				case GRSI: this._Solution = BCC.solveBCC(this); break;
+				
+				case GRSO: this._Solution = BCC.solveBCC(this); break;
+				
+				case IRSI: this._Solution = BCC.solveBCC(this); break;
+				
+				case IRSO: this._Solution = BCC.solveBCC(this); break;
+				
+				case DRSI: this._Solution = BCC.solveBCC(this); break;
+				
+				case DRSO: this._Solution = BCC.solveBCC(this); break;
 				
 				case SBM: this._Solution = SBM.solveSBM(this); break;
 				
@@ -479,7 +516,9 @@ public class DEAProblem {
 		}
 		
 		DEAModelType mt = this.getModelType();
-		if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
+		if(mt.getDEAReturnToScale() == DEAReturnToScale.General ||
+				mt.getDEAReturnToScale() == DEAReturnToScale.Increasing ||
+				mt.getDEAReturnToScale() == DEAReturnToScale.Decreasing) {
 			if(this.RTSUpperBound == 0) {
 				throw new MissingData("RTS Bounds not set correctly!");
 			}

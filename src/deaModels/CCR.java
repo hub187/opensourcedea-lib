@@ -319,12 +319,12 @@ public  class CCR {
 			for (int j = 0; j < NbVariables; j++) {
 				if(deaP.getVariableType(j) == DEAVariableType.Output) {
 					//Projections
-					ReturnSol.Projections[i] [j] = ReturnSol.Objectives[i] * deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
+					ReturnSol.Projections[i] [j] = ReturnSol.Objectives[i] * deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
 				}
 				else {
 					//Projections
 					//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-					ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+					ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
 				}
 			}
 		}
