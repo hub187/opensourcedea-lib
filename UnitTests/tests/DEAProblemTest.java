@@ -311,9 +311,7 @@ public class DEAProblemTest {
 		
 		
 		for (DEAModelType mt : DEAModelType.values())
-			if(mt.getDEAReturnToScale() == DEAReturnToScale.General ||
-					mt.getDEAReturnToScale() == DEAReturnToScale.Increasing ||
-					mt.getDEAReturnToScale() == DEAReturnToScale.Decreasing) {
+			if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
 				try {
 					tester.setModelType(mt);
 					tester.solve();

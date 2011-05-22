@@ -29,6 +29,7 @@ import deaModels.*;
 import java.util.ArrayList;
 
 
+
 /**
  *
  * <p>
@@ -462,13 +463,29 @@ public class DEAProblem {
 				
 				case GRSO: this._Solution = BCC.solveBCC(this); break;
 				
-				case IRSI: this._Solution = BCC.solveBCC(this); break;
+				case IRSI:
+					this.setRTSLowerBound(1);
+					this.setRTSUpperBound(1E30); //LpSolve cannot solve with Double.POSITIVE_INFINITY (numerical instability => model is infeasible, last best value of -1e+30)
+					this._Solution = BCC.solveBCC(this);
+					break;
 				
-				case IRSO: this._Solution = BCC.solveBCC(this); break;
+				case IRSO:
+					this.setRTSLowerBound(1);
+					this.setRTSUpperBound(1E30);
+					this._Solution = BCC.solveBCC(this);
+					break;
 				
-				case DRSI: this._Solution = BCC.solveBCC(this); break;
+				case DRSI:
+					this.setRTSLowerBound(0);
+					this.setRTSUpperBound(1);
+					this._Solution = BCC.solveBCC(this);
+					break;
 				
-				case DRSO: this._Solution = BCC.solveBCC(this); break;
+				case DRSO:
+					this.setRTSLowerBound(0);
+					this.setRTSUpperBound(1);
+					this._Solution = BCC.solveBCC(this);
+					break;
 				
 				case SBM: this._Solution = SBM.solveSBM(this); break;
 				
@@ -516,9 +533,7 @@ public class DEAProblem {
 		}
 		
 		DEAModelType mt = this.getModelType();
-		if(mt.getDEAReturnToScale() == DEAReturnToScale.General ||
-				mt.getDEAReturnToScale() == DEAReturnToScale.Increasing ||
-				mt.getDEAReturnToScale() == DEAReturnToScale.Decreasing) {
+		if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
 			if(this.RTSUpperBound == 0) {
 				throw new MissingData("RTS Bounds not set correctly!");
 			}
