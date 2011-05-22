@@ -373,6 +373,40 @@ public class DEAProblem {
 	}
 	
 	
+	/* If your class needs to access the following DEAModelType properties a numerous number of times
+	 * and if efficiency is key to your problem, it would be slightly quicker to create a DEAModelType
+	 * variable in your class directly and access it (otherwise, accessing the methods below would
+	 * create a new DEAModelType each time.*/
+	/**
+	 * This method return the DEA Model Orientation (Input, Output or Non oriented).
+	 * @return The DEAModelOrientation of the DEA Problem.
+	 */
+	public DEAModelOrientation getModelOrientation() {
+		DEAModelType mt = this.getModelType();
+		DEAModelOrientation mo = mt.getOrientation();
+		return mo;		
+	}
+	
+	/**
+	 * This method return the DEA Model Efficiency Type (e.g. MIX or TECH).
+	 * @return The DEAEfficiencyType of the DEA Problem.
+	 */
+	public DEAEfficiencyType getModelEfficiencyType() {
+		DEAModelType mt = this.getModelType();
+		DEAEfficiencyType me = mt.getDEAEfficiencyType();
+		return me;		
+	}
+	
+	/**
+	 * This method return the DEA Model RTS Type (e.g. Constant, Variable, Increasing...).
+	 * @return The DEAReturnToScale of the DEA Problem.
+	 */
+	public DEAReturnToScale getModelRTS() {
+		DEAModelType mt = this.getModelType();
+		DEAReturnToScale mrts = mt.getDEAReturnToScale();
+		return mrts;
+	}
+	
 	 //////////////////////////////////////////////////////////////////////////
 	//								Solve Problem							//
    //////////////////////////////////////////////////////////////////////////
@@ -444,10 +478,8 @@ public class DEAProblem {
 			throw new InconsistentNoOfDMUs();
 		}
 		
-		if(this.getModelType() == DEAModelType.DRSI || this.getModelType() == DEAModelType.DRSO ||
-				this.getModelType() == DEAModelType.IRSI || this.getModelType() == DEAModelType.IRSO ||
-				this.getModelType() == DEAModelType.GRSI || this.getModelType() == DEAModelType.GRSO ||
-				this.getModelType() == DEAModelType.SBMGRS || this.getModelType() == DEAModelType.SBMOGRS) {
+		DEAModelType mt = this.getModelType();
+		if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
 			if(this.RTSUpperBound == 0) {
 				throw new MissingData("RTS Bounds not set correctly!");
 			}

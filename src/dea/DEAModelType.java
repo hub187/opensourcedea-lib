@@ -45,42 +45,42 @@ public enum DEAModelType {
 			"Setting e*Lambdas = 1 is equivalent to the BCC model.",
 			DEAModelOrientation.InputOriented,
 			DEAEfficiencyType.TECH,
-			DEAReturnToScale.Variable),
+			DEAReturnToScale.General),
 	GRSO ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
 			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= Positive_Infinity." +
 			"Setting e*Lambdas = 1 is equivalent to the BCC model.",
 			DEAModelOrientation.OutputOriented,
 			DEAEfficiencyType.TECH,
-			DEAReturnToScale.Variable),
+			DEAReturnToScale.General),
 	IRSI ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow increasing Returns to Scale." +
 			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
 			"1 <= e*Lambdas",
 			DEAModelOrientation.InputOriented,
 			DEAEfficiencyType.TECH,
-			DEAReturnToScale.Variable),
+			DEAReturnToScale.General),
 	IRSO ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow increasing Returns to Scale." +
 			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
 			"1 <= e*Lambdas",
 			DEAModelOrientation.OutputOriented,
 			DEAEfficiencyType.TECH,
-			DEAReturnToScale.Variable),
+			DEAReturnToScale.General),
 	DRSI ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow decreasing Returns to Scale." +
 			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= 1.",
 			DEAModelOrientation.InputOriented,
 			DEAEfficiencyType.TECH,
-			DEAReturnToScale.Variable),
+			DEAReturnToScale.General),
 	DRSO ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow decreasing Returns to Scale." +
 			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= 1.",
 			DEAModelOrientation.OutputOriented,
 			DEAEfficiencyType.TECH,
-			DEAReturnToScale.Variable),
+			DEAReturnToScale.General),
 	SBM ("The Slack Based Model first (SBM) introduced by Tone (1997, 2001). " +
 			"The model assumes constant RTS and is non-oriented." +
 			"The model is also both unit invariant in respect to the unit of measurement and" +

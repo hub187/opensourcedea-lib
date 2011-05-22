@@ -94,6 +94,7 @@ public  class BCC {
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
 		double[] RHS1;
 		int[] SolverEqualityType;
+		DEAModelType mt = deaP.getModelType();
 		
 		if(deaP.getModelType() == DEAModelType.BCCI ||
 				deaP.getModelType() == DEAModelType.BCCO){
@@ -113,7 +114,7 @@ public  class BCC {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
 			if(j < NbVariables) {
-				if(deaP.getModelType() == DEAModelType.BCCI) {
+				if(mt.getOrientation() == DEAModelOrientation.InputOriented) {// deaP.getModelType() == DEAModelType.BCCI) {
 					if (deaP.getVariableType(j) == DEAVariableType.Input) {
 						ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
 					}
@@ -121,7 +122,7 @@ public  class BCC {
 						ConstraintRow[0] = 0;
 					}
 				}
-				else if(deaP.getModelType() == DEAModelType.BCCO) {
+				else { //if(deaP.getModelType() == DEAModelType.BCCO) {
 					if (deaP.getVariableType(j) == DEAVariableType.Output) {
 						ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
 					}
@@ -129,9 +130,7 @@ public  class BCC {
 						ConstraintRow[0] = 0;
 					}
 				}
-				else /* GRS, IRS, DRS, need one extra row for second convexity constraint*/ {
-					
-				}
+
 				
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);

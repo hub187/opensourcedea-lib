@@ -311,12 +311,9 @@ public class DEAProblemTest {
 		
 		
 		for (DEAModelType mt : DEAModelType.values())
-			if(mt == DEAModelType.DRSI || mt == DEAModelType.DRSO ||
-					mt == DEAModelType.GRSI || mt == DEAModelType.GRSO ||
-					mt == DEAModelType.IRSI || mt == DEAModelType.IRSO ||
-					mt == DEAModelType.SBMGRS || mt == DEAModelType.SBMIGRS ||
-					mt == DEAModelType.SBMOGRS) {
+			if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
 				try {
+					tester.setModelType(mt);
 					tester.solve();
 				}
 				catch (DEAException e) {

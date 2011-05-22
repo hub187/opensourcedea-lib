@@ -8,5 +8,5 @@ package dea;
  *
  */
 public enum DEAReturnToScale {
-	Constant, Variable, General;
+	Constant, Variable, General, Increasing, Decreasing;
 }
