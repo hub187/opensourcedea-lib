@@ -101,105 +101,129 @@ public class LibraryTestSBMO {
 		tester.setDMUNames(TestData.createTestDMUNames());
 	}
 	
-	private ArrayList<ArrayList<Integer>> getTestReferenceSet() {
-		ArrayList<ArrayList<Integer>> ReferenceSet = new ArrayList<ArrayList<Integer>>();
+	private ArrayList<Integer>[] getValidatedReferenceSet() {
+		@SuppressWarnings("unchecked")
+		ArrayList<Integer>[] ReferenceSet = (ArrayList<Integer>[])new ArrayList[5];
 		
-		ArrayList<Integer> Array0 = new ArrayList<Integer>();
-		Array0.add(5);
-		Array0.add(6);
-		ReferenceSet.add(Array0);
+		ReferenceSet[0] = new ArrayList<Integer>();
+		ReferenceSet[0].add(5);
+		ReferenceSet[0].add(6);
 		
-		ArrayList<Integer> Array1 = new ArrayList<Integer>();
-		Array1.add(5);
-		Array1.add(18);
-		ReferenceSet.add(Array1);
+		ReferenceSet[1] = new ArrayList<Integer>();
+		ReferenceSet[1].add(5);
+		ReferenceSet[1].add(18);
 		
-		ArrayList<Integer> Array2 = new ArrayList<Integer>();
-		Array2.add(5);
-		Array2.add(16);
-		Array2.add(18);
-		ReferenceSet.add(Array2);
-				
-		ArrayList<Integer> Array3 = new ArrayList<Integer>();
-		Array3.add(16);
-		Array3.add(18);
-		ReferenceSet.add(Array3);
+		ReferenceSet[2] = new ArrayList<Integer>();
+		ReferenceSet[2].add(5);
+		ReferenceSet[2].add(16);
+		ReferenceSet[2].add(18);
 		
-		ArrayList<Integer> Array4 = new ArrayList<Integer>();
-		Array4.add(5);
-		Array4.add(6);
-		ReferenceSet.add(Array4);
+		ReferenceSet[3] = new ArrayList<Integer>();
+		ReferenceSet[3].add(16);
+		ReferenceSet[3].add(18);
 		
-		ArrayList<Integer> Array5 = new ArrayList<Integer>();
-		Array5.add(5);
-		ReferenceSet.add(Array5);
+		ReferenceSet[4] = new ArrayList<Integer>();
+		ReferenceSet[4].add(5);
+		ReferenceSet[4].add(6);
 		
-		ArrayList<Integer> Array6 = new ArrayList<Integer>();
-		Array6.add(6);
-		ReferenceSet.add(Array6);
 		
-		ArrayList<Integer> Array7 = new ArrayList<Integer>();
-		Array7.add(5);
-		Array7.add(18);
-		ReferenceSet.add(Array7);
-		
-		ArrayList<Integer> Array8 = new ArrayList<Integer>();
-		Array8.add(5);
-		Array8.add(6);
-		ReferenceSet.add(Array8);
-		
-		ArrayList<Integer> Array9 = new ArrayList<Integer>();
-		Array9.add(16);
-		ReferenceSet.add(Array9);
-		
-		ArrayList<Integer> Array10 = new ArrayList<Integer>();
-		Array10.add(5);
-		Array10.add(16);
-		Array10.add(18);
-		ReferenceSet.add(Array10);
-		
-		ArrayList<Integer> Array11 = new ArrayList<Integer>();
-		Array11.add(11);
-		ReferenceSet.add(Array11);
-		
-		ArrayList<Integer> Array12 = new ArrayList<Integer>();
-		Array12.add(5);
-		Array12.add(16);
-		Array12.add(18);
-		ReferenceSet.add(Array12);
-		
-		ArrayList<Integer> Array13 = new ArrayList<Integer>();
-		Array13.add(16);
-		Array13.add(18);
-		ReferenceSet.add(Array13);
-		
-		ArrayList<Integer> Array14 = new ArrayList<Integer>();
-		Array14.add(5);
-		Array14.add(18);
-		ReferenceSet.add(Array14);
-		
-		ArrayList<Integer> Array15 = new ArrayList<Integer>();
-		Array15.add(5);
-		Array15.add(18);
-		ReferenceSet.add(Array15);
-		
-		ArrayList<Integer> Array16 = new ArrayList<Integer>();
-		Array16.add(16);
-		ReferenceSet.add(Array16);
-		
-		ArrayList<Integer> Array17 = new ArrayList<Integer>();
-		Array17.add(5);
-		Array17.add(11);
-		Array17.add(18);
-		ReferenceSet.add(Array17);
-		
-		ArrayList<Integer> Array18 = new ArrayList<Integer>();
-		Array18.add(18);
-		ReferenceSet.add(Array18);
-		
-		ArrayList<Integer> Array19 = new ArrayList<Integer>();
-		Array19.add(16);
-		ReferenceSet.add(Array19);
+//		
+//		ArrayList<Integer> Array0 = new ArrayList<Integer>();
+//		Array0.add(5);
+//		Array0.add(6);
+//		ReferenceSet.add(Array0);
+//		
+//		ArrayList<Integer> Array1 = new ArrayList<Integer>();
+//		Array1.add(5);
+//		Array1.add(18);
+//		ReferenceSet.add(Array1);
+//		
+//		ArrayList<Integer> Array2 = new ArrayList<Integer>();
+//		Array2.add(5);
+//		Array2.add(16);
+//		Array2.add(18);
+//		ReferenceSet.add(Array2);
+//				
+//		ArrayList<Integer> Array3 = new ArrayList<Integer>();
+//		Array3.add(16);
+//		Array3.add(18);
+//		ReferenceSet.add(Array3);
+//		
+//		ArrayList<Integer> Array4 = new ArrayList<Integer>();
+//		Array4.add(5);
+//		Array4.add(6);
+//		ReferenceSet.add(Array4);
+//		
+//		ArrayList<Integer> Array5 = new ArrayList<Integer>();
+//		Array5.add(5);
+//		ReferenceSet.add(Array5);
+//		
+//		ArrayList<Integer> Array6 = new ArrayList<Integer>();
+//		Array6.add(6);
+//		ReferenceSet.add(Array6);
+//		
+//		ArrayList<Integer> Array7 = new ArrayList<Integer>();
+//		Array7.add(5);
+//		Array7.add(18);
+//		ReferenceSet.add(Array7);
+//		
+//		ArrayList<Integer> Array8 = new ArrayList<Integer>();
+//		Array8.add(5);
+//		Array8.add(6);
+//		ReferenceSet.add(Array8);
+//		
+//		ArrayList<Integer> Array9 = new ArrayList<Integer>();
+//		Array9.add(16);
+//		ReferenceSet.add(Array9);
+//		
+//		ArrayList<Integer> Array10 = new ArrayList<Integer>();
+//		Array10.add(5);
+//		Array10.add(16);
+//		Array10.add(18);
+//		ReferenceSet.add(Array10);
+//		
+//		ArrayList<Integer> Array11 = new ArrayList<Integer>();
+//		Array11.add(11);
+//		ReferenceSet.add(Array11);
+//		
+//		ArrayList<Integer> Array12 = new ArrayList<Integer>();
+//		Array12.add(5);
+//		Array12.add(16);
+//		Array12.add(18);
+//		ReferenceSet.add(Array12);
+//		
+//		ArrayList<Integer> Array13 = new ArrayList<Integer>();
+//		Array13.add(16);
+//		Array13.add(18);
+//		ReferenceSet.add(Array13);
+//		
+//		ArrayList<Integer> Array14 = new ArrayList<Integer>();
+//		Array14.add(5);
+//		Array14.add(18);
+//		ReferenceSet.add(Array14);
+//		
+//		ArrayList<Integer> Array15 = new ArrayList<Integer>();
+//		Array15.add(5);
+//		Array15.add(18);
+//		ReferenceSet.add(Array15);
+//		
+//		ArrayList<Integer> Array16 = new ArrayList<Integer>();
+//		Array16.add(16);
+//		ReferenceSet.add(Array16);
+//		
+//		ArrayList<Integer> Array17 = new ArrayList<Integer>();
+//		Array17.add(5);
+//		Array17.add(11);
+//		Array17.add(18);
+//		ReferenceSet.add(Array17);
+//		
+//		ArrayList<Integer> Array18 = new ArrayList<Integer>();
+//		Array18.add(18);
+//		ReferenceSet.add(Array18);
+//		
+//		ArrayList<Integer> Array19 = new ArrayList<Integer>();
+//		Array19.add(16);
+//		ReferenceSet.add(Array19);
 		
 		return ReferenceSet;
 	}
@@ -223,7 +247,11 @@ public class LibraryTestSBMO {
 		
 		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 		
-		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
+		int iter = 0;
+		for(ArrayList<Integer> testArray: getValidatedReferenceSet()) {
+			assertEquals(testArray, tester.getReferenceSet(iter));
+			iter++;
+		}
 		
 		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		

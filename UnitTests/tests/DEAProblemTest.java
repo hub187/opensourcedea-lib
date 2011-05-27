@@ -135,9 +135,48 @@ public class DEAProblemTest {
 			System.out.println(e.toString());
 		}
 		
-		assertEquals(getTestReferenceSet(), tester.getReferenceSet());
-
+		ArrayList<Integer>[] validatedRefSet = getTestReferenceSet();
+		ArrayList<Integer>[] solRefSet = tester.getReferenceSet();
+		int iter;
+		
+		//Testing getReferenceSet (all DMUs)
+		for(int i = 0; i < validatedRefSet.length; i++) {
+			iter = 0;
+			for(Integer testInt: validatedRefSet[i]) {
+				assertEquals(testInt, solRefSet[i].get(iter));
+				iter++;
+			}
+		}
+		//Test getReferenceSet (single DMU)
+		assertEquals(tester.getReferenceSet(0), validatedRefSet[0]);
+		
 	}
+	
+	
+	private ArrayList<Integer>[] getTestReferenceSet() {
+		@SuppressWarnings("unchecked")
+		ArrayList<Integer>[] ReferenceSet = (ArrayList<Integer>[])new ArrayList[5];
+		
+		ReferenceSet[0] = new ArrayList<Integer>();
+		ReferenceSet[0].add(1);
+		ReferenceSet[0].add(2);
+		
+		ReferenceSet[1] = new ArrayList<Integer>();
+		ReferenceSet[1].add(1);
+		
+		ReferenceSet[2] = new ArrayList<Integer>();
+		ReferenceSet[2].add(2);
+		
+		ReferenceSet[3] = new ArrayList<Integer>();
+		ReferenceSet[3].add(2);
+		
+		ReferenceSet[4] = new ArrayList<Integer>();
+		ReferenceSet[4].add(1);
+		ReferenceSet[4].add(2);
+				
+		return ReferenceSet;
+	}
+	
 	
 	@Test
 	public void testSetGetRTSLowerBound() {
@@ -176,7 +215,6 @@ public class DEAProblemTest {
 		try {
 			tester.setRTSUpperBound(1.2);
 		} catch (InvalidPropertyValue e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(tester.getRTSUpperBound(),1.2,0);
@@ -196,33 +234,7 @@ public class DEAProblemTest {
 	}
 	
 	
-	private ArrayList<ArrayList<Integer>> getTestReferenceSet() {
-		ArrayList<ArrayList<Integer>> ReferenceSet = new ArrayList<ArrayList<Integer>>();
-		
-		ArrayList<Integer> Array1 = new ArrayList<Integer>();
-		Array1.add(1);
-		Array1.add(2);
-		ReferenceSet.add(Array1);
-		
-		ArrayList<Integer> Array2 = new ArrayList<Integer>();
-		Array2.add(1);
-		ReferenceSet.add(Array2);
-		
-		ArrayList<Integer> Array3 = new ArrayList<Integer>();
-		Array3.add(2);
-		ReferenceSet.add(Array3);
-		
-		ArrayList<Integer> Array4 = new ArrayList<Integer>();
-		Array4.add(2);
-		ReferenceSet.add(Array4);
-		
-		ArrayList<Integer> Array5 = new ArrayList<Integer>();
-		Array5.add(1);
-		Array5.add(2);
-		ReferenceSet.add(Array5);
-		
-		return ReferenceSet;
-	}
+
 	
 	@Test
 	public void TestToSeeObjectProperties() {
