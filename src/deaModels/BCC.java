@@ -333,7 +333,14 @@ public  class BCC {
 		}
 		
 		//Collect information from Phase II (Theta)
-		System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+			if(Sol.VariableResult[lambdaPos + 1] != 0) {
+				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
+			}
+		}
+		ReturnSol.ReferenceSet[i] = refSet;
+		System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i], 0, NbDMUs);
 		System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 
 

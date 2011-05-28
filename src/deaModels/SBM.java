@@ -189,8 +189,13 @@ public class SBM {
 			}
 		}
 		
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
 		for(int j = 0; j < NbDMUs;j++){
-			ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
+			if(Sol.VariableResult[j + 1] != 0){
+				refSet.add(new NonZeroLambda(j, Sol.VariableResult[j + 1] / t));
+			}
+			ReturnSol.ReferenceSet[i] = refSet;
+			//ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
 		}
 		
 		checkSolverStatus(ReturnSol, Sol);
