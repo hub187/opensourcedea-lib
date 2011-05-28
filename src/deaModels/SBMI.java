@@ -143,18 +143,18 @@ public class SBMI {
 		}
 		
 		//Store solution
-		ReturnSol.Objectives[i] = 1 + Sol.Objective; //there was a Objective constant of 1.
+		ReturnSol.getObjectives()[i] = 1 + Sol.Objective; //there was a Objective constant of 1.
 		
 		for(int j = 0; j < NbVariables; j++) {
-			ReturnSol.Slacks[i][j] = Sol.VariableResult[NbDMUs + j];
+			ReturnSol.getSlacks()[i] [j] = Sol.VariableResult[NbDMUs + j];
 			
 			if(deaP.getVariableType(j) == DEAVariableType.Input) {
-				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1] * -1;
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
+				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1] * -1;
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlacks()[i] [j];
 			}
 			else {
-				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1];
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlacks()[i] [j];
 			}
 		}
 		
@@ -164,7 +164,7 @@ public class SBMI {
 				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
 			}
 		}
-		ReturnSol.ReferenceSet[i] = refSet;
+		ReturnSol.getReferenceSet()[i] = refSet;
 		//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
 		
 		checkSolverStatus(ReturnSol, Sol);
@@ -174,15 +174,15 @@ public class SBMI {
 			SolverResults Sol) {
 		switch(Sol.Status) {
 			case OptimalSolutionNotfound:
-				ReturnSol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
 				break;
 		
 			case UnknownError:
-				ReturnSol.Status = SolverReturnStatus.UnknownError;
+				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
 				break;
 			
 			case ModelCreationFailure:
-				ReturnSol.Status = SolverReturnStatus.ModelCreationFailure;
+				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
 				break;
 			
 			case OptimalSolutionFound:
@@ -190,8 +190,8 @@ public class SBMI {
 				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
 				 * save to store a ReturnValue of OptimalSolutionFound*/
 				
-				if(ReturnSol.Status == SolverReturnStatus.NA){
-					ReturnSol.Status = SolverReturnStatus.OptimalSolutionFound;
+				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
+					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
 				}
 				break;
 		}

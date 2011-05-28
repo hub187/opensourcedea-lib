@@ -24,9 +24,9 @@ public class LibraryTestCCRO {
 		
 		DEAPSolution CCRISol = new DEAPSolution(20, 4);
 		
-		CCRISol.Objectives  = createCCROObjectives();		
+		CCRISol.setObjectives(createCCROObjectives());		
 		
-		CCRISol.Slacks = createCCROSlacks();
+		CCRISol.setSlacks(createCCROSlacks());
 		
 		
 		return CCRISol;
@@ -109,11 +109,11 @@ public class LibraryTestCCRO {
 		DEAPSolution CheckedSol = GetCCROResults();
 		
 		//Test Objectives
-		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.0001);
+		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
 		
 		//Test Slacks
 		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-			assertArrayEquals(tester.getSlacks(i), CheckedSol.Slacks[i], 0.1);
+			assertArrayEquals(tester.getSlacks(i), CheckedSol.getSlacks()[i], 0.1);
 		}
 		
 		//int[] ranks = tester.getDMURanks(true);

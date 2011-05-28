@@ -30,7 +30,7 @@ public class LibraryTestSBMOV {
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
 		
-		DEAModelSol.Objectives  = createSBMOObjectives();		
+		DEAModelSol.setObjectives(createSBMOObjectives());		
 		
 		return DEAModelSol;
 	}
@@ -219,7 +219,7 @@ public class LibraryTestSBMOV {
 		DEAPSolution CheckedSol = GetDEAModelResults();
 		
 		
-		assertArrayEquals(tester.getObjectives(), CheckedSol.Objectives,0.00001);
+		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.00001);
 		
 		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 		

@@ -26,7 +26,7 @@ package dea;
 //import java.util.Arrays;
 
 import deaModels.*;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 
 
@@ -374,10 +374,6 @@ public class DEAProblem {
 	}
 	
 	
-	/* If your class needs to access the following DEAModelType properties a numerous number of times
-	 * and if efficiency is key to your problem, it would be slightly quicker to create a DEAModelType
-	 * variable in your class directly and access it (otherwise, accessing the methods below would
-	 * create a new DEAModelType each time.*/
 	/**
 	 * This method return the DEA Model Orientation (Input, Output or Non oriented). This property cannot
 	 * be set as it is a inherent property of the DEAModelType of the DEA Problem. In order to set
@@ -387,9 +383,7 @@ public class DEAProblem {
 	 */
 	public DEAModelOrientation getModelOrientation() throws MissingData {
 		if(this.getModelType() != null) {
-			DEAModelType mt = this.getModelType();
-			DEAModelOrientation mo = mt.getOrientation();
-			return mo;
+			return this.getModelType().getOrientation() ;
 		}
 		else {
 			throw new MissingData("The DEA Model Type is not set!");
@@ -406,9 +400,7 @@ public class DEAProblem {
 	 */
 	public DEAEfficiencyType getModelEfficiencyType() throws MissingData {
 		if(this.getModelType() != null) {
-			DEAModelType mt = this.getModelType();
-			DEAEfficiencyType me = mt.getDEAEfficiencyType();
-			return me;
+			return this.getModelType().getDEAEfficiencyType();
 		}
 		else {
 			throw new MissingData("The DEA Model Type is not set!");
@@ -424,9 +416,7 @@ public class DEAProblem {
 	 */
 	public DEAReturnToScale getModelRTS() throws MissingData {
 		if(this.getModelType() != null) {
-			DEAModelType mt = this.getModelType();
-			DEAReturnToScale mrts = mt.getDEAReturnToScale();
-			return mrts;
+			return this.getModelType().getDEAReturnToScale();
 		}
 		else {
 			throw new MissingData("The DEA Model Type is not set!");
@@ -552,7 +542,7 @@ public class DEAProblem {
 	 * @return a SolverReturnStatus
 	 */
 	public SolverReturnStatus getOptimisationStatus() {
-		return this._Solution.Status;
+		return this._Solution.getStatus();
 	}
 	
 	/**
@@ -562,8 +552,8 @@ public class DEAProblem {
 	 */
 	public double[] getObjectives() //throws DEAExceptions
 	{
-		
-		return _Solution.Objectives;
+		return _Solution.getObjectives();
+		//return _Solution.Objectives;
 	}
 	
 	/**
@@ -573,30 +563,12 @@ public class DEAProblem {
 	 */
 	public double getObjective(int DMUNumber)
 	{
-		return _Solution.Objectives[DMUNumber];
+		return _Solution.getObjectives()[DMUNumber];// _Solution.getObjectives()[DMUNumber];
 	}
 		
 
 
-//	/**
-//	 * Returns the lambdas of the specified DMU.
-//	 * @param DMUNumber The number of the DMU in the Lambda Array.
-//	 * @return A double[] corresponding to the Lambdas for the specified DMU.
-//	 */
-//	public double[] getLambdas(int DMUNumber)
-//	{
-//		return _Solution.Lambdas[DMUNumber];
-//	}
-//	
-//	/**
-//	 * Returns the lambdas for all DMUs.
-//	 * @return A double[DMUNumber] [NumberOfDMUs] corresponding to the lambdas for all the DMUs.
-//	 */
-//	public double[] [] getLambdas()
-//	{
-//		return _Solution.Lambdas;
-//	}
-//	
+	
 //	/**
 //	 * Returns the Lambda of the specified DMU and Lambda.
 //	 * @param DMUNumber The DMU Number
@@ -617,7 +589,7 @@ public class DEAProblem {
 	 */
 	public double[] getSlacks(int DMUNumber)
 	{
-		return _Solution.Slacks[DMUNumber];
+		return _Solution.getSlacks()[DMUNumber]; // .Slacks[DMUNumber];
 	}
 	
 	/**
@@ -628,7 +600,7 @@ public class DEAProblem {
 	 */
 	public double getSlacks(int DMUNumber, int VarNumber)
 	{
-		return _Solution.Slacks[DMUNumber] [VarNumber];
+		return _Solution.getSlacks()[DMUNumber] [VarNumber]; // _Solution.Slacks[DMUNumber] [VarNumber];
 	}
 	
 	/**
@@ -637,7 +609,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getSlacks()
 	{
-		return _Solution.Slacks;
+		return _Solution.getSlacks(); // Slacks;
 	}
 	
 	
@@ -649,7 +621,7 @@ public class DEAProblem {
 	 */
 	public double[] getWeight(int DMUNumber)
 	{
-		return _Solution.Weights[DMUNumber];
+		return _Solution.getWeights()[DMUNumber];
 	}
 	
 	/**
@@ -660,7 +632,7 @@ public class DEAProblem {
 	 */
 	public double getWeight(int DMUNumber, int VarNumber)
 	{
-		return _Solution.Weights[DMUNumber] [VarNumber];
+		return _Solution.getWeights()[DMUNumber] [VarNumber];
 	}
 	
 	/**
@@ -669,7 +641,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getWeight()
 	{
-		return _Solution.Weights;
+		return _Solution.getWeights();
 	}
 	
 	
@@ -681,7 +653,7 @@ public class DEAProblem {
 	 */
 	public double[] getProjections(int DMUNumber)
 	{
-		return _Solution.Projections[DMUNumber];
+		return _Solution.getProjections()[DMUNumber];
 	}
 	
 	/**
@@ -690,7 +662,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getProjections()
 	{
-		return _Solution.Projections;
+		return _Solution.getProjections();
 	}
 	
 
@@ -706,11 +678,11 @@ public class DEAProblem {
 	 */	
 	public double[] getProjectionPercentages(int DMUNumber)
 	{
-		double[] ProjectionPercentages = new double[this._Solution.Projections[0].length];
+		double[] ProjectionPercentages = new double[this._Solution.getProjections()[0].length];
 		double VariableValue;
 		double[] Projections = this.getProjections(DMUNumber);
 		//Loop through each variable
-		for(int i = 0; i < this._Solution.Projections[0].length; i++) {
+		for(int i = 0; i < this._Solution.getProjections()[0].length; i++) {
 			VariableValue = this.getDataMatrix(DMUNumber, i);
 			if(this.getVariableType(i) == DEAVariableType.Input) {
 				ProjectionPercentages[i] = (VariableValue -  Projections[i]) / VariableValue * -1;
@@ -730,7 +702,7 @@ public class DEAProblem {
 	{
 		
 		double[] [] ProjectionPercentages =
-			new double[this.getDMUNames().length] [this._Solution.Projections[0].length];
+			new double[this.getDMUNames().length] [this._Solution.getProjections()[0].length];
 		double VariableValue;
 		double[] Projections; 
 		//Loop through all DMUs
@@ -738,7 +710,7 @@ public class DEAProblem {
 		for(int i = 0; i < this.getDMUNames().length; i++) {
 			Projections = this.getProjections(i);
 			//Loop through each variable
-			for(int j = 0; j < this._Solution.Projections[0].length; j++) {
+			for(int j = 0; j < this._Solution.getProjections()[0].length; j++) {
 				VariableValue = this.getDataMatrix(i, j);
 				if(this.getVariableType(j) == DEAVariableType.Input) {
 					ProjectionPercentages[i] [j] = (VariableValue -  Projections[j]) / VariableValue * -1;
@@ -766,7 +738,7 @@ public class DEAProblem {
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
-		ranksArray = Rank.getRanks(this._Solution.Objectives, HighestIsOne, typeOfRanking, Precision);
+		ranksArray = Rank.getRanks(this._Solution.getObjectives(), HighestIsOne, typeOfRanking, Precision);
 		return ranksArray;
 	
 	}

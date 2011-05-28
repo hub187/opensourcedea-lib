@@ -245,14 +245,14 @@ public  class BCC {
 		//Collect information from Phase I (Theta)
 		try {
 			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) { //deaP.getModelType() == DEAModelType.BCCI) {
-				ReturnSol.Objectives[i] = Sol.Objective;
+				ReturnSol.getObjectives()[i] = Sol.Objective;
 			}
 			else {
 				if(Sol.Objective != 0) {
-					ReturnSol.Objectives[i] = 1/ Sol.Objective;
+					ReturnSol.getObjectives()[i] = 1/ Sol.Objective;
 				}
 				else {
-					ReturnSol.Objectives[i] = 0;
+					ReturnSol.getObjectives()[i] = 0;
 				}
 			}
 		} catch (MissingData e1) {
@@ -261,12 +261,12 @@ public  class BCC {
 		
 		try {
 			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
-				ReturnSol.Weights[i] = Sol.Weights;
+				ReturnSol.getWeights()[i] = Sol.Weights;
 			}
 			else {
-				ReturnSol.Weights[i] = new double[Sol.Weights.length];
+				ReturnSol.getWeights()[i] = new double[Sol.Weights.length];
 				for(int k = 0; k < Sol.Weights.length; k++) {
-					ReturnSol.Weights[i][k] = Sol.Weights[k] * -1;
+					ReturnSol.getWeights()[i][k] = Sol.Weights[k] * -1;
 				}
 			}
 		} catch (MissingData e1) {
@@ -339,9 +339,10 @@ public  class BCC {
 				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
 			}
 		}
-		ReturnSol.ReferenceSet[i] = refSet;
+		ReturnSol.getReferenceSet()[i] = refSet;
 		//System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i], 0, NbDMUs);
-		System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
+		//ReturnSol.setSlackArrayCopy(Sol.VariableResult, NbDMUs + 1, 0, NbVariables, i);
+		System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.getSlacks()[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 
 
 		for (int j = 0; j < NbVariables; j++) {
@@ -349,28 +350,28 @@ public  class BCC {
 				if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) { //deaP.getModelType() == DEAModelType.BCCI) {
 					if(deaP.getVariableType(j) == DEAVariableType.Input) {
 						//Projections
-						ReturnSol.Projections[i] [j] = ReturnSol.Objectives[i] * deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
+						ReturnSol.getProjections()[i] [j] = ReturnSol.getObjectives()[i] * deaP.getDataMatrix(i, j) - ReturnSol.getSlacks()[i] [j];
 					}
 					else {
 						//Projections
 						//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-						ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+						ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlacks()[i] [j];
 					}
 				}
 				else {
 					if(deaP.getVariableType(j) == DEAVariableType.Output) {
 						//Projections
-						if(ReturnSol.Objectives[i] != 0){
-							ReturnSol.Projections[i] [j] = (1 / ReturnSol.Objectives[i]) * deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+						if(ReturnSol.getObjectives()[i] != 0){
+							ReturnSol.getProjections()[i] [j] = (1 / ReturnSol.getObjectives()[i]) * deaP.getDataMatrix(i, j) + ReturnSol.getSlacks()[i] [j];
 						}
 						else {
-							ReturnSol.Projections[i] [j] = ReturnSol.Slacks[i] [j];
+							ReturnSol.getProjections()[i] [j] = ReturnSol.getSlacks()[i] [j];
 						}
 					}
 					else {
 						//Projections
 						//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-						ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
+						ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlacks()[i] [j];
 					}
 				}
 			} catch (MissingData e) {
@@ -388,15 +389,15 @@ public  class BCC {
 			SolverResults Sol) {
 		switch(Sol.Status) {
 			case OptimalSolutionNotfound:
-				ReturnSol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
 				break;
 		
 			case UnknownError:
-				ReturnSol.Status = SolverReturnStatus.UnknownError;
+				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
 				break;
 			
 			case ModelCreationFailure:
-				ReturnSol.Status = SolverReturnStatus.ModelCreationFailure;
+				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
 				break;
 			
 			case OptimalSolutionFound:
@@ -404,8 +405,8 @@ public  class BCC {
 				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
 				 * save to store a ReturnValue of OptimalSolutionFound*/
 				
-				if(ReturnSol.Status == SolverReturnStatus.NA){
-					ReturnSol.Status = SolverReturnStatus.OptimalSolutionFound;
+				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
+					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
 				}
 				break;
 		}

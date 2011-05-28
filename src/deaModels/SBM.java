@@ -174,18 +174,19 @@ public class SBM {
 		//STORE SOLUTION
 		double t = Sol.VariableResult[0];
 		
-		ReturnSol.Objectives[i] = Sol.Objective;
+		ReturnSol.getObjectives()[i] = Sol.Objective;
+//		ReturnSol.Objectives[i] = Sol.Objective;
 		for(int j = 0; j < NbVariables; j++) {
 			
-			ReturnSol.Slacks[i][j] = Sol.VariableResult[NbDMUs + 1 + j] / t;
+			ReturnSol.getSlacks()[i] [j] = Sol.VariableResult[NbDMUs + 1 + j] / t;
 			
 			if(deaP.getVariableType(j) == DEAVariableType.Input) {
-				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i] [j];
+				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1];
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlacks()[i] [j];//
 			}
 			else {
-				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1] * -1;
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1] * -1;
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlacks()[i] [j];
 			}
 		}
 		
@@ -194,7 +195,7 @@ public class SBM {
 			if(Sol.VariableResult[j + 1] != 0){
 				refSet.add(new NonZeroLambda(j, Sol.VariableResult[j + 1] / t));
 			}
-			ReturnSol.ReferenceSet[i] = refSet;
+			ReturnSol.getReferenceSet()[i] = refSet;
 			//ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
 		}
 		
@@ -205,15 +206,15 @@ public class SBM {
 			SolverResults Sol) {
 		switch(Sol.Status) {
 			case OptimalSolutionNotfound:
-				ReturnSol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
 				break;
 		
 			case UnknownError:
-				ReturnSol.Status = SolverReturnStatus.UnknownError;
+				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
 				break;
 			
 			case ModelCreationFailure:
-				ReturnSol.Status = SolverReturnStatus.ModelCreationFailure;
+				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
 				break;
 			
 			case OptimalSolutionFound:
@@ -221,8 +222,8 @@ public class SBM {
 				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
 				 * save to store a ReturnValue of OptimalSolutionFound*/
 				
-				if(ReturnSol.Status == SolverReturnStatus.NA){
-					ReturnSol.Status = SolverReturnStatus.OptimalSolutionFound;
+				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
+					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
 				}
 				break;
 		}

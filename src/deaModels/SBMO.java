@@ -136,18 +136,18 @@ public class SBMO {
 		}
 		
 		//Store solution
-		ReturnSol.Objectives[i] = 1 / (1 + Sol.Objective); //there was a Objective constant of 1.
+		ReturnSol.getObjectives()[i] = 1 / (1 + Sol.Objective); //there was a Objective constant of 1.
 		for(int varPos = 0; varPos < NbVariables; varPos++) {
 			
-			ReturnSol.Slacks[i][varPos] = Sol.VariableResult[NbDMUs + varPos];
+			ReturnSol.getSlacks()[i] [varPos] = Sol.VariableResult[NbDMUs + varPos];
 			
 			if(deaP.getVariableType(varPos) == DEAVariableType.Output) {
-				ReturnSol.Weights[i][varPos] = Sol.DualResult[varPos + 1] * -1;
-				ReturnSol.Projections[i] [varPos] = deaP.getDataMatrix(i, varPos) + ReturnSol.Slacks[i] [varPos];
+				ReturnSol.getWeights()[i][varPos] = Sol.DualResult[varPos + 1] * -1;
+				ReturnSol.getProjections()[i] [varPos] = deaP.getDataMatrix(i, varPos) + ReturnSol.getSlacks()[i] [varPos];
 			}
 			else {
-				ReturnSol.Weights[i][varPos] = Sol.DualResult[varPos + 1];
-				ReturnSol.Projections[i] [varPos] = deaP.getDataMatrix(i, varPos) - ReturnSol.Slacks[i][varPos]; // + ReturnSol.Slacks[i] [j];
+				ReturnSol.getWeights()[i][varPos] = Sol.DualResult[varPos + 1];
+				ReturnSol.getProjections()[i] [varPos] = deaP.getDataMatrix(i, varPos) - ReturnSol.getSlacks()[i] [varPos]; // + ReturnSol.Slacks[i] [j];
 			}
 		}
 		
@@ -157,7 +157,7 @@ public class SBMO {
 				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
 			}
 		}
-		ReturnSol.ReferenceSet[i] = refSet;
+		ReturnSol.getReferenceSet()[i] = refSet;
 		//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
 		
 		checkSolverStatus(ReturnSol, Sol);
@@ -167,15 +167,15 @@ public class SBMO {
 			SolverResults Sol) {
 		switch(Sol.Status) {
 			case OptimalSolutionNotfound:
-				ReturnSol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
 				break;
 		
 			case UnknownError:
-				ReturnSol.Status = SolverReturnStatus.UnknownError;
+				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
 				break;
 			
 			case ModelCreationFailure:
-				ReturnSol.Status = SolverReturnStatus.ModelCreationFailure;
+				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
 				break;
 			
 			case OptimalSolutionFound:
@@ -183,8 +183,8 @@ public class SBMO {
 				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
 				 * save to store a ReturnValue of OptimalSolutionFound*/
 				
-				if(ReturnSol.Status == SolverReturnStatus.NA){
-					ReturnSol.Status = SolverReturnStatus.OptimalSolutionFound;
+				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
+					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
 				}
 				break;
 		}

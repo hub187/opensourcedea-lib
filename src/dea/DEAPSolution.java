@@ -12,13 +12,13 @@ import java.util.ArrayList;
  */
 public class DEAPSolution {
 	
-	public double[] Objectives;
-	//public double[] [] Lambdas;
-	public double[] [] Slacks;
-	public ArrayList<NonZeroLambda>[] ReferenceSet;
-	public double[] [] Weights;
-	public double[] [] Projections;
-	public SolverReturnStatus Status;
+	private double[] Objectives;
+	private double[] [] Slacks;
+	private ArrayList<NonZeroLambda>[] ReferenceSet;
+	private double[] [] Weights;
+	private double[] [] Projections;
+	private SolverReturnStatus Status;
+
 	
 	
 	/**
@@ -32,21 +32,74 @@ public class DEAPSolution {
 		
 		/*The solution Attributes will be put one by one at each solver optimisation (for each DMU).
 		 * The array are initialised here for this reason.*/
-		Objectives = new double[NbDMUs];
-		//Lambdas = new double[NbDMUs] [NbDMUs];
+		setObjectives(new double[NbDMUs]);
 		Slacks = new double[NbDMUs] [NbVariables];
-		ReferenceSet = (ArrayList<NonZeroLambda>[])new ArrayList[NbDMUs];
-		Weights = new double[NbDMUs] [NbVariables];
-		Projections = new double[NbDMUs] [NbVariables];
-		Status = SolverReturnStatus.NA;
-		
-		
+		setReferenceSet((ArrayList<NonZeroLambda>[])new ArrayList[NbDMUs]);
+		setWeights(new double[NbDMUs] [NbVariables]);
+		setProjections(new double[NbDMUs] [NbVariables]);
+		setStatus(SolverReturnStatus.NA);
+
 	}
-	
 
 	
-	
+	public void setSlacks(double[] [] slacks) {
+		this.Slacks = slacks;
+	}
 
+	
+	public double[][] getSlacks() {
+		return this.Slacks;
+	}
+
+
+	public void setReferenceSet(ArrayList<NonZeroLambda>[] referenceSet) {
+		ReferenceSet = referenceSet;
+	}
+
+
+	public ArrayList<NonZeroLambda>[] getReferenceSet() {
+		return ReferenceSet;
+	}
+
+
+	public void setWeights(double[] [] weights) {
+		Weights = weights;
+	}
+
+
+	public double[] [] getWeights() {
+		return Weights;
+	}
+
+
+	public void setProjections(double[] [] projections) {
+		Projections = projections;
+	}
+
+
+	public double[] [] getProjections() {
+		return Projections;
+	}
+
+
+	public void setStatus(SolverReturnStatus status) {
+		Status = status;
+	}
+
+
+	public SolverReturnStatus getStatus() {
+		return Status;
+	}
+
+
+	public void setObjectives(double[] objectives) {
+		Objectives = objectives;
+	}
+
+
+	public double[] getObjectives() {
+		return Objectives;
+	}
 	
 	
 	
