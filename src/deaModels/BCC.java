@@ -340,7 +340,7 @@ public  class BCC {
 			}
 		}
 		ReturnSol.ReferenceSet[i] = refSet;
-		System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i], 0, NbDMUs);
+		//System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i], 0, NbDMUs);
 		System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 
 

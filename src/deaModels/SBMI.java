@@ -1,7 +1,6 @@
 package deaModels;
 
 import dea.*;
-import dea.DEASolverException;
 import linearSolver.*;
 import lpsolve.LpSolve;
 import java.util.ArrayList;
@@ -145,8 +144,8 @@ public class SBMI {
 		
 		//Store solution
 		ReturnSol.Objectives[i] = 1 + Sol.Objective; //there was a Objective constant of 1.
+		
 		for(int j = 0; j < NbVariables; j++) {
-			
 			ReturnSol.Slacks[i][j] = Sol.VariableResult[NbDMUs + j];
 			
 			if(deaP.getVariableType(j) == DEAVariableType.Input) {
@@ -159,7 +158,14 @@ public class SBMI {
 			}
 		}
 		
-		System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+			if(Sol.VariableResult[lambdaPos] != 0) {
+				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
+			}
+		}
+		ReturnSol.ReferenceSet[i] = refSet;
+		//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
 		
 		checkSolverStatus(ReturnSol, Sol);
 	}

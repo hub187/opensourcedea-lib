@@ -4,7 +4,7 @@ package tests;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 //import static org.junit.Assert.assertEquals;
 //import java.util.*;
@@ -101,26 +101,26 @@ public class LibraryTestSBM {
 		tester.setDMUNames(TestData.createTestDMUNames());
 	}
 	
-	private ArrayList<Integer>[] getValidatedReferenceSet() {
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Integer>[] ReferenceSet = (ArrayList<Integer>[])new ArrayList[5];
-		
-		ReferenceSet[0] = new ArrayList<Integer>();
-		ReferenceSet[0].add(6);
-		
-		ReferenceSet[1] = new ArrayList<Integer>();
-		ReferenceSet[1].add(5);
-		
-		ReferenceSet[2] = new ArrayList<Integer>();
-		ReferenceSet[2].add(6);
-		ReferenceSet[2].add(16);
-		
-		ReferenceSet[3] = new ArrayList<Integer>();
-		ReferenceSet[3].add(16);
-		
-		ReferenceSet[4] = new ArrayList<Integer>();
-		ReferenceSet[4].add(6);
+//	private ArrayList<Integer>[] getValidatedReferenceSet() {
+//		
+//		@SuppressWarnings("unchecked")
+//		ArrayList<Integer>[] ReferenceSet = (ArrayList<Integer>[])new ArrayList[5];
+//		
+//		ReferenceSet[0] = new ArrayList<Integer>();
+//		ReferenceSet[0].add(6);
+//		
+//		ReferenceSet[1] = new ArrayList<Integer>();
+//		ReferenceSet[1].add(5);
+//		
+//		ReferenceSet[2] = new ArrayList<Integer>();
+//		ReferenceSet[2].add(6);
+//		ReferenceSet[2].add(16);
+//		
+//		ReferenceSet[3] = new ArrayList<Integer>();
+//		ReferenceSet[3].add(16);
+//		
+//		ReferenceSet[4] = new ArrayList<Integer>();
+//		ReferenceSet[4].add(6);
 		
 //		ArrayList<Integer> Array0 = new ArrayList<Integer>();
 //		Array0.add(6);
@@ -207,9 +207,9 @@ public class LibraryTestSBM {
 //		ArrayList<Integer> Array19 = new ArrayList<Integer>();
 //		Array19.add(16);
 //		ReferenceSet.add(Array19);
-		
-		return ReferenceSet;
-	}
+//		
+//		return ReferenceSet;
+//	}
 	
 	@Test
 	public void TestSBM() {
@@ -230,11 +230,11 @@ public class LibraryTestSBM {
 		
 		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 		
-		int iter = 0;
-		for(ArrayList<Integer> testArray: getValidatedReferenceSet()) {
-			assertEquals(testArray, tester.getReferenceSet(iter));
-			iter++;
-		}
+//		int iter = 0;
+//		for(ArrayList<Integer> testArray: getValidatedReferenceSet()) {
+//			assertEquals(testArray, tester.getReferenceSet(iter));
+//			iter++;
+//		}
 		
 		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class DEAPSolution {
 	
 	public double[] Objectives;
-	public double[] [] Lambdas;
+	//public double[] [] Lambdas;
 	public double[] [] Slacks;
 	public ArrayList<NonZeroLambda>[] ReferenceSet;
 	public double[] [] Weights;
@@ -33,7 +33,7 @@ public class DEAPSolution {
 		/*The solution Attributes will be put one by one at each solver optimisation (for each DMU).
 		 * The array are initialised here for this reason.*/
 		Objectives = new double[NbDMUs];
-		Lambdas = new double[NbDMUs] [NbDMUs];
+		//Lambdas = new double[NbDMUs] [NbDMUs];
 		Slacks = new double[NbDMUs] [NbVariables];
 		ReferenceSet = (ArrayList<NonZeroLambda>[])new ArrayList[NbDMUs];
 		Weights = new double[NbDMUs] [NbVariables];

@@ -578,35 +578,35 @@ public class DEAProblem {
 		
 
 
-	/**
-	 * Returns the lambdas of the specified DMU.
-	 * @param DMUNumber The number of the DMU in the Lambda Array.
-	 * @return A double[] corresponding to the Lambdas for the specified DMU.
-	 */
-	public double[] getLambdas(int DMUNumber)
-	{
-		return _Solution.Lambdas[DMUNumber];
-	}
-	
-	/**
-	 * Returns the lambdas for all DMUs.
-	 * @return A double[DMUNumber] [NumberOfDMUs] corresponding to the lambdas for all the DMUs.
-	 */
-	public double[] [] getLambdas()
-	{
-		return _Solution.Lambdas;
-	}
-	
-	/**
-	 * Returns the Lambda of the specified DMU and Lambda.
-	 * @param DMUNumber The DMU Number
-	 * @param Lambda The Lambda Number
-	 * @return The value of the lambda for the specified DMU and Lambda
-	 */
-	public double getLambda(int DMUNumber, int Lambda)
-	{
-		return _Solution.Lambdas[DMUNumber] [Lambda];
-	}
+//	/**
+//	 * Returns the lambdas of the specified DMU.
+//	 * @param DMUNumber The number of the DMU in the Lambda Array.
+//	 * @return A double[] corresponding to the Lambdas for the specified DMU.
+//	 */
+//	public double[] getLambdas(int DMUNumber)
+//	{
+//		return _Solution.Lambdas[DMUNumber];
+//	}
+//	
+//	/**
+//	 * Returns the lambdas for all DMUs.
+//	 * @return A double[DMUNumber] [NumberOfDMUs] corresponding to the lambdas for all the DMUs.
+//	 */
+//	public double[] [] getLambdas()
+//	{
+//		return _Solution.Lambdas;
+//	}
+//	
+//	/**
+//	 * Returns the Lambda of the specified DMU and Lambda.
+//	 * @param DMUNumber The DMU Number
+//	 * @param Lambda The Lambda Number
+//	 * @return The value of the lambda for the specified DMU and Lambda
+//	 */
+//	public double getLambda(int DMUNumber, int Lambda)
+//	{
+//		return _Solution.Lambdas[DMUNumber] [Lambda];
+//	}
 	
 	
 	
@@ -775,42 +775,42 @@ public class DEAProblem {
 	 * Returns the reference set of a DEAProblem solution.
 	 * @return An ArrayList<ArrayList<Integer>> corresponding to each DMU reference set.
 	 */
-	public ArrayList<Integer>[] getReferenceSet() {
-
-		@SuppressWarnings("unchecked")
-		ArrayList<Integer>[] ReferenceSets = (ArrayList<Integer>[])new ArrayList[this._DataMatrix.length];
-		
-		//loop through all DMUs
-		for(int i = 0; i < this.getNumberOfDMUs(); i++) {
-			//loop through all lambdas
-			ReferenceSets[i] = findNonZeroLambdas(i);		
-		}
-		
-		return ReferenceSets;
-	}
-	
-	
-	public ArrayList<Integer> getReferenceSet(int DMUIndex) {
-
-		ArrayList<Integer> ReferenceSet = findNonZeroLambdas(DMUIndex);
-		return ReferenceSet;
-	}
-
-
-
-
-	private ArrayList<Integer> findNonZeroLambdas( int i) {
-		ArrayList<Integer> nonZeroLambdaIndexes = new ArrayList<Integer>();
-		for(int j = 0; j < this.getNumberOfDMUs(); j++) {
-			if(this.getLambda(i, j) > 0.00000000001) {
-				/* Might want to add a sensitivity parameter in the getReferenceSet method
-				 * instead of hard-coding it in the > above.*/
-				nonZeroLambdaIndexes.add(j);
-			}
-			
-		}
-		return nonZeroLambdaIndexes;
-	}
+//	public ArrayList<Integer>[] getReferenceSet() {
+//
+//		@SuppressWarnings("unchecked")
+//		ArrayList<Integer>[] ReferenceSets = (ArrayList<Integer>[])new ArrayList[this._DataMatrix.length];
+//		
+//		//loop through all DMUs
+//		for(int i = 0; i < this.getNumberOfDMUs(); i++) {
+//			//loop through all lambdas
+//			ReferenceSets[i] = findNonZeroLambdas(i);		
+//		}
+//		
+//		return ReferenceSets;
+//	}
+//	
+//	
+//	public ArrayList<Integer> getReferenceSet(int DMUIndex) {
+//
+//		ArrayList<Integer> ReferenceSet = findNonZeroLambdas(DMUIndex);
+//		return ReferenceSet;
+//	}
+//
+//
+//
+//
+//	private ArrayList<Integer> findNonZeroLambdas( int i) {
+//		ArrayList<Integer> nonZeroLambdaIndexes = new ArrayList<Integer>();
+//		for(int j = 0; j < this.getNumberOfDMUs(); j++) {
+//			if(this.getLambda(i, j) > 0.00000000001) {
+//				/* Might want to add a sensitivity parameter in the getReferenceSet method
+//				 * instead of hard-coding it in the > above.*/
+//				nonZeroLambdaIndexes.add(j);
+//			}
+//			
+//		}
+//		return nonZeroLambdaIndexes;
+//	}
 	
 	
 	//Calculate weighted data

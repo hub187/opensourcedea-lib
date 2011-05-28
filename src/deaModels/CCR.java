@@ -289,14 +289,25 @@ public  class CCR {
 		}
 		
 		//Collect information from Phase II (Theta)
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
 		if(deaP.getModelType() == DEAModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
-			System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
+			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+				if(Sol.VariableResult[lambdaPos + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
+				}
+			}
+			ReturnSol.ReferenceSet[i] = refSet;
+			//System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
 			System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.Slacks[i] /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
 		}
 		else {
-			for(int l = 0; l < NbDMUs; l++) {
-				ReturnSol.Lambdas[i][l] = Sol.VariableResult[l + 1] * ReturnSol.Objectives[i]; 
+			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+				if(Sol.VariableResult[lambdaPos + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1] * ReturnSol.Objectives[i]));
+				}
+				//ReturnSol.Lambdas[i][lambdaPos] = Sol.VariableResult[lambdaPos + 1] * ReturnSol.Objectives[i]; 
 			}
+			ReturnSol.ReferenceSet[i] = refSet;
 			for(int s = 0; s < NbVariables; s++) {
 				ReturnSol.Slacks[i][s] = Sol.VariableResult[NbDMUs + 1 + s] * ReturnSol.Objectives[i]; 
 			}

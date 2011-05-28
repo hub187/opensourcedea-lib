@@ -1,7 +1,6 @@
 package deaModels;
 
 import dea.*;
-import dea.DEASolverException;
 import linearSolver.*;
 import lpsolve.LpSolve;
 import java.util.ArrayList;
@@ -138,21 +137,28 @@ public class SBMO {
 		
 		//Store solution
 		ReturnSol.Objectives[i] = 1 / (1 + Sol.Objective); //there was a Objective constant of 1.
-		for(int j = 0; j < NbVariables; j++) {
+		for(int varPos = 0; varPos < NbVariables; varPos++) {
 			
-			ReturnSol.Slacks[i][j] = Sol.VariableResult[NbDMUs + j];
+			ReturnSol.Slacks[i][varPos] = Sol.VariableResult[NbDMUs + varPos];
 			
-			if(deaP.getVariableType(j) == DEAVariableType.Output) {
-				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1] * -1;
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.Slacks[i] [j];
+			if(deaP.getVariableType(varPos) == DEAVariableType.Output) {
+				ReturnSol.Weights[i][varPos] = Sol.DualResult[varPos + 1] * -1;
+				ReturnSol.Projections[i] [varPos] = deaP.getDataMatrix(i, varPos) + ReturnSol.Slacks[i] [varPos];
 			}
 			else {
-				ReturnSol.Weights[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.Projections[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.Slacks[i][j]; // + ReturnSol.Slacks[i] [j];
+				ReturnSol.Weights[i][varPos] = Sol.DualResult[varPos + 1];
+				ReturnSol.Projections[i] [varPos] = deaP.getDataMatrix(i, varPos) - ReturnSol.Slacks[i][varPos]; // + ReturnSol.Slacks[i] [j];
 			}
 		}
 		
-		System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+			if(Sol.VariableResult[lambdaPos] != 0) {
+				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
+			}
+		}
+		ReturnSol.ReferenceSet[i] = refSet;
+		//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
 		
 		checkSolverStatus(ReturnSol, Sol);
 	}
