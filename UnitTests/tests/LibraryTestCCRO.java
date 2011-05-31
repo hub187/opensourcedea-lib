@@ -113,7 +113,7 @@ public class LibraryTestCCRO {
 		
 		//Test Slacks
 		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-			assertArrayEquals(tester.getSlacks(i), CheckedSol.getSlacks()[i], 0.1);
+			assertArrayEquals(tester.getSlacks(i), CheckedSol.getSlacks(i), 0.1);
 		}
 		
 		//int[] ranks = tester.getDMURanks(true);

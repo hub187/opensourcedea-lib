@@ -26,7 +26,6 @@ public class DEAPSolution {
 	 * @param NbDMUs The number of DMUs in the DEA problem to solve.
 	 * @param NbVariables The number of variables in the DEA Problem to solve.
 	 */
-	
 	@SuppressWarnings("unchecked")
 	public DEAPSolution (int NbDMUs, int NbVariables) {
 		
@@ -42,15 +41,60 @@ public class DEAPSolution {
 	}
 
 	
-	public void setSlacks(double[] [] slacks) {
-		this.Slacks = slacks;
+	
+	public void setObjectives(double[] objectives) {
+		Objectives = objectives;
 	}
-
+	
+	public void setObjective(int DMUIndex, double ObjectiveValue) {
+		Objectives[DMUIndex] = ObjectiveValue;
+	}
+	
+	public double getObjective(int DMUIndex) {
+		return Objectives[DMUIndex];
+	}
+	
+	public double[] getObjectives() {
+		return Objectives;
+	}
+	
+	
+	
+	
+	
+	public void setSlacks(double[] [] SlackValues) {
+		this.Slacks = SlackValues;
+	}
+	
+	public void setSlacks(int DMUIndex, double[] SlackValues) {
+		this.Slacks[DMUIndex] = SlackValues;
+	}
+	
+	public void setSlack(int DMUIndex, int VarIndex, double SlackValue) {
+		this.Slacks[DMUIndex][VarIndex] = SlackValue;
+	}
+	
+	public void setSlackArrayCopy(double[] ArrayToCopyFrom, int PositionToCopyFrom, 
+			int LengthToCopy, int DMUIndex) {
+		System.arraycopy(ArrayToCopyFrom, PositionToCopyFrom, this.Slacks[DMUIndex], 0, LengthToCopy);
+	}
+	
+	public double getSlack(int DMUIndex, int VarIndex) {
+		return this.Slacks[DMUIndex][VarIndex];
+	}
+	
+	public double[] getSlacks(int DMUIndex) {
+		return this.Slacks[DMUIndex];
+	}
 	
 	public double[][] getSlacks() {
 		return this.Slacks;
 	}
 
+	
+	
+	
+	
 
 	public void setReferenceSet(ArrayList<NonZeroLambda>[] referenceSet) {
 		ReferenceSet = referenceSet;
@@ -91,15 +135,9 @@ public class DEAPSolution {
 		return Status;
 	}
 
-
-	public void setObjectives(double[] objectives) {
-		Objectives = objectives;
-	}
+	
 
 
-	public double[] getObjectives() {
-		return Objectives;
-	}
 	
 	
 	

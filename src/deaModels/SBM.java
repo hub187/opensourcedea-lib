@@ -174,19 +174,19 @@ public class SBM {
 		//STORE SOLUTION
 		double t = Sol.VariableResult[0];
 		
-		ReturnSol.getObjectives()[i] = Sol.Objective;
+		ReturnSol.setObjective(i, Sol.Objective);
 //		ReturnSol.Objectives[i] = Sol.Objective;
 		for(int j = 0; j < NbVariables; j++) {
 			
-			ReturnSol.getSlacks()[i] [j] = Sol.VariableResult[NbDMUs + 1 + j] / t;
+			ReturnSol.setSlack(i, j, Sol.VariableResult[NbDMUs + 1 + j] / t);
 			
 			if(deaP.getVariableType(j) == DEAVariableType.Input) {
 				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlacks()[i] [j];//
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);//
 			}
 			else {
 				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1] * -1;
-				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlacks()[i] [j];
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
 			}
 		}
 		

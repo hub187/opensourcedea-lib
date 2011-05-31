@@ -589,7 +589,7 @@ public class DEAProblem {
 	 */
 	public double[] getSlacks(int DMUNumber)
 	{
-		return _Solution.getSlacks()[DMUNumber]; // .Slacks[DMUNumber];
+		return _Solution.getSlacks(DMUNumber); // .Slacks[DMUNumber];
 	}
 	
 	/**
@@ -598,9 +598,9 @@ public class DEAProblem {
 	 * @param VarNumber The Number of the Variable
 	 * @return The slack value for the specified DMU and Variable Number
 	 */
-	public double getSlacks(int DMUNumber, int VarNumber)
+	public double getSlack(int DMUNumber, int VarNumber)
 	{
-		return _Solution.getSlacks()[DMUNumber] [VarNumber]; // _Solution.Slacks[DMUNumber] [VarNumber];
+		return _Solution.getSlack(DMUNumber, VarNumber); // _Solution.Slacks[DMUNumber] [VarNumber];
 	}
 	
 	/**

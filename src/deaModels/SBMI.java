@@ -143,18 +143,18 @@ public class SBMI {
 		}
 		
 		//Store solution
-		ReturnSol.getObjectives()[i] = 1 + Sol.Objective; //there was a Objective constant of 1.
+		ReturnSol.setObjective(i, 1 + Sol.Objective); //there was a Objective constant of 1.
 		
 		for(int j = 0; j < NbVariables; j++) {
-			ReturnSol.getSlacks()[i] [j] = Sol.VariableResult[NbDMUs + j];
+			ReturnSol.setSlack(i, j, Sol.VariableResult[NbDMUs + j]);
 			
 			if(deaP.getVariableType(j) == DEAVariableType.Input) {
 				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1] * -1;
-				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlacks()[i] [j];
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);
 			}
 			else {
 				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlacks()[i] [j];
+				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
 			}
 		}
 		

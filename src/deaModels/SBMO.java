@@ -136,18 +136,18 @@ public class SBMO {
 		}
 		
 		//Store solution
-		ReturnSol.getObjectives()[i] = 1 / (1 + Sol.Objective); //there was a Objective constant of 1.
+		ReturnSol.setObjective(i, 1 / (1 + Sol.Objective)); //there was a Objective constant of 1.
 		for(int varPos = 0; varPos < NbVariables; varPos++) {
 			
-			ReturnSol.getSlacks()[i] [varPos] = Sol.VariableResult[NbDMUs + varPos];
+			ReturnSol.setSlack(i, varPos, Sol.VariableResult[NbDMUs + varPos]);
 			
 			if(deaP.getVariableType(varPos) == DEAVariableType.Output) {
 				ReturnSol.getWeights()[i][varPos] = Sol.DualResult[varPos + 1] * -1;
-				ReturnSol.getProjections()[i] [varPos] = deaP.getDataMatrix(i, varPos) + ReturnSol.getSlacks()[i] [varPos];
+				ReturnSol.getProjections()[i] [varPos] = deaP.getDataMatrix(i, varPos) + ReturnSol.getSlack(i, varPos);//
 			}
 			else {
 				ReturnSol.getWeights()[i][varPos] = Sol.DualResult[varPos + 1];
-				ReturnSol.getProjections()[i] [varPos] = deaP.getDataMatrix(i, varPos) - ReturnSol.getSlacks()[i] [varPos]; // + ReturnSol.Slacks[i] [j];
+				ReturnSol.getProjections()[i] [varPos] = deaP.getDataMatrix(i, varPos) - ReturnSol.getSlack(i, varPos); // + ReturnSol.Slacks[i] [j];
 			}
 		}
 		
