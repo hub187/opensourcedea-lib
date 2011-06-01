@@ -235,12 +235,12 @@ public  class CCR {
 		//Collect information from Phase I (Theta)
 		if(deaP.getModelType() == DEAModelType.CCRI) {
 			ReturnSol.setObjective(i, Sol.Objective);
-			ReturnSol.getWeights()[i] = Sol.Weights;
+			ReturnSol.setWeights(i, Sol.Weights);
 		}
 		else {
 			ReturnSol.setObjective(i, 1 / Sol.Objective);
 			for(int w = 0; w < Sol.Weights.length; w++) {
-				ReturnSol.getWeights()[i][w] = Sol.Weights[w] / Sol.Objective;
+				ReturnSol.setWeight(i, w, Sol.Weights[w] / Sol.Objective);
 			}
 			
 		}
@@ -296,10 +296,10 @@ public  class CCR {
 					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
 				}
 			}
-			ReturnSol.getReferenceSet()[i] = refSet;
+			ReturnSol.setReferenceSet(i, refSet);
 			//System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i] /*deaP.getLambdas(i) | deaP._Solution.Lambdas[i]*/, 0, NbDMUs);
 			//ReturnSol.setSlackArrayCopy(Sol.VariableResult, NbDMUs + 1, 0, NbVariables, i);
-			ReturnSol.setSlackArrayCopy(Sol.VariableResult, NbDMUs + 1, NbVariables, i);
+			ReturnSol.setSlackArrayCopy(i, Sol.VariableResult, NbDMUs + 1, NbVariables);
 		}
 		else {
 			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
@@ -308,7 +308,7 @@ public  class CCR {
 				}
 				//ReturnSol.Lambdas[i][lambdaPos] = Sol.VariableResult[lambdaPos + 1] * ReturnSol.Objectives[i]; 
 			}
-			ReturnSol.getReferenceSet()[i] = refSet;
+			ReturnSol.setReferenceSet(i, refSet);
 			for(int s = 0; s < NbVariables; s++) {
 				//setSlack(i, s, Sol.VariableResult[NbDMUs + 1 + s] * ReturnSol.getObjective(i));
 				ReturnSol.setSlack(i, s, Sol.VariableResult[NbDMUs + 1 + s] * ReturnSol.getObjective(i));
@@ -319,12 +319,14 @@ public  class CCR {
 			for (int j = 0; j < NbVariables; j++) {
 				if(deaP.getVariableType(j) == DEAVariableType.Input) {
 					//Projections
-					ReturnSol.getProjections()[i] [j] = ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);
+					ReturnSol.setProjection(i, j,
+							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 				}
 				else {
 					//Projections
 					//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-					ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
+					ReturnSol.setProjection(i, j,
+							deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
 				}
 			}
 		}
@@ -332,12 +334,14 @@ public  class CCR {
 			for (int j = 0; j < NbVariables; j++) {
 				if(deaP.getVariableType(j) == DEAVariableType.Output) {
 					//Projections
-					ReturnSol.getProjections()[i] [j] = ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
+					ReturnSol.setProjection(i, j,
+							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
 				}
 				else {
 					//Projections
 					//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-					ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);
+					ReturnSol.setProjection(i, j,
+							deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 				}
 			}
 		}

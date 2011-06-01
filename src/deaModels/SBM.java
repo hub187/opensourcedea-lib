@@ -181,12 +181,14 @@ public class SBM {
 			ReturnSol.setSlack(i, j, Sol.VariableResult[NbDMUs + 1 + j] / t);
 			
 			if(deaP.getVariableType(j) == DEAVariableType.Input) {
-				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1];
-				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);//
+				ReturnSol.setWeight(i, j, Sol.DualResult[j + 1]);
+				ReturnSol.setProjection(i, j,
+						deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));//
 			}
 			else {
-				ReturnSol.getWeights()[i][j] = Sol.DualResult[j + 1] * -1;
-				ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
+				ReturnSol.setWeight(i, j, Sol.DualResult[j + 1] * -1);
+				ReturnSol.setProjection(i, j,
+						deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
 			}
 		}
 		
@@ -195,7 +197,7 @@ public class SBM {
 			if(Sol.VariableResult[j + 1] != 0){
 				refSet.add(new NonZeroLambda(j, Sol.VariableResult[j + 1] / t));
 			}
-			ReturnSol.getReferenceSet()[i] = refSet;
+			ReturnSol.setReferenceSet(i, refSet);
 			//ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
 		}
 		

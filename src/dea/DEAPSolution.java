@@ -43,19 +43,19 @@ public class DEAPSolution {
 	
 	
 	public void setObjectives(double[] objectives) {
-		Objectives = objectives;
+		this.Objectives = objectives;
 	}
 	
 	public void setObjective(int DMUIndex, double ObjectiveValue) {
-		Objectives[DMUIndex] = ObjectiveValue;
+		this.Objectives[DMUIndex] = ObjectiveValue;
 	}
 	
 	public double getObjective(int DMUIndex) {
-		return Objectives[DMUIndex];
+		return this.Objectives[DMUIndex];
 	}
 	
 	public double[] getObjectives() {
-		return Objectives;
+		return this.Objectives;
 	}
 	
 	
@@ -74,8 +74,8 @@ public class DEAPSolution {
 		this.Slacks[DMUIndex][VarIndex] = SlackValue;
 	}
 	
-	public void setSlackArrayCopy(double[] ArrayToCopyFrom, int PositionToCopyFrom, 
-			int LengthToCopy, int DMUIndex) {
+	public void setSlackArrayCopy(int DMUIndex, double[] ArrayToCopyFrom, int PositionToCopyFrom, 
+			int LengthToCopy) {
 		System.arraycopy(ArrayToCopyFrom, PositionToCopyFrom, this.Slacks[DMUIndex], 0, LengthToCopy);
 	}
 	
@@ -90,47 +90,83 @@ public class DEAPSolution {
 	public double[][] getSlacks() {
 		return this.Slacks;
 	}
-
 	
 	
 	
 	
-
+	
 	public void setReferenceSet(ArrayList<NonZeroLambda>[] referenceSet) {
-		ReferenceSet = referenceSet;
+		this.ReferenceSet = referenceSet;
 	}
-
+	
+	public void setReferenceSet(int DMUIndex, ArrayList<NonZeroLambda> referenceSet) {
+		this.ReferenceSet[DMUIndex] = referenceSet;
+	}
 
 	public ArrayList<NonZeroLambda>[] getReferenceSet() {
-		return ReferenceSet;
+		return this.ReferenceSet;
 	}
-
-
+	
+	public ArrayList<NonZeroLambda> getReferenceSet(int DMUIndex) {
+		return this.ReferenceSet[DMUIndex];
+	}
+	
+	
+	
+	
+	
 	public void setWeights(double[] [] weights) {
-		Weights = weights;
+		this.Weights = weights;
+	}
+	
+	public void setWeights(int DMUIndex, double[] weights) {
+		this.Weights[DMUIndex] = weights;
 	}
 
-
+	public void setWeight(int DMUIndex, int VarIndex, double weight) {
+		this.Weights[DMUIndex] [VarIndex] = weight;
+	}
+	
 	public double[] [] getWeights() {
 		return Weights;
 	}
-
-
+	
+	public double[] getWeights(int DMUIndex) {
+		return this.Weights[DMUIndex];
+	}
+	
+	public double getWeight(int DMUIndex, int VarIndex) {
+		return this.Weights[DMUIndex][VarIndex];
+	}
+	
+	
+	
+	
+	
 	public void setProjections(double[] [] projections) {
 		Projections = projections;
 	}
-
+	
+	public void setProjection(int DMUIndex, int VarIndex, double ProjectionValue) {
+		this.Projections[DMUIndex][VarIndex] = ProjectionValue;
+	}
 
 	public double[] [] getProjections() {
 		return Projections;
 	}
-
-
+	
+	public double[] getProjections(int DMUIndex) {
+		return this.Projections[DMUIndex];
+	}
+	
+	
+	
+	
+	
 	public void setStatus(SolverReturnStatus status) {
 		Status = status;
 	}
-
-
+	
 	public SolverReturnStatus getStatus() {
 		return Status;
 	}

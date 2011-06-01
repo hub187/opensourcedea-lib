@@ -621,7 +621,7 @@ public class DEAProblem {
 	 */
 	public double[] getWeight(int DMUNumber)
 	{
-		return _Solution.getWeights()[DMUNumber];
+		return _Solution.getWeights(DMUNumber);
 	}
 	
 	/**
@@ -632,7 +632,7 @@ public class DEAProblem {
 	 */
 	public double getWeight(int DMUNumber, int VarNumber)
 	{
-		return _Solution.getWeights()[DMUNumber] [VarNumber];
+		return _Solution.getWeight(DMUNumber, VarNumber);
 	}
 	
 	/**
@@ -653,7 +653,7 @@ public class DEAProblem {
 	 */
 	public double[] getProjections(int DMUNumber)
 	{
-		return _Solution.getProjections()[DMUNumber];
+		return _Solution.getProjections(DMUNumber);
 	}
 	
 	/**

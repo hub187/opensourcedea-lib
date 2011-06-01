@@ -261,12 +261,12 @@ public  class BCC {
 		
 		try {
 			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
-				ReturnSol.getWeights()[i] = Sol.Weights;
+				ReturnSol.setWeights(i, Sol.Weights);
 			}
 			else {
-				ReturnSol.getWeights()[i] = new double[Sol.Weights.length];
+				ReturnSol.setWeights(i, new double[Sol.Weights.length]);
 				for(int k = 0; k < Sol.Weights.length; k++) {
-					ReturnSol.getWeights()[i][k] = Sol.Weights[k] * -1;
+					ReturnSol.setWeight(i, k, Sol.Weights[k] * -1);
 				}
 			}
 		} catch (MissingData e1) {
@@ -339,39 +339,39 @@ public  class BCC {
 				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
 			}
 		}
-		ReturnSol.getReferenceSet()[i] = refSet;
+		ReturnSol.setReferenceSet(i, refSet);
 		//System.arraycopy(Sol.VariableResult, 1, ReturnSol.Lambdas[i], 0, NbDMUs);
 		//ReturnSol.setSlackArrayCopy(Sol.VariableResult, NbDMUs + 1, 0, NbVariables, i);
-		System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.getSlacks(i) /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
-
+		//System.arraycopy(Sol.VariableResult, NbDMUs + 1, ReturnSol.getSlacks(i) /*deaP.getSlacks(i) | deaP.Solution.Slacks[i]*/, 0, NbVariables);
+		ReturnSol.setSlackArrayCopy(i, Sol.VariableResult, NbDMUs + 1, NbVariables);
 
 		for (int j = 0; j < NbVariables; j++) {
 			try {
 				if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) { //deaP.getModelType() == DEAModelType.BCCI) {
 					if(deaP.getVariableType(j) == DEAVariableType.Input) {
 						//Projections
-						ReturnSol.getProjections()[i] [j] = ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);
+						ReturnSol.setProjection(i, j, ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 					}
 					else {
 						//Projections
 						//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-						ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
+						ReturnSol.setProjection(i, j, deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
 					}
 				}
 				else {
 					if(deaP.getVariableType(j) == DEAVariableType.Output) {
 						//Projections
 						if(ReturnSol.getObjective(i) != 0){
-							ReturnSol.getProjections()[i] [j] = (1 / ReturnSol.getObjective(i)) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j);
+							ReturnSol.setProjection(i, j, (1 / ReturnSol.getObjective(i)) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
 						}
 						else {
-							ReturnSol.getProjections()[i] [j] = ReturnSol.getSlack(i, j);
+							ReturnSol.setProjection(i, j, ReturnSol.getSlack(i, j));
 						}
 					}
 					else {
 						//Projections
 						//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-						ReturnSol.getProjections()[i] [j] = deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j);
+						ReturnSol.setProjection(i, j, deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 					}
 				}
 			} catch (MissingData e) {
