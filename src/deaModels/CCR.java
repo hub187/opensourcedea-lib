@@ -136,16 +136,12 @@ public  class CCR {
 		
 
 		
-		for (int i = 0; i < NbDMUs; i++) {
+		for (int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
 			
 			  createAndSolveCCR(deaP, NbDMUs, NbVariables, TransposedMatrix,
-					ReturnSol, i);
-			
+					ReturnSol, DMUIndex);
 		}
-		
 		return ReturnSol;
-
-		
 	}
 
 
@@ -181,45 +177,8 @@ public  class CCR {
 		double[] RHS2;// = new double [NbVariables]; //RHS Phase II
 		int[] SolverEqualityType = new int[NbVariables];
 
-		for (int j = 0; j < NbVariables; j++) {
-			
-			//Build Model for each DMU
-			
-			//Build the Constraint Matrix
-			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
-			//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
-			if (deaP.getVariableType(j) == DEAVariableType.Input) {
-				ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
-			}
-			else {
-				ConstraintRow[0] = 0;
-			}
-			//Copy rest of the data matrix
-			System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);
-			//and slacks
-			if (deaP.getVariableType(j) == DEAVariableType.Input) {
-				ConstraintRow[NbDMUs + 1 + j] = -1;
-			}
-			else {
-				ConstraintRow[NbDMUs + 1 + j] = 1;
-			}
-			Constraints.add(ConstraintRow);
-			
-			
-			//Build RHS & SolverEqualityTypes
-			if (deaP.getVariableType(j) == DEAVariableType.Input) {
-				RHS1[j] = 0;
-				SolverEqualityType[j] = LpSolve.EQ;
-			}
-			else {
-				RHS1[j] = TransposedMatrix[j] [i];
-				SolverEqualityType[j] = LpSolve.EQ;
-			}
-		
-		}
-
-		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).
-		ObjF[0] = 1;
+		createPhaseOneModel(deaP, NbDMUs, NbVariables, TransposedMatrix, i,
+				Constraints, ObjF, RHS1, SolverEqualityType);
 		
 		
 		//Solve
@@ -232,20 +191,8 @@ public  class CCR {
 			throw e;
 		}
 
-		//Collect information from Phase I (Theta)
-		if(deaP.getModelType() == DEAModelType.CCRI) {
-			ReturnSol.setObjective(i, Sol.Objective);
-			ReturnSol.setWeights(i, Sol.Weights);
-		}
-		else {
-			ReturnSol.setObjective(i, 1 / Sol.Objective);
-			for(int w = 0; w < Sol.Weights.length; w++) {
-				ReturnSol.setWeight(i, w, Sol.Weights[w] / Sol.Objective);
-			}
-			
-		}
 		
-		checkSolverStatus(ReturnSol, Sol);
+		storePhaseOneInformation(deaP, ReturnSol, i, Sol);
 		
 		
 		  /////////////////////////////
@@ -257,28 +204,11 @@ public  class CCR {
 		 * - add the corresponding Theta to the RHS Array
 		 * - change the Objective Function accordingly (all 1 on Slacks, all others coeff = 0).*/
 		
-		
-		//Changing Constraint Matrix
-		double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
-		ConstraintRow[0] = 1;
-		Constraints.add(ConstraintRow);
-		
-		//Changing RHS & SolverEqTypes
 		RHS2 = new double[NbVariables + 1];
-		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-		RHS2[NbVariables] = Sol.Objective;
-		
 		SolverEqualityType = new int[NbVariables + 1];
-		for(int k = 0; k < NbVariables + 1; k++) {
-			SolverEqualityType[k] = LpSolve.EQ;
-		}
 		
-		
-		//Change Objective Function
-		Arrays.fill(ObjF,0);
-		for (int j = NbDMUs + 1; j <= NbDMUs + NbVariables; j++) {
-			ObjF[j] = 1;
-		}
+		createPhaseTwoModel(NbDMUs, NbVariables, Constraints, ObjF, RHS1, RHS2,
+				SolverEqualityType, Sol);
 		
 		//Solve the Phase II Problem
 		try {
@@ -288,6 +218,55 @@ public  class CCR {
 			throw e;
 		}
 		
+		storePhaseTwoInformation(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
+	}
+
+
+	private static void createPhaseTwoModel(int NbDMUs, int NbVariables,
+			ArrayList<double[]> Constraints, double[] ObjF, double[] RHS1,
+			double[] RHS2, int[] SolverEqualityType, SolverResults Sol) {
+		//Changing Constraint Matrix
+		double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+		ConstraintRow[0] = 1;
+		Constraints.add(ConstraintRow);
+		
+		//Changing RHS & SolverEqTypes
+		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
+		RHS2[NbVariables] = Sol.Objective;
+		
+		for(int VarIndex = 0; VarIndex < NbVariables + 1; VarIndex++) {
+			SolverEqualityType[VarIndex] = LpSolve.EQ;
+		}
+		
+		
+		//Change Objective Function
+		Arrays.fill(ObjF,0);
+		for (int j = NbDMUs + 1; j <= NbDMUs + NbVariables; j++) {
+			ObjF[j] = 1;
+		}
+	}
+
+
+	private static void storePhaseOneInformation(DEAProblem deaP,
+			DEAPSolution ReturnSol, int i, SolverResults Sol) {
+		//Collect information from Phase I (Theta)
+		if(deaP.getModelType() == DEAModelType.CCRI) {
+			ReturnSol.setObjective(i, Sol.Objective);
+			ReturnSol.setWeights(i, Sol.Weights);
+		}
+		else {
+			ReturnSol.setObjective(i, 1 / Sol.Objective);
+			for(int w = 0; w < Sol.Weights.length; w++) {
+				ReturnSol.setWeight(i, w, Sol.Weights[w] / Sol.Objective);
+			}
+		}
+		
+		SolverStatus.checkSolverStatus(ReturnSol, Sol);
+	}
+
+
+	private static void storePhaseTwoInformation(DEAProblem deaP, int NbDMUs,
+			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) {
 		//Collect information from Phase II (Theta)
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
 		if(deaP.getModelType() == DEAModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
@@ -302,9 +281,9 @@ public  class CCR {
 			ReturnSol.setSlackArrayCopy(i, Sol.VariableResult, NbDMUs + 1, NbVariables);
 		}
 		else {
-			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
-				if(Sol.VariableResult[lambdaPos + 1] != 0) {
-					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1] * ReturnSol.getObjective(i)));
+			for(int LambdaIndex = 0; LambdaIndex < NbDMUs; LambdaIndex++) {
+				if(Sol.VariableResult[LambdaIndex + 1] != 0) {
+					refSet.add(new NonZeroLambda(LambdaIndex, Sol.VariableResult[LambdaIndex + 1] * ReturnSol.getObjective(i)));
 				}
 				//ReturnSol.Lambdas[i][lambdaPos] = Sol.VariableResult[lambdaPos + 1] * ReturnSol.Objectives[i]; 
 			}
@@ -316,69 +295,84 @@ public  class CCR {
 		}
 		
 		if(deaP.getModelType() == DEAModelType.CCRI) {
-			for (int j = 0; j < NbVariables; j++) {
-				if(deaP.getVariableType(j) == DEAVariableType.Input) {
+			for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
+				if(deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
 					//Projections
-					ReturnSol.setProjection(i, j,
-							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
+					ReturnSol.setProjection(i, VarIndex,
+							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));
 				}
 				else {
 					//Projections
 					//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-					ReturnSol.setProjection(i, j,
-							deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
+					ReturnSol.setProjection(i, VarIndex,
+							deaP.getDataMatrix(i, VarIndex) + ReturnSol.getSlack(i, VarIndex));
 				}
 			}
 		}
 		else {
-			for (int j = 0; j < NbVariables; j++) {
-				if(deaP.getVariableType(j) == DEAVariableType.Output) {
+			for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
+				if(deaP.getVariableType(VarIndex) == DEAVariableType.Output) {
 					//Projections
-					ReturnSol.setProjection(i, j,
-							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
+					ReturnSol.setProjection(i, VarIndex,
+							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, VarIndex) + ReturnSol.getSlack(i, VarIndex));
 				}
 				else {
 					//Projections
 					//deaP.setProjections(i, j, deaP.getDataMatrix(i, j) + deaP.getSlacks(i, j));
-					ReturnSol.setProjection(i, j,
-							deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
+					ReturnSol.setProjection(i, VarIndex,
+							deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));
 				}
 			}
 		}
 		
-		
-		checkSolverStatus(ReturnSol, Sol);
+		SolverStatus.checkSolverStatus(ReturnSol, Sol);
 	}
 
-	
-	private static void checkSolverStatus(DEAPSolution ReturnSol,
-			SolverResults Sol) {
-		switch(Sol.Status) {
-			case OptimalSolutionNotfound:
-				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
-				break;
+
+	private static void createPhaseOneModel(DEAProblem deaP, int NbDMUs,
+			int NbVariables, double[][] TransposedMatrix, int i,
+			ArrayList<double[]> Constraints, double[] ObjF, double[] RHS1,
+			int[] SolverEqualityType) {
 		
-			case UnknownError:
-				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
-				break;
+		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 			
-			case ModelCreationFailure:
-				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
-				break;
+			//Build Model for each DMU
 			
-			case OptimalSolutionFound:
-				/* The lpsolve class CANNOT return NA (which is only used for initialisation as default value).
-				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
-				 * save to store a ReturnValue of OptimalSolutionFound*/
-				
-				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
-					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
-				}
-				break;
+			//Build the Constraint Matrix
+			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
+			//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
+			if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
+			}
+			else {
+				ConstraintRow[0] = 0;
+			}
+			//Copy rest of the data matrix
+			System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 1, NbDMUs);
+			//and slacks
+			if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				ConstraintRow[NbDMUs + 1 + VarIndex] = -1;
+			}
+			else {
+				ConstraintRow[NbDMUs + 1 + VarIndex] = 1;
+			}
+			Constraints.add(ConstraintRow);
+			
+			
+			//Build RHS & SolverEqualityTypes
+			if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				RHS1[VarIndex] = 0;
+				SolverEqualityType[VarIndex] = LpSolve.EQ;
+			}
+			else {
+				RHS1[VarIndex] = TransposedMatrix[VarIndex] [i];
+				SolverEqualityType[VarIndex] = LpSolve.EQ;
+			}
+		
 		}
-	}
-	
 
-	
+		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).
+		ObjF[0] = 1;
+	}
 
 }

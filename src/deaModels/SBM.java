@@ -1,7 +1,6 @@
 package deaModels;
 
 import dea.*;
-import dea.DEASolverException;
 import linearSolver.*;
 import lpsolve.LpSolve;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 
 
 /**
- * The class implementing the SBM (both CRTS and VRTS) Non Oriented model.
+ * The class implementing the SBM (CRS, VRS and GRS) Non Oriented model.
  * </br>
  * @author Hubert Virtos
  *
@@ -37,12 +36,11 @@ public class SBM {
 		/* As the SBM optimisation needs to be ran for all DMUs, 
 		 * the program will loop through all DMUs.*/
 		
-		for (int i = 0; i < NbDMUs; i++) {
+		for (int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
 			
 			createAndSolveSBM(deaP, NbDMUs, NbVariables, TransposedMatrix,
-					ReturnSol, i);
-
-		} //End loop through all DMUs
+					ReturnSol, DMUIndex);
+		}
 		return ReturnSol;
 	}
 
@@ -52,6 +50,7 @@ public class SBM {
 	private static void createAndSolveSBM(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix,
 			DEAPSolution ReturnSol, int i /*DMU Number*/) throws DEASolverException {
+		
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		/* There is one extra column for the scalar t used during the 
 		 * Fractional to Linear SBM model transformaation.*/
@@ -73,49 +72,113 @@ public class SBM {
 			SolverEqualityType = new int [NbVariables + 3];
 		}
 		
+		
+		createModel(deaP, NbDMUs, NbVariables, TransposedMatrix, i,
+				Constraints, ObjF, SolverEqualityType, RHS);
+		
+		
+		//SOLVE PROBLEM
+		SolverResults Sol = new SolverResults();
+		
+		try {
+			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
+		}
+		catch (DEASolverException e) {
+			throw e;
+		}
+
+		
+		storeSolution(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
+		
+	}
+
+
+
+
+	private static void storeSolution(DEAProblem deaP, int NbDMUs,
+			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) {
+		//STORE SOLUTION
+		double t = Sol.VariableResult[0];
+		
+		ReturnSol.setObjective(i, Sol.Objective);
+		for(int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
+			
+			ReturnSol.setSlack(i, VarIndex, Sol.VariableResult[NbDMUs + 1 + VarIndex] / t);
+			
+			if(deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1]);
+				ReturnSol.setProjection(i, VarIndex,
+						deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));//
+			}
+			else {
+				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1] * -1);
+				ReturnSol.setProjection(i, VarIndex,
+						deaP.getDataMatrix(i, VarIndex) + ReturnSol.getSlack(i, VarIndex));
+			}
+		}
+		
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		for(int LambdaIndex = 0; LambdaIndex < NbDMUs;LambdaIndex++){
+			if(Sol.VariableResult[LambdaIndex + 1] != 0){
+				refSet.add(new NonZeroLambda(LambdaIndex, Sol.VariableResult[LambdaIndex + 1] / t));
+			}
+			ReturnSol.setReferenceSet(i, refSet);
+			//ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
+		}
+		
+		SolverStatus.checkSolverStatus(ReturnSol, Sol);
+	}
+
+
+
+
+	private static void createModel(DEAProblem deaP, int NbDMUs,
+			int NbVariables, double[][] TransposedMatrix, int i,
+			ArrayList<double[]> Constraints, double[] ObjF,
+			int[] SolverEqualityType, double[] RHS) {
 		ObjF[0] = 1;
 		
 		/* BUILD THE CONTRAINST MATRIX (loop through all variables + one row for extra constraint after
 		 * Fractional => Linear transformation*/
-		for (int j = 0; j <= NbVariables; j++) {
+		for (int VarIndex = 0; VarIndex <= NbVariables; VarIndex++) {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			
-			if(j < NbVariables) {
+			if(VarIndex < NbVariables) {
 				//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
-					ConstraintRow[0] = TransposedMatrix[j] [i] * -1;
+					ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
 				//Copy rest of the data matrix
-				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 1, NbDMUs);
+				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 1, NbDMUs);
 				//and slacks
-				if (deaP.getVariableType(j) == DEAVariableType.Input) {
-					ConstraintRow[NbDMUs + 1 + j] = -1;
+				if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+					ConstraintRow[NbDMUs + 1 + VarIndex] = -1;
 				}
 				else {
-					ConstraintRow[NbDMUs + 1 + j] = 1;
+					ConstraintRow[NbDMUs + 1 + VarIndex] = 1;
 				}
 				Constraints.add(ConstraintRow);
 				
 				//Build RHS
-				RHS[j] = 0;
-				SolverEqualityType[j] = LpSolve.EQ;
+				RHS[VarIndex] = 0;
+				SolverEqualityType[VarIndex] = LpSolve.EQ;
 				
 			}
 			else {
 				/* Last row (added constraint after Fractional => Linear transformation).
 				 * Necessary for all SBM models*/
 				ConstraintRow[0] = 1;
-				for (int v = 0; v < NbVariables; v++) {
-					if(deaP.getVariableType(v) != DEAVariableType.Input) {
-						ConstraintRow[NbDMUs + 1 + v] = -1 / (TransposedMatrix[v] [i] * deaP.getNumberOfOutputs());
+				for (int SlackIndex = 0; SlackIndex < NbVariables; SlackIndex++) {
+					if(deaP.getVariableType(SlackIndex) != DEAVariableType.Input) {
+						ConstraintRow[NbDMUs + 1 + SlackIndex] = -1 / (TransposedMatrix[SlackIndex] [i] * deaP.getNumberOfOutputs());
 					}
 					else {
-						ObjF[NbDMUs + 1 + v] = 1 / (TransposedMatrix[v] [i] * deaP.getNumberOfInputs());
+						ObjF[NbDMUs + 1 + SlackIndex] = 1 / (TransposedMatrix[SlackIndex] [i] * deaP.getNumberOfInputs());
 					}
 				}
 				Constraints.add(ConstraintRow);
 				
 				//Build last row of RHS
-				RHS[j] = 1;
-				SolverEqualityType[j] = LpSolve.EQ;
+				RHS[VarIndex] = 1;
+				SolverEqualityType[VarIndex] = LpSolve.EQ;
 				
 			}
 			
@@ -127,8 +190,8 @@ public class SBM {
 			//Build convexity constraint. This is the ONLY difference with the SBMmodel
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			ConstraintRow[0] = 1;
-			for (int k = 1; k <= NbDMUs; k++) {
-				ConstraintRow[k] = -1;
+			for (int DMUIndex = 1; DMUIndex <= NbDMUs; DMUIndex++) {
+				ConstraintRow[DMUIndex] = -1;
 			}
 			Constraints.add(ConstraintRow);
 			//RHS already 0.
@@ -137,8 +200,8 @@ public class SBM {
 		
 		if(deaP.getModelType() == DEAModelType.SBMGRS) {
 			double[] TempConstraintRow = new double[NbDMUs + NbVariables + 1];
-			for (int k = 1; k <= NbDMUs; k++) {
-				TempConstraintRow[k] = -1;
+			for (int DMUIndex = 1; DMUIndex <= NbDMUs; DMUIndex++) {
+				TempConstraintRow[DMUIndex] = -1;
 			}
 			//Lower Bounds (General RTS)
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
@@ -157,80 +220,6 @@ public class SBM {
 			SolverEqualityType[NbVariables + 2] = LpSolve.GE;
 			
 		}
-		
-		
-		//SOLVE PROBLEM
-		SolverResults Sol = new SolverResults();
-		
-		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
-		}
-		catch (DEASolverException e) {
-			throw e;
-		}
-		
-		
-		
-		//STORE SOLUTION
-		double t = Sol.VariableResult[0];
-		
-		ReturnSol.setObjective(i, Sol.Objective);
-//		ReturnSol.Objectives[i] = Sol.Objective;
-		for(int j = 0; j < NbVariables; j++) {
-			
-			ReturnSol.setSlack(i, j, Sol.VariableResult[NbDMUs + 1 + j] / t);
-			
-			if(deaP.getVariableType(j) == DEAVariableType.Input) {
-				ReturnSol.setWeight(i, j, Sol.DualResult[j + 1]);
-				ReturnSol.setProjection(i, j,
-						deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));//
-			}
-			else {
-				ReturnSol.setWeight(i, j, Sol.DualResult[j + 1] * -1);
-				ReturnSol.setProjection(i, j,
-						deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
-			}
-		}
-		
-		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		for(int j = 0; j < NbDMUs;j++){
-			if(Sol.VariableResult[j + 1] != 0){
-				refSet.add(new NonZeroLambda(j, Sol.VariableResult[j + 1] / t));
-			}
-			ReturnSol.setReferenceSet(i, refSet);
-			//ReturnSol.Lambdas[i][j] = Sol.VariableResult[j + 1] / t;
-		}
-		
-		checkSolverStatus(ReturnSol, Sol);
 	}
-
-	private static void checkSolverStatus(DEAPSolution ReturnSol,
-			SolverResults Sol) {
-		switch(Sol.Status) {
-			case OptimalSolutionNotfound:
-				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
-				break;
-		
-			case UnknownError:
-				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
-				break;
-			
-			case ModelCreationFailure:
-				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
-				break;
-			
-			case OptimalSolutionFound:
-				/* The lpsolve class CANNOT return NA (which is only used for initialisation as default value).
-				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
-				 * save to store a ReturnValue of OptimalSolutionFound*/
-				
-				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
-					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
-				}
-				break;
-		}
-	}
-	
-	
 	
 }

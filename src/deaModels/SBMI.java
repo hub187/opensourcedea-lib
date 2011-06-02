@@ -33,20 +33,37 @@ public class SBMI {
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
 		
-		
 		/* Because the Constraint Matrix is identical for all optimisation,
 		 * let's build it here and re-use it for each optimisation. */
-		for (int j = 0; j < NbVariables; j++) {
+		createConstraintMatrix(deaP, NbDMUs, NbVariables, TransposedMatrix,
+				Constraints);
+		
+		/* As the SBM optimisation needs to be ran for all DMUs, 
+		 * the program will loop through all DMUs.*/
+		
+		for (int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
+			createAndSolveSBMI(deaP, NbDMUs, NbVariables, Constraints, TransposedMatrix,
+					ReturnSol, DMUIndex);
+		}		
+		return ReturnSol;
+	}
+	
+	
+	private static void createConstraintMatrix(DEAProblem deaP, int NbDMUs,
+			int NbVariables, double[][] TransposedMatrix,
+			ArrayList<double[]> Constraints) {
+
+		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables];
 			
 				//Copy rest of the data matrix
-				System.arraycopy(TransposedMatrix[j], 0, ConstraintRow, 0, NbDMUs);
+				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 0, NbDMUs);
 				//and slacks
-				if (deaP.getVariableType(j) == DEAVariableType.Input) {
-					ConstraintRow[NbDMUs + j] = 1;
+				if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+					ConstraintRow[NbDMUs + VarIndex] = 1;
 				}
 				else {
-					ConstraintRow[NbDMUs + j] = -1;
+					ConstraintRow[NbDMUs + VarIndex] = -1;
 				}
 				Constraints.add(ConstraintRow);
 		}
@@ -54,32 +71,20 @@ public class SBMI {
 		if(deaP.getModelType() == DEAModelType.SBMIV) {
 			//Add one row for the convexity constraints
 			double[] ConstraintRow = new double[NbDMUs + NbVariables];
-			for(int k = 0; k < NbDMUs; k++) {
-				ConstraintRow[k] = 1;
+			for(int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
+				ConstraintRow[DMUIndex] = 1;
 			}
 			Constraints.add(ConstraintRow);
 		}
 		
 		if(deaP.getModelType() == DEAModelType.SBMIGRS) {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables];
-			for(int k = 0; k < NbDMUs; k++) {
-				ConstraintRow[k] = 1;
+			for(int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
+				ConstraintRow[DMUIndex] = 1;
 			}
 			Constraints.add(ConstraintRow);
 			Constraints.add(ConstraintRow);
 		}
-		
-		/* As the SBM optimisation needs to be ran for all DMUs, 
-		 * the program will loop through all DMUs.*/
-		
-		for (int i = 0; i < NbDMUs; i++) {
-			createAndSolveSBMI(deaP, NbDMUs, NbVariables, Constraints, TransposedMatrix,
-					ReturnSol, i);
-		}
-		
-		
-		return ReturnSol;
-		
 	}
 
 	private static void createAndSolveSBMI(DEAProblem deaP, int NbDMUs,
@@ -103,17 +108,69 @@ public class SBMI {
 			SolverEqualityType = new int[NbVariables + 2];
 		}
 
+		
+		createModel(deaP, NbDMUs, NbVariables, TransposedMatrix, i, ObjF, RHS,
+				SolverEqualityType);
+		
+		
+		SolverResults Sol = new SolverResults();
+		try {
+			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
+		}
+		catch (DEASolverException e) {
+			throw e;
+		}
+		
+		
+		storeSolution(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
+	}
+
+
+	private static void storeSolution(DEAProblem deaP, int NbDMUs,
+			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) {
+		//Store solution
+		ReturnSol.setObjective(i, 1 + Sol.Objective); //there was a Objective constant of 1.
+		
+		for(int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
+			ReturnSol.setSlack(i, VarIndex, Sol.VariableResult[NbDMUs + VarIndex]);
+			
+			if(deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1] * -1);
+				ReturnSol.setProjection(i, VarIndex,
+						deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));
+			}
+			else {
+				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1]);
+				ReturnSol.setProjection(i, VarIndex,
+						deaP.getDataMatrix(i, VarIndex) + ReturnSol.getSlack(i, VarIndex));
+			}
+		}
+		
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		for(int LambdaIndex = 0; LambdaIndex < NbDMUs; LambdaIndex++) {
+			if(Sol.VariableResult[LambdaIndex] != 0) {
+				refSet.add(new NonZeroLambda(LambdaIndex, Sol.VariableResult[LambdaIndex]));
+			}
+		}
+		ReturnSol.setReferenceSet(i, refSet);
+		
+		SolverStatus.checkSolverStatus(ReturnSol, Sol);
+	}
+
+
+	private static void createModel(DEAProblem deaP, int NbDMUs,
+			int NbVariables, double[][] TransposedMatrix, int i, double[] ObjF,
+			double[] RHS, int[] SolverEqualityType) {
 		int NbInputs = deaP.getNumberOfInputs();
-		
-		
+				
 		//Build the RHS
-		for (int j = 0; j < NbVariables; j++) {
+		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 				//Build RHS
-				RHS[j] = TransposedMatrix[j] [i];
-				if(deaP.getVariableType(j) == DEAVariableType.Input){
-					ObjF[NbDMUs + j] = -1 / (TransposedMatrix[j] [i] * NbInputs);
+				RHS[VarIndex] = TransposedMatrix[VarIndex] [i];
+				if(deaP.getVariableType(VarIndex) == DEAVariableType.Input){
+					ObjF[NbDMUs + VarIndex] = -1 / (TransposedMatrix[VarIndex] [i] * NbInputs);
 				}
-				SolverEqualityType[j] = LpSolve.EQ;
+				SolverEqualityType[VarIndex] = LpSolve.EQ;
 		}
 		
 		//Add extra row if Variable RTS
@@ -132,73 +189,6 @@ public class SBMI {
 			SolverEqualityType[NbVariables+1] = LpSolve.LE;
 			
 		}
-		
-		SolverResults Sol = new SolverResults();
-		
-		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
-		}
-		catch (DEASolverException e) {
-			throw e;
-		}
-		
-		//Store solution
-		ReturnSol.setObjective(i, 1 + Sol.Objective); //there was a Objective constant of 1.
-		
-		for(int j = 0; j < NbVariables; j++) {
-			ReturnSol.setSlack(i, j, Sol.VariableResult[NbDMUs + j]);
-			
-			if(deaP.getVariableType(j) == DEAVariableType.Input) {
-				ReturnSol.setWeight(i, j, Sol.DualResult[j + 1] * -1);
-				ReturnSol.setProjection(i, j,
-						deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
-			}
-			else {
-				ReturnSol.setWeight(i, j, Sol.DualResult[j + 1]);
-				ReturnSol.setProjection(i, j,
-						deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
-			}
-		}
-		
-		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
-			if(Sol.VariableResult[lambdaPos] != 0) {
-				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
-			}
-		}
-		ReturnSol.setReferenceSet(i, refSet);
-		//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
-		
-		checkSolverStatus(ReturnSol, Sol);
 	}
-
-	private static void checkSolverStatus(DEAPSolution ReturnSol,
-			SolverResults Sol) {
-		switch(Sol.Status) {
-			case OptimalSolutionNotfound:
-				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
-				break;
-		
-			case UnknownError:
-				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
-				break;
-			
-			case ModelCreationFailure:
-				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
-				break;
-			
-			case OptimalSolutionFound:
-				/* The lpsolve class CANNOT return NA (which is only used for initialisation as default value).
-				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
-				 * save to store a ReturnValue of OptimalSolutionFound*/
-				
-				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
-					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
-				}
-				break;
-		}
-	}
-	
-	
 	
 }
