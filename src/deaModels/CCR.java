@@ -250,7 +250,7 @@ public  class CCR {
 	private static void storePhaseOneInformation(DEAProblem deaP,
 			DEAPSolution ReturnSol, int i, SolverResults Sol) {
 		//Collect information from Phase I (Theta)
-		if(deaP.getModelType() == DEAModelType.CCRI) {
+		if(deaP.getModelType() == ModelType.CCRI) {
 			ReturnSol.setObjective(i, Sol.Objective);
 			ReturnSol.setWeights(i, Sol.Weights);
 		}
@@ -269,7 +269,7 @@ public  class CCR {
 			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) {
 		//Collect information from Phase II (Theta)
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		if(deaP.getModelType() == DEAModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
+		if(deaP.getModelType() == ModelType.CCRI) { // getModelOrientation() == DEAModelOrientation.InputOriented) {
 			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
 				if(Sol.VariableResult[lambdaPos + 1] != 0) {
 					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
@@ -294,9 +294,9 @@ public  class CCR {
 			}
 		}
 		
-		if(deaP.getModelType() == DEAModelType.CCRI) {
+		if(deaP.getModelType() == ModelType.CCRI) {
 			for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
-				if(deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				if(deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 					//Projections
 					ReturnSol.setProjection(i, VarIndex,
 							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));
@@ -311,7 +311,7 @@ public  class CCR {
 		}
 		else {
 			for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
-				if(deaP.getVariableType(VarIndex) == DEAVariableType.Output) {
+				if(deaP.getVariableType(VarIndex) == DEAVariableType.OUTPUT) {
 					//Projections
 					ReturnSol.setProjection(i, VarIndex,
 							ReturnSol.getObjective(i) * deaP.getDataMatrix(i, VarIndex) + ReturnSol.getSlack(i, VarIndex));
@@ -341,7 +341,7 @@ public  class CCR {
 			//Build the Constraint Matrix
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
-			if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+			if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 				ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
 			}
 			else {
@@ -350,7 +350,7 @@ public  class CCR {
 			//Copy rest of the data matrix
 			System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 1, NbDMUs);
 			//and slacks
-			if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+			if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 				ConstraintRow[NbDMUs + 1 + VarIndex] = -1;
 			}
 			else {
@@ -360,7 +360,7 @@ public  class CCR {
 			
 			
 			//Build RHS & SolverEqualityTypes
-			if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+			if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 				RHS1[VarIndex] = 0;
 				SolverEqualityType[VarIndex] = LpSolve.EQ;
 			}

@@ -7,6 +7,6 @@ package dea;
  * @author Hubert Virtos
  *
  */
-public enum DEAEfficiencyType {
+public enum EfficiencyType {
 	MIX, TECH;
 }

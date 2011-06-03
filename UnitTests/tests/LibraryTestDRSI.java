@@ -91,7 +91,7 @@ public class LibraryTestDRSI {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -207,7 +207,7 @@ public class LibraryTestDRSI {
 	@Test
 	public void TestDRSI() {
 		
-		BuildDEAProblem(DEAModelType.DRSI); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.DRSI); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

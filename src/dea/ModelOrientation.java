@@ -6,6 +6,6 @@ package dea;
  * @author Hubert Virtos
  *
  */
-public enum DEAModelOrientation {
-	InputOriented, OutputOriented,NonOriented;
+public enum ModelOrientation {
+	INPUT_ORIENTED, OUTPUT_ORIENTED, NON_ORIENTED;
 }

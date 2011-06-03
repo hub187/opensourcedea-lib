@@ -158,10 +158,10 @@ public class TestData {
 		DEAVariableType[] TestVariableTypes = new DEAVariableType[4];
 						
 		//Set up the variable types
-		TestVariableTypes[0] = DEAVariableType.Input;
-		TestVariableTypes[1] = DEAVariableType.Input;
-		TestVariableTypes[2] = DEAVariableType.Output;
-		TestVariableTypes[3] = DEAVariableType.Output;
+		TestVariableTypes[0] = DEAVariableType.INPUT;
+		TestVariableTypes[1] = DEAVariableType.INPUT;
+		TestVariableTypes[2] = DEAVariableType.OUTPUT;
+		TestVariableTypes[3] = DEAVariableType.OUTPUT;
 		
 		return TestVariableTypes;
 	}

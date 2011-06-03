@@ -69,7 +69,7 @@ public class SolverExceptionTest {
 	@Test
 	public void testLinearSolverException() {
 		
-		tester.setModelType(DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
 	//	tester.setDMUNames(TestDMUNames);
 	//	//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 	//	tester.setVariableNames(TestVariableNames);

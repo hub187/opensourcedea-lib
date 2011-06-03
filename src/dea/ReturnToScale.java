@@ -7,6 +7,6 @@ package dea;
  * @author Hubert Virtos
  *
  */
-public enum DEAReturnToScale {
-	Constant, Variable, General, Increasing, Decreasing;
+public enum ReturnToScale {
+	CONSTANT, VARIABLE, GENERAL, INCREASING, DECREASING;
 }

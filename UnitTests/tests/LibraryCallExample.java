@@ -68,9 +68,9 @@ public class LibraryCallExample {
 		
 		
 		//Set up the variable types
-		TestVariableTypes[0] = DEAVariableType.Input;
-		TestVariableTypes[1] = DEAVariableType.Input;
-		TestVariableTypes[2] = DEAVariableType.Output;
+		TestVariableTypes[0] = DEAVariableType.INPUT;
+		TestVariableTypes[1] = DEAVariableType.INPUT;
+		TestVariableTypes[2] = DEAVariableType.OUTPUT;
 		
 
 	}
@@ -83,7 +83,7 @@ public class LibraryCallExample {
 				
 		
 		//Set the DEA Problem Model Type (CCR).
-		tester.setModelType(DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
 		
 		//Set the DEA Problem DMU Names where TestDMUName is a double[].
 		tester.setDMUNames(TestDMUNames);

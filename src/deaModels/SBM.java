@@ -59,15 +59,15 @@ public class SBM {
 		double[] RHS;
 		
 		//if model is assuming Variable RTS, we need to add an extra row for the convexity constraint
-		if(deaP.getModelType() == DEAModelType.SBM) {
+		if(deaP.getModelType() == ModelType.SBM) {
 			RHS = new double [NbVariables + 1];
 			SolverEqualityType = new int [NbVariables + 1];
 		}
-		else if (deaP.getModelType() == DEAModelType.SBMV) {
+		else if (deaP.getModelType() == ModelType.SBMV) {
 			RHS = new double [NbVariables + 2];
 			SolverEqualityType = new int [NbVariables + 2];
 		}
-		else /*if (deaP.getModelType() == DEAModelType.SBMGRS)*/ {
+		else /*if (deaP.getModelType() == ModelType.SBMGRS)*/ {
 			RHS = new double [NbVariables + 3];
 			SolverEqualityType = new int [NbVariables + 3];
 		}
@@ -105,7 +105,7 @@ public class SBM {
 			
 			ReturnSol.setSlack(i, VarIndex, Sol.VariableResult[NbDMUs + 1 + VarIndex] / t);
 			
-			if(deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+			if(deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1]);
 				ReturnSol.setProjection(i, VarIndex,
 						deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));//
@@ -149,7 +149,7 @@ public class SBM {
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 1, NbDMUs);
 				//and slacks
-				if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 					ConstraintRow[NbDMUs + 1 + VarIndex] = -1;
 				}
 				else {
@@ -167,7 +167,7 @@ public class SBM {
 				 * Necessary for all SBM models*/
 				ConstraintRow[0] = 1;
 				for (int SlackIndex = 0; SlackIndex < NbVariables; SlackIndex++) {
-					if(deaP.getVariableType(SlackIndex) != DEAVariableType.Input) {
+					if(deaP.getVariableType(SlackIndex) != DEAVariableType.INPUT) {
 						ConstraintRow[NbDMUs + 1 + SlackIndex] = -1 / (TransposedMatrix[SlackIndex] [i] * deaP.getNumberOfOutputs());
 					}
 					else {
@@ -186,7 +186,7 @@ public class SBM {
 		
 		
 		//OPTIONAL ROWS
-		if(deaP.getModelType() == DEAModelType.SBMV) {
+		if(deaP.getModelType() == ModelType.SBMV) {
 			//Build convexity constraint. This is the ONLY difference with the SBMmodel
 			double[] ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			ConstraintRow[0] = 1;
@@ -198,7 +198,7 @@ public class SBM {
 			SolverEqualityType[NbVariables + 1] = LpSolve.EQ;
 		}
 		
-		if(deaP.getModelType() == DEAModelType.SBMGRS) {
+		if(deaP.getModelType() == ModelType.SBMGRS) {
 			double[] TempConstraintRow = new double[NbDMUs + NbVariables + 1];
 			for (int DMUIndex = 1; DMUIndex <= NbDMUs; DMUIndex++) {
 				TempConstraintRow[DMUIndex] = -1;

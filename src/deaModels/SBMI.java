@@ -59,7 +59,7 @@ public class SBMI {
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 0, NbDMUs);
 				//and slacks
-				if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 					ConstraintRow[NbDMUs + VarIndex] = 1;
 				}
 				else {
@@ -68,7 +68,7 @@ public class SBMI {
 				Constraints.add(ConstraintRow);
 		}
 		
-		if(deaP.getModelType() == DEAModelType.SBMIV) {
+		if(deaP.getModelType() == ModelType.SBMIV) {
 			//Add one row for the convexity constraints
 			double[] ConstraintRow = new double[NbDMUs + NbVariables];
 			for(int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
@@ -77,7 +77,7 @@ public class SBMI {
 			Constraints.add(ConstraintRow);
 		}
 		
-		if(deaP.getModelType() == DEAModelType.SBMIGRS) {
+		if(deaP.getModelType() == ModelType.SBMIGRS) {
 			double[] ConstraintRow = new double[NbDMUs + NbVariables];
 			for(int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
 				ConstraintRow[DMUIndex] = 1;
@@ -93,16 +93,16 @@ public class SBMI {
 		double[] ObjF = new double [NbDMUs + NbVariables];
 		double[] RHS;
 		int[] SolverEqualityType;
-		if(deaP.getModelType() == DEAModelType.SBMI) {
+		if(deaP.getModelType() == ModelType.SBMI) {
 			RHS = new double[NbVariables];
 			SolverEqualityType = new int[NbVariables];
 		}
-		else if (deaP.getModelType() == DEAModelType.SBMIV) {
+		else if (deaP.getModelType() == ModelType.SBMIV) {
 			//One extra row for convexity constraint
 			RHS = new double[NbVariables + 1];
 			SolverEqualityType = new int[NbVariables + 1];
 		}
-		else { //In this case the model is DEAModelType.SBMIGRS
+		else { //In this case the model is ModelType.SBMIGRS
 			//Tow extra rows for GRS constraints
 			RHS = new double[NbVariables + 2];
 			SolverEqualityType = new int[NbVariables + 2];
@@ -134,7 +134,7 @@ public class SBMI {
 		for(int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 			ReturnSol.setSlack(i, VarIndex, Sol.VariableResult[NbDMUs + VarIndex]);
 			
-			if(deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+			if(deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1] * -1);
 				ReturnSol.setProjection(i, VarIndex,
 						deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));
@@ -167,20 +167,20 @@ public class SBMI {
 		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 				//Build RHS
 				RHS[VarIndex] = TransposedMatrix[VarIndex] [i];
-				if(deaP.getVariableType(VarIndex) == DEAVariableType.Input){
+				if(deaP.getVariableType(VarIndex) == DEAVariableType.INPUT){
 					ObjF[NbDMUs + VarIndex] = -1 / (TransposedMatrix[VarIndex] [i] * NbInputs);
 				}
 				SolverEqualityType[VarIndex] = LpSolve.EQ;
 		}
 		
 		//Add extra row if Variable RTS
-		if(deaP.getModelType() == DEAModelType.SBMIV) {
+		if(deaP.getModelType() == ModelType.SBMIV) {
 			RHS[NbVariables] = 1;
 			SolverEqualityType[NbVariables] = LpSolve.EQ;
 		}
 		
 		//Add two extra rows if model is SBMIGRS
-		if(deaP.getModelType() == DEAModelType.SBMIGRS) {
+		if(deaP.getModelType() == ModelType.SBMIGRS) {
 			
 			RHS[NbVariables] = deaP.getRTSLowerBound();
 			SolverEqualityType[NbVariables] = LpSolve.GE;

@@ -91,7 +91,7 @@ public class LibraryTestBCCO {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -197,7 +197,7 @@ public class LibraryTestBCCO {
 	@Test
 	public void TestBCCO() {
 		
-		BuildDEAProblem(DEAModelType.BCCO); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.BCCO); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

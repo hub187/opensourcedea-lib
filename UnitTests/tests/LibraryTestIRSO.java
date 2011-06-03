@@ -91,7 +91,7 @@ public class LibraryTestIRSO {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -207,7 +207,7 @@ public class LibraryTestIRSO {
 	@Test
 	public void TestIRSO() {
 		
-		BuildDEAProblem(DEAModelType.IRSO); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.IRSO); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

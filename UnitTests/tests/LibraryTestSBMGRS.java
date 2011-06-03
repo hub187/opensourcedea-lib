@@ -91,7 +91,7 @@ public class LibraryTestSBMGRS {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -209,7 +209,7 @@ public class LibraryTestSBMGRS {
 	@Test
 	public void TestSBMGRS() {
 		
-		BuildDEAProblem(DEAModelType.SBMGRS); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.SBMGRS); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

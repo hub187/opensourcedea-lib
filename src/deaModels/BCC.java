@@ -94,8 +94,8 @@ public  class BCC {
 		 //		Solve Phase I		 //
 		//////////////////////////////
 		
-		if(deaP.getModelType() == DEAModelType.BCCI ||
-				deaP.getModelType() == DEAModelType.BCCO){
+		if(deaP.getModelType() == ModelType.BCCI ||
+				deaP.getModelType() == ModelType.BCCO){
 			RHS1 = new double [NbVariables + 1]; //RHS Phase I
 			SolverEqualityType1 = new int[NbVariables + 1];
 		}
@@ -111,7 +111,7 @@ public  class BCC {
 		//Solve
 		SolverResults Sol = new SolverResults();
 		try {
-			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 				Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MIN, SolverEqualityType1);
 			}
 			else {
@@ -139,8 +139,8 @@ public  class BCC {
 		 * - add the corresponding Theta to the RHS Array
 		 * - change the Objective Function accordingly (all 1 on Slacks, all others coeff = 0).*/
 		
-		if(deaP.getModelType() == DEAModelType.BCCI ||
-				deaP.getModelType() == DEAModelType.BCCO) {
+		if(deaP.getModelType() == ModelType.BCCI ||
+				deaP.getModelType() == ModelType.BCCO) {
 			/*+1 row for convexity constraints, + 1 row for theta*/
 			RHS2 = new double[NbVariables + 2];
 			SolverEqualityType2 = new int[NbVariables + 2];
@@ -182,8 +182,8 @@ public  class BCC {
 
 		for (int j = 0; j < NbVariables; j++) {
 			try {
-				if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
-					if(deaP.getVariableType(j) == DEAVariableType.Input) {
+				if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+					if(deaP.getVariableType(j) == DEAVariableType.INPUT) {
 						//Projections
 						ReturnSol.setProjection(i, j, ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 					}
@@ -193,7 +193,7 @@ public  class BCC {
 					}
 				}
 				else {
-					if(deaP.getVariableType(j) == DEAVariableType.Output) {
+					if(deaP.getVariableType(j) == DEAVariableType.OUTPUT) {
 						//Projections
 						if(ReturnSol.getObjective(i) != 0){
 							ReturnSol.setProjection(i, j, (1 / ReturnSol.getObjective(i)) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
@@ -230,8 +230,8 @@ public  class BCC {
 				
 		
 		//Changing RHS & SolverEqTypes
-		if(deaP.getModelType() == DEAModelType.BCCI ||
-				deaP.getModelType() == DEAModelType.BCCO) {
+		if(deaP.getModelType() == ModelType.BCCI ||
+				deaP.getModelType() == ModelType.BCCO) {
 			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
 			RHS2[NbVariables + 1] = Sol.Objective;
 			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0, SolverEqualityType1.length);
@@ -257,7 +257,7 @@ public  class BCC {
 			DEAPSolution ReturnSol, int i, SolverResults Sol) {
 		//Collect information from Phase I (Theta)
 		try {
-			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 				ReturnSol.setObjective(i, Sol.Objective);
 			}
 			else {
@@ -273,7 +273,7 @@ public  class BCC {
 		}
 		
 		try {
-			if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
+			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 				ReturnSol.setWeights(i, Sol.Weights);
 			}
 			else {
@@ -301,8 +301,8 @@ public  class BCC {
 			ConstraintRow = new double[NbDMUs + NbVariables + 1];
 			//First column (input values for  DMU under observation (DMUIndex) * -1; 0 for outputs)
 				try {
-					if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+						if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 							ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
 						}
 						else  {
@@ -310,7 +310,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.Output) {
+						if (deaP.getVariableType(VarIndex) == DEAVariableType.OUTPUT) {
 							ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
 						}
 						else  {
@@ -326,7 +326,7 @@ public  class BCC {
 				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 1, NbDMUs);
 				
 				//and slacks
-				if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 					ConstraintRow[NbDMUs + 1 + VarIndex] = -1;
 				}
 				else {
@@ -338,8 +338,8 @@ public  class BCC {
 			
 			//Build RHS & SolverEqualityTypes
 				try {
-					if(deaP.getModelOrientation() == DEAModelOrientation.InputOriented) {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+						if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 							RHS1[VarIndex] = 0;
 							SolverEqualityType1[VarIndex] = LpSolve.EQ;
 						}
@@ -349,7 +349,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.Output) {
+						if (deaP.getVariableType(VarIndex) == DEAVariableType.OUTPUT) {
 							RHS1[VarIndex] = 0;
 							SolverEqualityType1[VarIndex] = LpSolve.EQ;
 						}
@@ -369,8 +369,8 @@ public  class BCC {
 		for(int VarIndex = 1; VarIndex <= NbDMUs; VarIndex++){
 			ConstraintRow[VarIndex] = 1;
 		}
-		if(deaP.getModelType() == DEAModelType.BCCI ||
-				deaP.getModelType() == DEAModelType.BCCO) {
+		if(deaP.getModelType() == ModelType.BCCI ||
+				deaP.getModelType() == ModelType.BCCO) {
 			Constraints.add(ConstraintRow);
 			RHS1[NbVariables] = 1;
 			SolverEqualityType1[NbVariables] = LpSolve.EQ;

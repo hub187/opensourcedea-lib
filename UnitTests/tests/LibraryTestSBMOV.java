@@ -91,7 +91,7 @@ public class LibraryTestSBMOV {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -207,7 +207,7 @@ public class LibraryTestSBMOV {
 	@Test
 	public void TestSBMO() {
 		
-		BuildDEAProblem(DEAModelType.SBMOV); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.SBMOV); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

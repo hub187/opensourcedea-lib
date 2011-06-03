@@ -8,6 +8,6 @@ package dea;
  *
  */
 public enum DEAVariableType {
-	Input, Output
+	INPUT, OUTPUT
 }
 

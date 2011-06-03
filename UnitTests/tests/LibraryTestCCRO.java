@@ -81,7 +81,7 @@ public class LibraryTestCCRO {
 	}
 	
 	
-	public void BuildDEAProblem(DEAModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -94,7 +94,7 @@ public class LibraryTestCCRO {
 	@Test
 	public void TestCCRO() {
 		
-		BuildDEAProblem(DEAModelType.CCRO);  //, DEAModelOrientation.OutputOriented);
+		BuildDEAProblem(ModelType.CCRO);  //, DEAModelOrientation.OutputOriented);
 		
 		
 		try {

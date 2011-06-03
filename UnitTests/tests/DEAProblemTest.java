@@ -57,9 +57,9 @@ public class DEAProblemTest {
 			TestDataMatrix [4] [2] = 3;
 			
 			//Set up the variable types
-			TestVariableTypes[0] = DEAVariableType.Input;
-			TestVariableTypes[1] = DEAVariableType.Input;
-			TestVariableTypes[2] = DEAVariableType.Output;
+			TestVariableTypes[0] = DEAVariableType.INPUT;
+			TestVariableTypes[1] = DEAVariableType.INPUT;
+			TestVariableTypes[2] = DEAVariableType.OUTPUT;
 
 		
 		
@@ -69,8 +69,8 @@ public class DEAProblemTest {
 
 	@Test
 	public void testSetGetModelType() {
-		tester.setModelType(DEAModelType.CCRI);
-		assertSame(tester.getModelType(), DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
+		assertSame(tester.getModelType(), ModelType.CCRI);
 	}
 	
 	
@@ -121,7 +121,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testReferenceSet() {
-		tester.setModelType(DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
 		tester.setDMUNames(TestDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
@@ -238,7 +238,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void TestToSeeObjectProperties() {
-		tester.setModelType(DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
 		tester.setDMUNames(TestDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
@@ -253,7 +253,8 @@ public class DEAProblemTest {
 			tester.solve();
 		}
 		catch (DEAException e) {
-			assertSame(e.getMessage(), "The DEAProblem is missing some data. Please check the DataMatrix, DMUNames, ModelType, VariableNames and VariableTypes.");
+			assertSame(e.getMessage(), "The DEAProblem is missing some data. " +
+					"Please check the DataMatrix, DMUNames,ModelType, VariableNames and VariableTypes.");
 		}
 		
 	}
@@ -264,7 +265,7 @@ public class DEAProblemTest {
 	@Test
 	public void testMissingDMUCountDiscrepancy() {
 		
-		tester.setModelType(DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
 		tester.setDMUNames(TestDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
@@ -288,7 +289,7 @@ public class DEAProblemTest {
 	@Test
 	public void testMissingVariableCountDiscrepancy() {
 		
-		tester.setModelType(DEAModelType.CCRI);
+		tester.setModelType(ModelType.CCRI);
 		tester.setDMUNames(TestDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
@@ -311,7 +312,7 @@ public class DEAProblemTest {
 	@Test
 	public void testRTSBoundsNotSet() {
 		
-		tester.setModelType(DEAModelType.SBMGRS);
+		tester.setModelType(ModelType.SBMGRS);
 		tester.setDMUNames(TestDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(TestVariableNames);
@@ -322,8 +323,8 @@ public class DEAProblemTest {
 		tester.setVariableNames(variableNames);
 		
 		
-		for (DEAModelType mt : DEAModelType.values())
-			if(mt.getDEAReturnToScale() == DEAReturnToScale.General) {
+		for (ModelType mt : ModelType.values())
+			if(mt.getReturnToScale() == ReturnToScale.GENERAL) {
 				try {
 					tester.setModelType(mt);
 					tester.solve();
@@ -336,9 +337,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetModelEfficiencyType() {
-		tester.setModelType(DEAModelType.SBM);
+		tester.setModelType(ModelType.SBM);
 		try {
-			assertSame(tester.getModelEfficiencyType(), DEAEfficiencyType.MIX);
+			assertSame(tester.getModelEfficiencyType(), EfficiencyType.MIX);
 		} catch (MissingData e) {
 			e.printStackTrace();
 		}
@@ -346,9 +347,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetModelOrientation() {
-		tester.setModelType(DEAModelType.SBM);
+		tester.setModelType(ModelType.SBM);
 		try {
-			assertSame(tester.getModelOrientation(), DEAModelOrientation.NonOriented);
+			assertSame(tester.getModelOrientation(), ModelOrientation.NON_ORIENTED);
 		} catch (MissingData e) {
 			e.printStackTrace();
 		}
@@ -356,9 +357,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetModelRTS() {
-		tester.setModelType(DEAModelType.SBM);
+		tester.setModelType(ModelType.SBM);
 		try {
-			assertSame(tester.getModelRTS(), DEAReturnToScale.Constant);
+			assertSame(tester.getModelRTS(), ReturnToScale.CONSTANT);
 		} catch (MissingData e) {
 			e.printStackTrace();
 		}

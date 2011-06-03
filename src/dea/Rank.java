@@ -40,13 +40,15 @@ public class Rank {
 	/**
 	 * Returns the ranks.
 	 * @param arrayToSort The Array To sort (DMU Objectives)
-	 * @param HighestIsOne A boolean. If true, specifies that the highest values of the ArrayToSort should be '1' (i.e. first).
-	 * @param Precision An int value to specify at which decimal place the scores need to be rounded up prior to been ranked.
-	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1 (e.g. 1.00000000000002).
+	 * @param highestIsOne A boolean. If true, specifies that the highest values of the ArrayToSort
+	 * should be '1' (i.e. first).
+	 * @param precision An int value to specify at which decimal place the scores need to be rounded up prior to been ranked.
+	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1
+	 * (e.g. 1.00000000000002).
 	 * All precisions between 0 and 16 are taken into account, any other int value would leave the scores unchanged.
 	 * @return An int[] with the rank positions.
 	 */
-	public static int[] getRanks(double[] arrayToSort, boolean HighestIsOne, RankingType TypeOfRanking, int Precision) {
+	public static int[] getRanks(double[] arrayToSort, boolean highestIsOne, RankingType typeOfRanking, int precision) {
 		
 		//Copy original Array to avoid messing with external data
 		int arrLength = arrayToSort.length - 1;
@@ -60,9 +62,9 @@ public class Rank {
 	
 		System.arraycopy(arrayToSort, 0, workArray, 0, arrayToSort.length);
 		
-		if(Precision >= 0 && Precision <=16) {
+		if(precision >= 0 && precision <=16) {
 			for(int i = 0; i <=arrLength; i++) {
-				workArray[i] = roundToDecimals(workArray[i],Precision);
+				workArray[i] = roundToDecimals(workArray[i],precision);
 			}
 		}
 		
@@ -77,7 +79,7 @@ public class Rank {
 		
 		
 		//Create the rank array (where the highest values have a rank of 1 (first)).
-		switch (TypeOfRanking) {
+		switch (typeOfRanking) {
 			case DENSE: 
 			rankArray[posArray[arrLength ]] = tempRank;
 				for(int i = 0; i < arrLength - 1 ; i++) {
@@ -113,7 +115,7 @@ public class Rank {
 		
 
 		//Check whether the ranks need to be reverted (i.e. Highest is no longer one but Array.Length - 1).
-		if(HighestIsOne != true) {
+		if(highestIsOne != true) {
 			//Find Maximum
 		    int maximum = rankArray[0];   // start with the first value
 		    for (int i=1; i<rankArray.length; i++) {

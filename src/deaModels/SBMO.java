@@ -68,7 +68,7 @@ public class SBMO {
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 0, NbDMUs);
 				//and slacks
-				if (deaP.getVariableType(VarIndex) == DEAVariableType.Input) {
+				if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
 					ConstraintRow[NbDMUs + VarIndex] = 1;
 				}
 				else {
@@ -77,14 +77,14 @@ public class SBMO {
 				Constraints.add(ConstraintRow);
 		}
 		
-		if(deaP.getModelType() == DEAModelType.SBMOV) {
+		if(deaP.getModelType() == ModelType.SBMOV) {
 			ConstraintRow = new double[NbDMUs + NbVariables];
 			for(int k = 0; k < NbDMUs; k++) {
 				ConstraintRow[k] = 1;
 			}
 			Constraints.add(ConstraintRow);
 		}
-		if(deaP.getModelType() == DEAModelType.SBMOGRS) {
+		if(deaP.getModelType() == ModelType.SBMOGRS) {
 			ConstraintRow = new double[NbDMUs + NbVariables];
 			for(int k = 0; k < NbDMUs; k++) {
 				ConstraintRow[k] = 1;
@@ -101,17 +101,17 @@ public class SBMO {
 		double[] RHS;
 		int[] SolverEqualityType;
 		
-		if(deaP.getModelType() == DEAModelType.SBMO) {
+		if(deaP.getModelType() == ModelType.SBMO) {
 			RHS = new double [NbVariables];
 			SolverEqualityType = new int[NbVariables];
 		}
-		else if (deaP.getModelType() == DEAModelType.SBMOV) {
+		else if (deaP.getModelType() == ModelType.SBMOV) {
 			RHS = new double [NbVariables + 1];
 			SolverEqualityType = new int[NbVariables + 1];
 			RHS[NbVariables] = 1;
 			SolverEqualityType[NbVariables] = LpSolve.EQ;
 		}
-		else { //deaP.getModelType() == DEAModelType.SBMOGRS
+		else { //deaP.getModelType() == ModelType.SBMOGRS
 			RHS = new double [NbVariables + 2];
 			SolverEqualityType = new int[NbVariables + 2];
 			RHS[NbVariables] = deaP.getRTSLowerBound();
@@ -128,7 +128,7 @@ public class SBMO {
 		for (int j = 0; j < NbVariables; j++) {
 				//Build RHS
 				RHS[j] = TransposedMatrix[j] [i];
-				if(deaP.getVariableType(j) == DEAVariableType.Output){
+				if(deaP.getVariableType(j) == DEAVariableType.OUTPUT){
 					ObjF[NbDMUs + j] = 1 / (TransposedMatrix[j] [i] * NbOutputs);
 				}
 				SolverEqualityType[j] = LpSolve.EQ;
@@ -157,7 +157,7 @@ public class SBMO {
 			
 			ReturnSol.setSlack(i, varPos, Sol.VariableResult[NbDMUs + varPos]);
 			
-			if(deaP.getVariableType(varPos) == DEAVariableType.Output) {
+			if(deaP.getVariableType(varPos) == DEAVariableType.OUTPUT) {
 				ReturnSol.setWeight(i, varPos, Sol.DualResult[varPos + 1] * -1);
 				ReturnSol.setProjection(i, varPos,
 						deaP.getDataMatrix(i, varPos) + ReturnSol.getSlack(i, varPos));//

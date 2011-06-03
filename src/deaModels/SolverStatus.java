@@ -6,6 +6,11 @@ import dea.SolverReturnStatus;
 
 public class SolverStatus {
 	
+	/**
+	 * 
+	 * @param ReturnSol
+	 * @param Sol
+	 */
 	public static void checkSolverStatus(DEAPSolution ReturnSol,
 			SolverResults Sol) {
 		switch(Sol.Status) {
