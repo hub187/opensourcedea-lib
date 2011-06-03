@@ -1,6 +1,6 @@
 package tests;
 
-import dea.DEAVariableType;
+import dea.VariableType;
 
 public class TestData {
 	
@@ -153,15 +153,15 @@ public class TestData {
 		return TestDataMatrix;
 	}
 	
-	public static DEAVariableType[] createTestDEAVariableTypes() {
+	public static VariableType[] createTestVariableTypes() {
 
-		DEAVariableType[] TestVariableTypes = new DEAVariableType[4];
+		VariableType[] TestVariableTypes = new VariableType[4];
 						
 		//Set up the variable types
-		TestVariableTypes[0] = DEAVariableType.INPUT;
-		TestVariableTypes[1] = DEAVariableType.INPUT;
-		TestVariableTypes[2] = DEAVariableType.OUTPUT;
-		TestVariableTypes[3] = DEAVariableType.OUTPUT;
+		TestVariableTypes[0] = VariableType.INPUT;
+		TestVariableTypes[1] = VariableType.INPUT;
+		TestVariableTypes[2] = VariableType.OUTPUT;
+		TestVariableTypes[3] = VariableType.OUTPUT;
 		
 		return TestVariableTypes;
 	}

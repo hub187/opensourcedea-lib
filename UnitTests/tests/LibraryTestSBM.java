@@ -96,7 +96,7 @@ public class LibraryTestSBM {
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableTypes(TestData.createTestDEAVariableTypes());
+		tester.setVariableTypes(TestData.createTestVariableTypes());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
 	}

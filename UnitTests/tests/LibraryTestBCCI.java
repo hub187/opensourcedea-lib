@@ -96,7 +96,7 @@ public class LibraryTestBCCI {
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableTypes(TestData.createTestDEAVariableTypes());
+		tester.setVariableTypes(TestData.createTestVariableTypes());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
 
@@ -207,6 +207,7 @@ public class LibraryTestBCCI {
 		}
 		
 		DEAPSolution CheckedSol = GetModelResults();
+		
 		
 		
 		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

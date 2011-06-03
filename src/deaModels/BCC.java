@@ -183,7 +183,7 @@ public  class BCC {
 		for (int j = 0; j < NbVariables; j++) {
 			try {
 				if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-					if(deaP.getVariableType(j) == DEAVariableType.INPUT) {
+					if(deaP.getVariableType(j) == VariableType.INPUT) {
 						//Projections
 						ReturnSol.setProjection(i, j, ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 					}
@@ -193,7 +193,7 @@ public  class BCC {
 					}
 				}
 				else {
-					if(deaP.getVariableType(j) == DEAVariableType.OUTPUT) {
+					if(deaP.getVariableType(j) == VariableType.OUTPUT) {
 						//Projections
 						if(ReturnSol.getObjective(i) != 0){
 							ReturnSol.setProjection(i, j, (1 / ReturnSol.getObjective(i)) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
@@ -302,7 +302,7 @@ public  class BCC {
 			//First column (input values for  DMU under observation (DMUIndex) * -1; 0 for outputs)
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
+						if (deaP.getVariableType(VarIndex) == VariableType.INPUT) {
 							ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
 						}
 						else  {
@@ -310,7 +310,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.OUTPUT) {
+						if (deaP.getVariableType(VarIndex) == VariableType.OUTPUT) {
 							ConstraintRow[0] = TransposedMatrix[VarIndex] [i] * -1;
 						}
 						else  {
@@ -326,7 +326,7 @@ public  class BCC {
 				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 1, NbDMUs);
 				
 				//and slacks
-				if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
+				if (deaP.getVariableType(VarIndex) == VariableType.INPUT) {
 					ConstraintRow[NbDMUs + 1 + VarIndex] = -1;
 				}
 				else {
@@ -339,7 +339,7 @@ public  class BCC {
 			//Build RHS & SolverEqualityTypes
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
+						if (deaP.getVariableType(VarIndex) == VariableType.INPUT) {
 							RHS1[VarIndex] = 0;
 							SolverEqualityType1[VarIndex] = LpSolve.EQ;
 						}
@@ -349,7 +349,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if (deaP.getVariableType(VarIndex) == DEAVariableType.OUTPUT) {
+						if (deaP.getVariableType(VarIndex) == VariableType.OUTPUT) {
 							RHS1[VarIndex] = 0;
 							SolverEqualityType1[VarIndex] = LpSolve.EQ;
 						}

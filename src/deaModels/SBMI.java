@@ -59,7 +59,7 @@ public class SBMI {
 				//Copy rest of the data matrix
 				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 0, NbDMUs);
 				//and slacks
-				if (deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
+				if (deaP.getVariableType(VarIndex) == VariableType.INPUT) {
 					ConstraintRow[NbDMUs + VarIndex] = 1;
 				}
 				else {
@@ -134,7 +134,7 @@ public class SBMI {
 		for(int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 			ReturnSol.setSlack(i, VarIndex, Sol.VariableResult[NbDMUs + VarIndex]);
 			
-			if(deaP.getVariableType(VarIndex) == DEAVariableType.INPUT) {
+			if(deaP.getVariableType(VarIndex) == VariableType.INPUT) {
 				ReturnSol.setWeight(i, VarIndex, Sol.DualResult[VarIndex + 1] * -1);
 				ReturnSol.setProjection(i, VarIndex,
 						deaP.getDataMatrix(i, VarIndex) - ReturnSol.getSlack(i, VarIndex));
@@ -167,7 +167,7 @@ public class SBMI {
 		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 				//Build RHS
 				RHS[VarIndex] = TransposedMatrix[VarIndex] [i];
-				if(deaP.getVariableType(VarIndex) == DEAVariableType.INPUT){
+				if(deaP.getVariableType(VarIndex) == VariableType.INPUT){
 					ObjF[NbDMUs + VarIndex] = -1 / (TransposedMatrix[VarIndex] [i] * NbInputs);
 				}
 				SolverEqualityType[VarIndex] = LpSolve.EQ;

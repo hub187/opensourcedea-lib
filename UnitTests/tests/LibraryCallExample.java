@@ -16,7 +16,7 @@ public class LibraryCallExample {
 	//Create some array for the DMU and Variable Names, types and the Data Matrix
 	static String[] TestDMUNames = new String[7];
 	static String[] TestVariableNames = new String [3];
-	static DEAVariableType[] TestVariableTypes = new DEAVariableType[3];
+	static VariableType[] TestVariableTypes = new VariableType[3];
 	static double[] [] TestDataMatrix = new double[7] [3];
 
 	
@@ -68,9 +68,9 @@ public class LibraryCallExample {
 		
 		
 		//Set up the variable types
-		TestVariableTypes[0] = DEAVariableType.INPUT;
-		TestVariableTypes[1] = DEAVariableType.INPUT;
-		TestVariableTypes[2] = DEAVariableType.OUTPUT;
+		TestVariableTypes[0] = VariableType.INPUT;
+		TestVariableTypes[1] = VariableType.INPUT;
+		TestVariableTypes[2] = VariableType.OUTPUT;
 		
 
 	}
@@ -94,7 +94,7 @@ public class LibraryCallExample {
 		//Set the DEA Problem Variable Names where TestVariableName is a String[].
 		tester.setVariableNames(TestVariableNames);
 		
-		//Set the DEA Problem Variable Types where TestVariableType is a DEAVariableType[].
+		//Set the DEA Problem Variable Types where TestVariableType is a VariableType[].
 		tester.setVariableTypes(TestVariableTypes);
 		
 		/* Set the DEA Problem Data Matrix where TestDataMatrix is a double[] [].

@@ -15,7 +15,7 @@ public class DEAProblemTest {
 	DEAProblem tester = new DEAProblem(5, 3);
 	static String[] TestDMUNames = new String[5];
 	static String[] TestVariableNames = new String [3];
-	static DEAVariableType[] TestVariableTypes = new DEAVariableType[3];
+	static VariableType[] TestVariableTypes = new VariableType[3];
 	static double[] [] TestDataMatrix = new double[5] [3];
 
 	
@@ -57,9 +57,9 @@ public class DEAProblemTest {
 			TestDataMatrix [4] [2] = 3;
 			
 			//Set up the variable types
-			TestVariableTypes[0] = DEAVariableType.INPUT;
-			TestVariableTypes[1] = DEAVariableType.INPUT;
-			TestVariableTypes[2] = DEAVariableType.OUTPUT;
+			TestVariableTypes[0] = VariableType.INPUT;
+			TestVariableTypes[1] = VariableType.INPUT;
+			TestVariableTypes[2] = VariableType.OUTPUT;
 
 		
 		

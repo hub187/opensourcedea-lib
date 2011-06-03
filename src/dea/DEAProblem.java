@@ -51,14 +51,14 @@ public class DEAProblem {
    //////////////////////////////////////////////////////////////////////////
 	
 
-	private ModelType deapModelType;
-	private String[] deapDMUName;
-	private String[] deapVariableName;
-	private DEAVariableType [] deapVariableType;
-	private double [] [] deapDataMatrix;
-	private double deapRTSLowerBound;
-	private double deapRTSUpperBound;
-	private dea.DEAPSolution deapSolution;
+	private ModelType modelType;
+	private String[] dmuName;
+	private String[] variableName;
+	private VariableType [] variableType;
+	private double [] [] dataMatrix;
+	private double rtsLowerBound;
+	private double rtsUpperBound;
+	private dea.DEAPSolution solution;
 	
 	
 	/**
@@ -67,7 +67,7 @@ public class DEAProblem {
 	 * @param nbVariables The number of variables in the DEA Problem to solve.
 	 */
 	public DEAProblem(int nbDMUs, int nbVariables) {
-		deapSolution = new DEAPSolution(nbDMUs, nbVariables);
+		this.solution = new DEAPSolution(nbDMUs, nbVariables);
 	}
 	
 
@@ -87,16 +87,16 @@ public class DEAProblem {
 	 */
 	public ModelType getModelType()
 	{
-		return deapModelType;
+		return this.modelType;
 	}
 	
 	/**
 	 * Sets type of DEA Problem Model (e.g. CCR, SBM...)
 	 * @param modelType The DEA Problem type.
 	 */
-	public void setModelType(ModelType modelType)
+	public void setModelType(ModelType modType)
 	{
-		deapModelType = modelType;
+		this.modelType = modType;
 	}
 
 	
@@ -107,7 +107,7 @@ public class DEAProblem {
 	 */
 	public String[] getDMUNames()
 	{
-		return deapDMUName;
+		return this.dmuName;
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class DEAProblem {
 	 */
 	public String getDMUName(int dmuIndex)
 	{
-		return deapDMUName[dmuIndex];
+		return this.dmuName[dmuIndex];
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class DEAProblem {
 	 */
 	public void setDMUNames(String[] dmuNames)
 	{
-		deapDMUName = dmuNames;
+		this.dmuName = dmuNames;
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public class DEAProblem {
 	 */
 	public void setDMUName(String dmuName, int dmuIndex)
 	{
-		deapDMUName[dmuIndex] = dmuName;
+		this.dmuName[dmuIndex] = dmuName;
 	}
 
 	
@@ -146,36 +146,36 @@ public class DEAProblem {
 	 */
 	public String[] getVariableNames()
 	{
-		return deapVariableName;
+		return this.variableName;
 	}
 	
 	/**
 	 * Returns the variable name for a specific variable.
-	 * @param variableIndex The Variable Number in the variable array.
+	 * @param varIndex The Variable Number in the variable array.
 	 * @return The variable name for a specific variable specified.
 	 */
-	public String getVariableName(int variableIndex)
+	public String getVariableName(int varIndex)
 	{
-		return deapVariableName[variableIndex];
+		return this.variableName[varIndex];
 	}
 	
 	/**
 	 * Sets all the Variable names.
-	 * @param variableNames A String[] of Variable Names.
+	 * @param varNames A String[] of Variable Names.
 	 */
-	public void setVariableNames(String[] variableNames)
+	public void setVariableNames(String[] varNames)
 	{
-		deapVariableName = variableNames;
+		this.variableName = varNames;
 	}
 	
 	/**
 	 * Sets the name of the variable at position VariableNumber in the Variable Names Array.
-	 * @param variableName The Name of the Variable.
-	 * @param variableIndex The Variable position in the Variable Array.
+	 * @param varName The Name of the Variable.
+	 * @param varIndex The Variable position in the Variable Array.
 	 */
-	public void setVariableName(String variableName, int variableIndex)
+	public void setVariableName(String varName, int varIndex)
 	{
-		deapVariableName[variableIndex] = variableName;
+		this.variableName[varIndex] = varName;
 	}
 	
 	
@@ -183,38 +183,38 @@ public class DEAProblem {
 	 * Returns an array of VariableTypes.
 	 * @return An array of variable types.
 	 */
-	public DEAVariableType[] getVariableTypes()
+	public VariableType[] getVariableTypes()
 	{
-		return deapVariableType;
+		return this.variableType;
 	}
 	
 	/**
 	 * Gets the Variable type of the Variable specified.
-	 * @param variableIndex The position of the variable in the Variable Array.
+	 * @param varIndex The position of the variable in the Variable Array.
 	 * @return The Variable Type of the Variable at the position specified.
 	 */
-	public DEAVariableType getVariableType(int variableIndex)
+	public VariableType getVariableType(int varIndex)
 	{
-		return deapVariableType[variableIndex];
+		return this.variableType[varIndex];
 	}
 	
 	/**
 	 * Sets the variable type for all the variables.
-	 * @param variableTypes An array of DEAVariableType.
+	 * @param varTypes An array of VariableType.
 	 */
-	public void setVariableTypes(DEAVariableType[] variableTypes)
+	public void setVariableTypes(VariableType[] varTypes)
 	{
-		deapVariableType = variableTypes;
+		this.variableType = varTypes;
 	}
 	
 	/**
-	 * Sets the DEAVariableType for the specified Variable.
-	 * @param variableType The DEAVariableType of the specified variable.
-	 * @param variableIndex The position of the variable in the Variable Array.
+	 * Sets the VariableType for the specified Variable.
+	 * @param variableType The VariableType of the specified variable.
+	 * @param varIndex The position of the variable in the Variable Array.
 	 */
-	public void setVariableType(DEAVariableType variableType, int variableIndex)
+	public void setVariableType(VariableType varType, int varIndex)
 	{
-		deapVariableType[variableIndex] = variableType;
+		this.variableType[varIndex] = varType;
 	}
 	
 	
@@ -224,38 +224,38 @@ public class DEAProblem {
 	 */
 	public double[] [] getDataMatrix()
 	{
-		return deapDataMatrix;
+		return this.dataMatrix;
 	}
 	
 	/**
 	 * Returns a specific variable value  from the Data Matrix for the DMU specified.
 	 * @param dmuIndex The number of DMU in the DMU array
-	 * @param variableIndex The number of the variable in the Variable Array
+	 * @param varIndex The number of the variable in the Variable Array
 	 * @return a double corresponding to the Variable value.
 	 */
-	public double getDataMatrix(int dmuIndex, int variableIndex)
+	public double getDataMatrix(int dmuIndex, int varIndex)
 	{
-		return deapDataMatrix[dmuIndex] [variableIndex];
+		return dataMatrix[dmuIndex] [varIndex];
 	}
 	
 	/**
 	 * Sets the whole Data Matrix.
-	 * @param dataMatrix The double [NbDMUs] [NbVariable] array of the problem values.
+	 * @param dMatrix The double [NbDMUs] [NbVariable] array of the problem values.
 	 */
-	public void setDataMatrix(double[] [] dataMatrix)
+	public void setDataMatrix(double[] [] dMatrix)
 	{
-		deapDataMatrix = dataMatrix;
+		this.dataMatrix = dMatrix;
 	}
 	
 	/**
 	 * Sets a value for a specific DMU.
 	 * @param value The specific value to set.
 	 * @param dmuIndex The DMU Number for which to set the value.
-	 * @param variableIndex The Variable Number for which to set the value.
+	 * @param varIndex The Variable Number for which to set the value.
 	 */
-	public void setDataMatrix(double value, int dmuIndex, int variableIndex)
+	public void setDataMatrix(double value, int dmuIndex, int varIndex)
 	{
-		deapDataMatrix[dmuIndex] [variableIndex] = value;
+		this.dataMatrix[dmuIndex] [varIndex] = value;
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class DEAProblem {
 		if(lowerB < 0 || lowerB > 1) {
 			throw new InvalidPropertyValue("Lower Bound must be as follows: 0 <= LowerB <= 1.");
 		}
-		deapRTSLowerBound = lowerB;
+		this.rtsLowerBound = lowerB;
 	}
 	
 	/**
@@ -274,7 +274,7 @@ public class DEAProblem {
 	 * @return RTSLowerBound A double corresponding to the General RTS Lower Bound Limit.
 	 */
 	public double getRTSLowerBound() {
-		return deapRTSLowerBound;
+		return this.rtsLowerBound;
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class DEAProblem {
 		if(upperB < 1) {
 			throw new InvalidPropertyValue("Upper Bound must be greater or equal to 1.");
 		}
-		deapRTSUpperBound = upperB;
+		this.rtsUpperBound = upperB;
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class DEAProblem {
 	 * @return RTSUpperBound A double corresponding to the General RTS Upper Bound Limit.
 	 */
 	public double getRTSUpperBound() {
-		return deapRTSUpperBound;
+		return this.rtsUpperBound;
 	}
 	
 	 //////////////////////////////////////////////////////////////////////////
@@ -306,7 +306,7 @@ public class DEAProblem {
 	 */
 	public int getNumberOfDMUs() {
 		int nbDMUs;
-		nbDMUs = deapDataMatrix.length;
+		nbDMUs = this.dataMatrix.length;
 		return nbDMUs;
 	}
 	
@@ -316,8 +316,8 @@ public class DEAProblem {
 	 */
 	public int getNumberOfOutputs() {
 		int nbOutputs = 0;
-		for(int i = 0; i < deapVariableType.length; i++) {
-			if(deapVariableType[i] == DEAVariableType.OUTPUT) {
+		for(int i = 0; i < this.variableType.length; i++) {
+			if(this.variableType[i] == VariableType.OUTPUT) {
 				nbOutputs++;
 			}
 		}
@@ -330,8 +330,8 @@ public class DEAProblem {
 	 */
 	public int getNumberOfInputs() {
 		int nbInputs = 0;
-		for(int i = 0; i < deapVariableType.length; i++) {
-			if(deapVariableType[i] == DEAVariableType.INPUT) {
+		for(int i = 0; i < variableType.length; i++) {
+			if(variableType[i] == VariableType.INPUT) {
 				nbInputs++;
 			}
 		}
@@ -344,7 +344,7 @@ public class DEAProblem {
 	 */
 	public int getNumberOfVariables() {
 		int nbVariables;
-		nbVariables = deapDataMatrix[0].length;
+		nbVariables = this.dataMatrix[0].length;
 		return nbVariables;
 	}
 	
@@ -354,17 +354,17 @@ public class DEAProblem {
 	 * @return A double[] [] corresponding to the transpose of the Data Matrix
 	 */
 	public double [] [] getTranspose(boolean returnsNegativeTranspose) {
-		double [] [] transposedMatrix = new double [this.deapDataMatrix[0].length] [this.deapDataMatrix.length];
+		double [] [] transposedMatrix = new double [this.dataMatrix[0].length] [this.dataMatrix.length];
 		
 		if(returnsNegativeTranspose == false) {
-			for (int i = 0; i < this.deapDataMatrix.length; i++)
-	            for (int j = 0; j < this.deapDataMatrix[0].length; j++)
-	                transposedMatrix[j][i] = this.deapDataMatrix[i][j];
+			for (int i = 0; i < this.dataMatrix.length; i++)
+	            for (int j = 0; j < this.dataMatrix[0].length; j++)
+	                transposedMatrix[j][i] = this.dataMatrix[i][j];
 		}
 		else {
-			for (int i = 0; i < this.deapDataMatrix.length; i++)
-	            for (int j = 0; j < this.deapDataMatrix[0].length; j++)
-	                transposedMatrix[j][i] = this.deapDataMatrix[i][j] * -1;
+			for (int i = 0; i < this.dataMatrix.length; i++)
+	            for (int j = 0; j < this.dataMatrix[0].length; j++)
+	                transposedMatrix[j][i] = this.dataMatrix[i][j] * -1;
 		}
 				
 		return transposedMatrix;
@@ -437,60 +437,60 @@ public class DEAProblem {
 		checkDataBeforeSolving();
 		
 		try {
-			switch (this.deapModelType) {
-				case CCRI: this.deapSolution = CCR.solveCCR(this); break;
+			switch (this.modelType) {
+				case CCRI: this.solution = CCR.solveCCR(this); break;
 				
-				case CCRO: this.deapSolution = CCR.solveCCR(this); break;
+				case CCRO: this.solution = CCR.solveCCR(this); break;
 				
-				case BCCI: this.deapSolution = BCC.solveBCC(this); break;
+				case BCCI: this.solution = BCC.solveBCC(this); break;
 				
-				case BCCO: this.deapSolution = BCC.solveBCC(this); break;
+				case BCCO: this.solution = BCC.solveBCC(this); break;
 				
-				case GRSI: this.deapSolution = BCC.solveBCC(this); break;
+				case GRSI: this.solution = BCC.solveBCC(this); break;
 				
-				case GRSO: this.deapSolution = BCC.solveBCC(this); break;
+				case GRSO: this.solution = BCC.solveBCC(this); break;
 				
 				case IRSI:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30); //LpSolve cannot solve with Double.POSITIVE_INFINITY (numerical instability => model is infeasible, last best value of -1e+30)
-					this.deapSolution = BCC.solveBCC(this);
+					this.solution = BCC.solveBCC(this);
 					break;
 				
 				case IRSO:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30);
-					this.deapSolution = BCC.solveBCC(this);
+					this.solution = BCC.solveBCC(this);
 					break;
 				
 				case DRSI:
 					this.setRTSLowerBound(0);
 					this.setRTSUpperBound(1);
-					this.deapSolution = BCC.solveBCC(this);
+					this.solution = BCC.solveBCC(this);
 					break;
 				
 				case DRSO:
 					this.setRTSLowerBound(0);
 					this.setRTSUpperBound(1);
-					this.deapSolution = BCC.solveBCC(this);
+					this.solution = BCC.solveBCC(this);
 					break;
 				
-				case SBM: this.deapSolution = SBM.solveSBM(this); break;
+				case SBM: this.solution = SBM.solveSBM(this); break;
 				
-				case SBMV: this.deapSolution = SBM.solveSBM(this); break;
+				case SBMV: this.solution = SBM.solveSBM(this); break;
 				
-				case SBMGRS: this.deapSolution = SBM.solveSBM(this); break;
+				case SBMGRS: this.solution = SBM.solveSBM(this); break;
 				
-				case SBMI: this.deapSolution = SBMI.solveSBMI(this); break;
+				case SBMI: this.solution = SBMI.solveSBMI(this); break;
 				
-				case SBMIV: this.deapSolution = SBMI.solveSBMI(this); break;				
+				case SBMIV: this.solution = SBMI.solveSBMI(this); break;				
 				
-				case SBMIGRS: this.deapSolution = SBMI.solveSBMI(this); break;
+				case SBMIGRS: this.solution = SBMI.solveSBMI(this); break;
 				
-				case SBMO: this.deapSolution = SBMO.solveSBMO(this); break;
+				case SBMO: this.solution = SBMO.solveSBMO(this); break;
 				
-				case SBMOV: this.deapSolution = SBMO.solveSBMO(this); break;
+				case SBMOV: this.solution = SBMO.solveSBMO(this); break;
 				
-				case SBMOGRS: this.deapSolution = SBMO.solveSBMO(this); break;
+				case SBMOGRS: this.solution = SBMO.solveSBMO(this); break;
 			}
 		}
 		catch (DEASolverException e) {
@@ -503,24 +503,24 @@ public class DEAProblem {
 
 	private void checkDataBeforeSolving() throws MissingData,
 			InconsistentNoOfVariables, InconsistentNoOfDMUs {
-		if(this.deapDataMatrix == null || this.deapDMUName == null || this.deapModelType == null ||
-				this.deapVariableName == null || this.deapVariableType == null) {
+		if(this.dataMatrix == null || this.dmuName == null || this.modelType == null ||
+				this.variableName == null || this.variableType == null) {
 			//MissingData e = new MissingData("some text to describe the error");
 			throw new MissingData();
 		}
 		
-		int lenX = this.deapDataMatrix[0].length;
-		if(lenX != this.deapVariableName.length || lenX != this.deapVariableType.length) {
+		int lenX = this.dataMatrix[0].length;
+		if(lenX != this.variableName.length || lenX != this.variableType.length) {
 			throw new InconsistentNoOfVariables();
 		}
 		
-		int lenY = this.deapDataMatrix.length;
-		if(lenY != this.deapDMUName.length) {
+		int lenY = this.dataMatrix.length;
+		if(lenY != this.dmuName.length) {
 			throw new InconsistentNoOfDMUs();
 		}
 		
 		if(this.getModelType().getReturnToScale() == ReturnToScale.GENERAL) {
-			if(this.deapRTSUpperBound == 0) {
+			if(this.rtsUpperBound == 0) {
 				throw new MissingData("RTS Bounds not set correctly!");
 			}
 		}
@@ -538,7 +538,7 @@ public class DEAProblem {
 	 * @return a SolverReturnStatus
 	 */
 	public SolverReturnStatus getOptimisationStatus() {
-		return this.deapSolution.getStatus();
+		return this.solution.getStatus();
 	}
 	
 	/**
@@ -546,20 +546,19 @@ public class DEAProblem {
 	 * @return A double[] corresponding to all the DMUs Objectives.
 	 * @throws DEAExceptions 
 	 */
-	public double[] getObjectives() //throws DEAExceptions
+	public double[] getObjectives()
 	{
-		return deapSolution.getObjectives();
-		//return _Solution.Objectives;
+		return this.solution.getObjectives();
 	}
 	
 	/**
 	 * Returns the Objective value for the specified DMU.
-	 * @param DMUNumber The number of the DMU in the Objective Array.
+	 * @param dmuNumber The number of the DMU in the Objective Array.
 	 * @return The Objective value for the specified DMU.
 	 */
-	public double getObjective(int DMUNumber)
+	public double getObjective(int dmuNumber)
 	{
-		return deapSolution.getObjectives()[DMUNumber];// _Solution.getObjectives()[DMUNumber];
+		return this.solution.getObjectives()[dmuNumber];
 	}
 		
 
@@ -580,23 +579,23 @@ public class DEAProblem {
 	
 	/**
 	 * Returns the Slacks for the specified DMU.
-	 * @param DMUNumber The number of the DMU.
+	 * @param dmuNumber The number of the DMU.
 	 * @return A double[] corresponding to the slacks for the specified DMU.
 	 */
-	public double[] getSlacks(int DMUNumber)
+	public double[] getSlacks(int dmuNumber)
 	{
-		return deapSolution.getSlacks(DMUNumber); // .Slacks[DMUNumber];
+		return this.solution.getSlacks(dmuNumber);
 	}
 	
 	/**
 	 * Returns the slack value for the specified DMU and Variable Number.
-	 * @param DMUNumber The number of the DMU
-	 * @param VarNumber The Number of the Variable
+	 * @param dmuNumber The number of the DMU
+	 * @param varNumber The Number of the Variable
 	 * @return The slack value for the specified DMU and Variable Number
 	 */
-	public double getSlack(int DMUNumber, int VarNumber)
+	public double getSlack(int dmuNumber, int varNumber)
 	{
-		return deapSolution.getSlack(DMUNumber, VarNumber); // _Solution.Slacks[DMUNumber] [VarNumber];
+		return this.solution.getSlack(dmuNumber, varNumber);
 	}
 	
 	/**
@@ -605,30 +604,30 @@ public class DEAProblem {
 	 */
 	public double[] [] getSlacks()
 	{
-		return deapSolution.getSlacks(); // Slacks;
+		return this.solution.getSlacks(); // Slacks;
 	}
 	
 	
 	
 	/**
 	 * Returns the weights of the specified DMU.
-	 * @param DMUNumber The Number of the DMU.
+	 * @param dmuNumber The Number of the DMU.
 	 * @return A double[] corresponding to the weights for the specified DMU.
 	 */
-	public double[] getWeight(int DMUNumber)
+	public double[] getWeight(int dmuNumber)
 	{
-		return deapSolution.getWeights(DMUNumber);
+		return this.solution.getWeights(dmuNumber);
 	}
 	
 	/**
 	 * Returns the specific weight value for the specified DMU and Variable number.
-	 * @param DMUNumber The number of the DMU
-	 * @param VarNumber The number of the Variable
+	 * @param dmuNumber The number of the DMU
+	 * @param varNumber The number of the Variable
 	 * @return A specific weight value.
 	 */
-	public double getWeight(int DMUNumber, int VarNumber)
+	public double getWeight(int dmuNumber, int varNumber)
 	{
-		return deapSolution.getWeight(DMUNumber, VarNumber);
+		return this.solution.getWeight(dmuNumber, varNumber);
 	}
 	
 	/**
@@ -637,19 +636,19 @@ public class DEAProblem {
 	 */
 	public double[] [] getWeight()
 	{
-		return deapSolution.getWeights();
+		return this.solution.getWeights();
 	}
 	
 	
 	
 	/**
 	 * Returns the projections for the specified DMU.
-	 * @param DMUNumber The number of the DMU
+	 * @param dmuNumber The number of the DMU
 	 * @return The projections for the specific DMU
 	 */
-	public double[] getProjections(int DMUNumber)
+	public double[] getProjections(int dmuNumber)
 	{
-		return deapSolution.getProjections(DMUNumber);
+		return this.solution.getProjections(dmuNumber);
 	}
 	
 	/**
@@ -658,7 +657,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getProjections()
 	{
-		return deapSolution.getProjections();
+		return this.solution.getProjections();
 	}
 	
 
@@ -669,25 +668,25 @@ public class DEAProblem {
 	
 	/**
 	 * Returns the projection percentages
-	 * @param DMUNumber The DMU Number
+	 * @param dmuNumber The DMU Number
 	 * @return A double[] of the projection percentages for the specified DMU
 	 */	
-	public double[] getProjectionPercentages(int DMUNumber)
+	public double[] getProjectionPercentages(int dmuNumber)
 	{
-		double[] ProjectionPercentages = new double[this.deapSolution.getProjections()[0].length];
-		double VariableValue;
-		double[] Projections = this.getProjections(DMUNumber);
+		double[] projectionPercentages = new double[this.solution.getProjections()[0].length];
+		double varValue;
+		double[] projections = this.getProjections(dmuNumber);
 		//Loop through each variable
-		for(int i = 0; i < this.deapSolution.getProjections()[0].length; i++) {
-			VariableValue = this.getDataMatrix(DMUNumber, i);
-			if(this.getVariableType(i) == DEAVariableType.INPUT) {
-				ProjectionPercentages[i] = (VariableValue -  Projections[i]) / VariableValue * -1;
+		for(int i = 0; i < this.solution.getProjections()[0].length; i++) {
+			varValue = this.getDataMatrix(dmuNumber, i);
+			if(this.getVariableType(i) == VariableType.INPUT) {
+				projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
 			}
 			else {
-				ProjectionPercentages[i] = (VariableValue -  Projections[i]) / VariableValue;
+				projectionPercentages[i] = (varValue -  projections[i]) / varValue;
 			}
 		}
-		return ProjectionPercentages;
+		return projectionPercentages;
 	}
 	
 	/**
@@ -697,44 +696,44 @@ public class DEAProblem {
 	public double[] [] getProjectionPercentages()
 	{
 		
-		double[] [] ProjectionPercentages =
-			new double[this.getDMUNames().length] [this.deapSolution.getProjections()[0].length];
-		double VariableValue;
-		double[] Projections; 
+		double[] [] projectionPercentages =
+			new double[this.getDMUNames().length] [this.solution.getProjections()[0].length];
+		double varValue;
+		double[] projections; 
 		//Loop through all DMUs
 		
 		for(int i = 0; i < this.getDMUNames().length; i++) {
-			Projections = this.getProjections(i);
+			projections = this.getProjections(i);
 			//Loop through each variable
-			for(int j = 0; j < this.deapSolution.getProjections()[0].length; j++) {
-				VariableValue = this.getDataMatrix(i, j);
-				if(this.getVariableType(j) == DEAVariableType.INPUT) {
-					ProjectionPercentages[i] [j] = (VariableValue -  Projections[j]) / VariableValue * -1;
+			for(int j = 0; j < this.solution.getProjections()[0].length; j++) {
+				varValue = this.getDataMatrix(i, j);
+				if(this.getVariableType(j) == VariableType.INPUT) {
+					projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
 				}
 				else {
-					ProjectionPercentages[i] [j] = (VariableValue -  Projections[j]) / VariableValue;
+					projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue;
 				}
 			}
 		}
-		return ProjectionPercentages;
+		return projectionPercentages;
 	}
 	
 	
 	/**
 	 * Returns the DMU ranks (based on Objectives value)
-	 * @param HighestIsOne A boolean. If true the highest value has rank '1' (first). Should generally be 'true'.
+	 * @param highestIsOne A boolean. If true the highest value has rank '1' (first). Should generally be 'true'.
 	 * @param typeOfRanking The type of ranking to use. Should generally be 'STANDARD'.
-	 * @param Precision An int value to specify at which decimal place the scores need to be rounded up prior to been ranked.
+	 * @param precision An int value to specify at which decimal place the scores need to be rounded up prior to been ranked.
 	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1 (e.g. 1.00000000000002).
 	 * All precisions between 0 and 16 are taken into account, any other int value would leave the scores unchanged.
 	 * @return A double[] of the ranks.
 	 */
-	public int[] getRanks(boolean HighestIsOne, RankingType typeOfRanking, int Precision)
+	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking, int precision)
 	{
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
-		ranksArray = Rank.getRanks(this.deapSolution.getObjectives(), HighestIsOne, typeOfRanking, Precision);
+		ranksArray = Rank.getRanks(this.solution.getObjectives(), highestIsOne, typeOfRanking, precision);
 		return ranksArray;
 	
 	}

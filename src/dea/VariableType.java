@@ -7,7 +7,7 @@ package dea;
  * @author Hubert Virtos
  *
  */
-public enum DEAVariableType {
+public enum VariableType {
 	INPUT, OUTPUT
 }
 
