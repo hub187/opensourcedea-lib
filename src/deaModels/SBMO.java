@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class SBMO {
 	
 	/**
-	 * The method solving the CCR Problem.
+	 * The method solving the DEA Problem.
 	 * @param deaP An instance of DEAProblem.
 	 * @throws Exception 
 	 */
