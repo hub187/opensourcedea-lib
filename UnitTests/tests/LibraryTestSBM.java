@@ -218,27 +218,29 @@ public class LibraryTestSBM {
 		
 		try {
 			tester.solve();
+	
+			
+			DEAPSolution CheckedSol = GetSBMCResults();
+			
+			
+			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+			
+			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
+			
+	//		int iter = 0;
+	//		for(ArrayList<Integer> testArray: getValidatedReferenceSet()) {
+	//			assertEquals(testArray, tester.getReferenceSet(iter));
+	//			iter++;
+	//		}
+			
+			
+			
+			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
+			
 		}
-		catch (DEAException e) {
+		catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
-		DEAPSolution CheckedSol = GetSBMCResults();
-		
-		
-		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
-		
-		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
-		
-//		int iter = 0;
-//		for(ArrayList<Integer> testArray: getValidatedReferenceSet()) {
-//			assertEquals(testArray, tester.getReferenceSet(iter));
-//			iter++;
-//		}
-		
-		
-		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 	}
 	

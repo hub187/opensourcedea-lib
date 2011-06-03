@@ -36,7 +36,7 @@ public class DEAPSolution {
 		setReferenceSet((ArrayList<NonZeroLambda>[])new ArrayList[NbDMUs]);
 		setWeights(new double[NbDMUs] [NbVariables]);
 		setProjections(new double[NbDMUs] [NbVariables]);
-		setStatus(SolverReturnStatus.NA);
+		setStatus(SolverReturnStatus.NOT_SOLVED);
 
 	}
 

@@ -97,4 +97,18 @@ public class SolverExceptionTest {
 		}
 	}
 	
+	@Test
+	public void testExceptionSequence() {
+		try {
+			dea.testClass.testMethod();
+		}
+		catch (ProblemNotSolvedProperly e1) {
+			e1.printStackTrace();
+		}
+		catch (DEAException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 }

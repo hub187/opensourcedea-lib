@@ -108,15 +108,27 @@ public class DEAProblemTest {
 	}
 	
 	@Test
-	public void testSetGetNumberOfOutputs() {
+	public void testSetGetNumberOfOutputs() throws Exception {
 		tester.setVariableTypes(TestVariableTypes);
-		assertEquals(tester.getNumberOfOutputs(),1,0);
+		try {
+			assertEquals(tester.getNumberOfOutputs(),1,0);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
 	}
 	
 	@Test
-	public void testSetGetNumberOfInputs() {
+	public void testSetGetNumberOfInputs() throws Exception {
 		tester.setVariableTypes(TestVariableTypes);
-		assertEquals(tester.getNumberOfInputs(),2,0);
+		try {
+			assertEquals(tester.getNumberOfInputs(),2,0);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
 	}
 	
 	@Test
@@ -131,7 +143,7 @@ public class DEAProblemTest {
 		try {
 			tester.solve();
 		}
-		catch (DEAException e) {
+		catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
@@ -256,6 +268,9 @@ public class DEAProblemTest {
 			assertSame(e.getMessage(), "The DEAProblem is missing some data. " +
 					"Please check the DataMatrix, DMUNames,ModelType, VariableNames and VariableTypes.");
 		}
+		catch (Exception e2) {
+			e2.printStackTrace();
+		}
 		
 	}
 
@@ -279,7 +294,7 @@ public class DEAProblemTest {
 		try {
 			tester.solve();
 		}
-		catch (DEAException e) {
+		catch (Exception e) {
 			assertSame(e.getMessage(), "The number of DMUs does not seem to match with the data. Please check the DMUNames and DataMatrix.");
 		}
 		
@@ -303,7 +318,7 @@ public class DEAProblemTest {
 		try {
 			tester.solve();
 		}
-		catch (DEAException e) {
+		catch (Exception e) {
 			assertSame(e.getMessage(), "The number of variables does not seem to match with the data. Please check the VariableNames, VariableTypes and DataMatrix.");
 		}
 		
@@ -329,7 +344,7 @@ public class DEAProblemTest {
 					tester.setModelType(mt);
 					tester.solve();
 				}
-				catch (DEAException e) {
+				catch (Exception e) {
 					assertSame(e.getMessage(), "RTS Bounds not set correctly!");
 				}
 			}

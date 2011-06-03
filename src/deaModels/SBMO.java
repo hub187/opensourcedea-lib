@@ -26,10 +26,11 @@ public class SBMO {
 	/**
 	 * The method solving the CCR Problem.
 	 * @param deaP An instance of DEAProblem.
-	 * @throws DEASolverException 
+	 * @throws Exception 
 	 */
-	public static DEAPSolution solveSBMO(DEAProblem deaP) throws DEASolverException {
+	public static DEAPSolution solveSBMO(DEAProblem deaP) throws Exception {
 		
+		try {
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
 		int NbDMUs = deaP.getNumberOfDMUs();
@@ -53,132 +54,157 @@ public class SBMO {
 					ReturnSol, i);
 		}
 		return ReturnSol;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 
 	private static void createConstraintMatrix(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix,
-			ArrayList<double[]> Constraints) {
+			ArrayList<double[]> Constraints) throws Exception {
 		
-		double[] ConstraintRow;
-		
-		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
-			ConstraintRow = new double[NbDMUs + NbVariables];
+		try {
+			double[] ConstraintRow;
+			for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
+				ConstraintRow = new double[NbDMUs + NbVariables];
+				
+					//Copy rest of the data matrix
+					System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 0, NbDMUs);
+					//and slacks
+					if (deaP.getVariableType(VarIndex) == VariableType.INPUT) {
+						ConstraintRow[NbDMUs + VarIndex] = 1;
+					}
+					else {
+						ConstraintRow[NbDMUs + VarIndex] = -1;
+					}
+					Constraints.add(ConstraintRow);
+			}
 			
-				//Copy rest of the data matrix
-				System.arraycopy(TransposedMatrix[VarIndex], 0, ConstraintRow, 0, NbDMUs);
-				//and slacks
-				if (deaP.getVariableType(VarIndex) == VariableType.INPUT) {
-					ConstraintRow[NbDMUs + VarIndex] = 1;
-				}
-				else {
-					ConstraintRow[NbDMUs + VarIndex] = -1;
+			if(deaP.getModelType() == ModelType.SBMOV) {
+				ConstraintRow = new double[NbDMUs + NbVariables];
+				for(int k = 0; k < NbDMUs; k++) {
+					ConstraintRow[k] = 1;
 				}
 				Constraints.add(ConstraintRow);
-		}
-		
-		if(deaP.getModelType() == ModelType.SBMOV) {
-			ConstraintRow = new double[NbDMUs + NbVariables];
-			for(int k = 0; k < NbDMUs; k++) {
-				ConstraintRow[k] = 1;
 			}
-			Constraints.add(ConstraintRow);
-		}
-		if(deaP.getModelType() == ModelType.SBMOGRS) {
-			ConstraintRow = new double[NbDMUs + NbVariables];
-			for(int k = 0; k < NbDMUs; k++) {
-				ConstraintRow[k] = 1;
+			if(deaP.getModelType() == ModelType.SBMOGRS) {
+				ConstraintRow = new double[NbDMUs + NbVariables];
+				for(int k = 0; k < NbDMUs; k++) {
+					ConstraintRow[k] = 1;
+				}
+				Constraints.add(ConstraintRow);
+				Constraints.add(ConstraintRow);
 			}
-			Constraints.add(ConstraintRow);
-			Constraints.add(ConstraintRow);
+		}
+		catch (Exception e) {
+			throw e;
 		}
 	}
 
 	private static void createAndSolveSBMO(DEAProblem deaP, int NbDMUs,
 			int NbVariables,  ArrayList<double[]> Constraints, double[][] TransposedMatrix,
-			DEAPSolution ReturnSol, int i) throws DEASolverException {
-		double[] ObjF = new double [NbDMUs + NbVariables];
-		double[] RHS;
-		int[] SolverEqualityType;
-		
-		if(deaP.getModelType() == ModelType.SBMO) {
-			RHS = new double [NbVariables];
-			SolverEqualityType = new int[NbVariables];
-		}
-		else if (deaP.getModelType() == ModelType.SBMOV) {
-			RHS = new double [NbVariables + 1];
-			SolverEqualityType = new int[NbVariables + 1];
-			RHS[NbVariables] = 1;
-			SolverEqualityType[NbVariables] = LpSolve.EQ;
-		}
-		else { //deaP.getModelType() == ModelType.SBMOGRS
-			RHS = new double [NbVariables + 2];
-			SolverEqualityType = new int[NbVariables + 2];
-			RHS[NbVariables] = deaP.getRTSLowerBound();
-			SolverEqualityType[NbVariables] = LpSolve.GE;
-			RHS[NbVariables + 1] = deaP.getRTSUpperBound();
-			SolverEqualityType[NbVariables + 1] = LpSolve.LE;
-			
-		}
-		
-		int NbOutputs = deaP.getNumberOfOutputs();
-		
-		
-		//Build the RHS (for the variables, added constraints (convexity, grs... were added before)
-		for (int j = 0; j < NbVariables; j++) {
-				//Build RHS
-				RHS[j] = TransposedMatrix[j] [i];
-				if(deaP.getVariableType(j) == VariableType.OUTPUT){
-					ObjF[NbDMUs + j] = 1 / (TransposedMatrix[j] [i] * NbOutputs);
-				}
-				SolverEqualityType[j] = LpSolve.EQ;
-		}
-		
-		
-		SolverResults Sol = new SolverResults();
+			DEAPSolution ReturnSol, Integer i) throws Exception {
 		
 		try {
-			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MAX, SolverEqualityType);
+			double[] ObjF = new double [NbDMUs + NbVariables];
+			double[] RHS;
+			int[] SolverEqualityType;
+			int NbOutputs = deaP.getNumberOfOutputs();
+			
+			if(deaP.getModelType() == ModelType.SBMO) {
+				RHS = new double [NbVariables];
+				SolverEqualityType = new int[NbVariables];
+			}
+			else if (deaP.getModelType() == ModelType.SBMOV) {
+				RHS = new double [NbVariables + 1];
+				SolverEqualityType = new int[NbVariables + 1];
+				RHS[NbVariables] = 1;
+				SolverEqualityType[NbVariables] = LpSolve.EQ;
+			}
+			else { //deaP.getModelType() == ModelType.SBMOGRS
+				RHS = new double [NbVariables + 2];
+				SolverEqualityType = new int[NbVariables + 2];
+				RHS[NbVariables] = deaP.getRTSLowerBound();
+				SolverEqualityType[NbVariables] = LpSolve.GE;
+				RHS[NbVariables + 1] = deaP.getRTSUpperBound();
+				SolverEqualityType[NbVariables + 1] = LpSolve.LE;
+				
+			}
+			
+			
+			
+			
+			//Build the RHS (for the variables, added constraints (convexity, grs... were added before)
+			for (int j = 0; j < NbVariables; j++) {
+					//Build RHS
+					RHS[j] = TransposedMatrix[j] [i];
+					if(deaP.getVariableType(j) == VariableType.OUTPUT){
+						ObjF[NbDMUs + j] = 1 / (TransposedMatrix[j] [i] * NbOutputs);
+					}
+					SolverEqualityType[j] = LpSolve.EQ;
+			}
+			
+			
+			SolverResults Sol = new SolverResults();
+			
+			try {
+				Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MAX, SolverEqualityType);
+			}
+			catch (ProblemNotSolvedProperly e1) {
+				throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
+						 i.toString());
+			}
+			catch (DEASolverException e2) {
+				throw e2;
+			}
+			
+			
+			storeSolution(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
 		}
-		catch (DEASolverException e) {
+		catch (Exception e) {
 			throw e;
 		}
-		
-		
-		storeSolution(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
 	}
 
 
 	private static void storeSolution(DEAProblem deaP, int NbDMUs,
-			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) {
-		//Store solution
-		ReturnSol.setObjective(i, 1 / (1 + Sol.Objective)); //there was a Objective constant of 1.
-		for(int varPos = 0; varPos < NbVariables; varPos++) {
-			
-			ReturnSol.setSlack(i, varPos, Sol.VariableResult[NbDMUs + varPos]);
-			
-			if(deaP.getVariableType(varPos) == VariableType.OUTPUT) {
-				ReturnSol.setWeight(i, varPos, Sol.DualResult[varPos + 1] * -1);
-				ReturnSol.setProjection(i, varPos,
-						deaP.getDataMatrix(i, varPos) + ReturnSol.getSlack(i, varPos));//
-			}
-			else {
-				ReturnSol.setWeight(i, varPos, Sol.DualResult[varPos + 1]);
-				ReturnSol.setProjection(i, varPos,
-						deaP.getDataMatrix(i, varPos) - ReturnSol.getSlack(i, varPos)); // + ReturnSol.Slacks[i] [j];
-			}
-		}
+			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) throws Exception {
 		
-		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
-			if(Sol.VariableResult[lambdaPos] != 0) {
-				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
+		try {
+			//Store solution
+			ReturnSol.setObjective(i, 1 / (1 + Sol.Objective)); //there was a Objective constant of 1.
+			for(int varPos = 0; varPos < NbVariables; varPos++) {
+				
+				ReturnSol.setSlack(i, varPos, Sol.VariableResult[NbDMUs + varPos]);
+				
+				if(deaP.getVariableType(varPos) == VariableType.OUTPUT) {
+					ReturnSol.setWeight(i, varPos, Sol.DualResult[varPos + 1] * -1);
+					ReturnSol.setProjection(i, varPos,
+							deaP.getDataMatrix(i, varPos) + ReturnSol.getSlack(i, varPos));//
+				}
+				else {
+					ReturnSol.setWeight(i, varPos, Sol.DualResult[varPos + 1]);
+					ReturnSol.setProjection(i, varPos,
+							deaP.getDataMatrix(i, varPos) - ReturnSol.getSlack(i, varPos)); // + ReturnSol.Slacks[i] [j];
+				}
 			}
+			
+			ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+				if(Sol.VariableResult[lambdaPos] != 0) {
+					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos]));
+				}
+			}
+			ReturnSol.setReferenceSet(i, refSet);
+			//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
+			
+			SolverStatus.checkSolverStatus(ReturnSol, Sol);
 		}
-		ReturnSol.setReferenceSet(i, refSet);
-		//System.arraycopy(Sol.VariableResult, 0, ReturnSol.Lambdas[i], 0, NbDMUs - 1);
-		
-		SolverStatus.checkSolverStatus(ReturnSol, Sol);
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 }

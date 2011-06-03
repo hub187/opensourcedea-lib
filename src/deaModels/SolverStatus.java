@@ -14,19 +14,19 @@ public class SolverStatus {
 	public static void checkSolverStatus(DEAPSolution ReturnSol,
 			SolverResults Sol) {
 		switch(Sol.Status) {
-			case OptimalSolutionNotfound:
-				ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionNotfound);
+			case OPTIMAL_SOLUTION_NOT_FOUND:
+				ReturnSol.setStatus(SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND);
 				break;
 		
-			case UnknownError:
-				ReturnSol.setStatus(SolverReturnStatus.UnknownError);
+			case UNKNOWN_ERROR:
+				ReturnSol.setStatus(SolverReturnStatus.UNKNOWN_ERROR);
 				break;
 			
-			case ModelCreationFailure:
-				ReturnSol.setStatus(SolverReturnStatus.ModelCreationFailure);
+			case MODEL_CREATION_FAILURE:
+				ReturnSol.setStatus(SolverReturnStatus.MODEL_CREATION_FAILURE);
 				break;
 			
-			case OptimalSolutionFound:
+			case OPTIMAL_SOLUTION_FOUND:
 
 				/* The lpsolve class CANNOT return NA (which is only used for initialisation as default value).
 				 * If ReturnSol.Status == NA this means the previous optimisation (if any) did not have any problem so it is
@@ -35,8 +35,8 @@ public class SolverStatus {
 				 * => OptimalSolutionFound, in this case we do not need to change it or
 				 * => A SolutionReturnStatus indicating a problem, in this case again, we should leave it as it is.*/
 				
-				if(ReturnSol.getStatus() == SolverReturnStatus.NA){
-					ReturnSol.setStatus(SolverReturnStatus.OptimalSolutionFound);
+				if(ReturnSol.getStatus() == SolverReturnStatus.NOT_SOLVED){
+					ReturnSol.setStatus(SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 				}
 				break;
 		}

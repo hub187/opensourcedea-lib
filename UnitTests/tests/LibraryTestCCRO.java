@@ -92,7 +92,7 @@ public class LibraryTestCCRO {
 	}
 	
 	@Test
-	public void TestCCRO() {
+	public void TestCCRO() throws Exception {
 		
 		BuildDEAProblem(ModelType.CCRO);  //, DEAModelOrientation.OutputOriented);
 		
@@ -108,24 +108,29 @@ public class LibraryTestCCRO {
 		
 		DEAPSolution CheckedSol = GetCCROResults();
 		
-		//Test Objectives
-		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
-		
-		//Test Slacks
-		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-			assertArrayEquals(tester.getSlacks(i), CheckedSol.getSlacks(i), 0.1);
+		try {
+			//Test Objectives
+			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+			
+			//Test Slacks
+			for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+				assertArrayEquals(tester.getSlacks(i), CheckedSol.getSlacks(i), 0.1);
+			}
+			
+			//int[] ranks = tester.getDMURanks(true);
+			
+			//Test Weighted Inputs = 1
+			for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+				assertEquals(tester.getDataMatrix(i, 2) * tester.getWeight(i, 2) + tester.getDataMatrix(i, 3) * tester.getWeight(i, 3),
+						1, 0.0001);
+			}
+			
+			//test return status is OK
+			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
-		
-		//int[] ranks = tester.getDMURanks(true);
-		
-		//Test Weighted Inputs = 1
-		for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
-			assertEquals(tester.getDataMatrix(i, 2) * tester.getWeight(i, 2) + tester.getDataMatrix(i, 3) * tester.getWeight(i, 3),
-					1, 0.0001);
+		catch (Exception e){
+			throw e;
 		}
-		
-		//test return status is OK
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
 		
 	}
 	

@@ -202,21 +202,24 @@ public class LibraryTestBCCO {
 		try {
 			tester.solve();
 		}
-		catch (DEAException e) {
+		catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
 		DEAPSolution CheckedSol = GetModelResults();
 		
-		
-		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
-		
-		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
-		
-//		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
-		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
-		
+		try {
+			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+			
+			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
+			
+//			assertEquals(getTestReferenceSet(),tester.getReferenceSet());
+			
+			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

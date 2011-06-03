@@ -114,10 +114,16 @@ public class DEAProblem {
 	 * Returns the name of a specific DMU.
 	 * @param dmuIndex The number of the DMU (position) in the Array.
 	 * @return DMUName The DMU name of the specific DMU at the position specified.
+	 * @throws Exception 
 	 */
-	public String getDMUName(int dmuIndex)
+	public String getDMUName(int dmuIndex) throws Exception
 	{
-		return this.dmuName[dmuIndex];
+		try {
+			return this.dmuName[dmuIndex];
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
@@ -133,10 +139,16 @@ public class DEAProblem {
 	 * Returns a DMU Name for the the DMU Number specified.
 	 * @param dmuName The Name of the DMU.
 	 * @param dmuIndex The DMU Number (position in the array) where to put the name.
+	 * @throws Exception 
 	 */
-	public void setDMUName(String dmuName, int dmuIndex)
+	public void setDMUName(String dmuName, int dmuIndex) throws Exception
 	{
-		this.dmuName[dmuIndex] = dmuName;
+		try {
+			this.dmuName[dmuIndex] = dmuName;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 
 	
@@ -153,10 +165,16 @@ public class DEAProblem {
 	 * Returns the variable name for a specific variable.
 	 * @param varIndex The Variable Number in the variable array.
 	 * @return The variable name for a specific variable specified.
+	 * @throws Exception 
 	 */
-	public String getVariableName(int varIndex)
+	public String getVariableName(int varIndex) throws Exception
 	{
-		return this.variableName[varIndex];
+		try {
+			return this.variableName[varIndex];
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
@@ -172,10 +190,16 @@ public class DEAProblem {
 	 * Sets the name of the variable at position VariableNumber in the Variable Names Array.
 	 * @param varName The Name of the Variable.
 	 * @param varIndex The Variable position in the Variable Array.
+	 * @throws Exception 
 	 */
-	public void setVariableName(String varName, int varIndex)
+	public void setVariableName(String varName, int varIndex) throws Exception
 	{
-		this.variableName[varIndex] = varName;
+		try {
+			this.variableName[varIndex] = varName;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	
@@ -192,10 +216,16 @@ public class DEAProblem {
 	 * Gets the Variable type of the Variable specified.
 	 * @param varIndex The position of the variable in the Variable Array.
 	 * @return The Variable Type of the Variable at the position specified.
+	 * @throws Exception 
 	 */
-	public VariableType getVariableType(int varIndex)
+	public VariableType getVariableType(int varIndex) throws Exception
 	{
-		return this.variableType[varIndex];
+		try {
+			return this.variableType[varIndex];
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
@@ -211,10 +241,16 @@ public class DEAProblem {
 	 * Sets the VariableType for the specified Variable.
 	 * @param variableType The VariableType of the specified variable.
 	 * @param varIndex The position of the variable in the Variable Array.
+	 * @throws Exception 
 	 */
-	public void setVariableType(VariableType varType, int varIndex)
+	public void setVariableType(VariableType varType, int varIndex) throws Exception
 	{
-		this.variableType[varIndex] = varType;
+		try {
+			this.variableType[varIndex] = varType;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	
@@ -252,10 +288,16 @@ public class DEAProblem {
 	 * @param value The specific value to set.
 	 * @param dmuIndex The DMU Number for which to set the value.
 	 * @param varIndex The Variable Number for which to set the value.
+	 * @throws Exception 
 	 */
-	public void setDataMatrix(double value, int dmuIndex, int varIndex)
+	public void setDataMatrix(double value, int dmuIndex, int varIndex) throws Exception
 	{
-		this.dataMatrix[dmuIndex] [varIndex] = value;
+		try {
+			this.dataMatrix[dmuIndex] [varIndex] = value;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
@@ -303,71 +345,102 @@ public class DEAProblem {
 	/**
 	 * Gets the number of DMUs in the DEA Problem
 	 * @return The number of DMUs.
+	 * @throws MissingData 
 	 */
-	public int getNumberOfDMUs() {
+	public int getNumberOfDMUs() throws MissingData {
 		int nbDMUs;
-		nbDMUs = this.dataMatrix.length;
-		return nbDMUs;
+		try {
+			nbDMUs = this.dataMatrix.length;
+			return nbDMUs;
+		}
+		catch (Exception e) {
+			throw new MissingData("The Data Matrix is null!");
+		}
+		
 	}
 	
 	/**
 	 * Gets the number of Outputs of the DEA Problem
 	 * @return The number of Outputs.
+	 * @throws MissingData 
 	 */
-	public int getNumberOfOutputs() {
+	public int getNumberOfOutputs() throws MissingData {
 		int nbOutputs = 0;
-		for(int i = 0; i < this.variableType.length; i++) {
-			if(this.variableType[i] == VariableType.OUTPUT) {
-				nbOutputs++;
+		try {
+			for(int i = 0; i < this.variableType.length; i++) {
+				if(this.variableType[i] == VariableType.OUTPUT) {
+					nbOutputs++;
+				}
 			}
+			return nbOutputs;
 		}
-		return nbOutputs;
+		catch (Exception e) {
+			throw new MissingData("The VariableType array is null!");
+		}
 	}
 	
 	/**
 	 * Gets the number of Inputs of the DEA Problem
 	 * @return The number of Inputs.
+	 * @throws MissingData 
 	 */
-	public int getNumberOfInputs() {
+	public int getNumberOfInputs() throws MissingData {
 		int nbInputs = 0;
-		for(int i = 0; i < variableType.length; i++) {
-			if(variableType[i] == VariableType.INPUT) {
-				nbInputs++;
+		try {
+			for(int i = 0; i < variableType.length; i++) {
+				if(variableType[i] == VariableType.INPUT) {
+					nbInputs++;
+				}
 			}
+			return nbInputs;
 		}
-		return nbInputs;
+		catch (Exception e) {
+			throw new MissingData("The VariableType array is null!");
+		}
 	}
 	
 	/**
 	 * Gets the number of Variables in the DEA Problem
 	 * @return The number of Variables.
+	 * @throws MissingData 
 	 */
-	public int getNumberOfVariables() {
+	public int getNumberOfVariables() throws MissingData {
 		int nbVariables;
-		nbVariables = this.dataMatrix[0].length;
-		return nbVariables;
+		try {
+			nbVariables = this.dataMatrix[0].length;
+			return nbVariables;
+		}
+		catch (Exception e) {
+			throw new MissingData("The Data Matrix is null!");
+		}
 	}
 	
 	/**
 	 * Gets the Transpose of the Data Matrix
 	 * @param returnsNegativeTranspose A boolean. If true, all values of the TransposedMatrix are timed by -1.
 	 * @return A double[] [] corresponding to the transpose of the Data Matrix
+	 * @throws MissingData 
 	 */
-	public double [] [] getTranspose(boolean returnsNegativeTranspose) {
-		double [] [] transposedMatrix = new double [this.dataMatrix[0].length] [this.dataMatrix.length];
-		
-		if(returnsNegativeTranspose == false) {
-			for (int i = 0; i < this.dataMatrix.length; i++)
-	            for (int j = 0; j < this.dataMatrix[0].length; j++)
-	                transposedMatrix[j][i] = this.dataMatrix[i][j];
+	public double [] [] getTranspose(boolean returnsNegativeTranspose) throws MissingData {
+		try {
+			double [] [] transposedMatrix = new double [this.dataMatrix[0].length] [this.dataMatrix.length];
+			
+			if(returnsNegativeTranspose == false) {
+				for (int i = 0; i < this.dataMatrix.length; i++)
+		            for (int j = 0; j < this.dataMatrix[0].length; j++)
+		                transposedMatrix[j][i] = this.dataMatrix[i][j];
+			}
+			else {
+				for (int i = 0; i < this.dataMatrix.length; i++)
+		            for (int j = 0; j < this.dataMatrix[0].length; j++)
+		                transposedMatrix[j][i] = this.dataMatrix[i][j] * -1;
+			}
+					
+			return transposedMatrix;
 		}
-		else {
-			for (int i = 0; i < this.dataMatrix.length; i++)
-	            for (int j = 0; j < this.dataMatrix[0].length; j++)
-	                transposedMatrix[j][i] = this.dataMatrix[i][j] * -1;
+		catch (Exception e) {
+			throw new MissingData("The Data Matrix is null!");
 		}
-				
-		return transposedMatrix;
 	}
 	
 	
@@ -432,7 +505,7 @@ public class DEAProblem {
 	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
 	 * methods).
 	 */
-	public void solve() throws DEAException, MissingData, InconsistentNoOfDMUs, InconsistentNoOfVariables {
+	public void solve() throws DEAException, MissingData, InconsistentNoOfDMUs, InconsistentNoOfVariables, Exception {
 		
 		checkDataBeforeSolving();
 		
@@ -493,7 +566,7 @@ public class DEAProblem {
 				case SBMOGRS: this.solution = SBMO.solveSBMO(this); break;
 			}
 		}
-		catch (DEASolverException e) {
+		catch (Exception e) {
 			throw e;
 		}
 		
@@ -544,10 +617,14 @@ public class DEAProblem {
 	/**
 	 * Returns the Objectives of all the DMUs.
 	 * @return A double[] corresponding to all the DMUs Objectives.
+	 * @throws ProblemNotSolvedProperly 
 	 * @throws DEAExceptions 
 	 */
-	public double[] getObjectives()
+	public double[] getObjectives() throws ProblemNotSolvedProperly
 	{
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
 		return this.solution.getObjectives();
 	}
 	
@@ -555,10 +632,20 @@ public class DEAProblem {
 	 * Returns the Objective value for the specified DMU.
 	 * @param dmuNumber The number of the DMU in the Objective Array.
 	 * @return The Objective value for the specified DMU.
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
-	public double getObjective(int dmuNumber)
+	public double getObjective(int dmuNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		return this.solution.getObjectives()[dmuNumber];
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			return this.solution.getObjective(dmuNumber);
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 		
 
@@ -581,10 +668,20 @@ public class DEAProblem {
 	 * Returns the Slacks for the specified DMU.
 	 * @param dmuNumber The number of the DMU.
 	 * @return A double[] corresponding to the slacks for the specified DMU.
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
-	public double[] getSlacks(int dmuNumber)
+	public double[] getSlacks(int dmuNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		return this.solution.getSlacks(dmuNumber);
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			return this.solution.getSlacks(dmuNumber);
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
@@ -592,19 +689,33 @@ public class DEAProblem {
 	 * @param dmuNumber The number of the DMU
 	 * @param varNumber The Number of the Variable
 	 * @return The slack value for the specified DMU and Variable Number
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
-	public double getSlack(int dmuNumber, int varNumber)
+	public double getSlack(int dmuNumber, int varNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		return this.solution.getSlack(dmuNumber, varNumber);
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			return this.solution.getSlack(dmuNumber, varNumber);
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
 	 * Returns the Slacks for all the DMUs.
 	 * @return A double[NbDMUs] [NbVariables] corresponding to all the slacks for all the DMUs.
+	 * @throws ProblemNotSolvedProperly 
 	 */
-	public double[] [] getSlacks()
+	public double[] [] getSlacks() throws ProblemNotSolvedProperly
 	{
-		return this.solution.getSlacks(); // Slacks;
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		return this.solution.getSlacks();
 	}
 	
 	
@@ -613,10 +724,20 @@ public class DEAProblem {
 	 * Returns the weights of the specified DMU.
 	 * @param dmuNumber The Number of the DMU.
 	 * @return A double[] corresponding to the weights for the specified DMU.
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
-	public double[] getWeight(int dmuNumber)
+	public double[] getWeight(int dmuNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		return this.solution.getWeights(dmuNumber);
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			return this.solution.getWeights(dmuNumber);
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
@@ -624,18 +745,32 @@ public class DEAProblem {
 	 * @param dmuNumber The number of the DMU
 	 * @param varNumber The number of the Variable
 	 * @return A specific weight value.
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
-	public double getWeight(int dmuNumber, int varNumber)
+	public double getWeight(int dmuNumber, int varNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		return this.solution.getWeight(dmuNumber, varNumber);
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			return this.solution.getWeight(dmuNumber, varNumber);
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
 	 * Returns the weights for all the DMUs
 	 * @return A double[NbDMUs] [NbVariables] corresponding to the weights of all the DMUs
+	 * @throws ProblemNotSolvedProperly 
 	 */
-	public double[] [] getWeight()
+	public double[] [] getWeight() throws ProblemNotSolvedProperly
 	{
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
 		return this.solution.getWeights();
 	}
 	
@@ -645,18 +780,32 @@ public class DEAProblem {
 	 * Returns the projections for the specified DMU.
 	 * @param dmuNumber The number of the DMU
 	 * @return The projections for the specific DMU
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
-	public double[] getProjections(int dmuNumber)
+	public double[] getProjections(int dmuNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		return this.solution.getProjections(dmuNumber);
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			return this.solution.getProjections(dmuNumber);
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	/**
 	 * Returns the projections for all the DMU
 	 * @return a double[NbDMUs] [NbVariables] of all the projections
+	 * @throws ProblemNotSolvedProperly 
 	 */
-	public double[] [] getProjections()
+	public double[] [] getProjections() throws ProblemNotSolvedProperly
 	{
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
 		return this.solution.getProjections();
 	}
 	
@@ -670,52 +819,72 @@ public class DEAProblem {
 	 * Returns the projection percentages
 	 * @param dmuNumber The DMU Number
 	 * @return A double[] of the projection percentages for the specified DMU
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */	
-	public double[] getProjectionPercentages(int dmuNumber)
+	public double[] getProjectionPercentages(int dmuNumber) throws Exception, ProblemNotSolvedProperly
 	{
-		double[] projectionPercentages = new double[this.solution.getProjections()[0].length];
-		double varValue;
-		double[] projections = this.getProjections(dmuNumber);
-		//Loop through each variable
-		for(int i = 0; i < this.solution.getProjections()[0].length; i++) {
-			varValue = this.getDataMatrix(dmuNumber, i);
-			if(this.getVariableType(i) == VariableType.INPUT) {
-				projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
-			}
-			else {
-				projectionPercentages[i] = (varValue -  projections[i]) / varValue;
-			}
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
 		}
-		return projectionPercentages;
+		try {
+			double[] projectionPercentages = new double[this.solution.getProjections()[0].length];
+			double varValue;
+			double[] projections = this.getProjections(dmuNumber);
+			//Loop through each variable
+			for(int i = 0; i < this.solution.getProjections()[0].length; i++) {
+				varValue = this.getDataMatrix(dmuNumber, i);
+				if(this.getVariableType(i) == VariableType.INPUT) {
+					projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
+				}
+				else {
+					projectionPercentages[i] = (varValue -  projections[i]) / varValue;
+				}
+			}
+			return projectionPercentages;
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
 	}
 	
 	/**
 	 * Returns the projection percentages for all DMUs
 	 * @return A double[NbDMUs] [NbVariables] of the projection percentages for all the DMUs.
+	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */	
-	public double[] [] getProjectionPercentages()
+	public double[] [] getProjectionPercentages() throws Exception, ProblemNotSolvedProperly
 	{
-		
-		double[] [] projectionPercentages =
-			new double[this.getDMUNames().length] [this.solution.getProjections()[0].length];
-		double varValue;
-		double[] projections; 
-		//Loop through all DMUs
-		
-		for(int i = 0; i < this.getDMUNames().length; i++) {
-			projections = this.getProjections(i);
-			//Loop through each variable
-			for(int j = 0; j < this.solution.getProjections()[0].length; j++) {
-				varValue = this.getDataMatrix(i, j);
-				if(this.getVariableType(j) == VariableType.INPUT) {
-					projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
-				}
-				else {
-					projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue;
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		try {
+			double[] [] projectionPercentages =
+				new double[this.getDMUNames().length] [this.solution.getProjections()[0].length];
+			double varValue;
+			double[] projections; 
+			//Loop through all DMUs
+			
+			for(int i = 0; i < this.getDMUNames().length; i++) {
+				projections = this.getProjections(i);
+				//Loop through each variable
+				for(int j = 0; j < this.solution.getProjections()[0].length; j++) {
+					varValue = this.getDataMatrix(i, j);
+					if(this.getVariableType(j) == VariableType.INPUT) {
+						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
+					}
+					else {
+						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue;
+					}
 				}
 			}
+			return projectionPercentages;
 		}
-		return projectionPercentages;
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	
@@ -727,9 +896,13 @@ public class DEAProblem {
 	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1 (e.g. 1.00000000000002).
 	 * All precisions between 0 and 16 are taken into account, any other int value would leave the scores unchanged.
 	 * @return A double[] of the ranks.
+	 * @throws ProblemNotSolvedProperly 
 	 */
-	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking, int precision)
+	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking, int precision) throws ProblemNotSolvedProperly
 	{
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;

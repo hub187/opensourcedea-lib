@@ -212,10 +212,7 @@ public class LibraryTestSBMIGRS {
 		
 		try {
 			tester.solve();
-		}
-		catch (DEAException e) {
-			System.out.println(e.toString());
-		}
+
 		
 		DEAPSolution CheckedSol = GetSBMResults();
 		
@@ -226,8 +223,12 @@ public class LibraryTestSBMIGRS {
 		
 //		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
 		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	
 	

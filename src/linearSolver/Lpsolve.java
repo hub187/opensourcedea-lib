@@ -27,6 +27,7 @@ import lpsolve.LpSolve;
 import dea.SolverObjDirection;
 import dea.SolverReturnStatus;
 import dea.DEASolverException;
+import dea.ProblemNotSolvedProperly;
 
 /**
  * This class deals with the calls to the lpsolve library and is used to solve linear problem.
@@ -78,9 +79,10 @@ public class Lpsolve {
 	 * @param Dir A SolverObjDirection (MIN or MAX)
 	 * @return A SolverResult Object with the solution to the linear problem.
 	 * @throws Exception 
+	 * @throws ProblemNotSolvedProperly
 	 */
 	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS,
-			SolverObjDirection Dir, int[] EqType) throws DEASolverException {
+			SolverObjDirection Dir, int[] EqType) throws DEASolverException, ProblemNotSolvedProperly {
 	
 		//The Solution object which will be returned
 		SolverResults Sol = new SolverResults();
@@ -96,7 +98,7 @@ public class Lpsolve {
 			LpSolve LpProb = LpSolve.makeLp(0, NbColumns);			
 	        if(LpProb.getLp() == 0) {
 	        	//Linear problem could not be constructed.
-	        	Sol.Status = SolverReturnStatus.ModelCreationFailure;
+	        	Sol.Status = SolverReturnStatus.MODEL_CREATION_FAILURE;
 	        	ret = 1;
 	        }
 	        
@@ -144,7 +146,8 @@ public class Lpsolve {
 	        	}
 	        	else {
 	        		ret = 1;
-	        		Sol.Status = SolverReturnStatus.OptimalSolutionNotfound;
+	        		Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND;
+	        		throw new ProblemNotSolvedProperly("The problem could not be solved properly.");
 	        	}
 	        	
 	        	//Store Optimisation values
@@ -174,7 +177,7 @@ public class Lpsolve {
 	        		Sol.Objective = Objective;
 	        		Sol.VariableResult = VariableResult;
 	        		Sol.Weights = Weights;
-	        		Sol.Status = SolverReturnStatus.OptimalSolutionFound;
+	        		Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_FOUND;
 
 	        		
 	        	}
@@ -186,7 +189,7 @@ public class Lpsolve {
 
 	    catch (Exception e) {
 	    	e.printStackTrace();
-	    	Sol.Status = SolverReturnStatus.UnknownError;
+	    	Sol.Status = SolverReturnStatus.UNKNOWN_ERROR;
 	    	throw new DEASolverException();
 	    	
 	    }

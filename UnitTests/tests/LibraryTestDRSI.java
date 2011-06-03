@@ -211,22 +211,20 @@ public class LibraryTestDRSI {
 		
 		try {
 			tester.solve();
+			
+			DEAPSolution CheckedSol = GetModelResults();
+			
+			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+			
+			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
+			
+//			assertEquals(getTestReferenceSet(),tester.getReferenceSet());
+			
+			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
-		catch (DEAException e) {
-			System.out.println(e.toString());
+		catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		DEAPSolution CheckedSol = GetModelResults();
-		
-		
-		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
-		
-		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
-		
-//		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
-		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
-		
 	}
 	
 	

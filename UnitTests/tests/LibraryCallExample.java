@@ -107,11 +107,11 @@ public class LibraryCallExample {
 		try {
 			tester.solve();
 		}
-		catch (DEAException e) {
+		catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
-		
+		try {
 		//Get the solution Objectives
 		double[] Objectives = tester.getObjectives();
 		
@@ -148,7 +148,13 @@ public class LibraryCallExample {
 		double[] ObjectivesTarget = getTargetObjectives();
 		
 		//AssertArrayEquals
-		assertArrayEquals(Objectives, ObjectivesTarget,0.0000000001);	
+		assertArrayEquals(Objectives, ObjectivesTarget,0.0000000001);
+		
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private double[] getTargetObjectives() {

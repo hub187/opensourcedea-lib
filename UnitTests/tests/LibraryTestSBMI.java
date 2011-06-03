@@ -200,10 +200,7 @@ public class LibraryTestSBMI {
 		
 		try {
 			tester.solve();
-		}
-		catch (DEAException e) {
-			System.out.println(e.toString());
-		}
+
 		
 		DEAPSolution CheckedSol = GetSBMCResults();
 		
@@ -214,8 +211,12 @@ public class LibraryTestSBMI {
 		
 		//assertEquals(getTestReferenceSet(),tester.getReferenceSet());
 		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	
 	

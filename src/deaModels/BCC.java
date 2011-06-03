@@ -46,41 +46,42 @@ public  class BCC {
 	/**
 	 * The method solving the CCR Problem.
 	 * @param deaP An instance of DEAProblem.
-	 * @throws DEASolverException 
+	 * @throws Exception 
 	 */
-	public static DEAPSolution solveBCC(DEAProblem deaP) throws DEASolverException {
+	public static DEAPSolution solveBCC(DEAProblem deaP) throws Exception, DEAException {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
-		int NbDMUs = deaP.getNumberOfDMUs();
-		int NbVariables = deaP.getNumberOfVariables();
-		double [] [] TransposedMatrix = new double [NbVariables] [NbDMUs];
-		TransposedMatrix = deaP.getTranspose(true); //Want the negative Transposed
-		DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
 		
-					
-		
-		
-		/* As the BBC optimisation needs to be ran for all DMUs, 
-		 * the program will loop through all DMUs.
-		 * Also, the BBC model is solved in two phases.
-		 * The problem will consequently be solved for each DMUs for Phase I and
-		 * solved again for each DMUs for Phase II.*/
-		
-
-		
-		for (int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
-			
-			  createAndSolveBCC(deaP, NbDMUs, NbVariables, TransposedMatrix,
-					ReturnSol, DMUIndex);
-		}		
-		return ReturnSol;
+		try {
+			int NbDMUs = deaP.getNumberOfDMUs();
+			int NbVariables = deaP.getNumberOfVariables();
+			double [] [] TransposedMatrix = new double [NbVariables] [NbDMUs];
+			TransposedMatrix = deaP.getTranspose(true); //Want the negative Transposed
+			DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
+	
+			/* As the BBC optimisation needs to be ran for all DMUs, 
+			 * the program will loop through all DMUs.
+			 * Also, the BBC model is solved in two phases.
+			 * The problem will consequently be solved for each DMUs for Phase I and
+			 * solved again for each DMUs for Phase II.*/
+	
+			for (int DMUIndex = 0; DMUIndex < NbDMUs; DMUIndex++) {
+				
+				  createAndSolveBCC(deaP, NbDMUs, NbVariables, TransposedMatrix,
+						ReturnSol, DMUIndex);
+			}		
+			return ReturnSol;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 
 
 	private static void createAndSolveBCC(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix,
-			DEAPSolution ReturnSol, int i) throws DEASolverException {
+			DEAPSolution ReturnSol, Integer i) throws Exception {
 		
 		ArrayList<double[]> Constraints = new ArrayList<double []>();
 		double[] ObjF = new double [NbDMUs + NbVariables + 1];
@@ -118,12 +119,17 @@ public  class BCC {
 				Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS1, SolverObjDirection.MAX, SolverEqualityType1);
 			}
 		}
-		catch (DEASolverException e) {
-			throw e;
+		catch (ProblemNotSolvedProperly e1) {
+			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
+					 i.toString());
 		}
-		catch (MissingData e) {
-			e.printStackTrace();
+		catch (MissingData e2) {
+			throw e2;
 		}
+		catch (DEASolverException e3) {
+			throw e3;
+		}
+
 
 		
 		storePhaseOneInformation(deaP, ReturnSol, i, Sol);
@@ -159,60 +165,73 @@ public  class BCC {
 		try {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS2, SolverObjDirection.MAX, SolverEqualityType2);
 		}
-		catch (DEASolverException e) {
+		catch (ProblemNotSolvedProperly e1) {
+			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
+					 i.toString());
+		}
+		catch (DEASolverException e2) {
+			throw e2;
+		}
+
+		
+		try {
+			storePhaseTwoInformation(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
+		}
+		catch (Exception e) {
 			throw e;
 		}
-		
-		storePhaseTwoInformation(deaP, NbDMUs, NbVariables, ReturnSol, i, Sol);
+
 	}
 
 
 	
 	private static void storePhaseTwoInformation(DEAProblem deaP, int NbDMUs,
-			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) {
+			int NbVariables, DEAPSolution ReturnSol, int i, SolverResults Sol) throws Exception {
+		
 		//Collect information from Phase II (Theta)
-		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
-			if(Sol.VariableResult[lambdaPos + 1] != 0) {
-				refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
-			}
-		}
-		ReturnSol.setReferenceSet(i, refSet);
-		ReturnSol.setSlackArrayCopy(i, Sol.VariableResult, NbDMUs + 1, NbVariables);
-
-		for (int j = 0; j < NbVariables; j++) {
-			try {
-				if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-					if(deaP.getVariableType(j) == VariableType.INPUT) {
-						//Projections
-						ReturnSol.setProjection(i, j, ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
-					}
-					else {
-						//Projections
-						ReturnSol.setProjection(i, j, deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
-					}
+		try {
+			ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+			for(int lambdaPos = 0; lambdaPos < NbDMUs; lambdaPos++) {
+				if(Sol.VariableResult[lambdaPos + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaPos, Sol.VariableResult[lambdaPos + 1]));
 				}
-				else {
-					if(deaP.getVariableType(j) == VariableType.OUTPUT) {
-						//Projections
-						if(ReturnSol.getObjective(i) != 0){
-							ReturnSol.setProjection(i, j, (1 / ReturnSol.getObjective(i)) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
+			}
+			ReturnSol.setReferenceSet(i, refSet);
+			ReturnSol.setSlackArrayCopy(i, Sol.VariableResult, NbDMUs + 1, NbVariables);
+	
+			for (int j = 0; j < NbVariables; j++) {
+					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+						if(deaP.getVariableType(j) == VariableType.INPUT) {
+							//Projections
+							ReturnSol.setProjection(i, j, ReturnSol.getObjective(i) * deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
 						}
 						else {
-							ReturnSol.setProjection(i, j, ReturnSol.getSlack(i, j));
+							//Projections
+							ReturnSol.setProjection(i, j, deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
 						}
 					}
 					else {
-						//Projections
-						ReturnSol.setProjection(i, j, deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
+						if(deaP.getVariableType(j) == VariableType.OUTPUT) {
+							//Projections
+							if(ReturnSol.getObjective(i) != 0){
+								ReturnSol.setProjection(i, j, (1 / ReturnSol.getObjective(i)) * deaP.getDataMatrix(i, j) + ReturnSol.getSlack(i, j));
+							}
+							else {
+								ReturnSol.setProjection(i, j, ReturnSol.getSlack(i, j));
+							}
+						}
+						else {
+							//Projections
+							ReturnSol.setProjection(i, j, deaP.getDataMatrix(i, j) - ReturnSol.getSlack(i, j));
+						}
 					}
-				}
-			} catch (MissingData e) {
-				e.printStackTrace();
 			}
+	
+			SolverStatus.checkSolverStatus(ReturnSol, Sol);
+			}
+		catch (Exception e) {
+			throw e;
 		}
-
-		SolverStatus.checkSolverStatus(ReturnSol, Sol);
 	}
 
 
@@ -254,7 +273,7 @@ public  class BCC {
 
 
 	private static void storePhaseOneInformation(DEAProblem deaP,
-			DEAPSolution ReturnSol, int i, SolverResults Sol) {
+			DEAPSolution ReturnSol, int i, SolverResults Sol) throws Exception {
 		//Collect information from Phase I (Theta)
 		try {
 			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
@@ -268,8 +287,8 @@ public  class BCC {
 					ReturnSol.setObjective(i, 0);
 				}
 			}
-		} catch (MissingData e1) {
-			e1.printStackTrace();
+		} catch (Exception e) {
+			throw e;
 		}
 		
 		try {
@@ -282,8 +301,8 @@ public  class BCC {
 					ReturnSol.setWeight(i, k, Sol.Weights[k] * -1);
 				}
 			}
-		} catch (MissingData e1) {
-			e1.printStackTrace();
+		} catch (Exception e) {
+			throw e;
 		}
 		
 		SolverStatus.checkSolverStatus(ReturnSol, Sol);
@@ -293,7 +312,8 @@ public  class BCC {
 	private static void createPhaseOneModel(DEAProblem deaP, int NbDMUs,
 			int NbVariables, double[][] TransposedMatrix, int i,
 			ArrayList<double[]> Constraints, double[] ObjF, double[] RHS1,
-			int[] SolverEqualityType1) {
+			int[] SolverEqualityType1) throws Exception {
+		
 		double[] ConstraintRow;
 		for (int VarIndex = 0; VarIndex < NbVariables; VarIndex++) {
 						
@@ -318,8 +338,8 @@ public  class BCC {
 						}
 					}
 				}
-				catch (MissingData e) {
-					e.printStackTrace();
+				catch (Exception e) {
+					throw e;
 				}
 
 				//Copy rest of the data matrix
@@ -359,10 +379,11 @@ public  class BCC {
 						}
 					}
 				}
-				catch (MissingData e) {
-					e.printStackTrace();
+				catch (Exception e) {
+					throw e;
 				}
 			} //finished looping through all variables
+
 		
 		//Build the row corresponding to the convexity constraint
 		ConstraintRow = new double[NbDMUs + NbVariables + 1];

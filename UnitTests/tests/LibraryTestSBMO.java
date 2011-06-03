@@ -235,10 +235,7 @@ public class LibraryTestSBMO {
 		
 		try {
 			tester.solve();
-		}
-		catch (DEAException e) {
-			System.out.println(e.toString());
-		}
+
 		
 		DEAPSolution CheckedSol = GetSBMCResults();
 		
@@ -253,8 +250,12 @@ public class LibraryTestSBMO {
 //			iter++;
 //		}
 		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OptimalSolutionFound);
+		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	
 	
