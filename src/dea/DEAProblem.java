@@ -505,7 +505,7 @@ public class DEAProblem {
 	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
 	 * methods).
 	 */
-	public void solve() throws DEAException, MissingData, InconsistentNoOfDMUs, InconsistentNoOfVariables, Exception {
+	public void solve() throws MissingData, InconsistentNoOfDMUs, InconsistentNoOfVariables, DEAException, Exception {
 		
 		checkDataBeforeSolving();
 		

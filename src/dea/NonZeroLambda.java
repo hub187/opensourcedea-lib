@@ -6,8 +6,8 @@ package dea;
  *
  */
 public class NonZeroLambda {
-	private int DMUIndex;
-	private double LambdaValue;
+	private int dmuIndex;
+	private double lambdaValue;
 	
 	/**
 	 * Constructor of the NonZeroLambda class.
@@ -24,20 +24,20 @@ public class NonZeroLambda {
 		return this;
 	}
 
-	public void setLambdaValue(double lambdaValue) {
-		LambdaValue = lambdaValue;
+	public void setLambdaValue(double lValue) {
+		lambdaValue = lValue;
 	}
 
 	public double getLambdaValue() {
-		return LambdaValue;
+		return lambdaValue;
 	}
 
 	public void setDMUIndex(int dMUIndex) {
-		DMUIndex = dMUIndex;
+		dmuIndex = dMUIndex;
 	}
 
 	public int getDMUIndex() {
-		return DMUIndex;
+		return dmuIndex;
 	}
 	
 }

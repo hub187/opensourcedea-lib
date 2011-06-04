@@ -19,7 +19,6 @@ public class InconsistentData extends DEAException {
 	}
 	public InconsistentData(String detailMsg) {
 		super(detailMsg);
-		// TODO Auto-generated constructor stub
 	}
 
 }

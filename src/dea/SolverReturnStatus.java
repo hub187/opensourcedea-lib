@@ -29,7 +29,7 @@ public enum SolverReturnStatus {
 	//Method to access _ModelType
 	public String getStatusDescription()
 	{
-		return description;
+		return this.description;
 	}
 	
 }

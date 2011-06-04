@@ -12,30 +12,30 @@ import java.util.ArrayList;
  */
 public class DEAPSolution {
 	
-	private double[] Objectives;
-	private double[] [] Slacks;
-	private ArrayList<NonZeroLambda>[] ReferenceSet;
-	private double[] [] Weights;
-	private double[] [] Projections;
-	private SolverReturnStatus Status;
+	private double[] objectives;
+	private double[] [] slacks;
+	private ArrayList<NonZeroLambda>[] referenceSet;
+	private double[] [] weights;
+	private double[] [] projections;
+	private SolverReturnStatus status;
 
 	
 	
 	/**
 	 * 
-	 * @param NbDMUs The number of DMUs in the DEA problem to solve.
-	 * @param NbVariables The number of variables in the DEA Problem to solve.
+	 * @param nbDMUs The number of DMUs in the DEA problem to solve.
+	 * @param nbVariables The number of variables in the DEA Problem to solve.
 	 */
 	@SuppressWarnings("unchecked")
-	public DEAPSolution (int NbDMUs, int NbVariables) {
+	public DEAPSolution (int nbDMUs, int nbVariables) {
 		
 		/*The solution Attributes will be put one by one at each solver optimisation (for each DMU).
 		 * The array are initialised here for this reason.*/
-		setObjectives(new double[NbDMUs]);
-		Slacks = new double[NbDMUs] [NbVariables];
-		setReferenceSet((ArrayList<NonZeroLambda>[])new ArrayList[NbDMUs]);
-		setWeights(new double[NbDMUs] [NbVariables]);
-		setProjections(new double[NbDMUs] [NbVariables]);
+		setObjectives(new double[nbDMUs]);
+		slacks = new double[nbDMUs] [nbVariables];
+		setReferenceSet((ArrayList<NonZeroLambda>[])new ArrayList[nbDMUs]);
+		setWeights(new double[nbDMUs] [nbVariables]);
+		setProjections(new double[nbDMUs] [nbVariables]);
 		setStatus(SolverReturnStatus.NOT_SOLVED);
 
 	}
@@ -43,52 +43,52 @@ public class DEAPSolution {
 	
 	
 	public void setObjectives(double[] objectives) {
-		this.Objectives = objectives;
+		this.objectives = objectives;
 	}
 	
-	public void setObjective(int DMUIndex, double ObjectiveValue) {
-		this.Objectives[DMUIndex] = ObjectiveValue;
+	public void setObjective(int DMUIndex, double objectiveValue) {
+		this.objectives[DMUIndex] = objectiveValue;
 	}
 	
-	public double getObjective(int DMUIndex) {
-		return this.Objectives[DMUIndex];
+	public double getObjective(int dmuIndex) {
+		return this.objectives[dmuIndex];
 	}
 	
 	public double[] getObjectives() {
-		return this.Objectives;
+		return this.objectives;
 	}
 	
 	
 	
 	
 	
-	public void setSlacks(double[] [] SlackValues) {
-		this.Slacks = SlackValues;
+	public void setSlacks(double[] [] slackValues) {
+		this.slacks = slackValues;
 	}
 	
-	public void setSlacks(int DMUIndex, double[] SlackValues) {
-		this.Slacks[DMUIndex] = SlackValues;
+	public void setSlacks(int dmuIndex, double[] slackValues) {
+		this.slacks[dmuIndex] = slackValues;
 	}
 	
-	public void setSlack(int DMUIndex, int VarIndex, double SlackValue) {
-		this.Slacks[DMUIndex][VarIndex] = SlackValue;
+	public void setSlack(int dmuIndex, int varIndex, double slackValue) {
+		this.slacks[dmuIndex][varIndex] = slackValue;
 	}
 	
-	public void setSlackArrayCopy(int DMUIndex, double[] ArrayToCopyFrom, int PositionToCopyFrom, 
+	public void setSlackArrayCopy(int dmuIndex, double[] arrayToCopyFrom, int positionToCopyFrom, 
 			int LengthToCopy) {
-		System.arraycopy(ArrayToCopyFrom, PositionToCopyFrom, this.Slacks[DMUIndex], 0, LengthToCopy);
+		System.arraycopy(arrayToCopyFrom, positionToCopyFrom, this.slacks[dmuIndex], 0, LengthToCopy);
 	}
 	
-	public double getSlack(int DMUIndex, int VarIndex) {
-		return this.Slacks[DMUIndex][VarIndex];
+	public double getSlack(int dmuIndex, int varIndex) {
+		return this.slacks[dmuIndex][varIndex];
 	}
 	
-	public double[] getSlacks(int DMUIndex) {
-		return this.Slacks[DMUIndex];
+	public double[] getSlacks(int dmuIndex) {
+		return this.slacks[dmuIndex];
 	}
 	
 	public double[][] getSlacks() {
-		return this.Slacks;
+		return this.slacks;
 	}
 	
 	
@@ -96,19 +96,19 @@ public class DEAPSolution {
 	
 	
 	public void setReferenceSet(ArrayList<NonZeroLambda>[] referenceSet) {
-		this.ReferenceSet = referenceSet;
+		this.referenceSet = referenceSet;
 	}
 	
-	public void setReferenceSet(int DMUIndex, ArrayList<NonZeroLambda> referenceSet) {
-		this.ReferenceSet[DMUIndex] = referenceSet;
+	public void setReferenceSet(int dmuIndex, ArrayList<NonZeroLambda> referenceSet) {
+		this.referenceSet[dmuIndex] = referenceSet;
 	}
 
 	public ArrayList<NonZeroLambda>[] getReferenceSet() {
-		return this.ReferenceSet;
+		return this.referenceSet;
 	}
 	
-	public ArrayList<NonZeroLambda> getReferenceSet(int DMUIndex) {
-		return this.ReferenceSet[DMUIndex];
+	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) {
+		return this.referenceSet[dmuIndex];
 	}
 	
 	
@@ -116,59 +116,59 @@ public class DEAPSolution {
 	
 	
 	public void setWeights(double[] [] weights) {
-		this.Weights = weights;
+		this.weights = weights;
 	}
 	
-	public void setWeights(int DMUIndex, double[] weights) {
-		this.Weights[DMUIndex] = weights;
+	public void setWeights(int dmuIndex, double[] weights) {
+		this.weights[dmuIndex] = weights;
 	}
 
-	public void setWeight(int DMUIndex, int VarIndex, double weight) {
-		this.Weights[DMUIndex] [VarIndex] = weight;
+	public void setWeight(int dmuIndex, int varIndex, double weight) {
+		this.weights[dmuIndex] [varIndex] = weight;
 	}
 	
 	public double[] [] getWeights() {
-		return Weights;
+		return weights;
 	}
 	
-	public double[] getWeights(int DMUIndex) {
-		return this.Weights[DMUIndex];
+	public double[] getWeights(int dmuIndex) {
+		return this.weights[dmuIndex];
 	}
 	
-	public double getWeight(int DMUIndex, int VarIndex) {
-		return this.Weights[DMUIndex][VarIndex];
+	public double getWeight(int dmuIndex, int varIndex) {
+		return this.weights[dmuIndex][varIndex];
 	}
 	
 	
 	
 	
 	
-	public void setProjections(double[] [] projections) {
-		Projections = projections;
+	public void setProjections(double[] [] projectionValues) {
+		this.projections = projectionValues;
 	}
 	
-	public void setProjection(int DMUIndex, int VarIndex, double ProjectionValue) {
-		this.Projections[DMUIndex][VarIndex] = ProjectionValue;
+	public void setProjection(int dmuIndex, int varIndex, double projectionValue) {
+		this.projections[dmuIndex][varIndex] = projectionValue;
 	}
 
 	public double[] [] getProjections() {
-		return Projections;
+		return this.projections;
 	}
 	
-	public double[] getProjections(int DMUIndex) {
-		return this.Projections[DMUIndex];
+	public double[] getProjections(int dmuIndex) {
+		return this.projections[dmuIndex];
 	}
 	
 	
 	
 	
 	
-	public void setStatus(SolverReturnStatus status) {
-		Status = status;
+	public void setStatus(SolverReturnStatus statusValue) {
+		status = statusValue;
 	}
 	
 	public SolverReturnStatus getStatus() {
-		return Status;
+		return this.status;
 	}
 
 	

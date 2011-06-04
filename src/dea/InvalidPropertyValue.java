@@ -19,7 +19,6 @@ public class InvalidPropertyValue extends DEAException {
 	}
 	public InvalidPropertyValue(String detailMsg) {
 		super(detailMsg);
-		// TODO Auto-generated constructor stub
 	}
 
 }

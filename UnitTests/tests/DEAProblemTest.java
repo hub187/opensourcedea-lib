@@ -13,10 +13,10 @@ import dea.*;
 public class DEAProblemTest {
 
 	DEAProblem tester = new DEAProblem(5, 3);
-	static String[] TestDMUNames = new String[5];
-	static String[] TestVariableNames = new String [3];
-	static VariableType[] TestVariableTypes = new VariableType[3];
-	static double[] [] TestDataMatrix = new double[5] [3];
+	static String[] testDMUNames = new String[5];
+	static String[] testVariableNames = new String [3];
+	static VariableType[] testVariableTypes = new VariableType[3];
+	static double[] [] testDataMatrix = new double[5] [3];
 
 	
 	@BeforeClass
@@ -24,42 +24,42 @@ public class DEAProblemTest {
 	{
 
 			//Set up the DMU Names
-			TestDMUNames[0] = "DMU 1";
-			TestDMUNames[1] = "DMU 2";
-			TestDMUNames[2] = "DMU 3";
-			TestDMUNames[3] = "DMU 4";
-			TestDMUNames[4] = "DMU 5";
+			testDMUNames[0] = "DMU 1";
+			testDMUNames[1] = "DMU 2";
+			testDMUNames[2] = "DMU 3";
+			testDMUNames[3] = "DMU 4";
+			testDMUNames[4] = "DMU 5";
 			
 			//Set up the Variable Names
-			TestVariableNames[0] = "Wood";
-			TestVariableNames[1] = "Twigs";
-			TestVariableNames[2] = "Fire";
+			testVariableNames[0] = "Wood";
+			testVariableNames[1] = "Twigs";
+			testVariableNames[2] = "Fire";
 			
 			//Set up the Data Matrix
-			TestDataMatrix [0] [0] = 1;
-			TestDataMatrix [0] [1] = 7;
-			TestDataMatrix [0] [2] = 5;
+			testDataMatrix [0] [0] = 1;
+			testDataMatrix [0] [1] = 7;
+			testDataMatrix [0] [2] = 5;
 			
-			TestDataMatrix [1] [0] = 1;
-			TestDataMatrix [1] [1] = 9;
-			TestDataMatrix [1] [2] = 8;
+			testDataMatrix [1] [0] = 1;
+			testDataMatrix [1] [1] = 9;
+			testDataMatrix [1] [2] = 8;
 			
-			TestDataMatrix [2] [0] = 1;
-			TestDataMatrix [2] [1] = 3;
-			TestDataMatrix [2] [2] = 3;
+			testDataMatrix [2] [0] = 1;
+			testDataMatrix [2] [1] = 3;
+			testDataMatrix [2] [2] = 3;
 			
-			TestDataMatrix [3] [0] = 9;
-			TestDataMatrix [3] [1] = 4;
-			TestDataMatrix [3] [2] = 4;
+			testDataMatrix [3] [0] = 9;
+			testDataMatrix [3] [1] = 4;
+			testDataMatrix [3] [2] = 4;
 			
-			TestDataMatrix [4] [0] = 1;
-			TestDataMatrix [4] [1] = 8;
-			TestDataMatrix [4] [2] = 3;
+			testDataMatrix [4] [0] = 1;
+			testDataMatrix [4] [1] = 8;
+			testDataMatrix [4] [2] = 3;
 			
 			//Set up the variable types
-			TestVariableTypes[0] = VariableType.INPUT;
-			TestVariableTypes[1] = VariableType.INPUT;
-			TestVariableTypes[2] = VariableType.OUTPUT;
+			testVariableTypes[0] = VariableType.INPUT;
+			testVariableTypes[1] = VariableType.INPUT;
+			testVariableTypes[2] = VariableType.OUTPUT;
 
 		
 		
@@ -76,8 +76,8 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testSetGetDMUNames() {
-		tester.setDMUNames(TestDMUNames);
-		assertArrayEquals(tester.getDMUNames(), TestDMUNames);
+		tester.setDMUNames(testDMUNames);
+		assertArrayEquals(tester.getDMUNames(), testDMUNames);
 	}
 	
 	
@@ -90,26 +90,26 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testSetGetVariableNames() {
-		tester.setVariableNames(TestVariableNames);
-		assertArrayEquals("Assert Array Equals", tester.getVariableNames(), TestVariableNames);
+		tester.setVariableNames(testVariableNames);
+		assertArrayEquals("Assert Array Equals", tester.getVariableNames(), testVariableNames);
 	}
 
 		
 	@Test
 	public void testSetGetVariableType() {
-		tester.setVariableTypes(TestVariableTypes);
-		assertArrayEquals("Assert Array Equals", tester.getVariableTypes(), TestVariableTypes);
+		tester.setVariableTypes(testVariableTypes);
+		assertArrayEquals("Assert Array Equals", tester.getVariableTypes(), testVariableTypes);
 	}
 
 	@Test
 	public void testSetGetDataMatrix() {
-		tester.setDataMatrix(TestDataMatrix);
-		assertArrayEquals("Assert Array Equals", tester.getDataMatrix(), TestDataMatrix);
+		tester.setDataMatrix(testDataMatrix);
+		assertArrayEquals("Assert Array Equals", tester.getDataMatrix(), testDataMatrix);
 	}
 	
 	@Test
 	public void testSetGetNumberOfOutputs() throws Exception {
-		tester.setVariableTypes(TestVariableTypes);
+		tester.setVariableTypes(testVariableTypes);
 		try {
 			assertEquals(tester.getNumberOfOutputs(),1,0);
 		}
@@ -121,7 +121,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testSetGetNumberOfInputs() throws Exception {
-		tester.setVariableTypes(TestVariableTypes);
+		tester.setVariableTypes(testVariableTypes);
 		try {
 			assertEquals(tester.getNumberOfInputs(),2,0);
 		}
@@ -134,11 +134,11 @@ public class DEAProblemTest {
 	@Test
 	public void testReferenceSet() {
 		tester.setModelType(ModelType.CCRI);
-		tester.setDMUNames(TestDMUNames);
+		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
-		tester.setVariableNames(TestVariableNames);
-		tester.setVariableTypes(TestVariableTypes);
-		tester.setDataMatrix(TestDataMatrix);
+		tester.setVariableNames(testVariableNames);
+		tester.setVariableTypes(testVariableTypes);
+		tester.setDataMatrix(testDataMatrix);
 		
 		try {
 			tester.solve();
@@ -249,13 +249,13 @@ public class DEAProblemTest {
 
 	
 	@Test
-	public void TestToSeeObjectProperties() {
+	public void testToSeeObjectProperties() {
 		tester.setModelType(ModelType.CCRI);
-		tester.setDMUNames(TestDMUNames);
+		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
-		tester.setVariableNames(TestVariableNames);
-		tester.setVariableTypes(TestVariableTypes);
-		tester.setDataMatrix(TestDataMatrix);
+		tester.setVariableNames(testVariableNames);
+		tester.setVariableTypes(testVariableTypes);
+		tester.setDataMatrix(testDataMatrix);
 		assertTrue(true);	
 	}
 	
@@ -273,19 +273,17 @@ public class DEAProblemTest {
 		}
 		
 	}
-
-	
 	
 	
 	@Test
 	public void testMissingDMUCountDiscrepancy() {
 		
 		tester.setModelType(ModelType.CCRI);
-		tester.setDMUNames(TestDMUNames);
+		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
-		tester.setVariableNames(TestVariableNames);
-		tester.setVariableTypes(TestVariableTypes);
-		tester.setDataMatrix(TestDataMatrix);
+		tester.setVariableNames(testVariableNames);
+		tester.setVariableTypes(testVariableTypes);
+		tester.setDataMatrix(testDataMatrix);
 		
 		String[] dmuNames = new String[3];
 		tester.setDMUNames(dmuNames);
@@ -305,11 +303,11 @@ public class DEAProblemTest {
 	public void testMissingVariableCountDiscrepancy() {
 		
 		tester.setModelType(ModelType.CCRI);
-		tester.setDMUNames(TestDMUNames);
+		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
-		tester.setVariableNames(TestVariableNames);
-		tester.setVariableTypes(TestVariableTypes);
-		tester.setDataMatrix(TestDataMatrix);
+		tester.setVariableNames(testVariableNames);
+		tester.setVariableTypes(testVariableTypes);
+		tester.setDataMatrix(testDataMatrix);
 		
 		String[] variableNames = new String[3];
 		tester.setVariableNames(variableNames);
@@ -328,11 +326,11 @@ public class DEAProblemTest {
 	public void testRTSBoundsNotSet() {
 		
 		tester.setModelType(ModelType.SBMGRS);
-		tester.setDMUNames(TestDMUNames);
+		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
-		tester.setVariableNames(TestVariableNames);
-		tester.setVariableTypes(TestVariableTypes);
-		tester.setDataMatrix(TestDataMatrix);
+		tester.setVariableNames(testVariableNames);
+		tester.setVariableTypes(testVariableTypes);
+		tester.setDataMatrix(testDataMatrix);
 		
 		String[] variableNames = new String[3];
 		tester.setVariableNames(variableNames);

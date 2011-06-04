@@ -139,19 +139,19 @@ public enum ModelType {
 
 	public String getDescription()
 	{
-		return description;
+		return this.description;
 	}
 	
 	public ModelOrientation getOrientation() {
-		return orientation;
+		return this.orientation;
 	}
 	
 	public EfficiencyType getEfficiencyType() {
-		return efficiencyType;
+		return this.efficiencyType;
 	}
 	
 	public ReturnToScale getReturnToScale() {
-		return rts;
+		return this.rts;
 	}
 	
 	

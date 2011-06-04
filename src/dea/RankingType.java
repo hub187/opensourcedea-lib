@@ -17,8 +17,8 @@ public enum RankingType {
 	
 	
 	private String rankingDescription;
-	RankingType(String Desc) {
-		this.rankingDescription = Desc;
+	RankingType(String desc) {
+		this.rankingDescription = desc;
 	}
 	
 	//Method to access _ModelType
