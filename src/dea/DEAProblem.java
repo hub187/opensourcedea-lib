@@ -368,7 +368,7 @@ public class DEAProblem {
 		int nbOutputs = 0;
 		try {
 			for(int i = 0; i < this.variableType.length; i++) {
-				if(this.variableType[i] == VariableType.OUTPUT) {
+				if(this.variableType[i] == VariableType.STANDARD_OUTPUT) {
 					nbOutputs++;
 				}
 			}
@@ -388,7 +388,7 @@ public class DEAProblem {
 		int nbInputs = 0;
 		try {
 			for(int i = 0; i < variableType.length; i++) {
-				if(variableType[i] == VariableType.INPUT) {
+				if(variableType[i] == VariableType.STANDARD_INPUT) {
 					nbInputs++;
 				}
 			}
@@ -564,6 +564,14 @@ public class DEAProblem {
 				case SBMOV: this.solution = SBMO.solveSBMO(this); break;
 				
 				case SBMOGRS: this.solution = SBMO.solveSBMO(this); break;
+				
+				case NCI: this.solution = NC.solveNC(this); break;
+				
+				case NCO: this.solution = NC.solveNC(this); break;
+				
+				case NCIV: this.solution = NC.solveNC(this); break;
+				
+				case NCOV: this.solution = NC.solveNC(this); break;
 			}
 		}
 		catch (Exception e) {
@@ -834,7 +842,7 @@ public class DEAProblem {
 			//Loop through each variable
 			for(int i = 0; i < this.solution.getProjections()[0].length; i++) {
 				varValue = this.getDataMatrix(dmuNumber, i);
-				if(this.getVariableType(i) == VariableType.INPUT) {
+				if(this.getVariableType(i) == VariableType.STANDARD_INPUT) {
 					projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
 				}
 				else {
@@ -872,7 +880,7 @@ public class DEAProblem {
 				//Loop through each variable
 				for(int j = 0; j < this.solution.getProjections()[0].length; j++) {
 					varValue = this.getDataMatrix(i, j);
-					if(this.getVariableType(j) == VariableType.INPUT) {
+					if(this.getVariableType(j) == VariableType.STANDARD_INPUT) {
 						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
 					}
 					else {

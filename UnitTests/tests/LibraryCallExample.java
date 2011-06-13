@@ -68,9 +68,9 @@ public class LibraryCallExample {
 		
 		
 		//Set up the variable types
-		TestVariableTypes[0] = VariableType.INPUT;
-		TestVariableTypes[1] = VariableType.INPUT;
-		TestVariableTypes[2] = VariableType.OUTPUT;
+		TestVariableTypes[0] = VariableType.STANDARD_INPUT;
+		TestVariableTypes[1] = VariableType.STANDARD_INPUT;
+		TestVariableTypes[2] = VariableType.STANDARD_OUTPUT;
 		
 
 	}

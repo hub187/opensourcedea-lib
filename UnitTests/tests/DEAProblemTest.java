@@ -57,9 +57,9 @@ public class DEAProblemTest {
 			testDataMatrix [4] [2] = 3;
 			
 			//Set up the variable types
-			testVariableTypes[0] = VariableType.INPUT;
-			testVariableTypes[1] = VariableType.INPUT;
-			testVariableTypes[2] = VariableType.OUTPUT;
+			testVariableTypes[0] = VariableType.STANDARD_INPUT;
+			testVariableTypes[1] = VariableType.STANDARD_INPUT;
+			testVariableTypes[2] = VariableType.STANDARD_OUTPUT;
 
 		
 		

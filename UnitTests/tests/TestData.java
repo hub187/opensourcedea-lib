@@ -158,10 +158,10 @@ public class TestData {
 		VariableType[] TestVariableTypes = new VariableType[4];
 						
 		//Set up the variable types
-		TestVariableTypes[0] = VariableType.INPUT;
-		TestVariableTypes[1] = VariableType.INPUT;
-		TestVariableTypes[2] = VariableType.OUTPUT;
-		TestVariableTypes[3] = VariableType.OUTPUT;
+		TestVariableTypes[0] = VariableType.STANDARD_INPUT;
+		TestVariableTypes[1] = VariableType.STANDARD_INPUT;
+		TestVariableTypes[2] = VariableType.STANDARD_OUTPUT;
+		TestVariableTypes[3] = VariableType.STANDARD_OUTPUT;
 		
 		return TestVariableTypes;
 	}

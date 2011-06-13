@@ -120,7 +120,35 @@ public enum ModelType {
 	SBMOGRS ("The Output Oriented version of the SBM model assuming GENERAL RTS.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.MIX,
-			ReturnToScale.GENERAL);
+			ReturnToScale.GENERAL),
+	NCI ("The Non-Controllable Model in its Input Oriented version. This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.CONSTANT),
+	NCIV ("The Non-Controllable Model in its Input Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.VARIABLE),
+	NCO ("The Non-Controllable Model in its Output Oriented version. This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly.",
+			ModelOrientation.OUTPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.CONSTANT),
+	NCOV ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly.",
+			ModelOrientation.OUTPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.VARIABLE);
 	
 	
 	private String description;

@@ -321,7 +321,7 @@ public  class CCR {
 			
 			if(deaP.getModelType() == ModelType.CCRI) {
 				for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
-					if(deaP.getVariableType(varIndex) == VariableType.INPUT) {
+					if(deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
 						//Projections
 						returnSol.setProjection(dmuIndex, varIndex,
 								returnSol.getObjective(dmuIndex) * deaP.getDataMatrix(dmuIndex, varIndex)
@@ -336,7 +336,7 @@ public  class CCR {
 			}
 			else {
 				for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
-					if(deaP.getVariableType(varIndex) == VariableType.OUTPUT) {
+					if(deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
 						//Projections
 						returnSol.setProjection(dmuIndex, varIndex,
 								returnSol.getObjective(dmuIndex) * deaP.getDataMatrix(dmuIndex, varIndex)
@@ -372,7 +372,7 @@ public  class CCR {
 				//Build the Constraint Matrix
 				double[] constraintRow = new double[nbDMUs + nbVariables + 1];
 				//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
-				if (deaP.getVariableType(varIndex) == VariableType.INPUT) {
+				if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
 					constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 				}
 				else {
@@ -381,7 +381,7 @@ public  class CCR {
 				//Copy rest of the data matrix
 				System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 1, nbDMUs);
 				//and slacks
-				if (deaP.getVariableType(varIndex) == VariableType.INPUT) {
+				if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
 					constraintRow[nbDMUs + 1 + varIndex] = -1;
 				}
 				else {
@@ -391,7 +391,7 @@ public  class CCR {
 				
 				
 				//Build RHS & SolverEqualityTypes
-				if (deaP.getVariableType(varIndex) == VariableType.INPUT) {
+				if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
 					rhs1[varIndex] = 0;
 					solverEqualityType[varIndex] = LpSolve.EQ;
 				}

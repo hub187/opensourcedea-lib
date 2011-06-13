@@ -32,23 +32,22 @@ import lpsolve.LpSolve;
 
 
 /**
- * The class implementing the BBC (Input and Output oriented) models as well as the IRS, DRS and GRS models.
+ * The class implementing the NC (Input and Output oriented) models as well as the NCIV and NCOV models.
  * The first column is the theta so the length of the weights array is NbVariable + 1.
  * Because Theta is coded in the first column, the first weight of the weight array is the variable u0. 
- * (multiplier variable corresponding to the convexity constraint). If the model is under IRS, DRS or GRS, there will be
- * TWO weights before the variable weights (corresponding respectively to the Lower Bound and Upper Bound constraints).
+ * (multiplier variable corresponding to the convexity constraint).
  * <\br>
  * @author Hubert Virtos
  *
  */
-public  class BCC {
+public  class NC {
 
 	/**
 	 * The method solving the DEA Problem.
 	 * @param deaP An instance of DEAProblem.
 	 * @throws Exception 
 	 */
-	public static DEAPSolution solveBCC(DEAProblem deaP) throws Exception, DEAException {
+	public static DEAPSolution solveNC(DEAProblem deaP) throws Exception, DEAException {
 		
 		/* Declare & Collect the variables that will often be used in the process (rather
 		 * than calling the different methods several times.*/
@@ -60,7 +59,7 @@ public  class BCC {
 			transposedMatrix = deaP.getTranspose(true); //Want the negative Transposed
 			DEAPSolution returnSol = new DEAPSolution(nbDMUs, nbVariables);
 	
-			/* As the BBC optimisation needs to be ran for all DMUs, 
+			/* As the NC optimisation needs to be ran for all DMUs, 
 			 * the program will loop through all DMUs.
 			 * Also, the BBC model is solved in two phases.
 			 * The problem will consequently be solved for each DMUs for Phase I and
