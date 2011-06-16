@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Sat May 14 13:45:54 BST 2011
+#Thu Jun 16 20:28:36 BST 2011
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=DeaSolver_fat.jar
+jarname=DeaSolver-v0.164-beta.jar
 manifest.mergeall=true
 manifest.mainclass=
 manifest.file=<createnew>
