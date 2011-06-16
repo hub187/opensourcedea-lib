@@ -25,6 +25,8 @@ package dea;
 
 //import java.util.Arrays;
 
+import java.util.ArrayList;
+
 import deaModels.*;
 //import java.util.ArrayList;
 
@@ -919,49 +921,33 @@ public class DEAProblem {
 	
 	}
 	
+	
 	/**
-	 * Returns the reference set of a DEAProblem solution.
-	 * @return An ArrayList<ArrayList<Integer>> corresponding to each DMU reference set.
+	 * Returns the solution Reference Sets (for all DMUs).
+	 * @return An ArrayList<NonZeroLambda>[].
+	 * @throws ProblemNotSolvedProperly 
 	 */
-//	public ArrayList<Integer>[] getReferenceSet() {
-//
-//		@SuppressWarnings("unchecked")
-//		ArrayList<Integer>[] ReferenceSets = (ArrayList<Integer>[])new ArrayList[this._DataMatrix.length];
-//		
-//		//loop through all DMUs
-//		for(int i = 0; i < this.getNumberOfDMUs(); i++) {
-//			//loop through all lambdas
-//			ReferenceSets[i] = findNonZeroLambdas(i);		
-//		}
-//		
-//		return ReferenceSets;
-//	}
-//	
-//	
-//	public ArrayList<Integer> getReferenceSet(int DMUIndex) {
-//
-//		ArrayList<Integer> ReferenceSet = findNonZeroLambdas(DMUIndex);
-//		return ReferenceSet;
-//	}
-//
-//
-//
-//
-//	private ArrayList<Integer> findNonZeroLambdas( int i) {
-//		ArrayList<Integer> nonZeroLambdaIndexes = new ArrayList<Integer>();
-//		for(int j = 0; j < this.getNumberOfDMUs(); j++) {
-//			if(this.getLambda(i, j) > 0.00000000001) {
-//				/* Might want to add a sensitivity parameter in the getReferenceSet method
-//				 * instead of hard-coding it in the > above.*/
-//				nonZeroLambdaIndexes.add(j);
-//			}
-//			
-//		}
-//		return nonZeroLambdaIndexes;
-//	}
+	public ArrayList<NonZeroLambda>[] getReferenceSet() throws ProblemNotSolvedProperly {
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		return this.solution.getReferenceSet();
+	}
 	
+	/**
+	 * Returns the Reference Set corresponding to dmuIndex.
+	 * @param dmuIndex
+	 * @return An ArrayList<NonZeroLambda>.
+	 * @throws ProblemNotSolvedProperly 
+	 */
+	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) throws ProblemNotSolvedProperly {
+		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperly();
+		}
+		return this.solution.getReferenceSet(dmuIndex);
+	}
 	
-	//Calculate weighted data
+
 
 
 }
