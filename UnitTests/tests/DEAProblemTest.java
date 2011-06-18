@@ -2,6 +2,11 @@ package tests;
 
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.BeforeClass;
 
@@ -132,7 +137,7 @@ public class DEAProblemTest {
 	}
 	
 	@Test
-	public void testReferenceSet() {
+	public void testGetReferenceSet() {
 		tester.setModelType(ModelType.CCRI);
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
@@ -147,20 +152,47 @@ public class DEAProblemTest {
 			System.out.println(e.toString());
 		}
 		
-//		ArrayList<Integer>[] validatedRefSet = getTestReferenceSet();
-//		ArrayList<Integer>[] solRefSet = tester.getReferenceSet();
-//		int iter;
-//		
-//		//Testing getReferenceSet (all DMUs)
-//		for(int i = 0; i < validatedRefSet.length; i++) {
-//			iter = 0;
-//			for(Integer testInt: validatedRefSet[i]) {
-//				assertEquals(testInt, solRefSet[i].get(iter));
-//				iter++;
-//			}
-//		}
-//		//Test getReferenceSet (single DMU)
-//		assertEquals(tester.getReferenceSet(0), validatedRefSet[0]);
+		@SuppressWarnings("unchecked")
+		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
+		
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(1, 0.5263157894736831));
+		refSet.add(new NonZeroLambda(2, 0.26315789473684525));
+		referenceSets[0] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(1, 1));
+		referenceSets[1] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(2, 1));
+		referenceSets[2] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(1, 0.348837209302325));
+		refSet.add(new NonZeroLambda(2, 0.06976744186046668));
+		referenceSets[4] = refSet;
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<NonZeroLambda>[] wholeRefSet = new ArrayList[20];
+		try {
+			wholeRefSet = tester.getReferenceSet();
+		} catch (ProblemNotSolvedProperly e1) {
+			e1.printStackTrace();
+		}
+		
+		List<Integer> l = Arrays.asList(0, 1, 2, 4);
+		for(Integer i : l){
+			for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
+				try {
+					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet(i).indexOf(nzlIndex));
+					assertEquals(refSet.indexOf(nzlIndex), wholeRefSet[i].indexOf(nzlIndex));
+				} catch (ProblemNotSolvedProperly e) {
+
+					e.printStackTrace();
+				}
+			}
+		}
 		
 	}
 	
