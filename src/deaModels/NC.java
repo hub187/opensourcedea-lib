@@ -210,7 +210,12 @@ public  class NC {
 						}
 					}
 					else { //Model is Output Oriented
-						//TO IMPLEMENT
+						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+							constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
+						}
+						else { //Either a non-controllable input or output or a standard output. In all cases not timed by theta so 0
+							constraintRow[0] = 0;
+						}
 					}
 				}
 				catch (Exception e) {
@@ -244,7 +249,14 @@ public  class NC {
 						}
 					}
 					else { //Model is Output Oriented
-						//TO IMLPEMENT
+						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+							rhs1[varIndex] = 0;
+							solverEqualityType1[varIndex] = LpSolve.EQ;
+						}
+						else {
+							rhs1[varIndex] = transposedMatrix[varIndex] [dmuIndex];
+							solverEqualityType1[varIndex] = LpSolve.EQ;
+						}
 					}
 				}
 				catch (Exception e) {

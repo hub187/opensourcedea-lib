@@ -281,7 +281,7 @@ public  class CCR {
 			else {
 				returnSol.setObjective(i, 0);
 				for(int w = 0; w < sol.Weights.length; w++) {
-					returnSol.setWeight(i, w, sol.Weights[w]); //Not correct but Obj = 0 should never occur
+					returnSol.setWeight(i, w, sol.Weights[w]);
 				}
 			}
 		}

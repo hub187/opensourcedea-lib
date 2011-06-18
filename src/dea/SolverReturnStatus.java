@@ -16,9 +16,9 @@ public enum SolverReturnStatus {
 	 * been solved prior to returning the solution (i.e. check whether InstanceOfDEAProblem.Solution.Status
 	 * 	== SolverReturnStatus.NA).*/
 	MODEL_CREATION_FAILURE ("One or all the Linear Problems could not be created"),
-	OPTIMAL_SOLUTION_FOUND ("One or all the models could be created and optimal solutions were found each time."),
-	OPTIMAL_SOLUTION_NOT_FOUND ("One or all the Models could be created but an optimal solution was not found at least once."),
-	UNKNOWN_ERROR ("An unknown problem occured which stopped the optimisation process.");
+	OPTIMAL_SOLUTION_FOUND ("All the models could be created and optimal solutions were found each time."),
+	OPTIMAL_SOLUTION_NOT_FOUND ("One or all the Models could be created but an optimal solution was not found for one or several DEA problems."),
+	UNKNOWN_ERROR ("An unknown problem occured which unexpectedly stopped the optimisation process.");
 	
 	
 	private String description;
