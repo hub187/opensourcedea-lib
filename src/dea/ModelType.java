@@ -124,28 +124,28 @@ public enum ModelType {
 	NCI ("The Non-Controllable Model in its Input Oriented version. This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
-			"accordingly.",
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.CONSTANT),
 	NCIV ("The Non-Controllable Model in its Input Oriented version. +This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
-			"accordingly.",
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.VARIABLE),
 	NCO ("The Non-Controllable Model in its Output Oriented version. This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
-			"accordingly.",
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.CONSTANT),
 	NCOV ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
-			"accordingly.",
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.VARIABLE);

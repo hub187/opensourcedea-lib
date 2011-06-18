@@ -102,7 +102,11 @@ public class DEAPSolution {
 	public void setReferenceSet(int dmuIndex, ArrayList<NonZeroLambda> referenceSet) {
 		this.referenceSet[dmuIndex] = referenceSet;
 	}
-
+	
+	public void setReferenceSet(int dmuIndex, NonZeroLambda nonZeroLambda) {
+		this.referenceSet[dmuIndex].add(nonZeroLambda);
+	}
+	
 	public ArrayList<NonZeroLambda>[] getReferenceSet() {
 		return this.referenceSet;
 	}
@@ -110,6 +114,8 @@ public class DEAPSolution {
 	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) {
 		return this.referenceSet[dmuIndex];
 	}
+	
+
 	
 	
 	

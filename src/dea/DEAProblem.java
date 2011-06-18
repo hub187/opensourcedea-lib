@@ -245,7 +245,7 @@ public class DEAProblem {
 	 * @param varIndex The position of the variable in the Variable Array.
 	 * @throws Exception 
 	 */
-	public void setVariableType(VariableType varType, int varIndex) throws Exception
+	public void setVariableType(int varIndex, VariableType varType) throws Exception
 	{
 		try {
 			this.variableType[varIndex] = varType;
