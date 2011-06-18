@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 //import static java.util.ArrayList.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 //import java.util.ArrayList;
 
@@ -135,6 +137,60 @@ public class LibraryTestNCI {
 		return referenceSets;
 	}
 	
+	private double[] [] getTestSlackValues() {
+		double[] [] slackValues = new double[20] [4];
+		slackValues[3] [3] = 18.333333;
+		slackValues[10] [3] = 103.9972;
+		slackValues[13] [3] = 112.7358;
+		return slackValues;
+	}
+	
+	private double[] [] getTestProjectionValues() {
+		double[] [] projectionValues = new double[20] [4];
+		projectionValues[0] [0] = 180.8311;
+		projectionValues[0] [1] = 83;
+		projectionValues[0] [2] = 1877.18;
+		projectionValues[0] [3] = 1345.27;
+		
+		projectionValues[3] [0] = 138.8927;
+		projectionValues[3] [1] = 83;
+		projectionValues[3] [2] = 1250.71;
+		projectionValues[3] [3] = 170.2733;
+		
+		projectionValues[10] [0] = 135.0601;
+		projectionValues[10] [1] = 65;
+		projectionValues[10] [2] = 1409.55;
+		projectionValues[10] [3] = 115.2572;
+		
+		return projectionValues;
+	}
+	
+	private double[] [] getTestWeightValues() {
+		double[] [] weightValues = new double[20] [4];
+		weightValues[0] [0] = 0.0024320840528248657;
+		weightValues[0] [1] = 0;
+		weightValues[0] [2] = 0;
+		weightValues[0] [3] = 7.379673342093572E-6;
+		
+		weightValues[3] [0] = 0.002770083102493075;
+		weightValues[3] [1] = 0;
+		weightValues[3] [2] = 0;
+		weightValues[3] [3] = 0;
+		
+		weightValues[10] [0] = 0.0026031565876782183;
+		weightValues[10] [1] = 0;
+		weightValues[10] [2] = 0;
+		weightValues[10] [3] = 0;
+		
+		weightValues[14] [0] = 0.0030557677616501137;
+		weightValues[14] [1] = 0;
+		weightValues[14] [2] = 0;
+		weightValues[14] [3] = 0.001285853711243773;
+		
+		return weightValues;
+	}
+	
+	
 	@Test
 	public void TestNCI() {
 		
@@ -158,24 +214,49 @@ public class LibraryTestNCI {
 		try {
 			DEAPSolution CheckedSol = GetModelResults();
 			
-			
+			//OBJECTIVES
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
 			
+			//RANKS
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 			
-			//Check Reference Set
-			ArrayList<Integer> l = new ArrayList<Integer>();
-			l.add(0);
-			l.add(1);
-			l.add(6);
-			l.add(12);
+			//REFERENCE SET
+			List<Integer> l = Arrays.asList(0, 1, 6, 12);
 			for(Integer i : l){
 				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
 				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
-					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet()[i].indexOf(nzlIndex));
+					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet(i).indexOf(nzlIndex));
 				}
 			}
 			
+			//SLACKS
+			l.clear();
+			l = Arrays.asList(3, 10, 13);
+			for(Integer i : l){
+				for(double slackValues : getTestSlackValues()[i]) {
+					assertEquals(slackValues, tester.getSlacks(i));
+				}
+			}
+			
+			//PROJECTIONS
+			l.clear();
+			l = Arrays.asList(0, 3, 10);
+			for(Integer i : l){
+				for(double projectionValues : getTestProjectionValues()[i]) {
+					assertEquals(projectionValues, tester.getProjections(i));
+				}
+			}
+			
+			//WEIGHTS
+			l.clear();
+			l = Arrays.asList(0, 3, 10, 14);
+			for(Integer i : l){
+				for(double weightValues : getTestWeightValues()[i]) {
+					assertEquals(weightValues, tester.getWeight(i));
+				}
+			}
+			
+			//OPTIMISATION STATUS OK
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
