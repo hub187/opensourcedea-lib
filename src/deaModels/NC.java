@@ -35,8 +35,7 @@ import lpsolve.LpSolve;
  * The class implementing the NC (Input and Output oriented) models as well as the NCIV and NCOV models.
  * These models solve the NC problem in ONE OPTIMISATION STAGE.
  * The first column is the theta so the length of the weights array is NbVariable + 1.
- * Because Theta is coded in the first column, the first weight of the weight array is the variable u0. 
- * (multiplier variable corresponding to the convexity constraint).
+ * For the NCIV and NCOV models, the first weight of the weight array is the variable u0 (corresponding to the convxity constraint).
  * <\br>
  * @author Hubert Virtos
  *
@@ -266,24 +265,24 @@ public  class NC {
 
 		
 		//Build the row corresponding to the convexity constraint
-//		constraintRow = new double[nbDMUs + nbVariables + 1];
-//		for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
-//			constraintRow[VarIndex] = 1;
-//		}
-//		if(deaP.getModelType() == ModelType.BCCI ||
-//				deaP.getModelType() == ModelType.BCCO) {
-//			constraints.add(constraintRow);
-//			rhs1[nbVariables] = 1;
-//			solverEqualityType1[nbVariables] = LpSolve.EQ;
-//		}
-//		else /*In this case the model is a general, increasing or decreasing model*/ {
-//			constraints.add(constraintRow);
-//			rhs1[nbVariables] = deaP.getRTSLowerBound();
-//			solverEqualityType1[nbVariables] = LpSolve.GE;
-//			constraints.add(constraintRow);
-//			rhs1[nbVariables + 1] = deaP.getRTSUpperBound();
-//			solverEqualityType1[nbVariables + 1] = LpSolve.LE;
-//		}
+		constraintRow = new double[nbDMUs + nbVariables + 1];
+		for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
+			constraintRow[VarIndex] = 1;
+		}
+		if(deaP.getModelType() == ModelType.NCIV ||
+				deaP.getModelType() == ModelType.NCOV) {
+			constraints.add(constraintRow);
+			rhs1[nbVariables] = 1;
+			solverEqualityType1[nbVariables] = LpSolve.EQ;
+		}
+		else /*In this case the model is a general, increasing or decreasing model*/ {
+			constraints.add(constraintRow);
+			rhs1[nbVariables] = deaP.getRTSLowerBound();
+			solverEqualityType1[nbVariables] = LpSolve.GE;
+			constraints.add(constraintRow);
+			rhs1[nbVariables + 1] = deaP.getRTSUpperBound();
+			solverEqualityType1[nbVariables + 1] = LpSolve.LE;
+		}
 		
 		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).
 		objF[0] = 1;

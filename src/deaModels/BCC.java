@@ -34,9 +34,9 @@ import lpsolve.LpSolve;
 /**
  * The class implementing the BBC (Input and Output oriented) models as well as the IRS, DRS and GRS models.
  * The first column is the theta so the length of the weights array is NbVariable + 1.
- * Because Theta is coded in the first column, the first weight of the weight array is the variable u0. 
- * (multiplier variable corresponding to the convexity constraint). If the model is under IRS, DRS or GRS, there will be
- * TWO weights before the variable weights (corresponding respectively to the Lower Bound and Upper Bound constraints).
+ * The first weight of the weight array is the variable u0 (corresponding to the convexity constraint). 
+ * If the model is under IRS, DRS or GRS, there will be TWO weights before the variable weights
+ * (corresponding respectively to the Lower Bound and Upper Bound constraints).
  * <\br>
  * @author Hubert Virtos
  *
