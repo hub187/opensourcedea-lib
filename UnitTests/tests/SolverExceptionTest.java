@@ -88,7 +88,7 @@ public class SolverExceptionTest {
 	//		SolvEqType
 	//	}
 		
-		//This will purposely FAIL!
+		//This will purposely FAIL (and send an java.lang.IndexOutOfBoundsException)!
 		try {
 			Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolvEqType);
 		}

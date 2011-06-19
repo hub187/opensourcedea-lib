@@ -263,25 +263,26 @@ public  class NC {
 				}
 			} //finished looping through all variables
 
-		
-		//Build the row corresponding to the convexity constraint
-		constraintRow = new double[nbDMUs + nbVariables + 1];
-		for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
-			constraintRow[VarIndex] = 1;
-		}
-		if(deaP.getModelType() == ModelType.NCIV ||
-				deaP.getModelType() == ModelType.NCOV) {
-			constraints.add(constraintRow);
-			rhs1[nbVariables] = 1;
-			solverEqualityType1[nbVariables] = LpSolve.EQ;
-		}
-		else /*In this case the model is a general, increasing or decreasing model*/ {
-			constraints.add(constraintRow);
-			rhs1[nbVariables] = deaP.getRTSLowerBound();
-			solverEqualityType1[nbVariables] = LpSolve.GE;
-			constraints.add(constraintRow);
-			rhs1[nbVariables + 1] = deaP.getRTSUpperBound();
-			solverEqualityType1[nbVariables + 1] = LpSolve.LE;
+		if(deaP.getModelRTS() != ReturnToScale.CONSTANT) {
+			//Build the row corresponding to the convexity constraint
+			constraintRow = new double[nbDMUs + nbVariables + 1];
+			for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
+				constraintRow[VarIndex] = 1;
+			}
+			if(deaP.getModelType() == ModelType.NCIV ||
+					deaP.getModelType() == ModelType.NCOV) {
+				constraints.add(constraintRow);
+				rhs1[nbVariables] = 1;
+				solverEqualityType1[nbVariables] = LpSolve.EQ;
+			}
+			else /*In this case the model is a general, increasing or decreasing model*/ {
+				constraints.add(constraintRow);
+				rhs1[nbVariables] = deaP.getRTSLowerBound();
+				solverEqualityType1[nbVariables] = LpSolve.GE;
+				constraints.add(constraintRow);
+				rhs1[nbVariables + 1] = deaP.getRTSUpperBound();
+				solverEqualityType1[nbVariables + 1] = LpSolve.LE;
+			}
 		}
 		
 		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).

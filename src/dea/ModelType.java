@@ -1,6 +1,7 @@
 package dea;
 
 
+
 /**
  * An enum of the possible Model Types (e.g. CCR, SBM...).
  * <p>
@@ -181,6 +182,11 @@ public enum ModelType {
 	public ReturnToScale getReturnToScale() {
 		return this.rts;
 	}
+	
+//	public static int getNumberOfModelsAvailable() {
+//		int nbModels = ModelType.values().length;
+//		return nbModels;
+//	}
 	
 	
 }

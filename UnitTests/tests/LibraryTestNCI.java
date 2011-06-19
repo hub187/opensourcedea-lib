@@ -3,21 +3,10 @@ package tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-//import static java.util.ArrayList.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-//import java.util.ArrayList;
-
-//import static org.junit.Assert.assertEquals;
-//import java.util.*;
-//import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
-//import dea.DEAModelOrientation;
+import java.util.ArrayList;
+
 import dea.*;
 
 
@@ -132,7 +121,7 @@ public class LibraryTestNCI {
 		refSet.add(new NonZeroLambda(6, 0.111079611602825));
 		refSet.add(new NonZeroLambda(9, 0.597659261779738));
 		refSet.add(new NonZeroLambda(11, 0.737193030387624));
-		referenceSets[6] = refSet;
+		referenceSets[12] = refSet;
 		
 		return referenceSets;
 	}
@@ -221,38 +210,54 @@ public class LibraryTestNCI {
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 			
 			//REFERENCE SET
-			List<Integer> l = Arrays.asList(0, 1, 6, 12);
+			ArrayList<Integer> l = new ArrayList<Integer>();
+			l.add(0);
+			l.add(1);
+			l.add(6);
+			l.add(12);
 			for(Integer i : l){
 				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
 				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
-					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet(i).indexOf(nzlIndex));
+					assertEquals(refSet.get(nzlIndex).getDMUIndex(), tester.getReferenceSet(i).get(nzlIndex).getDMUIndex());
+					assertEquals(refSet.get(nzlIndex).getLambdaValue(),
+							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
 				}
 			}
 			
 			//SLACKS
 			l.clear();
-			l = Arrays.asList(3, 10, 13);
+			l.add(3);
+			l.add(10);
+			l.add(13);
 			for(Integer i : l){
-				for(double slackValues : getTestSlackValues()[i]) {
-					assertEquals(slackValues, tester.getSlacks(i));
+				double[] slackValues = getTestSlackValues()[i];
+				for(int sIndex = 0; sIndex < slackValues.length; sIndex++) {
+					assertEquals(slackValues[sIndex], tester.getSlacks(i)[sIndex], 0.1);
 				}
 			}
 			
 			//PROJECTIONS
 			l.clear();
-			l = Arrays.asList(0, 3, 10);
+			l.add(0);
+			l.add(3);
+			l.add(10);
 			for(Integer i : l){
-				for(double projectionValues : getTestProjectionValues()[i]) {
-					assertEquals(projectionValues, tester.getProjections(i));
+				double[] projValues = getTestProjectionValues()[i];
+				for(int pIndex = 0; pIndex < projValues.length; pIndex++) {
+					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
 				}
 			}
 			
 			//WEIGHTS
 			l.clear();
-			l = Arrays.asList(0, 3, 10, 14);
+			l.add(0);
+			l.add(3);
+			l.add(10);
+			l.add(14);
 			for(Integer i : l){
-				for(double weightValues : getTestWeightValues()[i]) {
-					assertEquals(weightValues, tester.getWeight(i));
+				double[] weightValues = getTestWeightValues()[i];
+				for(int wIndex = 0; wIndex < weightValues.length; wIndex++) {
+					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
 				}
 			}
 			

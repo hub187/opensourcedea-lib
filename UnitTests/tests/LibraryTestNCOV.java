@@ -3,21 +3,10 @@ package tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-//import static java.util.ArrayList.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-//import java.util.ArrayList;
-
-//import static org.junit.Assert.assertEquals;
-//import java.util.*;
-//import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
-//import dea.DEAModelOrientation;
+import java.util.ArrayList;
+
 import dea.*;
 
 
@@ -116,7 +105,7 @@ public class LibraryTestNCOV {
 		refSet.add(new NonZeroLambda(2, 0.08676180103337995));
 		refSet.add(new NonZeroLambda(6, 0.20103617440083132));
 		refSet.add(new NonZeroLambda(8, 0.5230446306459055));
-		refSet.add(new NonZeroLambda(16, 0.18915739391988332));
+		refSet.add(new NonZeroLambda(17, 0.18915739391988332));
 		referenceSets[0] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
@@ -168,7 +157,7 @@ public class LibraryTestNCOV {
 	}
 	
 	private double[] [] getTestWeightValues() {
-		double[] [] weightValues = new double[20] [4];
+		double[] [] weightValues = new double[20] [5];
 		weightValues[0] [1] = 2.5610733103445874E-4;
 		weightValues[0] [2] = 0;
 		weightValues[0] [3] = 0;
@@ -223,38 +212,54 @@ public class LibraryTestNCOV {
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
 			
 			//REFERENCE SET
-			List<Integer> l = Arrays.asList(0, 1, 6, 12);
+			ArrayList<Integer> l = new ArrayList<Integer>();
+			l.add(0);
+			l.add(1);
+			l.add(6);
+			l.add(15);
 			for(Integer i : l){
 				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
 				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
-					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet(i).indexOf(nzlIndex));
+					assertEquals(refSet.get(nzlIndex).getDMUIndex(), tester.getReferenceSet(i).get(nzlIndex).getDMUIndex());
+					assertEquals(refSet.get(nzlIndex).getLambdaValue(),
+							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
 				}
 			}
 			
 			//SLACKS
 			l.clear();
-			l = Arrays.asList(3, 10, 13);
+			l.add(3);
+			l.add(10);
+			l.add(13);
 			for(Integer i : l){
-				for(double slackValues : getTestSlackValues()[i]) {
-					assertEquals(slackValues, tester.getSlacks(i));
+				double[] slackValues = getTestSlackValues()[i];
+				for(int sIndex = 0; sIndex < slackValues.length; sIndex++) {
+					assertEquals(slackValues[sIndex], tester.getSlacks(i)[sIndex], 0.1);
 				}
 			}
 			
 			//PROJECTIONS
 			l.clear();
-			l = Arrays.asList(0, 3, 10);
+			l.add(1);
+			l.add(3);
+			l.add(10);
 			for(Integer i : l){
-				for(double projectionValues : getTestProjectionValues()[i]) {
-					assertEquals(projectionValues, tester.getProjections(i));
+				double[] projValues = getTestProjectionValues()[i];
+				for(int pIndex = 0; pIndex < projValues.length; pIndex++) {
+					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
 				}
 			}
 			
 			//WEIGHTS
 			l.clear();
-			l = Arrays.asList(0, 3, 10, 14);
+			l.add(0);
+			l.add(3);
+			l.add(10);
+			l.add(14);
 			for(Integer i : l){
-				for(double weightValues : getTestWeightValues()[i]) {
-					assertEquals(weightValues, tester.getWeight(i));
+				double[] weightValues = getTestWeightValues()[i];
+				for(int wIndex = 1; wIndex < weightValues.length; wIndex++) {
+					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
 				}
 			}
 			

@@ -5,9 +5,9 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 //import static java.util.ArrayList.*;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 //import java.util.ArrayList;
 
@@ -221,43 +221,49 @@ public class LibraryTestNCO {
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 			
 			//REFERENCE SET
-			List<Integer> l = Arrays.asList(0, 1, 6, 12);
+			ArrayList<Integer> l = new ArrayList<Integer>();
+			l.add(0);
+			l.add(1);
+			l.add(6);
+			l.add(15);
 			for(Integer i : l){
 				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
 				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
-					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet(i).indexOf(nzlIndex));
+					assertEquals(refSet.get(nzlIndex).getDMUIndex(), tester.getReferenceSet(i).get(nzlIndex).getDMUIndex());
+					assertEquals(refSet.get(nzlIndex).getLambdaValue(),
+							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
 				}
 			}
-			
-//			//SLACKS
-//			l.clear();
-//			l = Arrays.asList(3, 10, 13);
-//			for(Integer i : l){
-//				for(double slackValues : getTestSlackValues()[i]) {
-//					assertEquals(slackValues, tester.getSlacks(i));
-//				}
-//			}
+
 			
 			//PROJECTIONS
 			l.clear();
-			l = Arrays.asList(0, 3, 10);
+			l.add(0);
+			l.add(3);
+			l.add(10);
 			for(Integer i : l){
-				for(double projectionValues : getTestProjectionValues()[i]) {
-					assertEquals(projectionValues, tester.getProjections(i));
+				double[] projValues = getTestProjectionValues()[i];
+				for(int pIndex = 0; pIndex < projValues.length; pIndex++) {
+					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
 				}
 			}
 			
 			//WEIGHTS
 			l.clear();
-			l = Arrays.asList(0, 3, 10, 14);
+			l.add(0);
+			l.add(3);
+			l.add(10);
+			l.add(14);
 			for(Integer i : l){
-				for(double weightValues : getTestWeightValues()[i]) {
-					assertEquals(weightValues, tester.getWeight(i));
+				double[] weightValues = getTestWeightValues()[i];
+				for(int wIndex = 0; wIndex < weightValues.length; wIndex++) {
+					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
 				}
 			}
 			
 			//OPTIMISATION STATUS OK
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

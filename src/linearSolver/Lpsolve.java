@@ -188,7 +188,7 @@ public class Lpsolve {
 			
 
 	    catch (Exception e) {
-	    	e.printStackTrace();
+	    	//e.printStackTrace();
 	    	Sol.Status = SolverReturnStatus.UNKNOWN_ERROR;
 	    	throw new DEASolverException();
 	    	
