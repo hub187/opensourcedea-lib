@@ -207,7 +207,7 @@ public class LibraryTestGRSO {
 	@Test
 	public void TestGRSO() {
 		
-		BuildDEAProblem(ModelType.GRSO); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.GRS_O); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

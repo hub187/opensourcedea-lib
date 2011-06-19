@@ -74,8 +74,8 @@ public class DEAProblemTest {
 
 	@Test
 	public void testSetGetModelType() {
-		tester.setModelType(ModelType.CCRI);
-		assertSame(tester.getModelType(), ModelType.CCRI);
+		tester.setModelType(ModelType.CCR_I);
+		assertSame(tester.getModelType(), ModelType.CCR_I);
 	}
 	
 	
@@ -138,7 +138,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetReferenceSet() {
-		tester.setModelType(ModelType.CCRI);
+		tester.setModelType(ModelType.CCR_I);
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -282,7 +282,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testToSeeObjectProperties() {
-		tester.setModelType(ModelType.CCRI);
+		tester.setModelType(ModelType.CCR_I);
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -310,7 +310,7 @@ public class DEAProblemTest {
 	@Test
 	public void testMissingDMUCountDiscrepancy() {
 		
-		tester.setModelType(ModelType.CCRI);
+		tester.setModelType(ModelType.CCR_I);
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -334,7 +334,7 @@ public class DEAProblemTest {
 	@Test
 	public void testMissingVariableCountDiscrepancy() {
 		
-		tester.setModelType(ModelType.CCRI);
+		tester.setModelType(ModelType.CCR_I);
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -357,7 +357,7 @@ public class DEAProblemTest {
 	@Test
 	public void testRTSBoundsNotSet() {
 		
-		tester.setModelType(ModelType.SBMGRS);
+		tester.setModelType(ModelType.SBM_GRS);
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);

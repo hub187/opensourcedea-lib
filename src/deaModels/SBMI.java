@@ -78,7 +78,7 @@ public class SBMI {
 			throw e;
 		}
 		
-		if(deaP.getModelType() == ModelType.SBMIV) {
+		if(deaP.getModelType() == ModelType.SBMI_V) {
 			//Add one row for the convexity constraints
 			double[] constraintRow = new double[nbDMUs + nbVariables];
 			for(int dmuIndex = 0; dmuIndex < nbDMUs; dmuIndex++) {
@@ -87,7 +87,7 @@ public class SBMI {
 			constraints.add(constraintRow);
 		}
 		
-		if(deaP.getModelType() == ModelType.SBMIGRS) {
+		if(deaP.getModelType() == ModelType.SBM_I_GRS) {
 			double[] constraintRow = new double[nbDMUs + nbVariables];
 			for(int dmuIndex = 0; dmuIndex < nbDMUs; dmuIndex++) {
 				constraintRow[dmuIndex] = 1;
@@ -104,11 +104,11 @@ public class SBMI {
 		double[] objF = new double [nbDMUs + nbVariables];
 		double[] rhs;
 		int[] solverEqualityType;
-		if(deaP.getModelType() == ModelType.SBMI) {
+		if(deaP.getModelType() == ModelType.SBM_I) {
 			rhs = new double[nbVariables];
 			solverEqualityType = new int[nbVariables];
 		}
-		else if (deaP.getModelType() == ModelType.SBMIV) {
+		else if (deaP.getModelType() == ModelType.SBMI_V) {
 			//One extra row for convexity constraint
 			rhs = new double[nbVariables + 1];
 			solverEqualityType = new int[nbVariables + 1];
@@ -205,13 +205,13 @@ public class SBMI {
 			}
 			
 			//Add extra row if Variable RTS
-			if(deaP.getModelType() == ModelType.SBMIV) {
+			if(deaP.getModelType() == ModelType.SBMI_V) {
 				rhs[nbVariables] = 1;
 				solverEqualityType[nbVariables] = LpSolve.EQ;
 			}
 			
 			//Add two extra rows if model is SBMIGRS
-			if(deaP.getModelType() == ModelType.SBMIGRS) {
+			if(deaP.getModelType() == ModelType.SBM_I_GRS) {
 				
 				rhs[nbVariables] = deaP.getRTSLowerBound();
 				solverEqualityType[nbVariables] = LpSolve.GE;

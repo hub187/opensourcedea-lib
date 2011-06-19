@@ -267,7 +267,7 @@ public  class CCR {
 	private static void storePhaseOneInformation(DEAProblem deaP,
 			DEAPSolution returnSol, int i, SolverResults sol) {
 		//Collect information from Phase I (Theta)
-		if(deaP.getModelType() == ModelType.CCRI) {
+		if(deaP.getModelType() == ModelType.CCR_I) {
 			returnSol.setObjective(i, sol.Objective);
 			returnSol.setWeights(i, sol.Weights);
 		}
@@ -296,7 +296,7 @@ public  class CCR {
 		try{
 			//Collect information from Phase II (Theta)
 			ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-			if(deaP.getModelType() == ModelType.CCRI) {
+			if(deaP.getModelType() == ModelType.CCR_I) {
 				for(int lambdaPos = 0; lambdaPos < nbDMUs; lambdaPos++) {
 					if(sol.VariableResult[lambdaPos + 1] != 0) {
 						refSet.add(new NonZeroLambda(lambdaPos, sol.VariableResult[lambdaPos + 1]));
@@ -319,7 +319,7 @@ public  class CCR {
 				}
 			}
 			
-			if(deaP.getModelType() == ModelType.CCRI) {
+			if(deaP.getModelType() == ModelType.CCR_I) {
 				for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 					if(deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
 						//Projections

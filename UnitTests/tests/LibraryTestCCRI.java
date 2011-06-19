@@ -97,7 +97,7 @@ public class LibraryTestCCRI {
 	@Test
 	public void TestCCRI() throws Exception {
 		
-		BuildDEAProblem(ModelType.CCRI);
+		BuildDEAProblem(ModelType.CCR_I);
 
 		
 		try {

@@ -208,7 +208,7 @@ public class LibraryTestSBMOGRS {
 	@Test
 	public void TestSBMOGRS() {
 		
-		BuildDEAProblem(ModelType.SBMOGRS); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.SBM_O_GRS); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

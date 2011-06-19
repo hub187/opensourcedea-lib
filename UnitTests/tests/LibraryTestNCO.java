@@ -194,7 +194,7 @@ public class LibraryTestNCO {
 	@Test
 	public void TestNCO() {
 		
-		BuildDEAProblem(ModelType.NCO); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.NC_O); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.setVariableType(1, VariableType.NON_CONTROLLABLE_INPUT);

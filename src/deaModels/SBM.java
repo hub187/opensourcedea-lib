@@ -68,7 +68,7 @@ public class SBM {
 			rhs = new double [nbVariables + 1];
 			solverEqualityType = new int [nbVariables + 1];
 		}
-		else if (deaP.getModelType() == ModelType.SBMV) {
+		else if (deaP.getModelType() == ModelType.SBM_V) {
 			rhs = new double [nbVariables + 2];
 			solverEqualityType = new int [nbVariables + 2];
 		}
@@ -223,7 +223,7 @@ public class SBM {
 			
 			
 			//OPTIONAL ROWS
-			if(deaP.getModelType() == ModelType.SBMV) {
+			if(deaP.getModelType() == ModelType.SBM_V) {
 				//Build convexity constraint. This is the ONLY difference with the SBMmodel
 				double[] constraintRow = new double[nbDMUs + nbVariables + 1];
 				constraintRow[0] = 1;
@@ -235,7 +235,7 @@ public class SBM {
 				solverEqualityType[nbVariables + 1] = LpSolve.EQ;
 			}
 			
-			if(deaP.getModelType() == ModelType.SBMGRS) {
+			if(deaP.getModelType() == ModelType.SBM_GRS) {
 				double[] tempConstraintRow = new double[nbDMUs + nbVariables + 1];
 				for (int dmuPos = 1; dmuPos <= nbDMUs; dmuPos++) {
 					tempConstraintRow[dmuPos] = -1;

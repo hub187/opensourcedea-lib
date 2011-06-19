@@ -94,7 +94,7 @@ public class LibraryTestCCRO {
 	@Test
 	public void TestCCRO() throws Exception {
 		
-		BuildDEAProblem(ModelType.CCRO);  //, DEAModelOrientation.OutputOriented);
+		BuildDEAProblem(ModelType.CCR_O);  //, DEAModelOrientation.OutputOriented);
 		
 		
 		try {

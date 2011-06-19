@@ -94,13 +94,13 @@ public  class NC {
 		 //		Solve Phase I		 //
 		//////////////////////////////
 		
-		if(deaP.getModelType() == ModelType.NCI ||
-				deaP.getModelType() == ModelType.NCO){
+		if(deaP.getModelType() == ModelType.NC_I ||
+				deaP.getModelType() == ModelType.NC_O){
 			rhs1 = new double [nbVariables];
 			solverEqualityType1 = new int[nbVariables];
 		}
-		else if(deaP.getModelType() == ModelType.NCIV ||
-				deaP.getModelType() == ModelType.NCOV){ /*Need an extra row for convexity contraint*/
+		else if(deaP.getModelType() == ModelType.NC_I_V ||
+				deaP.getModelType() == ModelType.NC_O_V){ /*Need an extra row for convexity contraint*/
 			rhs1 = new double [nbVariables + 1];
 			solverEqualityType1 = new int[nbVariables + 1];
 		}
@@ -269,8 +269,8 @@ public  class NC {
 			for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
 				constraintRow[VarIndex] = 1;
 			}
-			if(deaP.getModelType() == ModelType.NCIV ||
-					deaP.getModelType() == ModelType.NCOV) {
+			if(deaP.getModelType() == ModelType.NC_I_V ||
+					deaP.getModelType() == ModelType.NC_O_V) {
 				constraints.add(constraintRow);
 				rhs1[nbVariables] = 1;
 				solverEqualityType1[nbVariables] = LpSolve.EQ;

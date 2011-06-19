@@ -16,66 +16,66 @@ package dea;
  *
  */
 public enum ModelType {
-	CCRI ("The Charnes Cooper and Rhodes Model called CCR." +
+	CCR_I ("The Charnes Cooper and Rhodes Model called CCR." +
 			"This model was first introduced in 1978 and assumes CONSTANT RTS.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.CONSTANT),
-	CCRO ("The Charnes Cooper and Rhodes Model called CCR." +
+	CCR_O ("The Charnes Cooper and Rhodes Model called CCR." +
 			"This model was first introduced in 1978 and assumes CONSTANT RTS.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.CONSTANT),
-	BCCI ("The Banker Charnes and Cooper Model called BCC." +
+	BCC_I ("The Banker Charnes and Cooper Model called BCC." +
 			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model" +
 			"only assumed CONSTANT RTS). The only difference with the CCR model is the convexity constraint" +
 			"e*Lambdas = 1 / or uo in the multiplier form.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.VARIABLE),
-	BCCO ("The Banker Charnes and Cooper Model called BCC." +
+	BCC_O ("The Banker Charnes and Cooper Model called BCC." +
 			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model" +
 			"only assumed CONSTANT RTS). The only difference with the CCR model is the convexity constraint" +
 			"e*Lambdas = 1 / or uo in the multiplier form.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.VARIABLE),
-	GRSI ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
+	GRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
 			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= Positive_Infinity." +
 			"Setting e*Lambdas = 1 is equivalent to the BCC model.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.GENERAL),
-	GRSO ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
+	GRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
 			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= Positive_Infinity." +
 			"Setting e*Lambdas = 1 is equivalent to the BCC model.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.GENERAL),
-	IRSI ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
+	IRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow INCREASING Returns to Scale." +
 			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
 			"1 <= e*Lambdas",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.INCREASING),
-	IRSO ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
+	IRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow INCREASING Returns to Scale." +
 			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
 			"1 <= e*Lambdas",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.INCREASING),
-	DRSI ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
+	DRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow DECREASING Returns to Scale." +
 			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= 1.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.DECREASING),
-	DRSO ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
+	DRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
 			"allow DECREASING Returns to Scale." +
 			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
 			"0 <= e*Lambdas <= 1.",
@@ -89,67 +89,109 @@ public enum ModelType {
 			ModelOrientation.NON_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.CONSTANT),
-	SBMV ("The Non-Oriented version of the SBM model assuming VARIABLE RTS.",
+	SBM_V ("The Non-Oriented version of the SBM model assuming VARIABLE RTS.",
 			ModelOrientation.NON_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.VARIABLE),
-	SBMGRS ("The Non-Oriented version of the SBM model assuming GENERAL RTS." +
+	SBM_GRS ("The Non-Oriented version of the SBM model assuming GENERAL RTS." +
 			"This model requires a set of two parameters Lower Limit and Upper Limit.",
 			ModelOrientation.NON_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.GENERAL),
-	SBMI ("The Input Oriented version of the SBM model assuming CONSTANT RTS.",
+	SBM_I ("The Input Oriented version of the SBM model assuming CONSTANT RTS.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.CONSTANT),
-	SBMIV ("The Input Oriented version of the SBM model assuming VARIABLE RTS.",
+	SBMI_V ("The Input Oriented version of the SBM model assuming VARIABLE RTS.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.VARIABLE),	
-	SBMIGRS ("The Input Oriented version of the SBM model assuming GENERAL RTS.",
+	SBM_I_GRS ("The Input Oriented version of the SBM model assuming GENERAL RTS.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.GENERAL),	
-	SBMO ("The Ouput Oriented version of the SBM model assuming CONSTANT RTS.",
+	SBM_O ("The Ouput Oriented version of the SBM model assuming CONSTANT RTS.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.CONSTANT),
-	SBMOV ("The Ouput Oriented version of the SBM model assuming VARIABLE RTS.",
+	SBM_O_V ("The Ouput Oriented version of the SBM model assuming VARIABLE RTS.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.VARIABLE),
-	SBMOGRS ("The Output Oriented version of the SBM model assuming GENERAL RTS.",
+	SBM_O_GRS ("The Output Oriented version of the SBM model assuming GENERAL RTS.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.GENERAL),
-	NCI ("The Non-Controllable Model in its Input Oriented version. This model does not allow" +
+	NC_I ("The Non-Controllable Model in its Input Oriented version. This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.CONSTANT),
-	NCIV ("The Non-Controllable Model in its Input Oriented version. +This model does not allow" +
+	NC_I_V ("The Non-Controllable Model in its Input Oriented version. +This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.VARIABLE),
-	NCO ("The Non-Controllable Model in its Output Oriented version. This model does not allow" +
+	NC_O ("The Non-Controllable Model in its Output Oriented version. This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnToScale.CONSTANT),
-	NCOV ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_O_V ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
 			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
 			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
-			ReturnToScale.VARIABLE);
+			ReturnToScale.VARIABLE),
+	NC_I_GRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming GENERAL RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.GENERAL),
+	NC_O_GRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming GENERAL RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.OUTPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.GENERAL),
+	NC_I_IRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming INCREASING RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.INCREASING),
+	NC_O_IRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming INCREASING RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.OUTPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.INCREASING),
+	NC_I_DRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming DECREASING RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.DECREASING),
+	NC_O_DRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+			"any slacks on the Non-Controllable variables. The model is assuming DECREASING RTS." +
+			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.OUTPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.DECREASING);
 	
 	
 	private String description;
@@ -183,10 +225,10 @@ public enum ModelType {
 		return this.rts;
 	}
 	
-//	public static int getNumberOfModelsAvailable() {
-//		int nbModels = ModelType.values().length;
-//		return nbModels;
-//	}
+	public static int getNumberOfModelsAvailable() {
+		int nbModels = ModelType.values().length;
+		return nbModels;
+	}
 	
 	
 }

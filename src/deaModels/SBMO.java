@@ -82,14 +82,14 @@ public class SBMO {
 					constraints.add(constraintRow);
 			}
 			
-			if(deaP.getModelType() == ModelType.SBMOV) {
+			if(deaP.getModelType() == ModelType.SBM_O_V) {
 				constraintRow = new double[nbDMUs + nbVariables];
 				for(int k = 0; k < nbDMUs; k++) {
 					constraintRow[k] = 1;
 				}
 				constraints.add(constraintRow);
 			}
-			if(deaP.getModelType() == ModelType.SBMOGRS) {
+			if(deaP.getModelType() == ModelType.SBM_O_GRS) {
 				constraintRow = new double[nbDMUs + nbVariables];
 				for(int k = 0; k < nbDMUs; k++) {
 					constraintRow[k] = 1;
@@ -113,11 +113,11 @@ public class SBMO {
 			int[] solverEqualityType;
 			int nbOutputs = deaP.getNumberOfOutputs();
 			
-			if(deaP.getModelType() == ModelType.SBMO) {
+			if(deaP.getModelType() == ModelType.SBM_O) {
 				rhs = new double [nbVariables];
 				solverEqualityType = new int[nbVariables];
 			}
-			else if (deaP.getModelType() == ModelType.SBMOV) {
+			else if (deaP.getModelType() == ModelType.SBM_O_V) {
 				rhs = new double [nbVariables + 1];
 				solverEqualityType = new int[nbVariables + 1];
 				rhs[nbVariables] = 1;

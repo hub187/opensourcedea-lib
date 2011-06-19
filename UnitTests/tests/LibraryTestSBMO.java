@@ -231,7 +231,7 @@ public class LibraryTestSBMO {
 	@Test
 	public void TestSBMO() {
 		
-		BuildDEAProblem(ModelType.SBMO); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.SBM_O); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

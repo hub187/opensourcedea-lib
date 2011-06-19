@@ -207,7 +207,7 @@ public class LibraryTestIRSI {
 	@Test
 	public void TestIRSI() {
 		
-		BuildDEAProblem(ModelType.IRSI); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.IRS_I); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

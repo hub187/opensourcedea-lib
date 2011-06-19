@@ -197,7 +197,7 @@ public class LibraryTestBCCO {
 	@Test
 	public void TestBCCO() {
 		
-		BuildDEAProblem(ModelType.BCCO); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.BCC_O); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

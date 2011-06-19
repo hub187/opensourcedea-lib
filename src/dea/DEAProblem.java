@@ -513,67 +513,71 @@ public class DEAProblem {
 		
 		try {
 			switch (this.modelType) {
-				case CCRI: this.solution = CCR.solveCCR(this); break;
+				case CCR_I: this.solution = CCR.solveCCR(this); break;
 				
-				case CCRO: this.solution = CCR.solveCCR(this); break;
+				case CCR_O: this.solution = CCR.solveCCR(this); break;
 				
-				case BCCI: this.solution = BCC.solveBCC(this); break;
+				case BCC_I: this.solution = BCC.solveBCC(this); break;
 				
-				case BCCO: this.solution = BCC.solveBCC(this); break;
+				case BCC_O: this.solution = BCC.solveBCC(this); break;
 				
-				case GRSI: this.solution = BCC.solveBCC(this); break;
+				case GRS_I: this.solution = BCC.solveBCC(this); break;
 				
-				case GRSO: this.solution = BCC.solveBCC(this); break;
+				case GRS_O: this.solution = BCC.solveBCC(this); break;
 				
-				case IRSI:
+				case IRS_I: case IRS_O:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30); //LpSolve cannot solve with Double.POSITIVE_INFINITY (numerical instability => model is infeasible, last best value of -1e+30)
 					this.solution = BCC.solveBCC(this);
 					break;
 				
-				case IRSO:
+				case DRS_I: case DRS_O:
+					this.setRTSLowerBound(0);
+					this.setRTSUpperBound(1);
+					this.solution = BCC.solveBCC(this);
+					break;
+				
+				case NC_I_IRS: case NC_O_IRS:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30);
-					this.solution = BCC.solveBCC(this);
+					this.solution = NC.solveNC(this);
 					break;
 				
-				case DRSI:
+				case NC_I_DRS: case NC_O_DRS:
 					this.setRTSLowerBound(0);
 					this.setRTSUpperBound(1);
-					this.solution = BCC.solveBCC(this);
-					break;
-				
-				case DRSO:
-					this.setRTSLowerBound(0);
-					this.setRTSUpperBound(1);
-					this.solution = BCC.solveBCC(this);
+					this.solution = NC.solveNC(this);
 					break;
 				
 				case SBM: this.solution = SBM.solveSBM(this); break;
 				
-				case SBMV: this.solution = SBM.solveSBM(this); break;
+				case SBM_V: this.solution = SBM.solveSBM(this); break;
 				
-				case SBMGRS: this.solution = SBM.solveSBM(this); break;
+				case SBM_GRS: this.solution = SBM.solveSBM(this); break;
 				
-				case SBMI: this.solution = SBMI.solveSBMI(this); break;
+				case SBM_I: this.solution = SBMI.solveSBMI(this); break;
 				
-				case SBMIV: this.solution = SBMI.solveSBMI(this); break;				
+				case SBMI_V: this.solution = SBMI.solveSBMI(this); break;				
 				
-				case SBMIGRS: this.solution = SBMI.solveSBMI(this); break;
+				case SBM_I_GRS: this.solution = SBMI.solveSBMI(this); break;
 				
-				case SBMO: this.solution = SBMO.solveSBMO(this); break;
+				case SBM_O: this.solution = SBMO.solveSBMO(this); break;
 				
-				case SBMOV: this.solution = SBMO.solveSBMO(this); break;
+				case SBM_O_V: this.solution = SBMO.solveSBMO(this); break;
 				
-				case SBMOGRS: this.solution = SBMO.solveSBMO(this); break;
+				case SBM_O_GRS: this.solution = SBMO.solveSBMO(this); break;
 				
-				case NCI: this.solution = NC.solveNC(this); break;
+				case NC_I: this.solution = NC.solveNC(this); break;
 				
-				case NCO: this.solution = NC.solveNC(this); break;
+				case NC_O: this.solution = NC.solveNC(this); break;
 				
-				case NCIV: this.solution = NC.solveNC(this); break;
+				case NC_I_V: this.solution = NC.solveNC(this); break;
 				
-				case NCOV: this.solution = NC.solveNC(this); break;
+				case NC_O_V: this.solution = NC.solveNC(this); break;
+				
+				case NC_I_GRS: this.solution = NC.solveNC(this); break;
+				
+				case NC_O_GRS: this.solution = NC.solveNC(this); break;
 			}
 		}
 		catch (Exception e) {

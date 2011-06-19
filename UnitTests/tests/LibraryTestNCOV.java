@@ -185,7 +185,7 @@ public class LibraryTestNCOV {
 	@Test
 	public void TestNCOV() {
 		
-		BuildDEAProblem(ModelType.NCOV); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.NC_O_V); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.setVariableType(1, VariableType.NON_CONTROLLABLE_INPUT);

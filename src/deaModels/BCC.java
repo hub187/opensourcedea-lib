@@ -95,8 +95,8 @@ public  class BCC {
 		 //		Solve Phase I		 //
 		//////////////////////////////
 		
-		if(deaP.getModelType() == ModelType.BCCI ||
-				deaP.getModelType() == ModelType.BCCO){
+		if(deaP.getModelType() == ModelType.BCC_I ||
+				deaP.getModelType() == ModelType.BCC_O){
 			rhs1 = new double [nbVariables + 1]; //RHS Phase I
 			solverEqualityType1 = new int[nbVariables + 1];
 		}
@@ -146,8 +146,8 @@ public  class BCC {
 		 * - add the corresponding Theta to the RHS Array
 		 * - change the Objective Function accordingly (all 1 on Slacks, all others coeff = 0).*/
 		
-		if(deaP.getModelType() == ModelType.BCCI ||
-				deaP.getModelType() == ModelType.BCCO) {
+		if(deaP.getModelType() == ModelType.BCC_I ||
+				deaP.getModelType() == ModelType.BCC_O) {
 			/*+1 row for convexity constraints, + 1 row for theta*/
 			rhs2 = new double[nbVariables + 2];
 			solverEqualityType2 = new int[nbVariables + 2];
@@ -261,8 +261,8 @@ public  class BCC {
 				
 		
 		//Changing RHS & SolverEqTypes
-		if(deaP.getModelType() == ModelType.BCCI ||
-				deaP.getModelType() == ModelType.BCCO) {
+		if(deaP.getModelType() == ModelType.BCC_I ||
+				deaP.getModelType() == ModelType.BCC_O) {
 			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
 			RHS2[NbVariables + 1] = Sol.Objective;
 			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
@@ -404,8 +404,8 @@ public  class BCC {
 		for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
 			constraintRow[VarIndex] = 1;
 		}
-		if(deaP.getModelType() == ModelType.BCCI ||
-				deaP.getModelType() == ModelType.BCCO) {
+		if(deaP.getModelType() == ModelType.BCC_I ||
+				deaP.getModelType() == ModelType.BCC_O) {
 			constraints.add(constraintRow);
 			rhs1[nbVariables] = 1;
 			solverEqualityType1[nbVariables] = LpSolve.EQ;
