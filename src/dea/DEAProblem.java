@@ -56,7 +56,7 @@ public class DEAProblem {
 	private ModelType modelType;
 	private String[] dmuName;
 	private String[] variableName;
-	private VariableType [] variableType;
+	private VariableOrientation [] variableOrientation;
 	private double [] [] dataMatrix;
 	private double rtsLowerBound;
 	private double rtsUpperBound;
@@ -209,9 +209,9 @@ public class DEAProblem {
 	 * Returns an array of VariableTypes.
 	 * @return An array of variable types.
 	 */
-	public VariableType[] getVariableTypes()
+	public VariableOrientation[] getVariableTypes()
 	{
-		return this.variableType;
+		return this.variableOrientation;
 	}
 	
 	/**
@@ -220,10 +220,10 @@ public class DEAProblem {
 	 * @return The Variable Type of the Variable at the position specified.
 	 * @throws Exception 
 	 */
-	public VariableType getVariableType(int varIndex) throws Exception
+	public VariableOrientation getVariableType(int varIndex) throws Exception
 	{
 		try {
-			return this.variableType[varIndex];
+			return this.variableOrientation[varIndex];
 		}
 		catch (Exception e) {
 			throw e;
@@ -234,21 +234,21 @@ public class DEAProblem {
 	 * Sets the variable type for all the variables.
 	 * @param varTypes An array of VariableType.
 	 */
-	public void setVariableTypes(VariableType[] varTypes)
+	public void setVariableTypes(VariableOrientation[] varTypes)
 	{
-		this.variableType = varTypes;
+		this.variableOrientation = varTypes;
 	}
 	
 	/**
 	 * Sets the VariableType for the specified Variable.
-	 * @param variableType The VariableType of the specified variable.
+	 * @param variableOrientation The VariableType of the specified variable.
 	 * @param varIndex The position of the variable in the Variable Array.
 	 * @throws Exception 
 	 */
-	public void setVariableType(int varIndex, VariableType varType) throws Exception
+	public void setVariableType(int varIndex, VariableOrientation varType) throws Exception
 	{
 		try {
-			this.variableType[varIndex] = varType;
+			this.variableOrientation[varIndex] = varType;
 		}
 		catch (Exception e) {
 			throw e;
@@ -369,8 +369,8 @@ public class DEAProblem {
 	public int getNumberOfOutputs() throws MissingData {
 		int nbOutputs = 0;
 		try {
-			for(int i = 0; i < this.variableType.length; i++) {
-				if(this.variableType[i] == VariableType.STANDARD_OUTPUT) {
+			for(int i = 0; i < this.variableOrientation.length; i++) {
+				if(this.variableOrientation[i] == VariableOrientation.STANDARD_OUTPUT) {
 					nbOutputs++;
 				}
 			}
@@ -389,8 +389,8 @@ public class DEAProblem {
 	public int getNumberOfInputs() throws MissingData {
 		int nbInputs = 0;
 		try {
-			for(int i = 0; i < variableType.length; i++) {
-				if(variableType[i] == VariableType.STANDARD_INPUT) {
+			for(int i = 0; i < variableOrientation.length; i++) {
+				if(variableOrientation[i] == VariableOrientation.STANDARD_INPUT) {
 					nbInputs++;
 				}
 			}
@@ -593,13 +593,13 @@ public class DEAProblem {
 	private void checkDataBeforeSolving() throws MissingData,
 			InconsistentNoOfVariables, InconsistentNoOfDMUs {
 		if(this.dataMatrix == null || this.dmuName == null || this.modelType == null ||
-				this.variableName == null || this.variableType == null) {
+				this.variableName == null || this.variableOrientation == null) {
 			//MissingData e = new MissingData("some text to describe the error");
 			throw new MissingData();
 		}
 		
 		int lenX = this.dataMatrix[0].length;
-		if(lenX != this.variableName.length || lenX != this.variableType.length) {
+		if(lenX != this.variableName.length || lenX != this.variableOrientation.length) {
 			throw new InconsistentNoOfVariables();
 		}
 		
@@ -850,7 +850,7 @@ public class DEAProblem {
 			//Loop through each variable
 			for(int i = 0; i < this.solution.getProjections()[0].length; i++) {
 				varValue = this.getDataMatrix(dmuNumber, i);
-				if(this.getVariableType(i) == VariableType.STANDARD_INPUT) {
+				if(this.getVariableType(i) == VariableOrientation.STANDARD_INPUT) {
 					projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
 				}
 				else {
@@ -888,7 +888,7 @@ public class DEAProblem {
 				//Loop through each variable
 				for(int j = 0; j < this.solution.getProjections()[0].length; j++) {
 					varValue = this.getDataMatrix(i, j);
-					if(this.getVariableType(j) == VariableType.STANDARD_INPUT) {
+					if(this.getVariableType(j) == VariableOrientation.STANDARD_INPUT) {
 						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
 					}
 					else {

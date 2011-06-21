@@ -188,8 +188,8 @@ public class LibraryTestNCOV {
 		BuildDEAProblem(ModelType.NC_O_V); //, DEAModelOrientation.NonOriented);
 		
 		try {
-			tester.setVariableType(1, VariableType.NON_CONTROLLABLE_INPUT);
-			tester.setVariableType(2, VariableType.NON_CONTROLLABLE_OUTPUT);
+			tester.setVariableType(1, VariableOrientation.NON_CONTROLLABLE_INPUT);
+			tester.setVariableType(2, VariableOrientation.NON_CONTROLLABLE_OUTPUT);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

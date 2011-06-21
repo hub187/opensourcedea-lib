@@ -203,7 +203,7 @@ public  class BCC {
 	
 			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if(deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						if(deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 							//Projections
 							returnSol.setProjection(dmuIndex, varIndex, returnSol.getObjective(dmuIndex)
 									* deaP.getDataMatrix(dmuIndex, varIndex)
@@ -217,7 +217,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if(deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						if(deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 							//Projections
 							if(returnSol.getObjective(dmuIndex) != 0){
 								returnSol.setProjection(dmuIndex, varIndex,
@@ -336,7 +336,7 @@ public  class BCC {
 			//First column (input values for  DMU under observation (DMUIndex) * -1; 0 for outputs)
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 							constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 						}
 						else  {
@@ -344,7 +344,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 							constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 						}
 						else  {
@@ -360,7 +360,7 @@ public  class BCC {
 				System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 1, nbDMUs);
 				
 				//and slacks
-				if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+				if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 					constraintRow[nbDMUs + 1 + varIndex] = -1;
 				}
 				else {
@@ -373,7 +373,7 @@ public  class BCC {
 			//Build RHS & SolverEqualityTypes
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 							rhs1[varIndex] = 0;
 							solverEqualityType1[varIndex] = LpSolve.EQ;
 						}
@@ -383,7 +383,7 @@ public  class BCC {
 						}
 					}
 					else {
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 							rhs1[varIndex] = 0;
 							solverEqualityType1[varIndex] = LpSolve.EQ;
 						}

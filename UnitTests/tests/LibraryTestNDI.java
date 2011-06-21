@@ -185,8 +185,8 @@ public class LibraryTestNDI {
 		BuildDEAProblem(ModelType.ND_I); //, DEAModelOrientation.NonOriented);
 		
 		try {
-			tester.setVariableType(1, VariableType.NON_DISCRETIONARY_INPUT);
-			tester.setVariableType(2, VariableType.NON_DISCRETIONARY_OUTPUT);
+			tester.setVariableType(1, VariableOrientation.NON_DISCRETIONARY_INPUT);
+			tester.setVariableType(2, VariableOrientation.NON_DISCRETIONARY_OUTPUT);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

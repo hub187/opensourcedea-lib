@@ -1,14 +1,16 @@
 package dea;
 
-
-/**
- * An enum of the possible Variable Types (e.g. Input / Output Oriented).
- * </br>
- * @author Hubert Virtos
- *
- */
 public enum VariableType {
-	STANDARD_INPUT, STANDARD_OUTPUT, NON_DISCRETIONARY_INPUT, NON_DISCRETIONARY_OUTPUT,
-	NON_CONTROLLABLE_INPUT, NON_CONTROLLABLE_OUTPUT
+	STANDARD ("The standard variable type."),
+	NON_CONTROLLABLE ("The non-controllable variable type (used with the" +
+			"non-controllables models)."),
+	NON_DISCRETIONARY ("The non-discretionary variable type (used with the" +
+			"non-discretionary models).");
+	
+	private String name;
+	private String description;
+	
+	VariableType(String varDescription) {
+		this.description = varDescription;
+	}
 }
-

@@ -202,7 +202,7 @@ public  class NC_ND {
 			//First column (input values for  DMU under observation (DMUIndex) * -1; 0 for outputs)
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 							constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 						}
 						else { //Either a non-controllable input or output or a standard output. In all cases not timed by theta so 0
@@ -210,7 +210,7 @@ public  class NC_ND {
 						}
 					}
 					else { //Model is Output Oriented
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 							constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 						}
 						else { //Either a non-controllable input or output or a standard output. In all cases not timed by theta so 0
@@ -231,20 +231,20 @@ public  class NC_ND {
 						deaP.getModelType() == ModelType.NC_I_V || deaP.getModelType() == ModelType.NC_O ||
 						deaP.getModelType() == ModelType.NC_O_DRS || deaP.getModelType() == ModelType.NC_O_GRS ||
 						deaP.getModelType() == ModelType.NC_O_IRS || deaP.getModelType() == ModelType.NC_O_V) {
-					if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+					if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 						constraintRow[nbDMUs + 1 + varIndex] = 1;
 					}
-					else if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+					else if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 						constraintRow[nbDMUs + 1 + varIndex] = -1;
 					}
 				}
 				else { //Non discretionary models
-					if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT ||
-							deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY_INPUT) {
+					if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT ||
+							deaP.getVariableType(varIndex) == VariableOrientation.NON_DISCRETIONARY_INPUT) {
 						constraintRow[nbDMUs + 1 + varIndex] = 1;
 					}
-					else if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT ||
-							deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY_OUTPUT) {
+					else if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT ||
+							deaP.getVariableType(varIndex) == VariableOrientation.NON_DISCRETIONARY_OUTPUT) {
 						constraintRow[nbDMUs + 1 + varIndex] = -1;
 					}
 				}
@@ -255,7 +255,7 @@ public  class NC_ND {
 			//Build RHS & SolverEqualityTypes
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 							rhs1[varIndex] = 0;
 							solverEqualityType1[varIndex] = LpSolve.EQ;
 						}
@@ -265,7 +265,7 @@ public  class NC_ND {
 						}
 					}
 					else { //Model is Output Oriented
-						if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 							rhs1[varIndex] = 0;
 							solverEqualityType1[varIndex] = LpSolve.EQ;
 						}
@@ -355,13 +355,13 @@ public  class NC_ND {
 			//PROJECTIONS
 			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if(deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						if(deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 							//Projections
 							returnSol.setProjection(dmuIndex, varIndex, returnSol.getObjective(dmuIndex)
 									* deaP.getDataMatrix(dmuIndex, varIndex)
 									- returnSol.getSlack(dmuIndex, varIndex));
 						}
-						else if (deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY_INPUT) {
+						else if (deaP.getVariableType(varIndex) == VariableOrientation.NON_DISCRETIONARY_INPUT) {
 							//Projections
 							returnSol.setProjection(dmuIndex, varIndex, deaP.getDataMatrix(dmuIndex, varIndex)
 									- returnSol.getSlack(dmuIndex, varIndex));
@@ -374,7 +374,7 @@ public  class NC_ND {
 						}
 					}
 					else { //Set projections for output oriented model
-						if(deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						if(deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_OUTPUT) {
 							//Projections
 							if(returnSol.getObjective(dmuIndex) != 0){
 								returnSol.setProjection(dmuIndex, varIndex,

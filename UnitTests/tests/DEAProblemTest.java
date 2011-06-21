@@ -20,7 +20,7 @@ public class DEAProblemTest {
 	DEAProblem tester = new DEAProblem(5, 3);
 	static String[] testDMUNames = new String[5];
 	static String[] testVariableNames = new String [3];
-	static VariableType[] testVariableTypes = new VariableType[3];
+	static VariableOrientation[] testVariableTypes = new VariableOrientation[3];
 	static double[] [] testDataMatrix = new double[5] [3];
 
 	
@@ -62,9 +62,9 @@ public class DEAProblemTest {
 			testDataMatrix [4] [2] = 3;
 			
 			//Set up the variable types
-			testVariableTypes[0] = VariableType.STANDARD_INPUT;
-			testVariableTypes[1] = VariableType.STANDARD_INPUT;
-			testVariableTypes[2] = VariableType.STANDARD_OUTPUT;
+			testVariableTypes[0] = VariableOrientation.STANDARD_INPUT;
+			testVariableTypes[1] = VariableOrientation.STANDARD_INPUT;
+			testVariableTypes[2] = VariableOrientation.STANDARD_OUTPUT;
 
 		
 		

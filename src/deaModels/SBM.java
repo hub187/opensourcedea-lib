@@ -125,7 +125,7 @@ public class SBM {
 					returnSol.setSlack(dmuIndex, VarIndex, sol.VariableResult[nbDMUs + 1 + VarIndex]);
 				}
 				
-				if(deaP.getVariableType(VarIndex) == VariableType.STANDARD_INPUT) {
+				if(deaP.getVariableType(VarIndex) == VariableOrientation.STANDARD_INPUT) {
 					returnSol.setWeight(dmuIndex, VarIndex, sol.DualResult[VarIndex + 1]);
 					returnSol.setProjection(dmuIndex, VarIndex,
 							deaP.getDataMatrix(dmuIndex, VarIndex) - returnSol.getSlack(dmuIndex, VarIndex));
@@ -174,7 +174,7 @@ public class SBM {
 					//Copy rest of the data matrix
 					System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 1, nbDMUs);
 					//and slacks
-					if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+					if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
 						constraintRow[nbDMUs + 1 + varIndex] = -1;
 					}
 					else {
@@ -192,7 +192,7 @@ public class SBM {
 					 * Necessary for all SBM models*/
 					constraintRow[0] = 1;
 					for (int varPos = 0; varPos < nbVariables; varPos++) {
-						if(deaP.getVariableType(varPos) != VariableType.STANDARD_INPUT) {
+						if(deaP.getVariableType(varPos) != VariableOrientation.STANDARD_INPUT) {
 							if(transposedMatrix[varPos] [dmuIndex] * deaP.getNumberOfOutputs() != 0) {
 								constraintRow[nbDMUs + 1 + varPos] = -1
 								/ (transposedMatrix[varPos] [dmuIndex] * deaP.getNumberOfOutputs());

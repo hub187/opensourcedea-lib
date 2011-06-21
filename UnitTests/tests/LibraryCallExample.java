@@ -16,7 +16,7 @@ public class LibraryCallExample {
 	//Create some array for the DMU and Variable Names, types and the Data Matrix
 	static String[] TestDMUNames = new String[7];
 	static String[] TestVariableNames = new String [3];
-	static VariableType[] TestVariableTypes = new VariableType[3];
+	static VariableOrientation[] TestVariableTypes = new VariableOrientation[3];
 	static double[] [] TestDataMatrix = new double[7] [3];
 
 	
@@ -68,9 +68,9 @@ public class LibraryCallExample {
 		
 		
 		//Set up the variable types
-		TestVariableTypes[0] = VariableType.STANDARD_INPUT;
-		TestVariableTypes[1] = VariableType.STANDARD_INPUT;
-		TestVariableTypes[2] = VariableType.STANDARD_OUTPUT;
+		TestVariableTypes[0] = VariableOrientation.STANDARD_INPUT;
+		TestVariableTypes[1] = VariableOrientation.STANDARD_INPUT;
+		TestVariableTypes[2] = VariableOrientation.STANDARD_OUTPUT;
 		
 
 	}
