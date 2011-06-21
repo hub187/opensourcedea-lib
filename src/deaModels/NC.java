@@ -26,6 +26,7 @@ import dea.*;
 
 import java.util.ArrayList;
 //import java.util.Arrays;
+//import java.util.Arrays;
 import linearSolver.*;
 import lpsolve.LpSolve;
 
@@ -225,11 +226,27 @@ public  class NC {
 				System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 1, nbDMUs);
 				
 				//and slacks
-				if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
-					constraintRow[nbDMUs + 1 + varIndex] = 1;
+				if(deaP.getModelType() == ModelType.NC_I || deaP.getModelType() == ModelType.NC_I_DRS ||
+						deaP.getModelType() == ModelType.NC_I_GRS || deaP.getModelType() == ModelType.NC_I_IRS ||
+						deaP.getModelType() == ModelType.NC_I_V || deaP.getModelType() == ModelType.NC_O ||
+						deaP.getModelType() == ModelType.NC_O_DRS || deaP.getModelType() == ModelType.NC_O_GRS ||
+						deaP.getModelType() == ModelType.NC_O_IRS || deaP.getModelType() == ModelType.NC_O_V) {
+					if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT) {
+						constraintRow[nbDMUs + 1 + varIndex] = 1;
+					}
+					else if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
+						constraintRow[nbDMUs + 1 + varIndex] = -1;
+					}
 				}
-				else if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT) {
-					constraintRow[nbDMUs + 1 + varIndex] = -1;
+				else { //Non discretionary models
+					if (deaP.getVariableType(varIndex) == VariableType.STANDARD_INPUT ||
+							deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY_INPUT) {
+						constraintRow[nbDMUs + 1 + varIndex] = 1;
+					}
+					else if (deaP.getVariableType(varIndex) == VariableType.STANDARD_OUTPUT ||
+							deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY_OUTPUT) {
+						constraintRow[nbDMUs + 1 + varIndex] = -1;
+					}
 				}
 				
 				//Add the row to the Constraints ArrayList
@@ -344,6 +361,11 @@ public  class NC {
 									* deaP.getDataMatrix(dmuIndex, varIndex)
 									- returnSol.getSlack(dmuIndex, varIndex));
 						}
+						else if (deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY_INPUT) {
+							//Projections
+							returnSol.setProjection(dmuIndex, varIndex, deaP.getDataMatrix(dmuIndex, varIndex)
+									- returnSol.getSlack(dmuIndex, varIndex));
+						}
 						else {
 							//Projections
 							returnSol.setProjection(dmuIndex, varIndex,
@@ -446,7 +468,7 @@ public  class NC {
 //	private static void createPhaseTwoModel(DEAProblem deaP, int NbDMUs,
 //			int NbVariables, ArrayList<double[]> Constraints, double[] ObjF,
 //			double[] RHS1, double[] RHS2, int[] SolverEqualityType1,
-//			int[] SolverEqualityType2, SolverResults Sol) {
+//			int[] SolverEqualityType2, SolverResults Sol) throws Exception {
 //		
 //		double[] ConstraintRow;
 //		
@@ -463,7 +485,16 @@ public  class NC {
 //		//Change Objective Function
 //		Arrays.fill(ObjF,0);
 //		for (int j = NbDMUs + 1; j <= NbDMUs + NbVariables; j++) {
-//			ObjF[j] = 1;
+//			try{
+//			if(deaP.getVariableType(j - NbDMUs -1) == VariableType.STANDARD_INPUT ||
+//					deaP.getVariableType(j - NbDMUs -1) == VariableType.STANDARD_OUTPUT) {
+//				ObjF[j] = 1;
+//			}
+//			}
+//			catch (Exception e) {
+//				throw e;
+//			}
+//			
 //		}
 //	}
 

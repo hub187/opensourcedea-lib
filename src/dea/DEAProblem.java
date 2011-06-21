@@ -578,6 +578,8 @@ public class DEAProblem {
 				case NC_I_GRS: this.solution = NC.solveNC(this); break;
 				
 				case NC_O_GRS: this.solution = NC.solveNC(this); break;
+				
+				case ND_I: this.solution = NC.solveNC(this); break;
 			}
 		}
 		catch (Exception e) {

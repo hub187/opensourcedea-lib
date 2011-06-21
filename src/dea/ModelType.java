@@ -191,7 +191,15 @@ public enum ModelType {
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
-			ReturnToScale.DECREASING);
+			ReturnToScale.DECREASING),
+	ND_I ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+			"slacks on the Non-discretionary variables but these do not contribute to the score." +
+			"The model is assuming CONSTANT RTS." +
+			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.CONSTANT);
 	
 	
 	private String description;
