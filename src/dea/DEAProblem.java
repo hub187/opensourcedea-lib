@@ -57,6 +57,7 @@ public class DEAProblem {
 	private String[] dmuName;
 	private String[] variableName;
 	private VariableOrientation [] variableOrientation;
+	private Variable[] variable;
 	private double [] [] dataMatrix;
 	private double rtsLowerBound;
 	private double rtsUpperBound;
@@ -254,6 +255,11 @@ public class DEAProblem {
 			throw e;
 		}
 	}
+	
+	
+
+	
+	
 	
 	
 	/**
