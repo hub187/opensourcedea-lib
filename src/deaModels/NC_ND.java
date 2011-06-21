@@ -41,7 +41,7 @@ import lpsolve.LpSolve;
  * @author Hubert Virtos
  *
  */
-public  class NC {
+public  class NC_ND {
 
 	/**
 	 * The method solving the DEA Problem.

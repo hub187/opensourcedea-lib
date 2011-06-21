@@ -540,13 +540,13 @@ public class DEAProblem {
 				case NC_I_IRS: case NC_O_IRS:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30);
-					this.solution = NC.solveNC(this);
+					this.solution = NC_ND.solveNC(this);
 					break;
 				
 				case NC_I_DRS: case NC_O_DRS:
 					this.setRTSLowerBound(0);
 					this.setRTSUpperBound(1);
-					this.solution = NC.solveNC(this);
+					this.solution = NC_ND.solveNC(this);
 					break;
 				
 				case SBM: this.solution = SBM.solveSBM(this); break;
@@ -567,19 +567,19 @@ public class DEAProblem {
 				
 				case SBM_O_GRS: this.solution = SBMO.solveSBMO(this); break;
 				
-				case NC_I: this.solution = NC.solveNC(this); break;
+				case NC_I: this.solution = NC_ND.solveNC(this); break;
 				
-				case NC_O: this.solution = NC.solveNC(this); break;
+				case NC_O: this.solution = NC_ND.solveNC(this); break;
 				
-				case NC_I_V: this.solution = NC.solveNC(this); break;
+				case NC_I_V: this.solution = NC_ND.solveNC(this); break;
 				
-				case NC_O_V: this.solution = NC.solveNC(this); break;
+				case NC_O_V: this.solution = NC_ND.solveNC(this); break;
 				
-				case NC_I_GRS: this.solution = NC.solveNC(this); break;
+				case NC_I_GRS: this.solution = NC_ND.solveNC(this); break;
 				
-				case NC_O_GRS: this.solution = NC.solveNC(this); break;
+				case NC_O_GRS: this.solution = NC_ND.solveNC(this); break;
 				
-				case ND_I: this.solution = NC.solveNC(this); break;
+				case ND_I: this.solution = NC_ND.solveNC(this); break;
 			}
 		}
 		catch (Exception e) {
