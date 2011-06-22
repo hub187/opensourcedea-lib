@@ -261,7 +261,8 @@ public  class NC_ND {
 			//Build RHS & SolverEqualityTypes
 				try {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+						if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT &&
+								deaP.getVariableType(varIndex) == VariableType.STANDARD) {
 							rhs1[varIndex] = 0;
 							solverEqualityType1[varIndex] = LpSolve.EQ;
 						}
@@ -271,7 +272,8 @@ public  class NC_ND {
 						}
 					}
 					else { //Model is Output Oriented
-						if (deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
+						if (deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT &&
+								deaP.getVariableType(varIndex) == VariableType.STANDARD) {
 							rhs1[varIndex] = 0;
 							solverEqualityType1[varIndex] = LpSolve.EQ;
 						}
@@ -361,27 +363,29 @@ public  class NC_ND {
 			//PROJECTIONS
 			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 					if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-						if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-							//Projections
+						
+						if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT &&
+								deaP.getVariableType(varIndex) == VariableType.STANDARD) {
 							returnSol.setProjection(dmuIndex, varIndex, returnSol.getObjective(dmuIndex)
 									* deaP.getDataMatrix(dmuIndex, varIndex)
 									- returnSol.getSlack(dmuIndex, varIndex));
 						}
-						else if (deaP.getVariableType(varIndex) == VariableType.NON_DISCRETIONARY) {
-							//Projections
-							returnSol.setProjection(dmuIndex, varIndex, deaP.getDataMatrix(dmuIndex, varIndex)
-									- returnSol.getSlack(dmuIndex, varIndex));
+						else if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT &&
+								deaP.getVariableType(varIndex) != VariableType.STANDARD) {
+							//Non-discretionary and Non-controllable models. Slacks will be 0 for NC models
+							returnSol.setProjection(dmuIndex, varIndex,
+									deaP.getDataMatrix(dmuIndex, varIndex)- returnSol.getSlack(dmuIndex, varIndex));
 						}
-						else {
-							//Projections
+						else { //Output variable
 							returnSol.setProjection(dmuIndex, varIndex,
 									deaP.getDataMatrix(dmuIndex, varIndex)
 									+ returnSol.getSlack(dmuIndex, varIndex));
 						}
 					}
 					else { //Set projections for output oriented model
-						if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
-							//Projections
+						
+						if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT &&
+								deaP.getVariableType(varIndex) == VariableType.STANDARD) {
 							if(returnSol.getObjective(dmuIndex) != 0){
 								returnSol.setProjection(dmuIndex, varIndex,
 										(1 / returnSol.getObjective(dmuIndex))
@@ -390,11 +394,18 @@ public  class NC_ND {
 							}
 							else {
 								returnSol.setProjection(dmuIndex, varIndex,
-										returnSol.getSlack(dmuIndex, varIndex));
+										deaP.getDataMatrix(dmuIndex, varIndex));
 							}
 						}
+						else if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT &&
+								deaP.getVariableType(varIndex) != VariableType.STANDARD) {
+							//NC and ND models. Slacks will be 0 for NC models.
+							returnSol.setProjection(dmuIndex, varIndex,
+									deaP.getDataMatrix(dmuIndex, varIndex)
+									+ returnSol.getSlack(dmuIndex, varIndex));
+						}
 						else {
-							//Projections
+							//Input variable
 							returnSol.setProjection(dmuIndex, varIndex,
 									deaP.getDataMatrix(dmuIndex, varIndex)
 									- returnSol.getSlack(dmuIndex, varIndex));

@@ -185,7 +185,11 @@ public class Lpsolve {
 	        }
 	           
 		}
-			
+		
+		catch (ProblemNotSolvedProperly e1) {
+			Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND;
+	    	throw new ProblemNotSolvedProperly("The problem could not be solved properly.");
+		}
 
 	    catch (Exception e) {
 	    	//e.printStackTrace();

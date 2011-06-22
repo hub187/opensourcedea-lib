@@ -52,15 +52,10 @@ public class DEAProblem {
 	//				Properties of the DEAProblem Object						//
    //////////////////////////////////////////////////////////////////////////
 	
-
-	private ModelType modelType;
 	private String[] dmuName;
-//	private String[] variableName;
-//	private VariableOrientation [] variableOrientation;
-	private Variable variable;
 	private double [] [] dataMatrix;
-	private double rtsLowerBound;
-	private double rtsUpperBound;
+	private ModelDetails modelDetails;
+	private Variable variable;
 	private dea.DEAPSolution solution;
 	
 	
@@ -72,6 +67,7 @@ public class DEAProblem {
 	public DEAProblem(int nbDMUs, int nbVariables) {
 		this.solution = new DEAPSolution(nbDMUs, nbVariables);
 		this.variable = new Variable(nbVariables);
+		this.modelDetails = new ModelDetails();
 	}
 	
 
@@ -91,7 +87,7 @@ public class DEAProblem {
 	 */
 	public ModelType getModelType()
 	{
-		return this.modelType;
+		return this.modelDetails.getModelType();
 	}
 	
 	/**
@@ -100,7 +96,7 @@ public class DEAProblem {
 	 */
 	public void setModelType(ModelType modType)
 	{
-		this.modelType = modType;
+		this.modelDetails.setModelType(modType);
 	}
 
 	
@@ -370,7 +366,7 @@ public class DEAProblem {
 		if(lowerB < 0 || lowerB > 1) {
 			throw new InvalidPropertyValue("Lower Bound must be as follows: 0 <= LowerB <= 1.");
 		}
-		this.rtsLowerBound = lowerB;
+		this.modelDetails.setRTSLowerBound(lowerB);
 	}
 	
 	/**
@@ -378,7 +374,7 @@ public class DEAProblem {
 	 * @return RTSLowerBound A double corresponding to the General RTS Lower Bound Limit.
 	 */
 	public double getRTSLowerBound() {
-		return this.rtsLowerBound;
+		return this.modelDetails.getRTSLowerBound();
 	}
 	
 	/**
@@ -389,7 +385,7 @@ public class DEAProblem {
 		if(upperB < 1) {
 			throw new InvalidPropertyValue("Upper Bound must be greater or equal to 1.");
 		}
-		this.rtsUpperBound = upperB;
+		this.modelDetails.setRTSUpperBound(upperB);
 	}
 	
 	/**
@@ -397,7 +393,7 @@ public class DEAProblem {
 	 * @return RTSUpperBound A double corresponding to the General RTS Upper Bound Limit.
 	 */
 	public double getRTSUpperBound() {
-		return this.rtsUpperBound;
+		return this.modelDetails.getRTSUpperBound();
 	}
 	
 	 //////////////////////////////////////////////////////////////////////////
@@ -572,7 +568,7 @@ public class DEAProblem {
 		checkDataBeforeSolving();
 		
 		try {
-			switch (this.modelType) {
+			switch (this.modelDetails.getModelType()) {
 				case CCR_I: this.solution = CCR.solveCCR(this); break;
 				
 				case CCR_O: this.solution = CCR.solveCCR(this); break;
@@ -652,7 +648,7 @@ public class DEAProblem {
 
 	private void checkDataBeforeSolving() throws MissingData,
 			InconsistentNoOfVariables, InconsistentNoOfDMUs {
-		if(this.dataMatrix == null || this.dmuName == null || this.modelType == null ||
+		if(this.dataMatrix == null || this.dmuName == null || this.modelDetails.getModelType() == null ||
 				this.variable.getVariableNames() == null || this.variable.getVariableOrientations() == null) {
 			//MissingData e = new MissingData("some text to describe the error");
 			throw new MissingData();
@@ -669,7 +665,7 @@ public class DEAProblem {
 		}
 		
 		if(this.getModelType().getReturnToScale() == ReturnToScale.GENERAL) {
-			if(this.rtsUpperBound == 0) {
+			if(this.modelDetails.getRTSUpperBound() == 0) {
 				throw new MissingData("RTS Bounds not set correctly!");
 			}
 		}

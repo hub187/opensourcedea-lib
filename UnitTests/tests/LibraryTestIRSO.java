@@ -207,6 +207,7 @@ public class LibraryTestIRSO {
 	@Test
 	public void TestIRSO() {
 		
+	
 		BuildDEAProblem(ModelType.IRS_O); //, DEAModelOrientation.NonOriented);
 		
 		try {
