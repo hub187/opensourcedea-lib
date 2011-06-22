@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -93,8 +93,16 @@ public class SolverExceptionTest {
 			Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolvEqType);
 		}
 		catch (DEAException e) {
-			assertSame(e.getMessage(), "The linear solver lpsolve encountered an error. This is likely caused by inconsistencies in the data sent to the Lpsolve.solveLPProblem method.");
+				assertTrue(e.getClass() == DEASolverException.class);
 		}
 	}
 	
 }
+
+
+//java.lang.AssertionError: expected same:
+//<An error was thrown by the LpSolve class when attempting to solve the problem.This is likely caused by inconsistent data sent to the solver.The error details are as follows: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0: Index: 0, Size: 0>
+//<An error was thrown by the LpSolve class when attempting to solve the problem.This is likely caused by inconsistent data sent to the solver.The error details are as follows: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0: Index: 0, Size: 0>
+
+
+

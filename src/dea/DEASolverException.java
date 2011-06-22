@@ -17,4 +17,8 @@ public class DEASolverException extends DEAException {
 	public DEASolverException() {
 		super("The linear solver lpsolve encountered an error. This is likely caused by inconsistencies in the data sent to the Lpsolve.solveLPProblem method.");
 	}
+	
+	public DEASolverException (String message) {
+		super(message);
+	}
 }

@@ -191,10 +191,13 @@ public class Lpsolve {
 	    	throw new ProblemNotSolvedProperly("The problem could not be solved properly.");
 		}
 
-	    catch (Exception e) {
+	    catch (Exception e2) {
 	    	//e.printStackTrace();
 	    	Sol.Status = SolverReturnStatus.UNKNOWN_ERROR;
-	    	throw new DEASolverException();
+	    	throw new DEASolverException("An error was thrown by the LpSolve class when attempting to solve the problem." +
+	    			"This is likely caused by inconsistent data sent to the solver." +
+	    			"The error details are as follows: " + 
+	    			e2.toString());// + ": " + e2.getMessage());
 	    	
 	    }
 
