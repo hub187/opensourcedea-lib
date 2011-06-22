@@ -20,7 +20,7 @@ public class DEAProblemTest {
 	DEAProblem tester = new DEAProblem(5, 3);
 	static String[] testDMUNames = new String[5];
 	static String[] testVariableNames = new String [3];
-	static VariableOrientation[] testVariableTypes = new VariableOrientation[3];
+	static VariableOrientation[] testVariableOrientations = new VariableOrientation[3];
 	static double[] [] testDataMatrix = new double[5] [3];
 
 	
@@ -62,9 +62,9 @@ public class DEAProblemTest {
 			testDataMatrix [4] [2] = 3;
 			
 			//Set up the variable types
-			testVariableTypes[0] = VariableOrientation.STANDARD_INPUT;
-			testVariableTypes[1] = VariableOrientation.STANDARD_INPUT;
-			testVariableTypes[2] = VariableOrientation.STANDARD_OUTPUT;
+			testVariableOrientations[0] = VariableOrientation.INPUT;
+			testVariableOrientations[1] = VariableOrientation.INPUT;
+			testVariableOrientations[2] = VariableOrientation.OUTPUT;
 
 		
 		
@@ -101,9 +101,24 @@ public class DEAProblemTest {
 
 		
 	@Test
+	public void testSetGetVariableOrientation() {
+		tester.setVariableOrientations(testVariableOrientations);
+		assertArrayEquals("Assert Array Equals", tester.getVariableOrientation(), testVariableOrientations);
+	}
+	
+	@Test
 	public void testSetGetVariableType() {
-		tester.setVariableTypes(testVariableTypes);
-		assertArrayEquals("Assert Array Equals", tester.getVariableTypes(), testVariableTypes);
+		VariableType[] varTypes = new VariableType[] {VariableType.STANDARD, VariableType.NON_CONTROLLABLE, VariableType.NON_DISCRETIONARY};
+		tester.setVariableTypes(varTypes);
+		try {
+			assertEquals(tester.getVariableType(0), VariableType.STANDARD);
+			assertEquals(tester.getVariableType(1), VariableType.NON_CONTROLLABLE);
+			assertEquals(tester.getVariableType(2), VariableType.NON_DISCRETIONARY);
+			assertArrayEquals(tester.getVariableTypes(), varTypes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Test
@@ -114,7 +129,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testSetGetNumberOfOutputs() throws Exception {
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		try {
 			assertEquals(tester.getNumberOfOutputs(),1,0);
 		}
@@ -126,7 +141,7 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testSetGetNumberOfInputs() throws Exception {
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		try {
 			assertEquals(tester.getNumberOfInputs(),2,0);
 		}
@@ -142,7 +157,7 @@ public class DEAProblemTest {
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		tester.setDataMatrix(testDataMatrix);
 		
 		try {
@@ -286,7 +301,7 @@ public class DEAProblemTest {
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		tester.setDataMatrix(testDataMatrix);
 		assertTrue(true);	
 	}
@@ -314,7 +329,7 @@ public class DEAProblemTest {
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		tester.setDataMatrix(testDataMatrix);
 		
 		String[] dmuNames = new String[3];
@@ -338,7 +353,7 @@ public class DEAProblemTest {
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		tester.setDataMatrix(testDataMatrix);
 		
 		String[] variableNames = new String[3];
@@ -361,7 +376,7 @@ public class DEAProblemTest {
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
-		tester.setVariableTypes(testVariableTypes);
+		tester.setVariableOrientations(testVariableOrientations);
 		tester.setDataMatrix(testDataMatrix);
 		
 		String[] variableNames = new String[3];

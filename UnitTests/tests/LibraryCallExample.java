@@ -68,9 +68,9 @@ public class LibraryCallExample {
 		
 		
 		//Set up the variable types
-		TestVariableTypes[0] = VariableOrientation.STANDARD_INPUT;
-		TestVariableTypes[1] = VariableOrientation.STANDARD_INPUT;
-		TestVariableTypes[2] = VariableOrientation.STANDARD_OUTPUT;
+		TestVariableTypes[0] = VariableOrientation.INPUT;
+		TestVariableTypes[1] = VariableOrientation.INPUT;
+		TestVariableTypes[2] = VariableOrientation.OUTPUT;
 		
 
 	}
@@ -95,7 +95,7 @@ public class LibraryCallExample {
 		tester.setVariableNames(TestVariableNames);
 		
 		//Set the DEA Problem Variable Types where TestVariableType is a VariableType[].
-		tester.setVariableTypes(TestVariableTypes);
+		tester.setVariableOrientations(TestVariableTypes);
 		
 		/* Set the DEA Problem Data Matrix where TestDataMatrix is a double[] [].
 		 * Each row of the Matrix corresponds to the DMU in the DMUNames array.

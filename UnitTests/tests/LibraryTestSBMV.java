@@ -96,7 +96,7 @@ public class LibraryTestSBMV {
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableTypes(TestData.createTestVariableTypes());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
 	}

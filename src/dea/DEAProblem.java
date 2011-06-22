@@ -55,9 +55,9 @@ public class DEAProblem {
 
 	private ModelType modelType;
 	private String[] dmuName;
-	private String[] variableName;
-	private VariableOrientation [] variableOrientation;
-	private Variable[] variable;
+//	private String[] variableName;
+//	private VariableOrientation [] variableOrientation;
+	private Variable variable;
 	private double [] [] dataMatrix;
 	private double rtsLowerBound;
 	private double rtsUpperBound;
@@ -71,6 +71,7 @@ public class DEAProblem {
 	 */
 	public DEAProblem(int nbDMUs, int nbVariables) {
 		this.solution = new DEAPSolution(nbDMUs, nbVariables);
+		this.variable = new Variable(nbVariables);
 	}
 	
 
@@ -161,7 +162,7 @@ public class DEAProblem {
 	 */
 	public String[] getVariableNames()
 	{
-		return this.variableName;
+		return this.variable.getVariableNames();
 	}
 	
 	/**
@@ -173,7 +174,7 @@ public class DEAProblem {
 	public String getVariableName(int varIndex) throws Exception
 	{
 		try {
-			return this.variableName[varIndex];
+			return this.variable.getVariableName(varIndex);
 		}
 		catch (Exception e) {
 			throw e;
@@ -186,7 +187,7 @@ public class DEAProblem {
 	 */
 	public void setVariableNames(String[] varNames)
 	{
-		this.variableName = varNames;
+		this.variable.setVariableNames(varNames);
 	}
 	
 	/**
@@ -198,7 +199,7 @@ public class DEAProblem {
 	public void setVariableName(String varName, int varIndex) throws Exception
 	{
 		try {
-			this.variableName[varIndex] = varName;
+			this.variable.setVariableName(varIndex, varName);
 		}
 		catch (Exception e) {
 			throw e;
@@ -210,9 +211,9 @@ public class DEAProblem {
 	 * Returns an array of VariableTypes.
 	 * @return An array of variable types.
 	 */
-	public VariableOrientation[] getVariableTypes()
+	public VariableType[] getVariableTypes()
 	{
-		return this.variableOrientation;
+		return this.variable.getVariableTypes();
 	}
 	
 	/**
@@ -221,10 +222,10 @@ public class DEAProblem {
 	 * @return The Variable Type of the Variable at the position specified.
 	 * @throws Exception 
 	 */
-	public VariableOrientation getVariableType(int varIndex) throws Exception
+	public VariableType getVariableType(int varIndex) throws Exception
 	{
 		try {
-			return this.variableOrientation[varIndex];
+			return this.variable.getVariableType(varIndex);
 		}
 		catch (Exception e) {
 			throw e;
@@ -235,9 +236,9 @@ public class DEAProblem {
 	 * Sets the variable type for all the variables.
 	 * @param varTypes An array of VariableType.
 	 */
-	public void setVariableTypes(VariableOrientation[] varTypes)
+	public void setVariableTypes(VariableType[] varTypes)
 	{
-		this.variableOrientation = varTypes;
+		this.variable.setVariableTypes(varTypes);
 	}
 	
 	/**
@@ -246,10 +247,10 @@ public class DEAProblem {
 	 * @param varIndex The position of the variable in the Variable Array.
 	 * @throws Exception 
 	 */
-	public void setVariableType(int varIndex, VariableOrientation varType) throws Exception
+	public void setVariableType(int varIndex, VariableType varType) throws Exception
 	{
 		try {
-			this.variableOrientation[varIndex] = varType;
+			this.variable.setVariableType(varIndex, varType);
 		}
 		catch (Exception e) {
 			throw e;
@@ -257,7 +258,60 @@ public class DEAProblem {
 	}
 	
 	
-
+	
+	
+	
+	
+	
+	/**
+	 * Sets the model Variable Orientations
+	 * @param varOrientations the VariableOrientation[] array.
+	 */
+	public void setVariableOrientations(VariableOrientation[] varOrientations) {
+		this.variable.setVariableOrientations(varOrientations);
+	}
+	
+	/**
+	 * Sets the model variable orientation for the specific variable at varIndex.
+	 * @param varIndex the variable index
+	 * @param varOrientation the variable orientation type
+	 * @throws Exception Out of Bound exception
+	 */
+	public void setVariableOrientation(int varIndex, VariableOrientation varOrientation) throws Exception {
+		
+		try {
+		this.variable.setVariableOrientation(varIndex, varOrientation);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	/**
+	 * Returns the model variable orientation.
+	 * @return the variable orientations as (VariableOrientation[]).
+	 */
+	public VariableOrientation[] getVariableOrientation() {
+		return this.variable.getVariableOrientations();
+	}
+	
+	/**
+	 * 
+	 * @param varIndex the variable index
+	 * @return the variable orientation.
+	 * @throws Exception Out of Bound exception
+	 */
+	public VariableOrientation getVariableOrientation(int varIndex) throws Exception {
+		try {
+			return this.variable.getVariableOrientation(varIndex);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	
+	
 	
 	
 	
@@ -375,8 +429,8 @@ public class DEAProblem {
 	public int getNumberOfOutputs() throws MissingData {
 		int nbOutputs = 0;
 		try {
-			for(int i = 0; i < this.variableOrientation.length; i++) {
-				if(this.variableOrientation[i] == VariableOrientation.STANDARD_OUTPUT) {
+			for(int i = 0; i < this.variable.getVariableOrientations().length; i++) {
+				if(this.variable.getVariableOrientation(i) == VariableOrientation.OUTPUT) {
 					nbOutputs++;
 				}
 			}
@@ -395,8 +449,8 @@ public class DEAProblem {
 	public int getNumberOfInputs() throws MissingData {
 		int nbInputs = 0;
 		try {
-			for(int i = 0; i < variableOrientation.length; i++) {
-				if(variableOrientation[i] == VariableOrientation.STANDARD_INPUT) {
+			for(int i = 0; i < this.variable.getVariableOrientations().length; i++) {
+				if(this.variable.getVariableOrientation(i) == VariableOrientation.INPUT) {
 					nbInputs++;
 				}
 			}
@@ -599,13 +653,13 @@ public class DEAProblem {
 	private void checkDataBeforeSolving() throws MissingData,
 			InconsistentNoOfVariables, InconsistentNoOfDMUs {
 		if(this.dataMatrix == null || this.dmuName == null || this.modelType == null ||
-				this.variableName == null || this.variableOrientation == null) {
+				this.variable.getVariableNames() == null || this.variable.getVariableOrientations() == null) {
 			//MissingData e = new MissingData("some text to describe the error");
 			throw new MissingData();
 		}
 		
 		int lenX = this.dataMatrix[0].length;
-		if(lenX != this.variableName.length || lenX != this.variableOrientation.length) {
+		if(lenX != this.variable.getVariableNames().length || lenX != this.variable.getVariableOrientations().length) {
 			throw new InconsistentNoOfVariables();
 		}
 		
@@ -856,7 +910,7 @@ public class DEAProblem {
 			//Loop through each variable
 			for(int i = 0; i < this.solution.getProjections()[0].length; i++) {
 				varValue = this.getDataMatrix(dmuNumber, i);
-				if(this.getVariableType(i) == VariableOrientation.STANDARD_INPUT) {
+				if(this.getVariableOrientation(i) == VariableOrientation.INPUT) {
 					projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
 				}
 				else {
@@ -894,7 +948,7 @@ public class DEAProblem {
 				//Loop through each variable
 				for(int j = 0; j < this.solution.getProjections()[0].length; j++) {
 					varValue = this.getDataMatrix(i, j);
-					if(this.getVariableType(j) == VariableOrientation.STANDARD_INPUT) {
+					if(this.getVariableOrientation(j) == VariableOrientation.INPUT) {
 						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
 					}
 					else {

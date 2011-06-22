@@ -90,7 +90,8 @@ public class LibraryTestNDI {
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableTypes(TestData.createTestVariableTypes());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setVariableTypes(TestData.createTestVariableTypes(VariableType.NON_DISCRETIONARY));
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
 
@@ -184,12 +185,6 @@ public class LibraryTestNDI {
 		
 		BuildDEAProblem(ModelType.ND_I); //, DEAModelOrientation.NonOriented);
 		
-		try {
-			tester.setVariableType(1, VariableOrientation.NON_DISCRETIONARY_INPUT);
-			tester.setVariableType(2, VariableOrientation.NON_DISCRETIONARY_OUTPUT);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
 		
 		
 		try {

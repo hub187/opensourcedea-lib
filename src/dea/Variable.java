@@ -1,28 +1,45 @@
 package dea;
 
+import java.util.Arrays;
+
 public class Variable {
 	private String[] variableName;
 	private VariableOrientation [] variableOrientation;
 	private VariableType[] variableType;
 	
 	
-	
+	public Variable(int varNumber){
+		variableName = new String[varNumber];
+		variableOrientation = new VariableOrientation[varNumber];
+		variableType = new VariableType[varNumber];
+		Arrays.fill(variableType, VariableType.STANDARD);
+	}
 	
 	
 	public void setVariableNames(String[] varNames) {
 		this.variableName = varNames;
 	}
 	
-	public void setVariableName(int varIndex, String varName) {
-		this.variableName[varIndex] = varName;
+	public void setVariableName(int varIndex, String varName) throws Exception {
+		try {
+			this.variableName[varIndex] = varName;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public String[] getVariableNames() {
 		return this.variableName;
 	}
 	
-	public String getVariableName(int varIndex) {
-		return this.variableName[varIndex];
+	public String getVariableName(int varIndex) throws Exception {
+		try {
+			return this.variableName[varIndex];
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	
@@ -32,16 +49,26 @@ public class Variable {
 		this.variableOrientation = varOrientations;
 	}
 	
-	public void setVariableOrientation(int varIndex, VariableOrientation varOrientation) {
-		this.variableOrientation[varIndex] = varOrientation;
+	public void setVariableOrientation(int varIndex, VariableOrientation varOrientation) throws Exception{
+		try {
+			this.variableOrientation[varIndex] = varOrientation;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public VariableOrientation[] getVariableOrientations() {
 		return this.variableOrientation;
 	}
 	
-	public VariableOrientation getVariableOrientation(int varIndex) {
-		return this.variableOrientation[varIndex];
+	public VariableOrientation getVariableOrientation(int varIndex)  throws Exception{
+		try {
+			return this.variableOrientation[varIndex];
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	
@@ -51,15 +78,25 @@ public class Variable {
 		this.variableType = varTypes;
 	}
 	
-	public void setVariableType(int varIndex, VariableType varType) {
-		this.variableType[varIndex] = varType;
+	public void setVariableType(int varIndex, VariableType varType) throws Exception {
+		try {
+			this.variableType[varIndex] = varType;
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public VariableType[] getVariableTypes() {
 		return this.variableType;
 	}
 	
-	public VariableType getVariableType(int varIndex) {
-		return this.variableType[varIndex];
+	public VariableType getVariableType(int varIndex) throws Exception{
+		try {
+			return this.variableType[varIndex];
+		}
+		catch (Exception e) {
+			throw e;
+		}
 	}
 }

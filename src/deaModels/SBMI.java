@@ -65,7 +65,7 @@ public class SBMI {
 					//Copy rest of the data matrix
 					System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 0, nbDMUs);
 					//and slacks
-					if (deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
+					if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
 						constraintRow[nbDMUs + varIndex] = 1;
 					}
 					else {
@@ -154,7 +154,7 @@ public class SBMI {
 		for(int varIndex = 0; varIndex < nbVariables; varIndex++) {
 			returnSol.setSlack(dmuIndex, varIndex, sol.VariableResult[nbDMUs + varIndex]);
 			
-			if(deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT) {
+			if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
 				returnSol.setWeight(dmuIndex, varIndex, sol.DualResult[varIndex + 1] * -1);
 				returnSol.setProjection(dmuIndex, varIndex,
 						deaP.getDataMatrix(dmuIndex, varIndex) - returnSol.getSlack(dmuIndex, varIndex));
@@ -193,7 +193,7 @@ public class SBMI {
 			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 					//Build RHS
 					rhs[varIndex] = transposedMatrix[varIndex] [dmuIndex];
-					if(deaP.getVariableType(varIndex) == VariableOrientation.STANDARD_INPUT){
+					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT){
 						if(transposedMatrix[varIndex] [dmuIndex] * nbInputs != 0) {
 							objF[nbDMUs + varIndex] = -1 / (transposedMatrix[varIndex] [dmuIndex] * nbInputs);
 						}

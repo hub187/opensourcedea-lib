@@ -1,6 +1,7 @@
 package tests;
 
 import dea.VariableOrientation;
+import dea.VariableType;
 
 public class TestData {
 	
@@ -153,17 +154,29 @@ public class TestData {
 		return TestDataMatrix;
 	}
 	
-	public static VariableOrientation[] createTestVariableTypes() {
+	public static VariableOrientation[] createTestVariableOrientation() {
 
-		VariableOrientation[] TestVariableTypes = new VariableOrientation[4];
+		VariableOrientation[] testVariableOrientations = new VariableOrientation[4];
 						
 		//Set up the variable types
-		TestVariableTypes[0] = VariableOrientation.STANDARD_INPUT;
-		TestVariableTypes[1] = VariableOrientation.STANDARD_INPUT;
-		TestVariableTypes[2] = VariableOrientation.STANDARD_OUTPUT;
-		TestVariableTypes[3] = VariableOrientation.STANDARD_OUTPUT;
+		testVariableOrientations[0] = VariableOrientation.INPUT;
+		testVariableOrientations[1] = VariableOrientation.INPUT;
+		testVariableOrientations[2] = VariableOrientation.OUTPUT;
+		testVariableOrientations[3] = VariableOrientation.OUTPUT;
 		
-		return TestVariableTypes;
+		return testVariableOrientations;
+	}
+	
+	public static VariableType[] createTestVariableTypes(VariableType varType) {
+		VariableType[] testVariableTypes = new VariableType[4];
+		
+		//Set up the variable types
+		testVariableTypes[0] = VariableType.STANDARD;
+		testVariableTypes[1] = varType;
+		testVariableTypes[2] = varType;
+		testVariableTypes[3] = VariableType.STANDARD;
+		
+		return testVariableTypes;
 	}
 	
 

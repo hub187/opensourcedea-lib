@@ -90,7 +90,8 @@ public class LibraryTestNCOGRS {
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableTypes(TestData.createTestVariableTypes());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setVariableTypes(TestData.createTestVariableTypes(VariableType.NON_CONTROLLABLE));
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
 
@@ -188,8 +189,6 @@ public class LibraryTestNCOGRS {
 		BuildDEAProblem(ModelType.NC_O_GRS); //, DEAModelOrientation.NonOriented);
 		
 		try {
-			tester.setVariableType(1, VariableOrientation.NON_CONTROLLABLE_INPUT);
-			tester.setVariableType(2, VariableOrientation.NON_CONTROLLABLE_OUTPUT);
 			tester.setRTSLowerBound(0.8);
 			tester.setRTSUpperBound(1.2);
 		} catch (Exception e1) {
