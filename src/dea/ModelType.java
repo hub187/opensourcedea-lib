@@ -199,7 +199,39 @@ public enum ModelType {
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
-			ReturnToScale.CONSTANT);
+			ReturnToScale.CONSTANT),
+	ND_I_V ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+			"slacks on the Non-discretionary variables but these do not contribute to the score." +
+			"The model is assuming VARIABLE RTS." +
+			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.VARIABLE),
+	ND_I_IRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+			"slacks on the Non-discretionary variables but these do not contribute to the score." +
+			"The model is assuming INCREASING RTS." +
+			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.INCREASING),
+	ND_I_DRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+			"slacks on the Non-discretionary variables but these do not contribute to the score." +
+			"The model is assuming DECREASING RTS." +
+			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.DECREASING),
+	ND_I_GRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+			"slacks on the Non-discretionary variables but these do not contribute to the score." +
+			"The model is assuming GENERAL RTS." +
+			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			ModelOrientation.INPUT_ORIENTED,
+			EfficiencyType.TECH,
+			ReturnToScale.GENERAL);
 	
 	
 	private String description;

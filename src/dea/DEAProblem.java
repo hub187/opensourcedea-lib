@@ -593,13 +593,13 @@ public class DEAProblem {
 					this.solution = BCC.solveBCC(this);
 					break;
 				
-				case NC_I_IRS: case NC_O_IRS:
+				case NC_I_IRS: case NC_O_IRS: case ND_I_IRS:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30);
 					this.solution = NC_ND.solveNC(this);
 					break;
 				
-				case NC_I_DRS: case NC_O_DRS:
+				case NC_I_DRS: case NC_O_DRS: case ND_I_DRS:
 					this.setRTSLowerBound(0);
 					this.setRTSUpperBound(1);
 					this.solution = NC_ND.solveNC(this);
@@ -636,6 +636,11 @@ public class DEAProblem {
 				case NC_O_GRS: this.solution = NC_ND.solveNC(this); break;
 				
 				case ND_I: this.solution = NC_ND.solveNC(this); break;
+				
+				case ND_I_V: this.solution = NC_ND.solveNC(this); break;
+				
+				case ND_I_GRS: this.solution = NC_ND.solveNC(this); break;
+				
 			}
 		}
 		catch (Exception e) {

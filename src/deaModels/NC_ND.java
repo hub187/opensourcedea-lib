@@ -95,13 +95,11 @@ public  class NC_ND {
 		 //		Solve Phase I		 //
 		//////////////////////////////
 		
-		if(deaP.getModelType() == ModelType.NC_I ||
-				deaP.getModelType() == ModelType.NC_O){
+		if(deaP.getModelRTS() == ReturnToScale.CONSTANT){
 			rhs1 = new double [nbVariables];
 			solverEqualityType1 = new int[nbVariables];
 		}
-		else if(deaP.getModelType() == ModelType.NC_I_V ||
-				deaP.getModelType() == ModelType.NC_O_V){ /*Need an extra row for convexity contraint*/
+		else if(deaP.getModelRTS() == ReturnToScale.VARIABLE){ /*Need an extra row for convexity contraint*/
 			rhs1 = new double [nbVariables + 1];
 			solverEqualityType1 = new int[nbVariables + 1];
 		}
@@ -294,8 +292,7 @@ public  class NC_ND {
 			for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
 				constraintRow[VarIndex] = 1;
 			}
-			if(deaP.getModelType() == ModelType.NC_I_V ||
-					deaP.getModelType() == ModelType.NC_O_V) {
+			if(deaP.getModelRTS() == ReturnToScale.VARIABLE) {
 				constraints.add(constraintRow);
 				rhs1[nbVariables] = 1;
 				solverEqualityType1[nbVariables] = LpSolve.EQ;
