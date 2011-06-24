@@ -893,7 +893,8 @@ public class DEAProblem {
 	 * This is because it would be inefficient to access the values below individually.*/
 	
 	/**
-	 * Returns the projection percentages
+	 * Returns the projection percentages.  Input projections are negative, output projections are
+	 * positive.
 	 * @param dmuNumber The DMU Number
 	 * @return A double[] of the projection percentages for the specified DMU
 	 * @throws Exception 
@@ -915,7 +916,7 @@ public class DEAProblem {
 					projectionPercentages[i] = (varValue -  projections[i]) / varValue * -1;
 				}
 				else {
-					projectionPercentages[i] = (varValue -  projections[i]) / varValue;
+					projectionPercentages[i] = (projections[i] - varValue) / varValue;
 				}
 			}
 			return projectionPercentages;
@@ -927,7 +928,8 @@ public class DEAProblem {
 	}
 	
 	/**
-	 * Returns the projection percentages for all DMUs
+	 * Returns the projection percentages for all DMUs. Input projections are negative, output projections are
+	 * positive.
 	 * @return A double[NbDMUs] [NbVariables] of the projection percentages for all the DMUs.
 	 * @throws Exception 
 	 * @throws ProblemNotSolvedProperly
@@ -953,7 +955,7 @@ public class DEAProblem {
 						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue * -1;
 					}
 					else {
-						projectionPercentages[i] [j] = (varValue -  projections[j]) / varValue;
+						projectionPercentages[i] [j] = (projections[j] - varValue) / varValue;
 					}
 				}
 			}

@@ -243,6 +243,8 @@ public class LibraryTestNDI {
 				}
 			}
 			
+			
+			
 			//WEIGHTS
 			l.clear();
 			l.add(0);
