@@ -1,8 +1,8 @@
 package tests;
 
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -192,6 +192,7 @@ public class LibraryTestNDI {
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
+			
 		}
 		
 		try {
@@ -259,7 +260,9 @@ public class LibraryTestNDI {
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
+			System.out.println(e.toString());
 			e.printStackTrace();
+			assertTrue(false);
 		}
 		
 	}

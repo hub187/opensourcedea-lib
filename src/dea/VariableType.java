@@ -10,7 +10,18 @@ public enum VariableType {
 	private String name;
 	private String description;
 	
+	
+
 	VariableType(String varDescription) {
 		this.description = varDescription;
+	}
+	
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

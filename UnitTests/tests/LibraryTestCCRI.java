@@ -3,6 +3,7 @@ package tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 //import java.util.*;
 //import static org.junit.Assert.assertTrue;
 
@@ -134,7 +135,9 @@ public class LibraryTestCCRI {
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
-			throw e;
+			System.out.println(e.toString());
+			e.printStackTrace();
+			assertTrue(false);
 		}
 		
 	}

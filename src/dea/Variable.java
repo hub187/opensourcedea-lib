@@ -99,4 +99,23 @@ public class Variable {
 			throw e;
 		}
 	}
+	
+	public String getVariableTypeName(int varIndex) throws Exception {
+		try {
+			return this.getVariableType(varIndex).getName();
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	public String getVariableTypeDescription(int varIndex) throws Exception{
+		try {
+			return this.getVariableType(varIndex).getDescription();
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
 }

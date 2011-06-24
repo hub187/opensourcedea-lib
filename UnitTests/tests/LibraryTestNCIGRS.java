@@ -3,6 +3,8 @@ package tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -267,7 +269,9 @@ public class LibraryTestNCIGRS {
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
+			System.out.println(e.toString());
 			e.printStackTrace();
+			assertTrue(false);
 		}
 		
 	}

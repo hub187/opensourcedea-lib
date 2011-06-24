@@ -105,7 +105,7 @@ public class SBMO {
 
 	private static void createAndSolveSBMO(DEAProblem deaP, int nbDMUs,
 			int nbVariables,  ArrayList<double[]> constraints, double[][] transposedMatrix,
-			DEAPSolution returnSol, Integer i) throws Exception {
+			DEAPSolution returnSol, Integer dmuIndex) throws Exception {
 		
 		try {
 			double[] objF = new double [nbDMUs + nbVariables];
@@ -139,10 +139,10 @@ public class SBMO {
 			//Build the RHS (for the variables, added constraints (convexity, grs... were added before)
 			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 					//Build RHS
-					rhs[varIndex] = transposedMatrix[varIndex] [i];
+					rhs[varIndex] = transposedMatrix[varIndex] [dmuIndex];
 					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT){
-						if(transposedMatrix[varIndex] [i] * nbOutputs != 0) {
-							objF[nbDMUs + varIndex] = 1 / (transposedMatrix[varIndex] [i] * nbOutputs);
+						if(transposedMatrix[varIndex] [dmuIndex] * nbOutputs != 0) {
+							objF[nbDMUs + varIndex] = 1 / (transposedMatrix[varIndex] [dmuIndex] * nbOutputs);
 						}
 						else {
 							objF[nbDMUs + varIndex] = 1;
@@ -159,15 +159,18 @@ public class SBMO {
 						SolverObjDirection.MAX, solverEqualityType);
 			}
 			catch (ProblemNotSolvedProperly e1) {
-				throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
-						 i.toString());
+				throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
+						+ dmuIndex.toString()
+						+". The error was: " + e1.getMessage());
 			}
 			catch (DEASolverException e2) {
-				throw e2;
+				throw new DEASolverException("The problem could not be solved properly at DMU Index: "
+						+ dmuIndex.toString()
+						+ ". The error was: " + e2.getMessage());
 			}
 			
 			
-			storeSolution(deaP, nbDMUs, nbVariables, returnSol, i, sol);
+			storeSolution(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
 		}
 		catch (Exception e) {
 			throw e;

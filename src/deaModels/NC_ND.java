@@ -128,13 +128,13 @@ public  class NC_ND {
 		}
 		catch (ProblemNotSolvedProperly e1) {
 			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString());
+					+ dmuIndex.toString()
+					+". The error was: " + e1.getMessage());
 		}
-		catch (MissingData e2) {
-			throw e2;
-		}
-		catch (DEASolverException e3) {
-			throw e3;
+		catch (DEASolverException e2) {
+			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
+					+ dmuIndex.toString()
+					+ ". The error was: " + e2.getMessage());
 		}
 
 		

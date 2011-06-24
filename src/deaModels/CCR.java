@@ -193,11 +193,14 @@ public  class CCR {
 			sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN, solverEqualityType);
 		}
 		catch (ProblemNotSolvedProperly e1) {
-			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
-					 dmuIndex.toString());
+			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
+					+ dmuIndex.toString()
+					+". The error was: " + e1.getMessage());
 		}
 		catch (DEASolverException e2) {
-			throw e2;
+			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
+					+ dmuIndex.toString()
+					+ ". The error was: " + e2.getMessage());
 		}
 
 		
@@ -224,12 +227,16 @@ public  class CCR {
 			sol = Lpsolve.solveLPProblem(constraints, objF, rhs2, SolverObjDirection.MAX, solverEqualityType);
 		}
 		catch (ProblemNotSolvedProperly e1) {
-			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
-					 dmuIndex.toString());
+			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
+					+ dmuIndex.toString()
+					+". The error was: " + e1.getMessage());
 		}
 		catch (DEASolverException e2) {
-			throw e2;
+			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
+					+ dmuIndex.toString()
+					+ ". The error was: " + e2.getMessage());
 		}
+		
 		
 		try {
 			storePhaseTwoInformation(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
