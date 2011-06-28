@@ -593,13 +593,13 @@ public class DEAProblem {
 					this.solution = BCC.solveBCC(this);
 					break;
 				
-				case NC_I_IRS: case NC_O_IRS: case ND_I_IRS:
+				case NC_I_IRS: case NC_O_IRS: case ND_I_IRS: case ND_O_IRS:
 					this.setRTSLowerBound(1);
 					this.setRTSUpperBound(1E30);
 					this.solution = NC_ND.solveNC(this);
 					break;
 				
-				case NC_I_DRS: case NC_O_DRS: case ND_I_DRS:
+				case NC_I_DRS: case NC_O_DRS: case ND_I_DRS: case ND_O_DRS:
 					this.setRTSLowerBound(0);
 					this.setRTSUpperBound(1);
 					this.solution = NC_ND.solveNC(this);
@@ -641,6 +641,11 @@ public class DEAProblem {
 				
 				case ND_I_GRS: this.solution = NC_ND.solveNC(this); break;
 				
+				case ND_O: this.solution = NC_ND.solveNC(this); break;
+				
+				case ND_O_V: this.solution = NC_ND.solveNC(this); break;
+				
+				case ND_O_GRS: this.solution = NC_ND.solveNC(this); break;
 			}
 		}
 		catch (Exception e) {
@@ -670,7 +675,8 @@ public class DEAProblem {
 		}
 		
 		if(this.getModelType().getReturnToScale() == ReturnToScale.GENERAL) {
-			if(this.modelDetails.getRTSUpperBound() == 0) {
+			if(this.modelDetails.getRTSUpperBound() == 0 ||
+					this.modelDetails.getRTSUpperBound() < this.modelDetails.getRTSLowerBound()) {
 				throw new MissingData("RTS Bounds not set correctly!");
 			}
 		}
