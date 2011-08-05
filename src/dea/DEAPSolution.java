@@ -41,19 +41,36 @@ public class DEAPSolution {
 	}
 
 	
-	
+	/**
+	 * Sets the Objective values for all DMUs.
+	 * @param objectives The Objective values (array)
+	 */
 	public void setObjectives(double[] objectives) {
 		this.objectives = objectives;
 	}
 	
+	/**
+	 * Sets the Objective Value for the specific DMU.
+	 * @param DMUIndex The index of the DMU to set the objective value to.
+	 * @param objectiveValue The Objective Value.
+	 */
 	public void setObjective(int DMUIndex, double objectiveValue) {
 		this.objectives[DMUIndex] = objectiveValue;
 	}
 	
+	/**
+	 * Gets the Objective value for a specific DMU.
+	 * @param dmuIndex The index of the DMU to get the objective value for.
+	 * @return The Objective Value for the specified DMU.
+	 */
 	public double getObjective(int dmuIndex) {
 		return this.objectives[dmuIndex];
 	}
 	
+	/**
+	 * Gets the Objective values for all DMUs.
+	 * @return The Objective Values.
+	 */
 	public double[] getObjectives() {
 		return this.objectives;
 	}
@@ -61,19 +78,41 @@ public class DEAPSolution {
 	
 	
 	
-	
+	/**
+	 * Set the Slack Values for all DMUs.
+	 * @param slackValues The Slack Values for all DMUs.
+	 */
 	public void setSlacks(double[] [] slackValues) {
 		this.slacks = slackValues;
 	}
 	
+	/**
+	 * Set the Slacks for a specific DMU.
+	 * @param dmuIndex The index of the DMU to set slacks for.
+	 * @param slackValues The Slack Values.
+	 */
 	public void setSlacks(int dmuIndex, double[] slackValues) {
 		this.slacks[dmuIndex] = slackValues;
 	}
 	
+	/**
+	 * Set the Slack for a specific DMU and a specific variable.
+	 * @param dmuIndex The index of the DMU to set slack for.
+	 * @param varIndex The index of the variable to set the slack for.
+	 * @param slackValue The actual slack value.
+	 */
 	public void setSlack(int dmuIndex, int varIndex, double slackValue) {
 		this.slacks[dmuIndex][varIndex] = slackValue;
 	}
 	
+	/**
+	 * Copies slacks from an array to the Slack Array of the Solution Object.
+	 * This enables efficient copying of Solver results into the DEAPSolution.slacks array.
+	 * @param dmuIndex The index of the DMU to c
+	 * @param arrayToCopyFrom
+	 * @param positionToCopyFrom
+	 * @param LengthToCopy
+	 */
 	public void setSlackArrayCopy(int dmuIndex, double[] arrayToCopyFrom, int positionToCopyFrom, 
 			int LengthToCopy) {
 		System.arraycopy(arrayToCopyFrom, positionToCopyFrom, this.slacks[dmuIndex], 0, LengthToCopy);
