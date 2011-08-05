@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 
 /**
- * This class defines a DEA Problem Solution.
+ * This class defines a DEA Problem Solution. All the methods in this class are used 
+ * to set or get part of a DEA Problem Solution (DEAPSolution).
  * </br>
  * @author Hubert Virtos
  *
@@ -33,7 +34,7 @@ public class DEAPSolution {
 		 * The array are initialised here for this reason.*/
 		setObjectives(new double[nbDMUs]);
 		slacks = new double[nbDMUs] [nbVariables];
-		setReferenceSet((ArrayList<NonZeroLambda>[])new ArrayList[nbDMUs]);
+		setReferenceSets((ArrayList<NonZeroLambda>[])new ArrayList[nbDMUs]);
 		setWeights(new double[nbDMUs] [nbVariables]);
 		setProjections(new double[nbDMUs] [nbVariables]);
 		setStatus(SolverReturnStatus.NOT_SOLVED);
@@ -108,24 +109,46 @@ public class DEAPSolution {
 	/**
 	 * Copies slacks from an array to the Slack Array of the Solution Object.
 	 * This enables efficient copying of Solver results into the DEAPSolution.slacks array.
-	 * @param dmuIndex The index of the DMU to c
-	 * @param arrayToCopyFrom
-	 * @param positionToCopyFrom
-	 * @param LengthToCopy
+	 * @param dmuIndex The index of the DMU to copy data to
+	 * @param arrayToCopyFrom the array to copy slack values from
+	 * @param positionToCopyFrom the position to copy from in this array
+	 * @param LengthToCopy the length to copy
+	 * @throws DEAException
 	 */
 	public void setSlackArrayCopy(int dmuIndex, double[] arrayToCopyFrom, int positionToCopyFrom, 
-			int LengthToCopy) {
+			int LengthToCopy) throws DEAException {
+		try {
 		System.arraycopy(arrayToCopyFrom, positionToCopyFrom, this.slacks[dmuIndex], 0, LengthToCopy);
+		}
+		catch (Exception e) {
+			DEAException e1 = new DEAException("Some parameters crashed the method. Check variable values.");
+			throw e1;
+		}
 	}
 	
+	/**
+	 * Gets the slack value for a specific DMU and a specific variable.
+	 * @param dmuIndex The index of the DMU to get the slack value for.
+	 * @param varIndex The index of the variable to get the slack for/
+	 * @return The slack value for the specified DMU and variable.
+	 */
 	public double getSlack(int dmuIndex, int varIndex) {
 		return this.slacks[dmuIndex][varIndex];
 	}
 	
+	/**
+	 * Gets the slack values for the specified DMU.
+	 * @param dmuIndex The index of the DMU to get the slacks for.
+	 * @return The slack values for the specified DMU.
+	 */
 	public double[] getSlacks(int dmuIndex) {
 		return this.slacks[dmuIndex];
 	}
 	
+	/**
+	 * Gets all the slack values for all the DMUs.
+	 * @return The slack values for all the DMUs.
+	 */
 	public double[][] getSlacks() {
 		return this.slacks;
 	}
@@ -133,23 +156,45 @@ public class DEAPSolution {
 	
 	
 	
-	
-	public void setReferenceSet(ArrayList<NonZeroLambda>[] referenceSet) {
-		this.referenceSet = referenceSet;
+	/**
+	 * Sets the reference set for all DMUs.
+	 * @param referenceSets The reference sets for all DMUs.
+	 */
+	public void setReferenceSets(ArrayList<NonZeroLambda>[] referenceSets) {
+		this.referenceSet = referenceSets;
 	}
 	
+	/**
+	 * Sets the reference set of a specific DMU.
+	 * @param dmuIndex The index of the DMU to set the reference set to.
+	 * @param referenceSet The reference set of the DMU.
+	 */
 	public void setReferenceSet(int dmuIndex, ArrayList<NonZeroLambda> referenceSet) {
 		this.referenceSet[dmuIndex] = referenceSet;
 	}
 	
-	public void setReferenceSet(int dmuIndex, NonZeroLambda nonZeroLambda) {
+	/**
+	 * Adds a NonZeroLambda to the reference set of a DMU.
+	 * @param dmuIndex The index of the DMU to add a NonZeroLambda to.
+	 * @param nonZeroLambda The NonZeroLambda to add to the reference set.
+	 */
+	public void addNonZeroLambdaToReferenceSet(int dmuIndex, NonZeroLambda nonZeroLambda) {
 		this.referenceSet[dmuIndex].add(nonZeroLambda);
 	}
 	
+	/**
+	 * Gets all the reference sets for all the DMUs.
+	 * @return The reference sets of all DMUs.
+	 */
 	public ArrayList<NonZeroLambda>[] getReferenceSet() {
 		return this.referenceSet;
 	}
 	
+	/**
+	 * Gets the reference set of a specific DMU.
+	 * @param dmuIndex The index of the DMU to get the reference set for.
+	 * @return The reference set for the specified DMU.
+	 */
 	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) {
 		return this.referenceSet[dmuIndex];
 	}
@@ -159,27 +204,56 @@ public class DEAPSolution {
 	
 	
 	
-	
+	/**
+	 * Sets all the weights for all the DMUs.
+	 * @param weights The double[] [] corresponding to all the weights for all the DMUs.
+	 */
 	public void setWeights(double[] [] weights) {
 		this.weights = weights;
 	}
 	
+	/**
+	 * Sets the weights for a specific DMU.
+	 * @param dmuIndex The index of the DMU to set the weights for.
+	 * @param weights The array of the weights to assign to the DMU.
+	 */
 	public void setWeights(int dmuIndex, double[] weights) {
 		this.weights[dmuIndex] = weights;
 	}
-
+	
+	/**
+	 * Sets the weight for a specific DMU and a specific variable.
+	 * @param dmuIndex The index of the DMU to set the weight for.
+	 * @param varIndex The index of the variable to set the weight for.
+	 * @param weight The weight to set.
+	 */
 	public void setWeight(int dmuIndex, int varIndex, double weight) {
 		this.weights[dmuIndex] [varIndex] = weight;
 	}
 	
+	/**
+	 * Gets the all the weights for all the DMUs.
+	 * @return All the weights for all the DMUs.
+	 */
 	public double[] [] getWeights() {
 		return weights;
 	}
 	
+	/**
+	 * Gets the weight for a specific DMU.
+	 * @param dmuIndex The index of the DMU to get the weight of.
+	 * @return The weights for the specified DMU.
+	 */
 	public double[] getWeights(int dmuIndex) {
 		return this.weights[dmuIndex];
 	}
 	
+	/**
+	 * Gets a specific weight for a specific DMU.
+	 * @param dmuIndex The index of the DMU to get the weight of.
+	 * @param varIndex The index of the variable to get the weight of. 
+	 * @return The weight for the specified variable and DMU.
+	 */
 	public double getWeight(int dmuIndex, int varIndex) {
 		return this.weights[dmuIndex][varIndex];
 	}
@@ -187,19 +261,37 @@ public class DEAPSolution {
 	
 	
 	
-	
+	/**
+	 * Sets all the projections for all the DMUs.
+	 * @param projectionValues The double[] [] of projections for all DMUs.
+	 */
 	public void setProjections(double[] [] projectionValues) {
 		this.projections = projectionValues;
 	}
 	
+	/**
+	 * Sets the projection value for a specific variable and a specific DMU.
+	 * @param dmuIndex The index of the DMU to set the projection value for.
+	 * @param varIndex The index of the variable to set the projection value for.
+	 * @param projectionValue The projection value to set.
+	 */
 	public void setProjection(int dmuIndex, int varIndex, double projectionValue) {
 		this.projections[dmuIndex][varIndex] = projectionValue;
 	}
-
+	
+	/**
+	 * Gets all the projections for all the DMUs.
+	 * @return All the projections for all the DMUs.
+	 */
 	public double[] [] getProjections() {
 		return this.projections;
 	}
 	
+	/**
+	 * Gets all the projections for a specific DMU.
+	 * @param dmuIndex The index of the DMU to get the projection of.
+	 * @return The projections for the specified DMU.
+	 */
 	public double[] getProjections(int dmuIndex) {
 		return this.projections[dmuIndex];
 	}
@@ -207,11 +299,20 @@ public class DEAPSolution {
 	
 	
 	
-	
+	/**
+	 * Sets the Solution Status.
+	 * This status is used to specify whether the problem was solved successfully for all DMUs.
+	 * @param statusValue The status value.
+	 */
 	public void setStatus(SolverReturnStatus statusValue) {
 		status = statusValue;
 	}
 	
+	/**
+	 * Gets the Solution Status.
+	 * This status is used to specify whether the problem was solved successfully for all DMUs.
+	 * @return statusValue The status value.
+	 */
 	public SolverReturnStatus getStatus() {
 		return this.status;
 	}
