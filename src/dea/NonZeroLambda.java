@@ -20,22 +20,42 @@ public class NonZeroLambda {
 	}
 
 	
+	/**
+	 * Gets the NonZeroLambda (this).
+	 * @return
+	 */
 	public NonZeroLambda getNonZeroLambda() {
 		return this;
 	}
 
+	/**
+	 * Updates the value of a NonZeroLambda.
+	 * @param lValue The value of the Lambda to set.
+	 */
 	public void setLambdaValue(double lValue) {
 		lambdaValue = lValue;
 	}
-
+	
+	/**
+	 * Gets the value of a NonZeroLambda.
+	 * @return The value of a NonZeroLambda.
+	 */
 	public double getLambdaValue() {
 		return lambdaValue;
 	}
-
+	
+	/**
+	 * Updates the DMU Index of a NonZeroLambda.
+	 * @param dMUIndex The index of the DMU to set.
+	 */
 	public void setDMUIndex(int dMUIndex) {
 		dmuIndex = dMUIndex;
 	}
 
+	/**
+	 * Gets the DMU Index of a NonZeroLambda.
+	 * @return The index of the DMU.
+	 */
 	public int getDMUIndex() {
 		return dmuIndex;
 	}

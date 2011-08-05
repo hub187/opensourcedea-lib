@@ -2,6 +2,12 @@ package dea;
 
 import java.util.Arrays;
 
+/**
+ * The Variables of a DEA Problem. This holds all the information relative to the 
+ * variables of a DEA Problem.
+ * @author Hubert.Virtos
+ *
+ */
 public class Variable {
 	private String[] variableName;
 	private VariableOrientation [] variableOrientation;
@@ -16,6 +22,10 @@ public class Variable {
 	}
 	
 	
+	/**
+	 * Sets the Variable Names.
+	 * @param varNames The Variable Names.
+	 */
 	public void setVariableNames(String[] varNames) {
 		this.variableName = varNames;
 	}

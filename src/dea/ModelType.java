@@ -3,7 +3,8 @@ package dea;
 
 
 /**
- * An enum of the possible Model Types (e.g. CCR, SBM...).
+ * An enum of the possible Model Types (e.g. CCR, SBM...). If new models are added to the library,
+ * they will have to be listed in this enum.
  * <p>
  * The enum lists, for each model, the model characteristics. These are - amongst others:
  * <ul>
