@@ -38,40 +38,24 @@ import dea.ProblemNotSolvedProperly;
  */
 public class Lpsolve {
 	
-	/* INSTALLATION INSTRUCTIONS
-	 * In order for this code to run, you need to install lpsolve on your machine.
-	 * As the correct dlls and the lpsolve jar wrapper are already on your machine (if you checked out the source correctly
-	 * they should be in src\linearSolver\lpsolve), you simply need to:
+
+	/*
+	 * IMPORTANT NOTE:
 	 * 
-	 * 1) Move or copy the two .dll (resp. lpsolve55.dll and lpsolve55j.dll) to:
-	 * 		- C:\Windows\System32 on Windows machines
-	 * 		- /usr/local/lib on linux/GNU machines
-	 * 
-	 * 2) You should not have to add lpsolve55j.jar to your buildpath as 
-	 * the .classpath file for this project should already point to it.
-	 * 
-	 * 
-	 * If you need to check whether the lpsolve55j.jar in isn Eclipse, you can proceed as follows:
-	 * 1) right clicking on your project,
-	 * 2) selecting Properties (you can also select your project in the package explorer and press Alt + Enter),
-	 * 3) clicking on the libraries tabs,
-	 * 4) Check the JARs already attached.
-	 * If none:
-	 * 5) clicking on Add External JARs,
-	 * 6) browsing to the lpsolve55j.jar and clicking OK.*/
+	 * If you have any problem initiating the LpSolve class, check the installation instructions in linearSolver.lpsolve\READ ME file.
+	 */
+
 	
-	/* The solveLPProblem method is called with all the element required to define a Linear Problem, i.e.:
+	/**
+	 * The solveLPProblem method solve a Linear Problem. This method is called for each DMU when solving a DEA problem.
+	 * The method returns a solution object. See the SolverResults class for more information on this object.
+	 * 
+	 * The solveLPProblem method is called with all the element required to define a Linear Problem, i.e.:
 	 * 1) an ArrayList of double[] for the constraints
 	 * 2) a double[] for the objective function
 	 * 3) a double[] for the Right Hand Side
 	 * 4) a optimisation direction (min or max)
 	 * 
-	 * The method returns a solution object. See the SolverResults class for more information on this object.
-	 * */	
-
-	
-	/**
-	 * The solveLPProblem method solve a Linear Problem. This method is called for each DMU when solving a DEA problem.
 	 * 
 	 * @param Constraints A double[] of the constraint values.
 	 * @param ObjF A double[] of the Objective Function values.
