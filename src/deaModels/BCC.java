@@ -44,7 +44,7 @@ import lpsolve.LpSolve;
 public  class BCC {
 
 	/**
-	 * The method solving the DEA Problem.
+	 * The method solving the BCC Problems.
 	 * @param deaP An instance of DEAProblem.
 	 * @throws Exception 
 	 */
@@ -78,7 +78,18 @@ public  class BCC {
 		}
 	}
 
-
+	/**
+	 * This method creates and solves the BCC problem.
+	 * @param deaP The DEAProblem to solve.
+	 * @param nbDMUs The number of DMUs of the DEAProblem.
+	 * This information is already in the DEAProblem but it is more efficient to use call the method
+	 * with the number of DMUs rather than determining the number of DMUs from the DEAProblem.
+	 * @param nbVariables The number of Variables of the DEA Problem.
+	 * @param transposedMatrix The transposed of the DEAProblem matrix (model in the envelopment form)
+	 * @param returnSol The Solution Object in which the solution will be stored.
+	 * @param dmuIndex The index of the DMU under examination.
+	 * @throws Exception
+	 */
 	private static void createAndSolveBCC(DEAProblem deaP, int nbDMUs,
 			int nbVariables, double[][] transposedMatrix,
 			DEAPSolution returnSol, Integer dmuIndex) throws Exception {
@@ -189,7 +200,16 @@ public  class BCC {
 	}
 
 
-	
+	/**
+	 * 
+	 * @param deaP
+	 * @param nbDMUs
+	 * @param nbVariables
+	 * @param returnSol
+	 * @param dmuIndex
+	 * @param sol
+	 * @throws Exception
+	 */
 	private static void storePhaseTwoInformation(DEAProblem deaP, int nbDMUs,
 			int nbVariables, DEAPSolution returnSol, int dmuIndex, SolverResults sol) throws Exception {
 		
@@ -249,7 +269,19 @@ public  class BCC {
 		}
 	}
 
-
+	/**
+	 * Creates the model for the second phase of the BCC model.
+	 * @param deaP The DEAProblem to solve.
+	 * @param nbDMUs The number of DMUs of the DEAProblem.
+	 * @param nbVariables The number of Variables of the DEA Problem.
+	 * @param Constraints The Constraints of the DEA Problem
+	 * @param ObjF The Objective function of the DEA Problem
+	 * @param RHS1 The Right Hand Side element of the first phase.
+	 * @param RHS2 The Right Hand Side element of the second phase.
+	 * @param SolverEqualityType1 The equality type (equal, lower or equal...) from the first phase.
+	 * @param SolverEqualityType2 The equality type (equal, lower or equal...) from the second phase.
+	 * @param Sol The Solver result object
+	 */
 	private static void createPhaseTwoModel(DEAProblem deaP, int NbDMUs,
 			int NbVariables, ArrayList<double[]> Constraints, double[] ObjF,
 			double[] RHS1, double[] RHS2, int[] SolverEqualityType1,
@@ -288,7 +320,14 @@ public  class BCC {
 		}
 	}
 
-
+	/**
+	 * Stores phase one solution.
+	 * @param deaP The DEAProblem being solved.
+	 * @param returnSol The solution where results are stored.
+	 * @param i
+	 * @param sol
+	 * @throws Exception
+	 */
 	private static void storePhaseOneInformation(DEAProblem deaP,
 			DEAPSolution returnSol, int i, SolverResults sol) throws Exception {
 		//Collect information from Phase I (Theta)
@@ -325,7 +364,19 @@ public  class BCC {
 		SolverStatus.checkSolverStatus(returnSol, sol);
 	}
 
-
+	/**
+	 * 
+	 * @param deaP
+	 * @param nbDMUs
+	 * @param nbVariables
+	 * @param transposedMatrix
+	 * @param dmuIndex
+	 * @param constraints
+	 * @param objF
+	 * @param rhs1
+	 * @param solverEqualityType1
+	 * @throws Exception
+	 */
 	private static void createPhaseOneModel(DEAProblem deaP, int nbDMUs,
 			int nbVariables, double[][] transposedMatrix, int dmuIndex,
 			ArrayList<double[]> constraints, double[] objF, double[] rhs1,

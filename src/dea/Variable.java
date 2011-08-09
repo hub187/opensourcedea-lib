@@ -1,6 +1,6 @@
 package dea;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 
 /**
  * The Variables of a DEA Problem. This holds all the information relative to the 
@@ -18,7 +18,11 @@ public class Variable {
 		variableName = new String[varNumber];
 		variableOrientation = new VariableOrientation[varNumber];
 		variableType = new VariableType[varNumber];
-		Arrays.fill(variableType, VariableType.STANDARD);
+		/* No real need to fill some values here, if the arrays are not filled by the user,
+		 * then using the get methods will give empty arrays.
+		 */
+		//Arrays.fill(variableType, VariableType.STANDARD);
+		//Arrays.fill(variableOrientation, VariableOrientation.INPUT);
 	}
 	
 	
@@ -30,6 +34,12 @@ public class Variable {
 		this.variableName = varNames;
 	}
 	
+	/**
+	 * Sets the name of a Variable.
+	 * @param varIndex The index of the Variable to set the name for.
+	 * @param varName The Variable Name.
+	 * @throws Exception
+	 */
 	public void setVariableName(int varIndex, String varName) throws Exception {
 		try {
 			this.variableName[varIndex] = varName;
@@ -39,6 +49,10 @@ public class Variable {
 		}
 	}
 	
+	/**
+	 * Gets the names of the variables.
+	 * @return The names of the variables.
+	 */
 	public String[] getVariableNames() {
 		return this.variableName;
 	}
@@ -54,11 +68,20 @@ public class Variable {
 	
 	
 	
-	
+	/**
+	 * Sets the orientations of the variables (e.g. input oriented).
+	 * @param varOrientations The variable orientation.
+	 */
 	public void setVariableOrientations(VariableOrientation[] varOrientations) {
 		this.variableOrientation = varOrientations;
 	}
 	
+	/**
+	 * Sets the orientation of a specific variable.
+	 * @param varIndex The index of the variable to set the orientation for.
+	 * @param varOrientation the orientation of the variable.
+	 * @throws Exception
+	 */
 	public void setVariableOrientation(int varIndex, VariableOrientation varOrientation) throws Exception{
 		try {
 			this.variableOrientation[varIndex] = varOrientation;
@@ -68,10 +91,20 @@ public class Variable {
 		}
 	}
 	
+	/**
+	 * Gets the variables orientation.
+	 * @return The orientation for all the variables.
+	 */
 	public VariableOrientation[] getVariableOrientations() {
 		return this.variableOrientation;
 	}
 	
+	/**
+	 * Gets the orientation of a specific variable.
+	 * @param varIndex The index of the variable to get the orientation of.
+	 * @return The orientation of the variable.
+	 * @throws Exception
+	 */
 	public VariableOrientation getVariableOrientation(int varIndex)  throws Exception{
 		try {
 			return this.variableOrientation[varIndex];
@@ -83,11 +116,20 @@ public class Variable {
 	
 	
 	
-	
+	/**
+	 * Sets the types for all the variables (e.g. standard, non-discretionary...).
+	 * @param varTypes The Types of all variables. 
+	 */
 	public void setVariableTypes(VariableType[] varTypes) {
 		this.variableType = varTypes;
 	}
 	
+	/**
+	 * Sets the variable type for a specific variable.
+	 * @param varIndex The index of the variable to set the variable type to.
+	 * @param varType The type of variable.
+	 * @throws Exception
+	 */
 	public void setVariableType(int varIndex, VariableType varType) throws Exception {
 		try {
 			this.variableType[varIndex] = varType;
@@ -97,10 +139,20 @@ public class Variable {
 		}
 	}
 	
+	/**
+	 * Gets the variable types for all the variables.
+	 * @return The variable types of all the variables.
+	 */
 	public VariableType[] getVariableTypes() {
 		return this.variableType;
 	}
 	
+	/**
+	 * Gets the variable type of a specific variable.
+	 * @param varIndex The index of the variable to get the Type of.
+	 * @return The variable Variable Type.
+	 * @throws Exception
+	 */
 	public VariableType getVariableType(int varIndex) throws Exception{
 		try {
 			return this.variableType[varIndex];
@@ -110,6 +162,14 @@ public class Variable {
 		}
 	}
 	
+	/**
+	 * Gets the name of a VariableType for a specific variable. VariableTypes enums have both a 
+	 * name and a description fields (e.g. NON_DISCRETIONARY, "A non-discretionary variable").
+	 * This method only provides the name part of the enum (e.g. in this case, NON_DISCRETIONARY).
+	 * @param varIndex The index of the variable to get the VariableType name of.
+	 * @return The VariableType name of the specified variable.
+	 * @throws Exception
+	 */
 	public String getVariableTypeName(int varIndex) throws Exception {
 		try {
 			return this.getVariableType(varIndex).getName();
@@ -119,6 +179,15 @@ public class Variable {
 		}
 	}
 	
+	/**
+	 * Gets the description of a VariableType for a specific variable. VariableTypes enums have both a 
+	 * name and a description fields (e.g. NON_DISCRETIONARY, "A non-discretionary variable").
+	 * This method only provides the description part of the enum (e.g. in this case,
+	 * "A non-discretionary variable").
+	 * @param varIndex The index of the variable to get the VariableType description of.
+	 * @return The VariableType description of the specified variable.
+	 * @throws Exception
+	 */
 	public String getVariableTypeDescription(int varIndex) throws Exception{
 		try {
 			return this.getVariableType(varIndex).getDescription();

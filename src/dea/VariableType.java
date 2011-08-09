@@ -1,5 +1,11 @@
 package dea;
 
+/**
+ * An enum listing the possible VariableTypes.
+ * </br> 
+ * @author Hubert.Virtos
+ *
+ */
 public enum VariableType {
 	STANDARD ("The standard variable type."),
 	NON_CONTROLLABLE ("The non-controllable variable type (used with the" +
