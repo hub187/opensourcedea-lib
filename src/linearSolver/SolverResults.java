@@ -22,7 +22,8 @@ package linearSolver;
 import dea.SolverReturnStatus;
 
 /**
- * This class defines a linear problem Solution. This object is returned by the {@link linearSolver.Lpsolve#solveLPProblem(java.util.ArrayList, double[], double[], dea.SolverObjDirection)} method.
+ * This class defines a linear problem Solution. This object is returned by the
+ * solveLPProblem method in the linearSolver package.
  * 
  * @author Hubert Virtos
  *

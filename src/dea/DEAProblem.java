@@ -17,9 +17,8 @@
     
     
     @author Hubert Paul Bernard VIRTOS
-    @version 0.1 2011-02-04
+    
 */
-
 
 package dea;
 
@@ -92,7 +91,7 @@ public class DEAProblem {
 	
 	/**
 	 * Sets type of DEA Problem Model (e.g. CCR, SBM...)
-	 * @param modelType The DEA Problem type.
+	 * @param modType The DEA Problem type.
 	 */
 	public void setModelType(ModelType modType)
 	{
@@ -239,8 +238,8 @@ public class DEAProblem {
 	
 	/**
 	 * Sets the VariableType for the specified Variable.
-	 * @param variableOrientation The VariableType of the specified variable.
 	 * @param varIndex The position of the variable in the Variable Array.
+	 * @param varType The VariableType of the specified variable.
 	 * @throws Exception 
 	 */
 	public void setVariableType(int varIndex, VariableType varType) throws Exception
