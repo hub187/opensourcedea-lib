@@ -44,7 +44,7 @@ public class MiscStuff {
 				e.printStackTrace();
 			}
 			if (tester.getWeight(0).length > 4) {
-				//System.out.println("Model Type: " + modType.toString() + " has more than 4 weights");
+				System.out.println("Model Type: " + modType.toString() + " has: " + tester.getWeight(0).length + " weights");
 			}
 		}
 		

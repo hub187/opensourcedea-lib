@@ -210,6 +210,8 @@ public class LibraryTestDRSI {
 		
 		BuildDEAProblem(ModelType.DRS_I); //, DEAModelOrientation.NonOriented);
 		
+		//testDEAPSolution asdf = new testDEAPSolution(20, 4);
+		
 		try {
 			tester.solve();
 			

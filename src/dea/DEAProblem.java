@@ -96,6 +96,8 @@ public class DEAProblem {
 	public void setModelType(ModelType modType)
 	{
 		this.modelDetails.setModelType(modType);
+		//Solver solver = SolutionFactory.Create(modType);
+		//solver.solve(this);
 	}
 
 	
