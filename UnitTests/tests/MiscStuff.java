@@ -2,10 +2,10 @@ package tests;
 
 import org.junit.Test;
 
-import dea.DEAException;
-import dea.DEAProblem;
-import dea.InvalidPropertyValue;
-import dea.ModelType;
+import org.opensourcedea.dea.DEAException;
+import org.opensourcedea.dea.DEAProblem;
+import org.opensourcedea.dea.InvalidPropertyValue;
+import org.opensourcedea.dea.ModelType;
 
 public class MiscStuff {
 	

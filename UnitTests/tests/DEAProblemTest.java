@@ -9,11 +9,11 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.BeforeClass;
+import org.opensourcedea.dea.*;
 
 //import java.util.ArrayList;
 
 //import dea.DEAModelOrientation;
-import dea.*;
 
 public class DEAProblemTest {
 

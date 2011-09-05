@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.Test;
+import org.opensourcedea.dea.*;
+import org.opensourcedea.linearSolver.*;
 //import org.junit.BeforeClass;
 
-import dea.*;
-import linearSolver.*;
 
 
 public class SolverExceptionTest {

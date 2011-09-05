@@ -2,9 +2,9 @@ package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.opensourcedea.dea.Rank;
+import org.opensourcedea.dea.RankingType;
 
-import dea.Rank;
-import dea.RankingType;
 
 public class RankTest {
 	

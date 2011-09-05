@@ -1,7 +1,7 @@
 package tests;
 
-import dea.VariableOrientation;
-import dea.VariableType;
+import org.opensourcedea.dea.VariableOrientation;
+import org.opensourcedea.dea.VariableType;
 
 public class TestData {
 	

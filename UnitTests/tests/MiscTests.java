@@ -2,8 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.opensourcedea.dea.ModelType;
 
-import dea.ModelType;
 
 public class MiscTests {
 	

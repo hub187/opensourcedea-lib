@@ -4,10 +4,10 @@ package tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.opensourcedea.dea.*;
 
 import java.util.ArrayList;
 
-import dea.*;
 
 
 
