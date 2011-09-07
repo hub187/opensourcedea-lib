@@ -56,6 +56,7 @@ public class DEAProblem {
 	private ModelDetails modelDetails;
 	private Variable variable;
 	private org.opensourcedea.dea.DEAPSolution solution;
+	private IModel model;
 	
 	
 	/**
@@ -95,7 +96,12 @@ public class DEAProblem {
 	 */
 	public void setModelType(ModelType modType)
 	{
-		this.modelDetails.setModelType(modType);
+		if(modType == ModelType.BCC_I) {
+			model = new BCC2();
+		}
+		else {
+			this.modelDetails.setModelType(modType);
+		}
 	}
 
 	
@@ -567,6 +573,9 @@ public class DEAProblem {
 		checkDataBeforeSolving();
 		
 		try {
+			//this would solve the BCC2 problems (family of problems that can be solved using the BCC2 class.
+			model.solve(this);
+			
 			switch (this.modelDetails.getModelType()) {
 				case CCR_I: this.solution = CCR.solveCCR(this); break;
 				

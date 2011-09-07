@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.opensourcedea.dea.*;
+import org.opensourcedea.models.BCC2;
 
 //import dea.DEAModelOrientation;
 
@@ -197,6 +198,10 @@ public class LibraryTestBCCI {
 	
 	@Test
 	public void TestBCCI() {
+		
+		IModel deaP = new BCC2();
+		
+		
 		
 		BuildDEAProblem(ModelType.BCC_I); //, DEAModelOrientation.NonOriented);
 		
