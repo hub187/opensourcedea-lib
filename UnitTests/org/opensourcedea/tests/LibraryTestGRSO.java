@@ -94,7 +94,9 @@ public class LibraryTestGRSO {
 	
 	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
+		
 		tester.setModelType(ModelType);
+
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableOrientations(TestData.createTestVariableOrientation());

@@ -94,22 +94,14 @@ public class LibraryTestDRSI {
 	
 	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
+		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableOrientations(TestData.createTestVariableOrientation());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
-		try {
-			tester.setRTSLowerBound(0.8);
-		} catch (InvalidPropertyValueException e) {
-			e.printStackTrace();
-		}
-		try {
-			tester.setRTSUpperBound(1.2);
-		} catch (InvalidPropertyValueException e) {
-			e.printStackTrace();
-		}
+
 
 	}
 	

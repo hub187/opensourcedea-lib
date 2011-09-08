@@ -74,7 +74,9 @@ public class DEAProblemTest {
 
 	@Test
 	public void testSetGetModelType() {
+
 		tester.setModelType(ModelType.CCR_I);
+
 		assertSame(tester.getModelType(), ModelType.CCR_I);
 	}
 	
@@ -153,7 +155,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetReferenceSet() {
+
 		tester.setModelType(ModelType.CCR_I);
+
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -297,7 +301,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testToSeeObjectProperties() {
+
 		tester.setModelType(ModelType.CCR_I);
+
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -325,7 +331,10 @@ public class DEAProblemTest {
 	@Test
 	public void testMissingDMUCountDiscrepancy() {
 		
+
 		tester.setModelType(ModelType.CCR_I);
+
+
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -349,7 +358,9 @@ public class DEAProblemTest {
 	@Test
 	public void testMissingVariableCountDiscrepancy() {
 		
+		
 		tester.setModelType(ModelType.CCR_I);
+
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -372,7 +383,9 @@ public class DEAProblemTest {
 	@Test
 	public void testRTSBoundsNotSet() {
 		
+		
 		tester.setModelType(ModelType.SBM_GRS);
+
 		tester.setDMUNames(testDMUNames);
 		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
 		tester.setVariableNames(testVariableNames);
@@ -397,7 +410,10 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetModelEfficiencyType() {
+		
 		tester.setModelType(ModelType.SBM);
+
+
 		try {
 			assertSame(tester.getModelEfficiencyType(), EfficiencyType.MIX);
 		} catch (MissingDataException e) {
@@ -407,7 +423,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetModelOrientation() {
+		
 		tester.setModelType(ModelType.SBM);
+
 		try {
 			assertSame(tester.getModelOrientation(), ModelOrientation.NON_ORIENTED);
 		} catch (MissingDataException e) {
@@ -417,7 +435,9 @@ public class DEAProblemTest {
 	
 	@Test
 	public void testGetModelRTS() {
+		
 		tester.setModelType(ModelType.SBM);
+
 		try {
 			assertSame(tester.getModelRTS(), ReturnToScale.CONSTANT);
 		} catch (MissingDataException e) {

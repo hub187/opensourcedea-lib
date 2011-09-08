@@ -100,7 +100,31 @@ public class DEAProblem {
 		 * the refactoring is finished.*/
 		this.modelDetails.setModelType(modType);
 		
-		if(modType == ModelType.BCC_I) {
+		try {
+			if(this.getModelType() == ModelType.IRS_I ||
+					this.getModelType() == ModelType.IRS_O){
+				this.setRTSLowerBound(1);
+				this.setRTSUpperBound(1E30); //LpSolve cannot solve with Double.POSITIVE_INFINITY (numerical instability => model is infeasible, last best value of -1e+30)
+			}
+			else if (this.getModelType() == ModelType.DRS_I ||
+					this.getModelType() == ModelType.DRS_O){
+				this.setRTSLowerBound(0);
+				this.setRTSUpperBound(1);
+			}
+		}
+		catch (InvalidPropertyValueException e) {
+			e.printStackTrace();
+		}
+
+		
+		if(this.getModelType() == ModelType.BCC_I ||
+				this.getModelType() == ModelType.BCC_O ||
+				this.getModelType() == ModelType.GRS_I ||
+				this.getModelType() == ModelType.GRS_O ||
+				this.getModelType() == ModelType.IRS_I ||
+				this.getModelType() == ModelType.IRS_O ||
+				this.getModelType() == ModelType.DRS_I ||
+				this.getModelType() == ModelType.DRS_O) {
 			model = new BCC2();
 		}
 	}
@@ -576,8 +600,16 @@ public class DEAProblem {
 		try {
 			/*DEBUG ONLY (NECESSARY FOR ALL THE TESTS TO WORK DURING THE REFACTORING)
 			To be replaced by 'model.solve(this);' only*/
-			if(this.getModelType() == ModelType.BCC_I){
-				model.solve(this);
+			if(this.getModelType() == ModelType.BCC_I ||
+					this.getModelType() == ModelType.BCC_O ||
+					this.getModelType() == ModelType.GRS_I ||
+					this.getModelType() == ModelType.GRS_O ||
+					this.getModelType() == ModelType.IRS_I ||
+					this.getModelType() == ModelType.IRS_O ||
+					this.getModelType() == ModelType.DRS_I ||
+					this.getModelType() == ModelType.DRS_O){
+				this.solution = model.solve(this);
+				return;
 			}
 			
 			switch (this.modelDetails.getModelType()) {

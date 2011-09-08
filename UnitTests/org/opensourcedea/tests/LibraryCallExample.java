@@ -84,6 +84,7 @@ public class LibraryCallExample {
 		
 		//Set the DEA Problem Model Type (CCR).
 		tester.setModelType(ModelType.CCR_I);
+
 		
 		//Set the DEA Problem DMU Names where TestDMUName is a double[].
 		tester.setDMUNames(TestDMUNames);
