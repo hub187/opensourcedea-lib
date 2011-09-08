@@ -96,11 +96,12 @@ public class DEAProblem {
 	 */
 	public void setModelType(ModelType modType)
 	{
+		/* The line below should be replaced by a switch statement when
+		 * the refactoring is finished.*/
+		this.modelDetails.setModelType(modType);
+		
 		if(modType == ModelType.BCC_I) {
 			model = new BCC2();
-		}
-		else {
-			this.modelDetails.setModelType(modType);
 		}
 	}
 
@@ -367,9 +368,9 @@ public class DEAProblem {
 	 * Sets the Lower Bound limit for General Return To Scale DEA Models.
 	 * @param lowerB A double corresponding to the General RTS Lower Bound Limit.
 	 */
-	public void setRTSLowerBound(double lowerB) throws InvalidPropertyValue {
+	public void setRTSLowerBound(double lowerB) throws InvalidPropertyValueException {
 		if(lowerB < 0 || lowerB > 1) {
-			throw new InvalidPropertyValue("Lower Bound must be as follows: 0 <= LowerB <= 1.");
+			throw new InvalidPropertyValueException("Lower Bound must be as follows: 0 <= LowerB <= 1.");
 		}
 		this.modelDetails.setRTSLowerBound(lowerB);
 	}
@@ -386,9 +387,9 @@ public class DEAProblem {
 	 * Sets the Upper Bound limit for General Return To Scale DEA Models.
 	 * @param upperB A double corresponding to the General RTS Upper Bound Limit.
 	 */
-	public void setRTSUpperBound(double upperB) throws InvalidPropertyValue {
+	public void setRTSUpperBound(double upperB) throws InvalidPropertyValueException {
 		if(upperB < 1) {
-			throw new InvalidPropertyValue("Upper Bound must be greater or equal to 1.");
+			throw new InvalidPropertyValueException("Upper Bound must be greater or equal to 1.");
 		}
 		this.modelDetails.setRTSUpperBound(upperB);
 	}
@@ -408,16 +409,16 @@ public class DEAProblem {
 	/**
 	 * Gets the number of DMUs in the DEA Problem
 	 * @return The number of DMUs.
-	 * @throws MissingData 
+	 * @throws MissingDataException 
 	 */
-	public int getNumberOfDMUs() throws MissingData {
+	public int getNumberOfDMUs() throws MissingDataException {
 		int nbDMUs;
 		try {
 			nbDMUs = this.dataMatrix.length;
 			return nbDMUs;
 		}
 		catch (Exception e) {
-			throw new MissingData("The Data Matrix is null!");
+			throw new MissingDataException("The Data Matrix is null!");
 		}
 		
 	}
@@ -425,9 +426,9 @@ public class DEAProblem {
 	/**
 	 * Gets the number of Outputs of the DEA Problem
 	 * @return The number of Outputs.
-	 * @throws MissingData 
+	 * @throws MissingDataException 
 	 */
-	public int getNumberOfOutputs() throws MissingData {
+	public int getNumberOfOutputs() throws MissingDataException {
 		int nbOutputs = 0;
 		try {
 			for(int i = 0; i < this.variable.getVariableOrientations().length; i++) {
@@ -438,16 +439,16 @@ public class DEAProblem {
 			return nbOutputs;
 		}
 		catch (Exception e) {
-			throw new MissingData("The VariableType array is null!");
+			throw new MissingDataException("The VariableType array is null!");
 		}
 	}
 	
 	/**
 	 * Gets the number of Inputs of the DEA Problem
 	 * @return The number of Inputs.
-	 * @throws MissingData 
+	 * @throws MissingDataException 
 	 */
-	public int getNumberOfInputs() throws MissingData {
+	public int getNumberOfInputs() throws MissingDataException {
 		int nbInputs = 0;
 		try {
 			for(int i = 0; i < this.variable.getVariableOrientations().length; i++) {
@@ -458,23 +459,23 @@ public class DEAProblem {
 			return nbInputs;
 		}
 		catch (Exception e) {
-			throw new MissingData("The VariableType array is null!");
+			throw new MissingDataException("The VariableType array is null!");
 		}
 	}
 	
 	/**
 	 * Gets the number of Variables in the DEA Problem
 	 * @return The number of Variables.
-	 * @throws MissingData 
+	 * @throws MissingDataException 
 	 */
-	public int getNumberOfVariables() throws MissingData {
+	public int getNumberOfVariables() throws MissingDataException {
 		int nbVariables;
 		try {
 			nbVariables = this.dataMatrix[0].length;
 			return nbVariables;
 		}
 		catch (Exception e) {
-			throw new MissingData("The Data Matrix is null!");
+			throw new MissingDataException("The Data Matrix is null!");
 		}
 	}
 	
@@ -482,9 +483,9 @@ public class DEAProblem {
 	 * Gets the Transpose of the Data Matrix
 	 * @param returnsNegativeTranspose A boolean. If true, all values of the TransposedMatrix are timed by -1.
 	 * @return A double[] [] corresponding to the transpose of the Data Matrix
-	 * @throws MissingData 
+	 * @throws MissingDataException 
 	 */
-	public double [] [] getTranspose(boolean returnsNegativeTranspose) throws MissingData {
+	public double [] [] getTranspose(boolean returnsNegativeTranspose) throws MissingDataException {
 		try {
 			double [] [] transposedMatrix = new double [this.dataMatrix[0].length] [this.dataMatrix.length];
 			
@@ -502,7 +503,7 @@ public class DEAProblem {
 			return transposedMatrix;
 		}
 		catch (Exception e) {
-			throw new MissingData("The Data Matrix is null!");
+			throw new MissingDataException("The Data Matrix is null!");
 		}
 	}
 	
@@ -512,14 +513,14 @@ public class DEAProblem {
 	 * be set as it is a inherent property of the ModelType of the DEA Problem. In order to set
 	 * the ModelOrientation property, it is necessary to set the corresponding ModelType.
 	 * @return The DEAModelOrientation of the DEA Problem.
-	 * @throws MissingData Thrown if the ModelType is not set.
+	 * @throws MissingDataException Thrown if the ModelType is not set.
 	 */
-	public ModelOrientation getModelOrientation() throws MissingData {
+	public ModelOrientation getModelOrientation() throws MissingDataException {
 		if(this.getModelType() != null) {
 			return this.getModelType().getOrientation() ;
 		}
 		else {
-			throw new MissingData("The DEA Model Type is not set!");
+			throw new MissingDataException("The DEA Model Type is not set!");
 		}
 			
 	}
@@ -529,14 +530,14 @@ public class DEAProblem {
 	 * be set as it is a inherent property of the ModelType of the DEA Problem. In order to set
 	 * the ModelEfficiencyType property, it is necessary to set the corresponding ModelType.
 	 * @return The DEAEfficiencyType of the DEA Problem.
-	 * @throws MissingData Thrown if the ModelType is not set.
+	 * @throws MissingDataException Thrown if the ModelType is not set.
 	 */
-	public EfficiencyType getModelEfficiencyType() throws MissingData {
+	public EfficiencyType getModelEfficiencyType() throws MissingDataException {
 		if(this.getModelType() != null) {
 			return this.getModelType().getEfficiencyType();
 		}
 		else {
-			throw new MissingData("The DEA Model Type is not set!");
+			throw new MissingDataException("The DEA Model Type is not set!");
 		}
 	}
 	
@@ -545,14 +546,14 @@ public class DEAProblem {
 	 * be set as it is a inherent property of the ModelType of the DEA Problem. In order to set
 	 * the DEAReturnToScale property, it is necessary to set the corresponding ModelType.
 	 * @return The DEAReturnToScale of the DEA Problem.
-	 * @throws MissingData Thrown if the ModelType is not set. 
+	 * @throws MissingDataException Thrown if the ModelType is not set. 
 	 */
-	public ReturnToScale getModelRTS() throws MissingData {
+	public ReturnToScale getModelRTS() throws MissingDataException {
 		if(this.getModelType() != null) {
 			return this.getModelType().getReturnToScale();
 		}
 		else {
-			throw new MissingData("The DEA Model Type is not set!");
+			throw new MissingDataException("The DEA Model Type is not set!");
 		}
 	}
 	
@@ -568,13 +569,16 @@ public class DEAProblem {
 	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
 	 * methods).
 	 */
-	public void solve() throws MissingData, InconsistentNoOfDMUs, InconsistentNoOfVariables, DEAException, Exception {
+	public void solve() throws MissingDataException, InconsistentNoOfDMUsException, InconsistentNoOfVariablesException, DEAException, Exception {
 		
 		checkDataBeforeSolving();
 		
 		try {
-			//this would solve the BCC2 problems (family of problems that can be solved using the BCC2 class.
-			model.solve(this);
+			/*DEBUG ONLY (NECESSARY FOR ALL THE TESTS TO WORK DURING THE REFACTORING)
+			To be replaced by 'model.solve(this);' only*/
+			if(this.getModelType() == ModelType.BCC_I){
+				model.solve(this);
+			}
 			
 			switch (this.modelDetails.getModelType()) {
 				case CCR_I: this.solution = CCR.solveCCR(this); break;
@@ -664,28 +668,28 @@ public class DEAProblem {
 	}
 
 
-	private void checkDataBeforeSolving() throws MissingData,
-			InconsistentNoOfVariables, InconsistentNoOfDMUs {
+	private void checkDataBeforeSolving() throws MissingDataException,
+			InconsistentNoOfVariablesException, InconsistentNoOfDMUsException {
 		if(this.dataMatrix == null || this.dmuName == null || this.modelDetails.getModelType() == null ||
 				this.variable.getVariableNames() == null || this.variable.getVariableOrientations() == null) {
 			//MissingData e = new MissingData("some text to describe the error");
-			throw new MissingData();
+			throw new MissingDataException();
 		}
 		
 		int lenX = this.dataMatrix[0].length;
 		if(lenX != this.variable.getVariableNames().length || lenX != this.variable.getVariableOrientations().length) {
-			throw new InconsistentNoOfVariables();
+			throw new InconsistentNoOfVariablesException();
 		}
 		
 		int lenY = this.dataMatrix.length;
 		if(lenY != this.dmuName.length) {
-			throw new InconsistentNoOfDMUs();
+			throw new InconsistentNoOfDMUsException();
 		}
 		
 		if(this.getModelType().getReturnToScale() == ReturnToScale.GENERAL) {
 			if(this.modelDetails.getRTSUpperBound() == 0 ||
 					this.modelDetails.getRTSUpperBound() < this.modelDetails.getRTSLowerBound()) {
-				throw new MissingData("RTS Bounds not set correctly!");
+				throw new MissingDataException("RTS Bounds not set correctly!");
 			}
 		}
 	}
@@ -708,13 +712,13 @@ public class DEAProblem {
 	/**
 	 * Returns the Objectives of all the DMUs.
 	 * @return A double[] corresponding to all the DMUs Objectives.
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 * @throws DEAExceptions 
 	 */
-	public double[] getObjectives() throws ProblemNotSolvedProperly
+	public double[] getObjectives() throws ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		return this.solution.getObjectives();
 	}
@@ -724,12 +728,12 @@ public class DEAProblem {
 	 * @param dmuNumber The number of the DMU in the Objective Array.
 	 * @return The Objective value for the specified DMU.
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double getObjective(int dmuNumber) throws Exception, ProblemNotSolvedProperly
+	public double getObjective(int dmuNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			return this.solution.getObjective(dmuNumber);
@@ -760,12 +764,12 @@ public class DEAProblem {
 	 * @param dmuNumber The number of the DMU.
 	 * @return A double[] corresponding to the slacks for the specified DMU.
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double[] getSlacks(int dmuNumber) throws Exception, ProblemNotSolvedProperly
+	public double[] getSlacks(int dmuNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			return this.solution.getSlacks(dmuNumber);
@@ -781,12 +785,12 @@ public class DEAProblem {
 	 * @param varNumber The Number of the Variable
 	 * @return The slack value for the specified DMU and Variable Number
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double getSlack(int dmuNumber, int varNumber) throws Exception, ProblemNotSolvedProperly
+	public double getSlack(int dmuNumber, int varNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			return this.solution.getSlack(dmuNumber, varNumber);
@@ -799,12 +803,12 @@ public class DEAProblem {
 	/**
 	 * Returns the Slacks for all the DMUs.
 	 * @return A double[NbDMUs] [NbVariables] corresponding to all the slacks for all the DMUs.
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public double[] [] getSlacks() throws ProblemNotSolvedProperly
+	public double[] [] getSlacks() throws ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		return this.solution.getSlacks();
 	}
@@ -816,12 +820,12 @@ public class DEAProblem {
 	 * @param dmuNumber The Number of the DMU.
 	 * @return A double[] corresponding to the weights for the specified DMU.
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double[] getWeight(int dmuNumber) throws Exception, ProblemNotSolvedProperly
+	public double[] getWeight(int dmuNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			return this.solution.getWeights(dmuNumber);
@@ -837,12 +841,12 @@ public class DEAProblem {
 	 * @param varNumber The number of the Variable
 	 * @return A specific weight value.
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double getWeight(int dmuNumber, int varNumber) throws Exception, ProblemNotSolvedProperly
+	public double getWeight(int dmuNumber, int varNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			return this.solution.getWeight(dmuNumber, varNumber);
@@ -855,12 +859,12 @@ public class DEAProblem {
 	/**
 	 * Returns the weights for all the DMUs
 	 * @return A double[NbDMUs] [NbVariables] corresponding to the weights of all the DMUs
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public double[] [] getWeight() throws ProblemNotSolvedProperly
+	public double[] [] getWeight() throws ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		return this.solution.getWeights();
 	}
@@ -872,12 +876,12 @@ public class DEAProblem {
 	 * @param dmuNumber The number of the DMU
 	 * @return The projections for the specific DMU
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double[] getProjections(int dmuNumber) throws Exception, ProblemNotSolvedProperly
+	public double[] getProjections(int dmuNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			return this.solution.getProjections(dmuNumber);
@@ -890,12 +894,12 @@ public class DEAProblem {
 	/**
 	 * Returns the projections for all the DMU
 	 * @return a double[NbDMUs] [NbVariables] of all the projections
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public double[] [] getProjections() throws ProblemNotSolvedProperly
+	public double[] [] getProjections() throws ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		return this.solution.getProjections();
 	}
@@ -912,12 +916,12 @@ public class DEAProblem {
 	 * @param dmuNumber The DMU Number
 	 * @return A double[] of the projection percentages for the specified DMU
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */	
-	public double[] getProjectionPercentages(int dmuNumber) throws Exception, ProblemNotSolvedProperly
+	public double[] getProjectionPercentages(int dmuNumber) throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			double[] projectionPercentages = new double[this.solution.getProjections()[0].length];
@@ -946,12 +950,12 @@ public class DEAProblem {
 	 * positive.
 	 * @return A double[NbDMUs] [NbVariables] of the projection percentages for all the DMUs.
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */	
-	public double[] [] getProjectionPercentages() throws Exception, ProblemNotSolvedProperly
+	public double[] [] getProjectionPercentages() throws Exception, ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		try {
 			double[] [] projectionPercentages =
@@ -989,12 +993,12 @@ public class DEAProblem {
 	 * This is important as most of the scores of the 'efficient' DMUs are not 1 but some value very close to 1 (e.g. 1.00000000000002).
 	 * All precisions between 0 and 16 are taken into account, any other int value would leave the scores unchanged.
 	 * @return A double[] of the ranks.
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking, int precision) throws ProblemNotSolvedProperly
+	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking, int precision) throws ProblemNotSolvedProperlyException
 	{
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
@@ -1008,11 +1012,11 @@ public class DEAProblem {
 	/**
 	 * Returns the solution Reference Sets (for all DMUs).
 	 * @return An ArrayList<NonZeroLambda>[].
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public ArrayList<NonZeroLambda>[] getReferenceSet() throws ProblemNotSolvedProperly {
+	public ArrayList<NonZeroLambda>[] getReferenceSet() throws ProblemNotSolvedProperlyException {
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		return this.solution.getReferenceSet();
 	}
@@ -1021,11 +1025,11 @@ public class DEAProblem {
 	 * Returns the Reference Set corresponding to dmuIndex.
 	 * @param dmuIndex
 	 * @return An ArrayList<NonZeroLambda>.
-	 * @throws ProblemNotSolvedProperly 
+	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) throws ProblemNotSolvedProperly {
+	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) throws ProblemNotSolvedProperlyException {
 		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperly();
+			throw new ProblemNotSolvedProperlyException();
 		}
 		return this.solution.getReferenceSet(dmuIndex);
 	}

@@ -5,15 +5,12 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-//import java.util.ArrayList;
-
-//import static org.junit.Assert.assertEquals;
-//import java.util.*;
-//import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
-import org.opensourcedea.dea.*;
-import org.opensourcedea.models.BCC2;
+import org.opensourcedea.dea.DEAPSolution;
+import org.opensourcedea.dea.DEAProblem;
+import org.opensourcedea.dea.ModelType;
+import org.opensourcedea.dea.RankingType;
+import org.opensourcedea.dea.SolverReturnStatus;
 
 //import dea.DEAModelOrientation;
 
@@ -198,9 +195,7 @@ public class LibraryTestBCCI {
 	
 	@Test
 	public void TestBCCI() {
-		
-		IModel deaP = new BCC2();
-		
+				
 		
 		
 		BuildDEAProblem(ModelType.BCC_I); //, DEAModelOrientation.NonOriented);

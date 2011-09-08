@@ -25,7 +25,7 @@ package org.opensourcedea.linearSolver;
 import java.util.ArrayList;
 
 import org.opensourcedea.dea.DEASolverException;
-import org.opensourcedea.dea.ProblemNotSolvedProperly;
+import org.opensourcedea.dea.ProblemNotSolvedProperlyException;
 import org.opensourcedea.dea.SolverObjDirection;
 import org.opensourcedea.dea.SolverReturnStatus;
 
@@ -65,10 +65,10 @@ public class Lpsolve {
 	 * @param Dir A SolverObjDirection (MIN or MAX)
 	 * @return A SolverResult Object with the solution to the linear problem.
 	 * @throws Exception 
-	 * @throws ProblemNotSolvedProperly
+	 * @throws ProblemNotSolvedProperlyException
 	 */
 	public static SolverResults solveLPProblem(ArrayList<double[]> Constraints, double[] ObjF, double[] RHS,
-			SolverObjDirection Dir, int[] EqType) throws DEASolverException, ProblemNotSolvedProperly {
+			SolverObjDirection Dir, int[] EqType) throws DEASolverException, ProblemNotSolvedProperlyException {
 	
 		//The Solution object which will be returned
 		SolverResults Sol = new SolverResults();
@@ -133,7 +133,7 @@ public class Lpsolve {
 	        	else {
 	        		ret = 1;
 	        		Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND;
-	        		throw new ProblemNotSolvedProperly("The problem could not be solved properly.");
+	        		throw new ProblemNotSolvedProperlyException("The problem could not be solved properly.");
 	        	}
 	        	
 	        	//Store Optimisation values
@@ -172,7 +172,7 @@ public class Lpsolve {
 	           
 		}
 		
-		catch (ProblemNotSolvedProperly e1) {
+		catch (ProblemNotSolvedProperlyException e1) {
 			Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND;
 	    	throw e1;
 		}

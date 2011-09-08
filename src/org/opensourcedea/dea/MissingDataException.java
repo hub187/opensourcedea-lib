@@ -23,24 +23,22 @@
 package org.opensourcedea.dea;
 
 /**
- * A DEAException thrown when number of variables or DMUs do not match between different element of the DEAProblem
- * (e.g. 1050 VariableTypes but only 1040 VariableNames).
+ * A DEAException thrown when number the DEAProblem has missing data.
  * </br>
  * @author Hubert Virtos
  *
  */
-public class InvalidPropertyValue extends DEAException {
-
+public class MissingDataException extends DEAException {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public InvalidPropertyValue() {
-		super("The value entered is invalid.");
+	
+	public MissingDataException() {
+		super("The DEAProblem is missing some data. Please check the DataMatrix, DMUNames," +
+				"ModelType, VariableNames and VariableTypes.");
 	}
-	public InvalidPropertyValue(String detailMsg) {
-		super(detailMsg);
+	public MissingDataException(String message) {
+		super(message);
 	}
-
 }

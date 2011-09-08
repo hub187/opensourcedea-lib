@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import org.opensourcedea.dea.DEAException;
 import org.opensourcedea.dea.DEAProblem;
-import org.opensourcedea.dea.InvalidPropertyValue;
+import org.opensourcedea.dea.InvalidPropertyValueException;
 import org.opensourcedea.dea.ModelType;
 
 public class MiscStuff {
@@ -21,12 +21,12 @@ public class MiscStuff {
 		tester.setDMUNames(TestData.createTestDMUNames());
 		try {
 			tester.setRTSLowerBound(0.8);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 		try {
 			tester.setRTSUpperBound(1.2);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 	}

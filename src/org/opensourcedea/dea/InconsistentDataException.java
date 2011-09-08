@@ -23,21 +23,24 @@
 package org.opensourcedea.dea;
 
 /**
- * A DEAException extending InconsistentData thrown when number of DMUs do not match between different
- * element of the DEAProblem.
+ * A DEAException thrown when number of variables or DMUs do not match between different element of the DEAProblem
+ * (e.g. 1050 VariableTypes but only 1040 VariableNames).
  * </br>
  * @author Hubert Virtos
  *
  */
-public class InconsistentNoOfDMUs extends InconsistentData {
+public class InconsistentDataException extends DEAException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public InconsistentNoOfDMUs() {
-		super("The number of DMUs does not seem to match with the data. Please check the DMUNames and DataMatrix.");
+
+	public InconsistentDataException() {
+		super("The data is inconsistent.");
 	}
-	
+	public InconsistentDataException(String detailMsg) {
+		super(detailMsg);
+	}
+
 }

@@ -192,7 +192,7 @@ public class DEAProblemTest {
 		ArrayList<NonZeroLambda>[] wholeRefSet = new ArrayList[20];
 		try {
 			wholeRefSet = tester.getReferenceSet();
-		} catch (ProblemNotSolvedProperly e1) {
+		} catch (ProblemNotSolvedProperlyException e1) {
 			e1.printStackTrace();
 		}
 		
@@ -202,7 +202,7 @@ public class DEAProblemTest {
 				try {
 					assertEquals(refSet.indexOf(nzlIndex), tester.getReferenceSet(i).indexOf(nzlIndex));
 					assertEquals(refSet.indexOf(nzlIndex), wholeRefSet[i].indexOf(nzlIndex));
-				} catch (ProblemNotSolvedProperly e) {
+				} catch (ProblemNotSolvedProperlyException e) {
 
 					e.printStackTrace();
 				}
@@ -273,7 +273,7 @@ public class DEAProblemTest {
 	public void testSetGetRTSUpperBound() {
 		try {
 			tester.setRTSUpperBound(1.2);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 		assertEquals(tester.getRTSUpperBound(),1.2,0);
@@ -400,7 +400,7 @@ public class DEAProblemTest {
 		tester.setModelType(ModelType.SBM);
 		try {
 			assertSame(tester.getModelEfficiencyType(), EfficiencyType.MIX);
-		} catch (MissingData e) {
+		} catch (MissingDataException e) {
 			e.printStackTrace();
 		}
 	}
@@ -410,7 +410,7 @@ public class DEAProblemTest {
 		tester.setModelType(ModelType.SBM);
 		try {
 			assertSame(tester.getModelOrientation(), ModelOrientation.NON_ORIENTED);
-		} catch (MissingData e) {
+		} catch (MissingDataException e) {
 			e.printStackTrace();
 		}
 	}
@@ -420,7 +420,7 @@ public class DEAProblemTest {
 		tester.setModelType(ModelType.SBM);
 		try {
 			assertSame(tester.getModelRTS(), ReturnToScale.CONSTANT);
-		} catch (MissingData e) {
+		} catch (MissingDataException e) {
 			e.printStackTrace();
 		}
 	}

@@ -181,8 +181,8 @@ public class SBMO {
 				sol = Lpsolve.solveLPProblem(constraints, objF, rhs,
 						SolverObjDirection.MAX, solverEqualityType);
 			}
-			catch (ProblemNotSolvedProperly e1) {
-				throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
+			catch (ProblemNotSolvedProperlyException e1) {
+				throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
 						+ dmuIndex.toString()
 						+". The error was: " + e1.getMessage());
 			}

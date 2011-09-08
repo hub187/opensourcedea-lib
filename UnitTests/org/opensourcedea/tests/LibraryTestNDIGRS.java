@@ -99,7 +99,7 @@ public class LibraryTestNDIGRS {
 		try {
 			tester.setRTSLowerBound(0.8);
 			tester.setRTSUpperBound(1.2);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 	}

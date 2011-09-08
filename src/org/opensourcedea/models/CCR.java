@@ -194,8 +194,8 @@ public  class CCR {
 		try {
 			sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN, solverEqualityType);
 		}
-		catch (ProblemNotSolvedProperly e1) {
-			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
+		catch (ProblemNotSolvedProperlyException e1) {
+			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
 					+ dmuIndex.toString()
 					+". The error was: " + e1.getMessage());
 		}
@@ -228,8 +228,8 @@ public  class CCR {
 		try {
 			sol = Lpsolve.solveLPProblem(constraints, objF, rhs2, SolverObjDirection.MAX, solverEqualityType);
 		}
-		catch (ProblemNotSolvedProperly e1) {
-			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: "
+		catch (ProblemNotSolvedProperlyException e1) {
+			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
 					+ dmuIndex.toString()
 					+". The error was: " + e1.getMessage());
 		}

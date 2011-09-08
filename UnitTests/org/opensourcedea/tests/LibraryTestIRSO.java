@@ -102,12 +102,12 @@ public class LibraryTestIRSO {
 		tester.setDMUNames(TestData.createTestDMUNames());
 		try {
 			tester.setRTSLowerBound(0.8);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 		try {
 			tester.setRTSUpperBound(1.2);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 

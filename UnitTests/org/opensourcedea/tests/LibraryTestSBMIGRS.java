@@ -109,7 +109,7 @@ public class LibraryTestSBMIGRS {
 		
 		try {
 			tester.setRTSUpperBound(1.2);
-		} catch (InvalidPropertyValue e) {
+		} catch (InvalidPropertyValueException e) {
 			e.printStackTrace();
 		}
 	}

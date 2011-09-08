@@ -5,7 +5,7 @@ import org.opensourcedea.dea.*;
 public class BCC2 extends AbstractModel implements IModel {
 
 	@Override
-	public DEAPSolution solve(DEAProblem deaP) throws MissingData {
+	public DEAPSolution solve(DEAProblem deaP) throws MissingDataException {
 		
 	
 		try {
@@ -17,7 +17,7 @@ public class BCC2 extends AbstractModel implements IModel {
 				createAndSolve(deaP, nbDMUs, nbVars, transPosM, tempSol, i);
 			}
 			return tempSol;			
-		} catch (MissingData e) {
+		} catch (MissingDataException e) {
 			// TODO Auto-generated catch block
 			throw e;
 		}

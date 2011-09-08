@@ -22,16 +22,22 @@
 
 package org.opensourcedea.dea;
 
-public class ProblemNotSolvedProperly extends DEAException {
+/**
+ * A DEAException extending InconsistentData thrown when number of DMUs do not match between different
+ * element of the DEAProblem.
+ * </br>
+ * @author Hubert Virtos
+ *
+ */
+public class InconsistentNoOfDMUsException extends InconsistentDataException {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
-	public ProblemNotSolvedProperly() {
-		super("One of the problem was not solved successfully." +
-				"You cannot read a solution from a DEA Problem when a DMU optimisation was not solved optimally.");
-	}
-	public ProblemNotSolvedProperly(String detailMsg) {
-		super(detailMsg);
+	
+	public InconsistentNoOfDMUsException() {
+		super("The number of DMUs does not seem to match with the data. Please check the DMUNames and DataMatrix.");
 	}
 	
 }

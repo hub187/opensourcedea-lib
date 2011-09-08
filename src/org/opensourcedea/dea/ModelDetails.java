@@ -62,11 +62,11 @@ public class ModelDetails {
 	/**
 	 * Sets the Model Return To Scale Lower Bound limit (RTSLowerBound).
 	 * @param rtsLowerBound The Model rtsLowerBound.
-	 * @throws InvalidPropertyValue
+	 * @throws InvalidPropertyValueException
 	 */
-	public void setRTSLowerBound(double rtsLowerBound) throws InvalidPropertyValue {
+	public void setRTSLowerBound(double rtsLowerBound) throws InvalidPropertyValueException {
 		if(rtsLowerBound < 0 || rtsLowerBound > 1) {
-			throw new InvalidPropertyValue("Lower Bound must be as follows: 0 <= LowerB <= 1.");
+			throw new InvalidPropertyValueException("Lower Bound must be as follows: 0 <= LowerB <= 1.");
 		}
 		this.rtsLowerBound = rtsLowerBound;
 	}
@@ -83,11 +83,11 @@ public class ModelDetails {
 	/**
 	 * Sets the Model Return To Scale Upper Bound (rtsUpperBound).
 	 * @param rtsUpperBound The Model rtsUpperBound.
-	 * @throws InvalidPropertyValue
+	 * @throws InvalidPropertyValueException
 	 */
-	public void setRTSUpperBound(double rtsUpperBound) throws InvalidPropertyValue {
+	public void setRTSUpperBound(double rtsUpperBound) throws InvalidPropertyValueException {
 		if(rtsUpperBound < 1) {
-			throw new InvalidPropertyValue("Upper Bound must be greater or equal to 1.");
+			throw new InvalidPropertyValueException("Upper Bound must be greater or equal to 1.");
 		}
 		this.rtsUpperBound = rtsUpperBound;
 	}

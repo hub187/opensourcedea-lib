@@ -99,8 +99,8 @@ public class ModelTemplate {
 		try {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);
 		}
-		catch (ProblemNotSolvedProperly e1) {
-			throw new ProblemNotSolvedProperly("The problem could not be solved properly at DMU Index: " +
+		catch (ProblemNotSolvedProperlyException e1) {
+			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: " +
 					 i.toString());
 		}
 		catch (DEASolverException e2) {
