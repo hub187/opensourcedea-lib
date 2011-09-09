@@ -87,12 +87,6 @@ public class DEAProblemTest {
 		assertArrayEquals(tester.getDMUNames(), testDMUNames);
 	}
 	
-	
-//	@Test
-//	public void testSetGetModelOrientation() {
-//		tester.setModelOrientation(DEAModelOrientation.InputOriented);
-//		assertSame(tester.getModelOrientation(), DEAModelOrientation.InputOriented);
-//	}
 
 	
 	@Test
@@ -215,30 +209,6 @@ public class DEAProblemTest {
 		
 	}
 	
-	
-//	private ArrayList<Integer>[] getTestReferenceSet() {
-//		@SuppressWarnings("unchecked")
-//		ArrayList<Integer>[] ReferenceSet = (ArrayList<Integer>[])new ArrayList[5];
-//		
-//		ReferenceSet[0] = new ArrayList<Integer>();
-//		ReferenceSet[0].add(1);
-//		ReferenceSet[0].add(2);
-//		
-//		ReferenceSet[1] = new ArrayList<Integer>();
-//		ReferenceSet[1].add(1);
-//		
-//		ReferenceSet[2] = new ArrayList<Integer>();
-//		ReferenceSet[2].add(2);
-//		
-//		ReferenceSet[3] = new ArrayList<Integer>();
-//		ReferenceSet[3].add(2);
-//		
-//		ReferenceSet[4] = new ArrayList<Integer>();
-//		ReferenceSet[4].add(1);
-//		ReferenceSet[4].add(2);
-//				
-//		return ReferenceSet;
-//	}
 	
 	
 	@Test

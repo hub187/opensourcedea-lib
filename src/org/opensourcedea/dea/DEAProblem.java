@@ -56,7 +56,7 @@ public class DEAProblem {
 	private ModelDetails modelDetails;
 	private Variable variable;
 	private org.opensourcedea.dea.DEAPSolution solution;
-	private IModel model;
+	private Model model;
 	
 	
 	/**
@@ -595,7 +595,7 @@ public class DEAProblem {
 					this.getModelType() == ModelType.IRS_O ||
 					this.getModelType() == ModelType.DRS_I ||
 					this.getModelType() == ModelType.DRS_O){
-				this.solution = model.solve(this);
+				this.solution = model.solve(this, true);
 				return;
 			}
 			
@@ -735,7 +735,6 @@ public class DEAProblem {
 	 * Returns the Objectives of all the DMUs.
 	 * @return A double[] corresponding to all the DMUs Objectives.
 	 * @throws ProblemNotSolvedProperlyException 
-	 * @throws DEAExceptions 
 	 */
 	public double[] getObjectives() throws ProblemNotSolvedProperlyException
 	{

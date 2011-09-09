@@ -2,14 +2,26 @@ package org.opensourcedea.tests;
 
 
 import static org.junit.Assert.assertArrayEquals;
-//import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opensourcedea.dea.*;
+import org.opensourcedea.dea.DEAException;
+import org.opensourcedea.dea.DEAProblem;
+import org.opensourcedea.dea.InconsistentNoOfDMUsException;
+import org.opensourcedea.dea.InconsistentNoOfVariablesException;
+import org.opensourcedea.dea.MissingDataException;
+import org.opensourcedea.dea.ModelType;
+import org.opensourcedea.dea.NonZeroLambda;
+import org.opensourcedea.dea.ProblemNotSolvedProperlyException;
+import org.opensourcedea.dea.RankingType;
+import org.opensourcedea.dea.VariableOrientation;
 
 
-
+/*
+ * This class is used as an example of how to call the OSDEASolver.
+ */
 public class LibraryCallExample {
 	
 	
@@ -86,11 +98,9 @@ public class LibraryCallExample {
 		tester.setModelType(ModelType.CCR_I);
 
 		
-		//Set the DEA Problem DMU Names where TestDMUName is a double[].
+		//Set the DEA Problem DMU Names where TestDMUName is a string[].
 		tester.setDMUNames(TestDMUNames);
-		
-		//Set the DEA problem Model Orientation (Input Oriented).
-		//tester.setModelOrientation(DEAModelOrientation.InputOriented);
+
 		
 		//Set the DEA Problem Variable Names where TestVariableName is a String[].
 		tester.setVariableNames(TestVariableNames);
@@ -105,44 +115,61 @@ public class LibraryCallExample {
 
 		
 		//Solve the DEA Problem
+
 		try {
 			tester.solve();
+		} catch (InconsistentNoOfDMUsException e1) {
+			/* These Exceptions are generated before the model is solved when there is a discrepancy
+			 * in the number of DMUs.*/
+			e1.printStackTrace();
+		} catch (InconsistentNoOfVariablesException e1) {
+			/* These Exceptions are generated before the model is solved when there is a discrepancy
+			 * in the number of Variables.*/
+			e1.printStackTrace();
+		} catch (MissingDataException e1) {
+			/* These Exceptions are generated before the model is solved when the models has not
+			 * been correctly constructed (for example missing VariableTypes).*/
+			e1.printStackTrace();
+		} catch (DEAException e1) {
+			/* These Exceptions are generated when the solver has encountered a unexpected
+			 * problem.*/
+			e1.printStackTrace();
 		}
-		catch (Exception e) {
-			System.out.println(e.toString());
-		}
+
+
 		
 		try {
 		//Get the solution Objectives
 		double[] Objectives = tester.getObjectives();
 		
-//		/* Get the solution Lambdas.
-//		 * The first array corresponds to the DMUs.
-//		 * The second nested array corresponds to the Lambda values.*/
-//		double[] [] Lambdas = tester.getLambdas();
-//		
-//		/* Get the solution Slacks.
-//		 * The first array corresponds to the DMUs.
-//		 * The second nested array corresponds to the Slack values.*/
-//		double[] [] Slacks = tester.getSlacks();
-//		
-//		/* Get the solution Projections.
-//		 * The first array corresponds to the DMUs.
-//		 * The second nested array corresponds to the Projection values.*/
-//		double[] [] Projections = tester.getProjections();
-//		
-//		/* Get the solution Weights.
-//		 * The first array corresponds to the DMUs.
-//		 * The second nested array corresponds to the Weight values.*/
-//		double[] [] Weights = tester.getWeight();
-//		
-//		/* Get the DMU ranks.
-//		 * The boolean confirms that the Highest DMU score is ranked first.
-//		 * The STANDARD ranking type confirms that the ranking is standard.
-//		 * This means that if they are two DMUs with an efficiency score of 1 both will be ranked first.
-//		 * However, the following DMU will only be ranked 3rd as they are two DMUs which score better than it.
-//		 * Conversely, a DENSE RankingType will have given the following (3rd) DMU the ranking of second.*/
-//		int[] Ranks = tester.getRanks(true, RankingType.STANDARD);
+		/* Get the solution Lambdas.
+		 * This returns an Array of ArrayLists of NonZeroLamdas.*/
+		 @SuppressWarnings("unchecked")
+		 ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[7];
+		    referenceSets = tester.getReferenceSet();
+		
+		/* Get the solution Slacks.
+		 * The first array corresponds to the DMUs.
+		 * The second nested array corresponds to the Slack values.*/
+		double[] [] Slacks = tester.getSlacks();
+		
+		/* Get the solution Projections.
+		 * The first array corresponds to the DMUs.
+		 * The second nested array corresponds to the Projection values.*/
+		double[] [] Projections = tester.getProjections();
+		
+		/* Get the solution Weights.
+		 * The first array corresponds to the DMUs.
+		 * The second nested array corresponds to the Weight values.*/
+		double[] [] Weights = tester.getWeight();
+		
+		/* Get the DMU ranks.
+		 * The boolean confirms that the Highest DMU score is ranked first.
+		 * The STANDARD ranking type confirms that the ranking is standard.
+		 * This means that if they are two DMUs with an efficiency score of 1 both will be ranked first.
+		 * However, the following DMU will only be ranked 3rd as they are two DMUs which score better than it.
+		 * Conversely, a DENSE RankingType will have given the following (3rd) DMU the ranking of second.*/
+		int[] Ranks = tester.getRanks(true, RankingType.STANDARD, 10);
 		
 		
 		//Get the objective values for the CCR-I model
@@ -150,14 +177,20 @@ public class LibraryCallExample {
 		
 		//AssertArrayEquals
 		assertArrayEquals(Objectives, ObjectivesTarget,0.0000000001);
-		
 		}
-		catch (Exception e) {
+		catch (ProblemNotSolvedProperlyException e) {
 			e.printStackTrace();
 		}
+
 		
 	}
 
+	
+	
+	
+	
+	
+	
 	private double[] getTargetObjectives() {
 		double[] ObjectivesTarget = new double[7];
 		ObjectivesTarget[0] = 0.8571428571428571;

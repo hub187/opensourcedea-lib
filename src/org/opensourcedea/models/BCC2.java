@@ -9,54 +9,8 @@ import org.opensourcedea.dea.*;
 import org.opensourcedea.linearSolver.Lpsolve;
 import org.opensourcedea.linearSolver.SolverResults;
 
-public class BCC2 extends AbstractModel implements IModel {
+public class BCC2 extends Model {
 
-	@Override
-	public DEAPSolution solve(DEAProblem deaP)
-		throws MissingDataException, DEASolverException, ProblemNotSolvedProperlyException {
-		
-		Integer dmuIndex = 0;
-		
-		try {
-			int nbDMUs = deaP.getNumberOfDMUs();
-			int nbVars = deaP.getNumberOfVariables();
-			double[][] transPosM = deaP.getTranspose(true);
-			
-			DEAPSolution tempSol = new DEAPSolution(nbDMUs, nbVars);
-			
-			/* As the BBC optimisations need to be ran for all DMUs, 
-			 * the program will loop through all DMUs.
-			 * Also, the BBC models are solved in two phases.
-			 * The problem will consequently be solved for each DMUs for Phase I and
-			 * solved again for each DMUs for Phase II.*/
-			
-			for(int i = 0; i < nbDMUs; i++) {
-				dmuIndex = i;
-				createAndSolve(deaP, nbDMUs, nbVars, transPosM, tempSol, i);
-			}
-			return tempSol;			
-		}
-		
-		catch (ProblemNotSolvedProperlyException e1) {
-			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString()
-					+". The error was: " + e1.getMessage());
-		}
-		catch (DEASolverException e2) {
-			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString()
-					+ ". The error was: " + e2.getMessage());
-		}
-		catch (MissingDataException e3) {
-			throw new MissingDataException("Some model data is missing.");
-		}	
-		
-
-		
-		
-	}
-
-	
 	
 	/**
 	 * This method creates and solves BCC problems.
