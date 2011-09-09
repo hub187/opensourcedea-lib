@@ -135,17 +135,10 @@ public class DEAPSolution {
 	 * @param arrayToCopyFrom the array to copy slack values from
 	 * @param positionToCopyFrom the position to copy from in this array
 	 * @param LengthToCopy the length to copy
-	 * @throws DEAException
 	 */
 	public void setSlackArrayCopy(int dmuIndex, double[] arrayToCopyFrom, int positionToCopyFrom, 
-			int LengthToCopy) throws DEAException {
-		try {
+			int LengthToCopy)  {
 		System.arraycopy(arrayToCopyFrom, positionToCopyFrom, this.slacks[dmuIndex], 0, LengthToCopy);
-		}
-		catch (Exception e) {
-			DEAException e1 = new DEAException("Some parameters crashed the method. Check variable values.");
-			throw e1;
-		}
 	}
 	
 	/**
@@ -154,7 +147,7 @@ public class DEAPSolution {
 	 * @param varIndex The index of the variable to get the slack for/
 	 * @return The slack value for the specified DMU and variable.
 	 */
-	public double getSlack(int dmuIndex, int varIndex) {
+	public double getSlack(int dmuIndex, int varIndex){
 		return this.slacks[dmuIndex][varIndex];
 	}
 	

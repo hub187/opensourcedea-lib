@@ -60,13 +60,13 @@ public class Variable {
 	 * Sets the name of a Variable.
 	 * @param varIndex The index of the Variable to set the name for.
 	 * @param varName The Variable Name.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public void setVariableName(int varIndex, String varName) throws Exception {
+	public void setVariableName(int varIndex, String varName) throws IndexOutOfBoundsException {
 		try {
 			this.variableName[varIndex] = varName;
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -74,16 +74,17 @@ public class Variable {
 	/**
 	 * Gets the names of the variables.
 	 * @return The names of the variables.
+	 * @IndexOutOfBoundsException
 	 */
 	public String[] getVariableNames() {
 		return this.variableName;
 	}
 	
-	public String getVariableName(int varIndex) throws Exception {
+	public String getVariableName(int varIndex) throws IndexOutOfBoundsException {
 		try {
 			return this.variableName[varIndex];
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -102,13 +103,14 @@ public class Variable {
 	 * Sets the orientation of a specific variable.
 	 * @param varIndex The index of the variable to set the orientation for.
 	 * @param varOrientation the orientation of the variable.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public void setVariableOrientation(int varIndex, VariableOrientation varOrientation) throws Exception{
+	public void setVariableOrientation(int varIndex, VariableOrientation varOrientation)
+		throws IndexOutOfBoundsException{
 		try {
 			this.variableOrientation[varIndex] = varOrientation;
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -125,13 +127,14 @@ public class Variable {
 	 * Gets the orientation of a specific variable.
 	 * @param varIndex The index of the variable to get the orientation of.
 	 * @return The orientation of the variable.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public VariableOrientation getVariableOrientation(int varIndex)  throws Exception{
+	public VariableOrientation getVariableOrientation(int varIndex) 
+		throws IndexOutOfBoundsException{
 		try {
 			return this.variableOrientation[varIndex];
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -150,13 +153,14 @@ public class Variable {
 	 * Sets the variable type for a specific variable.
 	 * @param varIndex The index of the variable to set the variable type to.
 	 * @param varType The type of variable.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public void setVariableType(int varIndex, VariableType varType) throws Exception {
+	public void setVariableType(int varIndex, VariableType varType)
+		throws IndexOutOfBoundsException {
 		try {
 			this.variableType[varIndex] = varType;
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -173,13 +177,13 @@ public class Variable {
 	 * Gets the variable type of a specific variable.
 	 * @param varIndex The index of the variable to get the Type of.
 	 * @return The variable Variable Type.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public VariableType getVariableType(int varIndex) throws Exception{
+	public VariableType getVariableType(int varIndex) throws IndexOutOfBoundsException {
 		try {
 			return this.variableType[varIndex];
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -190,13 +194,13 @@ public class Variable {
 	 * This method only provides the name part of the enum (e.g. in this case, NON_DISCRETIONARY).
 	 * @param varIndex The index of the variable to get the VariableType name of.
 	 * @return The VariableType name of the specified variable.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public String getVariableTypeName(int varIndex) throws Exception {
+	public String getVariableTypeName(int varIndex) throws IndexOutOfBoundsException {
 		try {
 			return this.getVariableType(varIndex).getName();
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
@@ -208,13 +212,13 @@ public class Variable {
 	 * "A non-discretionary variable").
 	 * @param varIndex The index of the variable to get the VariableType description of.
 	 * @return The VariableType description of the specified variable.
-	 * @throws Exception
+	 * @throws IndexOutOfBoundsException
 	 */
-	public String getVariableTypeDescription(int varIndex) throws Exception{
+	public String getVariableTypeDescription(int varIndex) throws IndexOutOfBoundsException{
 		try {
 			return this.getVariableType(varIndex).getDescription();
 		}
-		catch (Exception e) {
+		catch (IndexOutOfBoundsException e) {
 			throw e;
 		}
 	}
