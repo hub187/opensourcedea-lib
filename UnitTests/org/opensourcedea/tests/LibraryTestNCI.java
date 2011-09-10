@@ -1,14 +1,18 @@
 package org.opensourcedea.tests;
 
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-import org.opensourcedea.dea.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+
+import org.junit.Test;
+import org.opensourcedea.dea.DEAPSolution;
+import org.opensourcedea.dea.DEAProblem;
+import org.opensourcedea.dea.ModelType;
+import org.opensourcedea.dea.NonZeroLambda;
+import org.opensourcedea.dea.RankingType;
+import org.opensourcedea.dea.SolverReturnStatus;
+import org.opensourcedea.dea.VariableType;
 
 
 
