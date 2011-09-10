@@ -125,8 +125,13 @@ public class DEAProblem {
 				this.getModelType() == ModelType.IRS_O ||
 				this.getModelType() == ModelType.DRS_I ||
 				this.getModelType() == ModelType.DRS_O) {
-			model = new BCC2();
+			model = new BCC();
 		}
+		else if(this.getModelType() == ModelType.CCR_I ||
+			this.getModelType() == ModelType.CCR_O) {
+			model = new CCR();
+		}
+
 	}
 
 	
@@ -585,8 +590,11 @@ public class DEAProblem {
 		checkDataBeforeSolving();
 		
 		
-			/*DEBUG ONLY (NECESSARY FOR ALL THE TESTS TO WORK DURING THE REFACTORING)
-			To be replaced by 'model.solve(this);' only*/
+			/* DEBUG ONLY
+			 * THIS CODE WILL REPLACE THE SWITCH BELOW
+			 * (NECESSARY FOR ALL THE TESTS TO WORK DURING THE REFACTORING)
+			 * THIS CODE WILL BE REPLACED BY A SINGLE CODE LINE:
+			 * 'model.solve(this);'*/
 			if(this.getModelType() == ModelType.BCC_I ||
 					this.getModelType() == ModelType.BCC_O ||
 					this.getModelType() == ModelType.GRS_I ||
@@ -594,38 +602,18 @@ public class DEAProblem {
 					this.getModelType() == ModelType.IRS_I ||
 					this.getModelType() == ModelType.IRS_O ||
 					this.getModelType() == ModelType.DRS_I ||
-					this.getModelType() == ModelType.DRS_O){
+					this.getModelType() == ModelType.DRS_O ||
+					this.getModelType() == ModelType.CCR_I ||
+					this.getModelType() == ModelType.CCR_O){
 				this.solution = model.solve(this, true);
 				return;
 			}
+
 			
 			/* Will get rid of this try catch as well as whole switch statement
 			 * after the model.solve method works for all the models.*/
 			try {
 			switch (this.modelDetails.getModelType()) {
-				case CCR_I: this.solution = CCR.solveCCR(this); break;
-				
-				case CCR_O: this.solution = CCR.solveCCR(this); break;
-				
-				case BCC_I: this.solution = BCC.solveBCC(this); break;
-				
-				case BCC_O: this.solution = BCC.solveBCC(this); break;
-				
-				case GRS_I: this.solution = BCC.solveBCC(this); break;
-				
-				case GRS_O: this.solution = BCC.solveBCC(this); break;
-				
-				case IRS_I: case IRS_O:
-					this.setRTSLowerBound(1);
-					this.setRTSUpperBound(1E30); //LpSolve cannot solve with Double.POSITIVE_INFINITY (numerical instability => model is infeasible, last best value of -1e+30)
-					this.solution = BCC.solveBCC(this);
-					break;
-				
-				case DRS_I: case DRS_O:
-					this.setRTSLowerBound(0);
-					this.setRTSUpperBound(1);
-					this.solution = BCC.solveBCC(this);
-					break;
 				
 				case NC_I_IRS: case NC_O_IRS: case ND_I_IRS: case ND_O_IRS:
 					this.setRTSLowerBound(1);

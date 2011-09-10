@@ -38,9 +38,11 @@ public class MiscStuff {
 			tester = new DEAProblem(20, 4);
 			BuildDEAProblem(modType);
 			try {
+				//System.out.print("Solving: " + tester.getModelType().toString() + "\r\n");
 				tester.solve();
 			}
 			catch (DEAException e) {
+				System.out.print("There was a problem solving model: " + tester.getModelType().toString());
 				e.printStackTrace();
 			}
 			if (tester.getWeight(0).length > 4) {

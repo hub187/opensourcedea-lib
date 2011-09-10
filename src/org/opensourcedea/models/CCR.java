@@ -1,213 +1,57 @@
-
-/*	<DEASolver (googleproject opensourcedea) is a java DEA solver.>
-    Copyright (C) <2010>  <Hubert Paul Bernard VIRTOS>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    @author Hubert Paul Bernard VIRTOS
-    @version 0.1 2011-02-04
-*/
-
 package org.opensourcedea.models;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.opensourcedea.dea.*;
-import org.opensourcedea.linearSolver.*;
-
 import lpsolve.LpSolve;
 
+import org.opensourcedea.dea.*;
+import org.opensourcedea.linearSolver.Lpsolve;
+import org.opensourcedea.linearSolver.SolverResults;
 
+public class CCR extends Model {
 
-/**
- * The class implementing the CCR (Input and Output oriented) models.
- *
- *<p>
- *The linear problem of the Model is as follows:
- *<p>
- * <center>
- * <table border = "1">
- * <tr>
- * 		<td>Variable</td>
- * 		<td>Theta</td>
- * 		<td>Lambda 1</td>
- * 		<td>...</td>
- * 		<td>Lambda n</td>
- * 		<td>Slack 1</td>
- * 		<td>...</td>
- * 		<td>Slack p</td>
- * 		<td>DIR</td>
- * 		<td>RHS</td>
- * </tr>
- * <tr>
- * 		<td>Obj Coeff</td>
- * 		<td>1</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td>0</td>
- * 		<td></td>
- * 		<td></td>
- * </tr>
- * <tr>
- * 		<td>Input 1</td>
- * 		<td>-Input 1,1</td>
- * 		<td>Input 1,1</td>
- * 		<td>...</td>
- * 		<td>Input 1, n</td>
- * 		<td>0</td>
- * 		<td>...</td>
- * 		<td>0</td>
- * 		<td>E</td>
- * 		<td>0</td>
- * </tr>
- * <tr>
- * 		<td>Input i</td>
- * 		<td>-Input i, 1</td>
- * 		<td>Input i, 1</td>
- * 		<td>...</td>
- * 		<td>Input i, n</td>
- * 		<td>0</td>
- * 		<td>...</td>
- * 		<td>0</td>
- * 		<td>E</td>
- * 		<td>0</td>
- * </tr>
- * <tr>
- * 		<td>Ouput p</td>
- * 		<td>0</td>
- * 		<td>Output p, 1</td>
- * 		<td>...</td>
- * 		<td>Output p, n</td>
- * 		<td>0</td>
- * 		<td>...</td>
- * 		<td>-1</td>
- * 		<td>E</td>
- * 		<td>Output p, 1</td>
- * </tr>
- * </table>
- * </center>
- * <p>
- *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
- *  (e.g. -Inputi 1 being the ith input of DMU1).
- * </p>
- * @author Hubert Virtos
- *
- */
-public  class CCR {
-
-	/**
-	 * The method solving the CCR Problem.
-	 * @param deaP An instance of DEAProblem.
-	 * @throws Exception 
-	 */
-	public static DEAPSolution solveCCR(DEAProblem deaP) throws Exception {
-		
-		/* Declare & Collect the variables that will often be used in the process (rather
-		 * than calling the different methods several times.*/
-		try {
-			int nbDMUs = deaP.getNumberOfDMUs();
-			int nbVariables = deaP.getNumberOfVariables();
-			double [] [] transposedMatrix = new double [nbVariables] [nbDMUs];
-			transposedMatrix = deaP.getTranspose(true); //Want the negative Transposed
-			DEAPSolution returnSol = new DEAPSolution(nbDMUs, nbVariables);
-			
-						
-			
-			
-			/* As the CCR optimisation needs to be ran for all DMUs, 
-			 * the program will loop through all DMUs.
-			 * Also, the CCR model is solved in two phases.
-			 * The problem will consequently be solved for each DMUs for Phase I and
-			 * solved again for each DMUs for Phase II.*/
-			
 	
-			
-			for (int dmuIndex = 0; dmuIndex < nbDMUs; dmuIndex++) {
-				
-				  createAndSolveCCR(deaP, nbDMUs, nbVariables, transposedMatrix,
-						returnSol, dmuIndex);
-			}
-			return returnSol;
-		}
-		catch (Exception e) {
-			throw e;
-		}
-	}
-
-
-	private static void createAndSolveCCR(DEAProblem deaP, int nbDMUs,
+	/**
+	 * This method creates and solves the CCR problems. The CCRO solution is derived from
+	 * CCRI solution (the CCRO model is thus never built).
+	 * @param deaP The DEAProblem to solve.
+	 * @param nbDMUs The number of DMUs of the DEAProblem.
+	 * This information is already in the DEAProblem but it is more efficient to use call the method
+	 * with the number of DMUs rather than determining the number of DMUs from the DEAProblem.
+	 * @param nbVariables The number of Variables of the DEA Problem.
+	 * @param transposedMatrix The transposed of the DEAProblem matrix (model in the envelopment form)
+	 * @param returnSol The Solution Object in which the solution will be stored.
+	 * @param dmuIndex The index of the DMU under examination.
+	 * @throws MissingDataException
+	 * @throws ProblemNotSolvedProperlyException
+	 * @throws DEASolverException
+	 */
+	@Override
+	public void createAndSolve(DEAProblem deaP, int nbDMUs,
 			int nbVariables, double[][] transposedMatrix,
-			DEAPSolution returnSol, Integer dmuIndex) throws DEASolverException, Exception {
-		/////////////////////////////
-		 //		Solve Phase I		//
-		/////////////////////////////
-		
-		//Build model for Phase I
-
-		/*
-		 * The model is built with an array as follows:
-		 * 
-		 * 	Variable:		Theta	  Lambda 1   .....	  Lambda n      Slack 1  ...  Slack p		DIR		RHS
-		 *  
-		 *  Obj Coeff:		  1		     0       .....       0		      0      ...     0			 
-		 *  
-		 *  DMU1 (input)   -Input1 1  Input1 1   .....     Input1 n       1      ...     0			 E		 0
-		 *  DMUi (input)   -Inputi 1  Inputi 1   .....     Inputi n       0      ...     0			 E		 0
-		 *  DMUp (output)     0	      Outputp 1  .....     Outputp n      0      ...    -1			 E	  Output p 1
-		 * 
-		 * 
-		 *  Where the input values of the DMU being optimised are put in the Theta column and timed by -1
-		 *  (e.g. -Inputi 1 being the ith input of DMU1).
-		 */
-		
+			DEAPSolution returnSol, Integer dmuIndex)
+		throws ProblemNotSolvedProperlyException, DEASolverException, MissingDataException {
 		
 		ArrayList<double[]> constraints = new ArrayList<double []>();
 		double[] objF = new double [nbDMUs + nbVariables + 1];
-		double[] rhs1 = new double [nbVariables]; //RHS Phase I
-		double[] rhs2;// = new double [NbVariables]; //RHS Phase II
-		int[] solverEqualityType = new int[nbVariables];
-
-		createPhaseOneModel(deaP, nbDMUs, nbVariables, transposedMatrix, dmuIndex,
-				constraints, objF, rhs1, solverEqualityType);
-		
-		
-		//Solve
+		double[] rhs1;
+		double[] rhs2;
+		int[] solverEqualityType1;
+		int[] solverEqualityType2;
 		SolverResults sol = new SolverResults();
 		
-		try {
-			sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN, solverEqualityType);
-		}
-		catch (ProblemNotSolvedProperlyException e1) {
-			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString()
-					+". The error was: " + e1.getMessage());
-		}
-		catch (DEASolverException e2) {
-			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString()
-					+ ". The error was: " + e2.getMessage());
-		}
+		  /////////////////////
+		 //		Phase I		//
+		/////////////////////
+		
+		//Instantiate the rhs1 and solverEqualityType1 arrays
+		rhs1 = new double [nbVariables]; //RHS Phase I
+		solverEqualityType1 = new int[nbVariables];
+		
+		solvePhaseI(deaP, nbDMUs, nbVariables, transposedMatrix, dmuIndex,
+					constraints, objF, rhs1, solverEqualityType1, returnSol, sol);
 
-		
-		storePhaseOneInformation(deaP, returnSol, dmuIndex, sol);
-		
 		
 		  /////////////////////////////
 		 //		Solve Phase II		//
@@ -218,206 +62,273 @@ public  class CCR {
 		 * - add the corresponding Theta to the RHS Array
 		 * - change the Objective Function accordingly (all 1 on Slacks, all others coeff = 0).*/
 		
+		//Instantiate the rhs2 and solverEqualityType2 arrays
 		rhs2 = new double[nbVariables + 1];
-		solverEqualityType = new int[nbVariables + 1];
+		solverEqualityType2 = new int[nbVariables + 1];
 		
-		createPhaseTwoModel(nbDMUs, nbVariables, constraints, objF, rhs1, rhs2,
-				solverEqualityType, sol);
+		solvePhaseII(deaP, nbDMUs, nbVariables, constraints, objF, rhs1,
+				rhs2, solverEqualityType1, solverEqualityType2, sol, returnSol, dmuIndex);
+
+	}
+
+	
+	
+	
+	
+	private void solvePhaseI (DEAProblem deaP, int nbDMUs,
+			int nbVariables, double[][] transposedMatrix, Integer dmuIndex,
+			ArrayList<double[]> constraints, double[] objF, double[] rhs1,
+			int[] solverEqualityType1, DEAPSolution returnSol, SolverResults sol)
+	throws ProblemNotSolvedProperlyException, DEASolverException, MissingDataException  {
+		
+		createPhaseOneModel(deaP, nbDMUs, nbVariables, transposedMatrix, dmuIndex,
+				constraints, objF, rhs1, solverEqualityType1);
+
+		sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN,
+				solverEqualityType1);
+		
+		storePhaseOneInformation(deaP, returnSol, dmuIndex, sol);
+		
+	}
+	
+	
+	private void solvePhaseII (DEAProblem deaP, int nbDMUs, int nbVariables, ArrayList<double[]> constraints, double[] objF,
+			double[]rhs1, double[] rhs2, int[] solverEqualityType1, int[] solverEqualityType2, SolverResults sol,
+			DEAPSolution returnSol, Integer dmuIndex) throws ProblemNotSolvedProperlyException, DEASolverException, MissingDataException {
+		
+		createPhaseTwoModel(deaP, nbDMUs, nbVariables, constraints, objF, rhs1,
+				rhs2, solverEqualityType1, solverEqualityType2, returnSol, dmuIndex);
+		
 		
 		//Solve the Phase II Problem
-		try {
-			sol = Lpsolve.solveLPProblem(constraints, objF, rhs2, SolverObjDirection.MAX, solverEqualityType);
+		sol = Lpsolve.solveLPProblem(constraints, objF, rhs2, SolverObjDirection.MAX,
+				solverEqualityType2);
+
+		storePhaseTwoInformation(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
+		
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param deaP
+	 * @param nbDMUs
+	 * @param nbVariables
+	 * @param returnSol
+	 * @param dmuIndex
+	 * @param sol
+	 * @throws MissingDataException 
+	 */
+	private static void storePhaseTwoInformation(DEAProblem deaP, int nbDMUs,
+			int nbVariables, DEAPSolution returnSol, int dmuIndex, SolverResults sol) throws MissingDataException {
+		
+		//Collect information from Phase II (Theta)
+	
+		//Collect information from Phase II (Theta)
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		if(deaP.getModelType() == ModelType.CCR_I) {
+			for(int lambdaPos = 0; lambdaPos < nbDMUs; lambdaPos++) {
+				if(sol.VariableResult[lambdaPos + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaPos, sol.VariableResult[lambdaPos + 1]));
+				}
+			}
+			returnSol.setReferenceSet(dmuIndex, refSet);
+			returnSol.setSlackArrayCopy(dmuIndex, sol.VariableResult, nbDMUs + 1, nbVariables);
 		}
-		catch (ProblemNotSolvedProperlyException e1) {
-			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString()
-					+". The error was: " + e1.getMessage());
-		}
-		catch (DEASolverException e2) {
-			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
-					+ dmuIndex.toString()
-					+ ". The error was: " + e2.getMessage());
+		else {
+			for(int lambdaIndex = 0; lambdaIndex < nbDMUs; lambdaIndex++) {
+				if(sol.VariableResult[lambdaIndex + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaIndex,
+							sol.VariableResult[lambdaIndex + 1] / returnSol.getObjective(dmuIndex)));
+				}
+			}
+			returnSol.setReferenceSet(dmuIndex, refSet);
+			for(int varIndex = 0; varIndex < nbVariables; varIndex++) {
+				//setSlack(i, s, Sol.VariableResult[NbDMUs + 1 + s] * ReturnSol.getObjective(i));
+				returnSol.setSlack(dmuIndex, varIndex, sol.VariableResult[nbDMUs + 1 + varIndex] / returnSol.getObjective(dmuIndex));
+			}
 		}
 		
-		
-		try {
-			storePhaseTwoInformation(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
-		} catch (Exception e) {
-			throw e;
+		if(deaP.getModelType() == ModelType.CCR_I) {
+			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
+				if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							returnSol.getObjective(dmuIndex) * deaP.getDataMatrix(dmuIndex, varIndex)
+							- returnSol.getSlack(dmuIndex, varIndex));
+				}
+				else {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							deaP.getDataMatrix(dmuIndex, varIndex) + returnSol.getSlack(dmuIndex, varIndex));
+				}
+			}
 		}
+		else {
+			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
+				if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							(1 / returnSol.getObjective(dmuIndex)) * deaP.getDataMatrix(dmuIndex, varIndex)
+							+ returnSol.getSlack(dmuIndex, varIndex));
+				}
+				else {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							deaP.getDataMatrix(dmuIndex, varIndex) - returnSol.getSlack(dmuIndex, varIndex));
+				}
+			}
+		}
+
+		SolverStatus.checkSolverStatus(returnSol, sol);
+
 	}
 
-
-	private static void createPhaseTwoModel(int nbDMUs, int nbVariables,
-			ArrayList<double[]> constraints, double[] objF, double[] rhs1,
-			double[] rhs2, int[] solverEqualityType, SolverResults sol) {
+	/**
+	 * Creates the model for the second phase of the BCC model.
+	 * @param deaP The DEAProblem to solve.
+	 * @param nbDMUs The number of DMUs of the DEAProblem.
+	 * @param nbVariables The number of Variables of the DEA Problem.
+	 * @param Constraints The Constraints of the DEA Problem
+	 * @param ObjF The Objective function of the DEA Problem
+	 * @param RHS1 The Right Hand Side element of the first phase.
+	 * @param RHS2 The Right Hand Side element of the second phase.
+	 * @param SolverEqualityType1 The equality type (equal, lower or equal...) from the first phase.
+	 * @param SolverEqualityType2 The equality type (equal, lower or equal...) from the second phase.
+	 * @param Sol The Solver result object
+	 * @throws MissingDataException 
+	 */
+	private static void createPhaseTwoModel(DEAProblem deaP, int NbDMUs,
+			int NbVariables, ArrayList<double[]> Constraints, double[] ObjF,
+			double[] RHS1, double[] RHS2, int[] SolverEqualityType1,
+			int[] SolverEqualityType2, DEAPSolution Sol, int dmuIndex) throws MissingDataException {
+		
+		double[] ConstraintRow;
+		
 		//Changing Constraint Matrix
-		double[] constraintRow = new double[nbDMUs + nbVariables + 1];
-		constraintRow[0] = 1;
-		constraints.add(constraintRow);
+		ConstraintRow = new double[NbDMUs + NbVariables + 1];
+		ConstraintRow[0] = 1;
+		Constraints.add(ConstraintRow);
+				
 		
 		//Changing RHS & SolverEqTypes
-		System.arraycopy(rhs1, 0, rhs2, 0, rhs1.length);
-		rhs2[nbVariables] = sol.Objective;
-		
-		for(int varIndex = 0; varIndex < nbVariables + 1; varIndex++) {
-			solverEqualityType[varIndex] = LpSolve.EQ;
+		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
+		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED){
+			RHS2[NbVariables] = Sol.getObjective(dmuIndex);
 		}
+		else {
+			RHS2[NbVariables] =/* 1 /*/ Sol.getObjective(dmuIndex);
+		}
+		System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
+				SolverEqualityType1.length);
+		SolverEqualityType2[NbVariables] = LpSolve.EQ;
+
 		
-		
+	
 		//Change Objective Function
-		Arrays.fill(objF,0);
-		for (int j = nbDMUs + 1; j <= nbDMUs + nbVariables; j++) {
-			objF[j] = 1;
+		Arrays.fill(ObjF,0);
+		for (int j = NbDMUs + 1; j < NbDMUs + NbVariables; j++) {
+			ObjF[j] = 1;
 		}
+
 	}
 
-
+	/**
+	 * Stores phase one solution.
+	 * @param deaP The DEAProblem being solved.
+	 * @param returnSol The solution where results are stored.
+	 * @param i
+	 * @param sol
+	 * @throws MissingDataException 
+	 * @throws Exception
+	 */
 	private static void storePhaseOneInformation(DEAProblem deaP,
-			DEAPSolution returnSol, int i, SolverResults sol) {
-		//Collect information from Phase I (Theta)
-		if(deaP.getModelType() == ModelType.CCR_I) {
-			returnSol.setObjective(i, sol.Objective);
+			DEAPSolution returnSol, int i, SolverResults sol) throws MissingDataException {
+
+		//Collect information from Phase I (Theta)	
+		returnSol.setObjective(i, sol.Objective);
+
+
+		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 			returnSol.setWeights(i, sol.Weights);
 		}
 		else {
-			if(sol.Objective != 0) {
-				returnSol.setObjective(i, 1 / sol.Objective);
-				for(int w = 0; w < sol.Weights.length; w++) {
-					returnSol.setWeight(i, w, sol.Weights[w] / sol.Objective);
-				}
-			}
-			else {
-				returnSol.setObjective(i, 0);
-				for(int w = 0; w < sol.Weights.length; w++) {
-					returnSol.setWeight(i, w, sol.Weights[w]);
-				}
+			returnSol.setWeights(i, new double[sol.Weights.length]);
+			for(int k = 0; k < sol.Weights.length; k++) {
+				returnSol.setWeight(i, k, sol.Weights[k] / sol.Objective);
 			}
 		}
-		
+
 		SolverStatus.checkSolverStatus(returnSol, sol);
 	}
 
-
-	private static void storePhaseTwoInformation(DEAProblem deaP, int nbDMUs,
-			int nbVariables, DEAPSolution returnSol, int dmuIndex, SolverResults sol) throws Exception {
-		
-		try{
-			//Collect information from Phase II (Theta)
-			ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-			if(deaP.getModelType() == ModelType.CCR_I) {
-				for(int lambdaPos = 0; lambdaPos < nbDMUs; lambdaPos++) {
-					if(sol.VariableResult[lambdaPos + 1] != 0) {
-						refSet.add(new NonZeroLambda(lambdaPos, sol.VariableResult[lambdaPos + 1]));
-					}
-				}
-				returnSol.setReferenceSet(dmuIndex, refSet);
-				returnSol.setSlackArrayCopy(dmuIndex, sol.VariableResult, nbDMUs + 1, nbVariables);
-			}
-			else {
-				for(int lambdaIndex = 0; lambdaIndex < nbDMUs; lambdaIndex++) {
-					if(sol.VariableResult[lambdaIndex + 1] != 0) {
-						refSet.add(new NonZeroLambda(lambdaIndex,
-								sol.VariableResult[lambdaIndex + 1] * returnSol.getObjective(dmuIndex)));
-					}
-				}
-				returnSol.setReferenceSet(dmuIndex, refSet);
-				for(int varIndex = 0; varIndex < nbVariables; varIndex++) {
-					//setSlack(i, s, Sol.VariableResult[NbDMUs + 1 + s] * ReturnSol.getObjective(i));
-					returnSol.setSlack(dmuIndex, varIndex, sol.VariableResult[nbDMUs + 1 + varIndex] * returnSol.getObjective(dmuIndex));
-				}
-			}
-			
-			if(deaP.getModelType() == ModelType.CCR_I) {
-				for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
-					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex,
-								returnSol.getObjective(dmuIndex) * deaP.getDataMatrix(dmuIndex, varIndex)
-								- returnSol.getSlack(dmuIndex, varIndex));
-					}
-					else {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex,
-								deaP.getDataMatrix(dmuIndex, varIndex) + returnSol.getSlack(dmuIndex, varIndex));
-					}
-				}
-			}
-			else {
-				for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
-					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex,
-								returnSol.getObjective(dmuIndex) * deaP.getDataMatrix(dmuIndex, varIndex)
-								+ returnSol.getSlack(dmuIndex, varIndex));
-					}
-					else {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex,
-								deaP.getDataMatrix(dmuIndex, varIndex) - returnSol.getSlack(dmuIndex, varIndex));
-					}
-				}
-			}
-			
-			SolverStatus.checkSolverStatus(returnSol, sol);
-		}
-		catch (Exception e) {
-			throw e;
-		}
-	}
-
-
+	/**
+	 * 
+	 * @param deaP
+	 * @param nbDMUs
+	 * @param nbVariables
+	 * @param transposedMatrix
+	 * @param dmuIndex
+	 * @param constraints
+	 * @param objF
+	 * @param rhs1
+	 * @param solverEqualityType1
+	 * @throws MissingDataException 
+	 */
 	private static void createPhaseOneModel(DEAProblem deaP, int nbDMUs,
 			int nbVariables, double[][] transposedMatrix, int dmuIndex,
 			ArrayList<double[]> constraints, double[] objF, double[] rhs1,
-			int[] solverEqualityType) throws Exception {
+			int[] solverEqualityType1) throws MissingDataException {
 		
-		
-		try {
-			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
-				
-				//Build Model for each DMU
-				
-				//Build the Constraint Matrix
-				double[] constraintRow = new double[nbDMUs + nbVariables + 1];
-				//First column (input values for  DMU under observation (i) * -1; 0 for outputs)
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-					constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
-				}
-				else {
-					constraintRow[0] = 0;
-				}
-				//Copy rest of the data matrix
-				System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 1, nbDMUs);
-				//and slacks
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-					constraintRow[nbDMUs + 1 + varIndex] = -1;
-				}
-				else {
-					constraintRow[nbDMUs + 1 + varIndex] = 1;
-				}
-				constraints.add(constraintRow);
-				
-				
-				//Build RHS & SolverEqualityTypes
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-					rhs1[varIndex] = 0;
-					solverEqualityType[varIndex] = LpSolve.EQ;
-				}
-				else {
-					rhs1[varIndex] = transposedMatrix[varIndex] [dmuIndex];
-					solverEqualityType[varIndex] = LpSolve.EQ;
-				}
-			
+		double[] constraintRow;
+		for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
+						
+			//Build the Constraint Matrix, row by row
+			constraintRow = new double[nbDMUs + nbVariables + 1];
+			//First column (input values for  DMU under observation (DMUIndex) * -1; 0 for outputs)
+			if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+				constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 			}
-		}
-		catch (Exception e) {
-			throw e;
-		}
-		/* Build Objective Function (Theta column is assigned the weight 1.
-		 * All the other columns are left to 0).*/
+			else  {
+				constraintRow[0] = 0;
+			}
+	
+			//Copy rest of the data matrix
+			System.arraycopy(transposedMatrix[varIndex], 0, constraintRow, 1, nbDMUs);
+			
+			//and slacks
+			if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+				constraintRow[nbDMUs + 1 + varIndex] = -1;
+			}
+			else {
+				constraintRow[nbDMUs + 1 + varIndex] = 1;
+			}
+			
+			//Add the row to the Constraints ArrayList
+			constraints.add(constraintRow);
+		
+			//Build RHS & SolverEqualityTypes
+			if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+				rhs1[varIndex] = 0;
+				solverEqualityType1[varIndex] = LpSolve.EQ;
+			}
+			else {
+				rhs1[varIndex] = transposedMatrix[varIndex] [dmuIndex];
+				solverEqualityType1[varIndex] = LpSolve.EQ;
+			}
+
+
+		} //finished looping through all variables
+
+		
+		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).
 		objF[0] = 1;
+		
 	}
 
+	
 
+	
 }
