@@ -197,7 +197,7 @@ public class LibraryTestSBMIV {
 	@Test
 	public void TestSBMIV() {
 		
-		BuildDEAProblem(ModelType.SBMI_V); //, DEAModelOrientation.NonOriented);
+		BuildDEAProblem(ModelType.SBM_I_V); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();

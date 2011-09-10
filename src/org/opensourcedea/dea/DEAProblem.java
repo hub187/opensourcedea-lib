@@ -113,6 +113,7 @@ public class DEAProblem {
 			}
 		}
 		catch (InvalidPropertyValueException e) {
+			//These values are fine and should never throw an error (or the setRTS methods are wrong).
 			e.printStackTrace();
 		}
 
@@ -158,6 +159,16 @@ public class DEAProblem {
 				this.getModelType() == ModelType.SBM_V ||
 				this.getModelType() == ModelType.SBM_GRS){
 			model = new SBM();
+		}
+		else if(this.getModelType() == ModelType.SBM_I ||
+				this.getModelType() == ModelType.SBM_I_V ||
+				this.getModelType() == ModelType.SBM_I_GRS) {
+			model = new SBM_I();
+		}
+		else if(this.getModelType() == ModelType.SBM_O ||
+				this.getModelType() == ModelType.SBM_O_V ||
+				this.getModelType() == ModelType.SBM_O_GRS){
+			model = new SBM_O();
 		}
 
 	}
@@ -616,78 +627,8 @@ public class DEAProblem {
 	public void solve() throws MissingDataException, InconsistentNoOfDMUsException, InconsistentNoOfVariablesException, DEAException {
 		
 		checkDataBeforeSolving();
-		
-		
-			/* DEBUG ONLY
-			 * THIS CODE WILL REPLACE THE SWITCH BELOW
-			 * (NECESSARY FOR ALL THE TESTS TO WORK DURING THE REFACTORING)
-			 * THIS CODE WILL BE REPLACED BY A SINGLE CODE LINE:
-			 * 'model.solve(this);'*/
-			if(this.getModelType() == ModelType.BCC_I ||
-					this.getModelType() == ModelType.BCC_O ||
-					this.getModelType() == ModelType.GRS_I ||
-					this.getModelType() == ModelType.GRS_O ||
-					this.getModelType() == ModelType.IRS_I ||
-					this.getModelType() == ModelType.IRS_O ||
-					this.getModelType() == ModelType.DRS_I ||
-					this.getModelType() == ModelType.DRS_O ||
-					this.getModelType() == ModelType.CCR_I ||
-					this.getModelType() == ModelType.CCR_O ||
-				
-					this.getModelType() == ModelType.NC_I ||
-					this.getModelType() == ModelType.NC_O ||
-					this.getModelType() == ModelType.NC_I_V ||
-					this.getModelType() == ModelType.NC_O_V ||
-					this.getModelType() == ModelType.NC_I_IRS ||
-					this.getModelType() == ModelType.NC_I_DRS ||
-					this.getModelType() == ModelType.NC_O_IRS ||
-					this.getModelType() == ModelType.NC_O_DRS ||
-					this.getModelType() == ModelType.NC_I_GRS ||
-					this.getModelType() == ModelType.NC_O_GRS ||
-					
-					this.getModelType() == ModelType.ND_I ||
-					this.getModelType() == ModelType.ND_O ||
-					this.getModelType() == ModelType.ND_I_V ||
-					this.getModelType() == ModelType.ND_O_V ||
-					this.getModelType() == ModelType.ND_I_IRS ||
-					this.getModelType() == ModelType.ND_I_DRS ||
-					this.getModelType() == ModelType.ND_O_IRS ||
-					this.getModelType() == ModelType.ND_O_DRS ||
-					this.getModelType() == ModelType.ND_I_GRS ||
-					this.getModelType() == ModelType.ND_O_GRS ||
-					
-					this.getModelType() == ModelType.SBM ||
-					this.getModelType() == ModelType.SBM_V ||
-					this.getModelType() == ModelType.SBM_GRS){
-				this.solution = model.solve(this, true);
-				return;
-			}
 
-			
-			/* Will get rid of this try catch as well as whole switch statement
-			 * after the model.solve method works for all the models.*/
-			try {
-			switch (this.modelDetails.getModelType()) {
-				
-				case SBM_I: this.solution = SBMI.solveSBMI(this); break;
-				
-				case SBMI_V: this.solution = SBMI.solveSBMI(this); break;				
-				
-				case SBM_I_GRS: this.solution = SBMI.solveSBMI(this); break;
-				
-				case SBM_O: this.solution = SBMO.solveSBMO(this); break;
-				
-				case SBM_O_V: this.solution = SBMO.solveSBMO(this); break;
-				
-				case SBM_O_GRS: this.solution = SBMO.solveSBMO(this); break;
-				
-				
-			}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		
+		this.solution = model.solve(this);
 		
 	}
 

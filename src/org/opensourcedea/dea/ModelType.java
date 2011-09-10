@@ -125,7 +125,7 @@ public enum ModelType {
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.CONSTANT),
-	SBMI_V ("The Input Oriented version of the SBM model assuming VARIABLE RTS.",
+	SBM_I_V ("The Input Oriented version of the SBM model assuming VARIABLE RTS.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnToScale.VARIABLE),	

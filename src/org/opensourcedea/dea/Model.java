@@ -14,7 +14,7 @@ public class Model {
 	 * @throws DEASolverException
 	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public DEAPSolution solve(DEAProblem deaP, boolean negativeTranspose) 
+	public DEAPSolution solve(DEAProblem deaP) 
 	throws MissingDataException, DEASolverException, ProblemNotSolvedProperlyException {
 		
 		Integer dmuIndex = 0;
@@ -22,7 +22,11 @@ public class Model {
 		try {
 			int nbDMUs = deaP.getNumberOfDMUs();
 			int nbVars = deaP.getNumberOfVariables();
-			double[][] transPosM = deaP.getTranspose(negativeTranspose);
+			/* Although the negative transpose often allow the model built
+			 * to be closer to the mathematical examples, returning the negative
+			 * transpose is not really efficient. It might be worth changing all the
+			 * models to use the positive transpose?*/ 
+			double[][] transPosM = deaP.getTranspose(true);
 			
 			DEAPSolution tempSol = new DEAPSolution(nbDMUs, nbVars);
 			
