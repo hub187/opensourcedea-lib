@@ -68,6 +68,8 @@ public class DEAProblem {
 		this.solution = new DEAPSolution(nbDMUs, nbVariables);
 		this.variable = new Variable(nbVariables);
 		this.modelDetails = new ModelDetails();
+		this.modelDetails.setNbDMUs(nbDMUs);
+		this.modelDetails.setNbVariables(nbVariables);
 	}
 	
 
@@ -99,7 +101,8 @@ public class DEAProblem {
 		
 		//Cast to different DEAPsolution if not constant RTS
 		if(modType.getReturnToScale() == ReturnToScale.VARIABLE) {
-			solution = new DEAPSolutionVariableRTS(solution.getObjectives().length, solution.getWeights(0).length);
+			//Use an Abstract Factory instead!!
+			solution = new DEAPSolutionVariableRTS(this.getNumberOfDMUs(), this.getNumberOfVariables());
 		}
 		
 		this.modelDetails.setModelType(modType);
@@ -468,18 +471,9 @@ public class DEAProblem {
 	/**
 	 * Gets the number of DMUs in the DEA Problem
 	 * @return The number of DMUs.
-	 * @throws MissingDataException 
 	 */
-	public int getNumberOfDMUs() throws MissingDataException {
-		int nbDMUs;
-		try {
-			nbDMUs = this.dataMatrix.length;
-			return nbDMUs;
-		}
-		catch (Exception e) {
-			throw new MissingDataException("The Data Matrix is null!");
-		}
-		
+	public int getNumberOfDMUs()  {
+		return this.modelDetails.getNbDMUs();
 	}
 	
 	/**
@@ -525,17 +519,9 @@ public class DEAProblem {
 	/**
 	 * Gets the number of Variables in the DEA Problem
 	 * @return The number of Variables.
-	 * @throws MissingDataException 
 	 */
-	public int getNumberOfVariables() throws MissingDataException {
-		int nbVariables;
-		try {
-			nbVariables = this.dataMatrix[0].length;
-			return nbVariables;
-		}
-		catch (Exception e) {
-			throw new MissingDataException("The Data Matrix is null!");
-		}
+	public int getNumberOfVariables() {
+		return this.getNumberOfVariables();
 	}
 	
 	/**

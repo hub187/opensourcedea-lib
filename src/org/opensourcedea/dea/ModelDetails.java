@@ -32,6 +32,8 @@ public class ModelDetails {
 	private ModelType modelType;
 	private double rtsLowerBound;
 	private double rtsUpperBound;
+	private int nbDMUs;
+	private int nbVariables;
 	
 	
 	/**
@@ -90,6 +92,38 @@ public class ModelDetails {
 			throw new InvalidPropertyValueException("Upper Bound must be greater or equal to 1.");
 		}
 		this.rtsUpperBound = rtsUpperBound;
+	}
+	
+	/**
+	 * Sets the number of DMUs in the DEAProblem
+	 * @param nbDMUs
+	 */
+	public void setNbDMUs(int nbDMUs) {
+		this.nbDMUs = nbDMUs;
+	}
+	
+	/**
+	 * Sets the number of Variable in the DEA Problem
+	 * @return the number of DMUs
+	 */
+	public int getNbDMUs() {
+		return nbDMUs;
+	}
+	
+	/**
+	 * Sets the number of Variables in the DEAProblem
+	 * @param nbVariables
+	 */
+	public void setNbVariables(int nbVariables) {
+		this.nbVariables = nbVariables;
+	}
+	
+	/**
+	 * Gets the number of Variable in the DEA Problem
+	 * @return
+	 */
+	public int getNbVariables() {
+		return nbVariables;
 	}
 	
 	
