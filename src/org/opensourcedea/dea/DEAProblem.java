@@ -55,7 +55,7 @@ public class DEAProblem {
 	private double [] [] dataMatrix;
 	private ModelDetails modelDetails;
 	private Variable variable;
-	private org.opensourcedea.dea.DEAPSolution solution;
+	private DEAPSolution solution;
 	private Model model;
 	
 	
@@ -96,8 +96,12 @@ public class DEAProblem {
 	 */
 	public void setModelType(ModelType modType)
 	{
-		/* The line below should be replaced by a switch statement when
-		 * the refactoring is finished.*/
+		
+		//Cast to different DEAPsolution if not constant RTS
+		if(modType.getReturnToScale() == ReturnToScale.VARIABLE) {
+			solution = new DEAPSolutionVariableRTS(solution.getObjectives().length, solution.getWeights(0).length);
+		}
+		
 		this.modelDetails.setModelType(modType);
 		
 		try {

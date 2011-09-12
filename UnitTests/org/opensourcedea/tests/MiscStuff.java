@@ -46,7 +46,7 @@ public class MiscStuff {
 				e.printStackTrace();
 			}
 			if (tester.getWeight(0).length > 4) {
-				System.out.println("Model Type: " + modType.toString() + " has: " + tester.getWeight(0).length + " weights");
+				System.out.println("The model assumes: " + tester.getModelRTS().toString() + " RTS. The Model Type is: " + modType.toString() + " has: " + tester.getWeight(0).length + " weights");
 			}
 		}
 		

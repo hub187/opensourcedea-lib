@@ -55,7 +55,7 @@ public class DEAPSolution {
 		/*The solution Attributes will be put one by one at each solver optimisation (for each DMU).
 		 * The array are initialised here for this reason.*/
 		setObjectives(new double[nbDMUs]);
-		slacks = new double[nbDMUs] [nbVariables];
+		setSlacks(new double[nbDMUs] [nbVariables]);
 		setReferenceSets((ArrayList<NonZeroLambda>[])new ArrayList[nbDMUs]);
 		setWeights(new double[nbDMUs] [nbVariables]);
 		setProjections(new double[nbDMUs] [nbVariables]);
