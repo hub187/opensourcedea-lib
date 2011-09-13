@@ -27,8 +27,8 @@ public class ProblemNotSolvedProperlyException extends DEAException {
 	private static final long serialVersionUID = 1L;
 
 	public ProblemNotSolvedProperlyException() {
-		super("One of the problem was not solved successfully." +
-				"You cannot read a solution from a DEA Problem when a DMU optimisation was not solved optimally.");
+		super("The DEA Problem was not solved or at least one optimisation failed to find an optimum." +
+				"You cannot read a solution from a DEA Problem if not all optimisations were sucessfull.");
 	}
 	public ProblemNotSolvedProperlyException(String detailMsg) {
 		super(detailMsg);

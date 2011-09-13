@@ -39,6 +39,9 @@ public class DEAPSolution {
 	private double[] [] slacks;
 	private ArrayList<NonZeroLambda>[] referenceSet;
 	private double[] [] weights;
+	private double u0Weight;
+	private double lBConvexityConstraintWeight;
+	private double uBConvexityConstraintWeight;
 	private double[] [] projections;
 	private SolverReturnStatus status;
 
@@ -330,6 +333,63 @@ public class DEAPSolution {
 	 */
 	public SolverReturnStatus getStatus() {
 		return this.status;
+	}
+
+	/**
+	 * Sets the u0 weight (corresponding to the convexity constraint on variable models).
+	 * @param u0Weight
+	 */
+	public void setU0Weight(double u0Weight) {
+		this.u0Weight = u0Weight;
+	}
+
+	
+	/**
+	 * Gets the u0 weight (corresponding to the convexity constraint on variable models).
+	 * @return the u0 weight
+	 */
+	public double getU0Weight() {
+		return u0Weight;
+	}
+
+	
+	/**
+	 * Sets the weight corresponding to the lower bound convexity constraint on
+	 * general, increasing and decreasing models.
+	 * @param lBConvexityConstraintWeight
+	 */
+	public void setlBConvexityConstraintWeight(double lBConvexityConstraintWeight) {
+		this.lBConvexityConstraintWeight = lBConvexityConstraintWeight;
+	}
+
+	
+	/**
+	 * Gets the weight corresponding to the lower bound convexity constraint on
+	 * general, increasing and decreasing models.
+	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 */
+	public double getlBConvexityConstraintWeight() {
+		return lBConvexityConstraintWeight;
+	}
+
+	
+	/**
+	 * Sets the weight corresponding to the upper bound convexity constraint on
+	 * general, increasing and decreasing models.
+	 * @param uBConvexityConstraintWeight
+	 */
+	public void setuBConvexityConstraintWeight(double uBConvexityConstraintWeight) {
+		this.uBConvexityConstraintWeight = uBConvexityConstraintWeight;
+	}
+
+	
+	/**
+	 * Gets the weight corresponding to the upper bound convexity constraint on
+	 * general, increasing and decreasing models.
+	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 */
+	public double getuBConvexityConstraintWeight() {
+		return uBConvexityConstraintWeight;
 	}
 
 	

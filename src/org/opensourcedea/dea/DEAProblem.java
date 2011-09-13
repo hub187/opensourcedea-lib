@@ -99,12 +99,6 @@ public class DEAProblem {
 	public void setModelType(ModelType modType)
 	{
 		
-		//Cast to different DEAPsolution if not constant RTS
-		if(modType.getReturnToScale() == ReturnToScale.VARIABLE) {
-			//Use an Abstract Factory instead!!
-			solution = new DEAPSolutionVariableRTS(this.getNumberOfDMUs(), this.getNumberOfVariables());
-		}
-		
 		this.modelDetails.setModelType(modType);
 		
 		try {
@@ -521,7 +515,7 @@ public class DEAProblem {
 	 * @return The number of Variables.
 	 */
 	public int getNumberOfVariables() {
-		return this.getNumberOfVariables();
+		return this.modelDetails.getNbVariables();
 	}
 	
 	/**
@@ -665,15 +659,24 @@ public class DEAProblem {
 	}
 	
 	/**
+	 * Private method that checks whether model was solved properly and throws an exception instead.
+	 * This method should be used for ALL the getSomeInformationOnDEAPSolution methods.
+	 * @throws ProblemNotSolvedProperlyException
+	 */
+	private void testProblemSolvedProperly() throws ProblemNotSolvedProperlyException {
+		if(this.solution.getStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
+			throw new ProblemNotSolvedProperlyException();
+		}
+	}
+	
+	/**
 	 * Returns the Objectives of all the DMUs.
 	 * @return A double[] corresponding to all the DMUs Objectives.
 	 * @throws ProblemNotSolvedProperlyException 
 	 */
 	public double[] getObjectives() throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		return this.solution.getObjectives();
 	}
 	
@@ -685,28 +688,13 @@ public class DEAProblem {
 	 */
 	public double getObjective(int dmuNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		
 		return this.solution.getObjective(dmuNumber);
 
 	}
 		
 
-
-	
-//	/**
-//	 * Returns the Lambda of the specified DMU and Lambda.
-//	 * @param DMUNumber The DMU Number
-//	 * @param Lambda The Lambda Number
-//	 * @return The value of the lambda for the specified DMU and Lambda
-//	 */
-//	public double getLambda(int DMUNumber, int Lambda)
-//	{
-//		return _Solution.Lambdas[DMUNumber] [Lambda];
-//	}
-	
 	
 	
 	/**
@@ -717,9 +705,7 @@ public class DEAProblem {
 	 */
 	public double[] getSlacks(int dmuNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		
 		return this.solution.getSlacks(dmuNumber);
 
@@ -734,9 +720,7 @@ public class DEAProblem {
 	 */
 	public double getSlack(int dmuNumber, int varNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 
 		return this.solution.getSlack(dmuNumber, varNumber);
 	}
@@ -748,9 +732,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getSlacks() throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		return this.solution.getSlacks();
 	}
 	
@@ -764,9 +746,7 @@ public class DEAProblem {
 	 */
 	public double[] getWeight(int dmuNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 	
 		return this.solution.getWeights(dmuNumber);
 
@@ -781,9 +761,7 @@ public class DEAProblem {
 	 */
 	public double getWeight(int dmuNumber, int varNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 
 		return this.solution.getWeight(dmuNumber, varNumber);
 
@@ -796,9 +774,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getWeight() throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		return this.solution.getWeights();
 	}
 	
@@ -812,9 +788,7 @@ public class DEAProblem {
 	 */
 	public double[] getProjections(int dmuNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 
 		return this.solution.getProjections(dmuNumber);
 
@@ -827,9 +801,7 @@ public class DEAProblem {
 	 */
 	public double[] [] getProjections() throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		return this.solution.getProjections();
 	}
 	
@@ -848,9 +820,7 @@ public class DEAProblem {
 	 */	
 	public double[] getProjectionPercentages(int dmuNumber) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		
 		double[] projectionPercentages = new double[this.solution.getProjections()[0].length];
 		double varValue;
@@ -878,9 +848,7 @@ public class DEAProblem {
 	 */	
 	public double[] [] getProjectionPercentages() throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 
 		double[] [] projectionPercentages =
 			new double[this.getDMUNames().length] [this.solution.getProjections()[0].length];
@@ -918,9 +886,7 @@ public class DEAProblem {
 	 */
 	public int[] getRanks(boolean highestIsOne, RankingType typeOfRanking, int precision) throws ProblemNotSolvedProperlyException
 	{
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		/*This needs to be calculated here (i.e. if requested by the user) instead of
 		 * calculating it post optimisation automatically (which would slow the optimisation process.*/
 		int[] ranksArray;
@@ -936,9 +902,7 @@ public class DEAProblem {
 	 * @throws ProblemNotSolvedProperlyException 
 	 */
 	public ArrayList<NonZeroLambda>[] getReferenceSet() throws ProblemNotSolvedProperlyException {
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		return this.solution.getReferenceSet();
 	}
 	
@@ -949,12 +913,62 @@ public class DEAProblem {
 	 * @throws ProblemNotSolvedProperlyException 
 	 */
 	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) throws ProblemNotSolvedProperlyException {
-		if(this.getOptimisationStatus() != SolverReturnStatus.OPTIMAL_SOLUTION_FOUND) {
-			throw new ProblemNotSolvedProperlyException();
-		}
+		testProblemSolvedProperly();
 		return this.solution.getReferenceSet(dmuIndex);
 	}
 	
+	
+	/**
+	 * Gets the u0 weight (corresponding to the convexity constraint on variable models).
+	 * @return the u0 weight
+	 * @throws ProblemNotSolvedProperlyException 
+	 * @throws MissingDataException 
+	 */
+	public double getU0Weight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.VARIABLE) {
+			throw new IncompatibleModelTypeException();
+		}
+		return this.solution.getU0Weight();
+	}
+	
+	/**
+	 * Gets the weight corresponding to the lower bound convexity constraint on
+	 * general, increasing and decreasing models.
+	 * Not aware of any DEA application that would use this but this is part of the solution so
+	 * should be made available.
+	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 * @throws IncompatibleModelTypeException 
+	 * @throws ProblemNotSolvedProperlyException 
+	 */
+	public double getlBConvexityConstraintWeight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.DECREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.INCREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.GENERAL) {
+			throw new IncompatibleModelTypeException();
+		}
+		return this.solution.getlBConvexityConstraintWeight();
+	}
+	
+	/**
+	 * Gets the weight corresponding to the upper bound convexity constraint on
+	 * general, increasing and decreasing models.
+	 * Not aware of any DEA application that would use this but this is part of the solution so
+	 * should be made available.
+	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 * @throws IncompatibleModelTypeException 
+	 * @throws ProblemNotSolvedProperlyException 
+	 */
+	public double getuBConvexityConstraintWeight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.DECREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.INCREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.GENERAL) {
+			throw new IncompatibleModelTypeException();
+		}
+		return this.solution.getuBConvexityConstraintWeight();
+	}
 
 
 
