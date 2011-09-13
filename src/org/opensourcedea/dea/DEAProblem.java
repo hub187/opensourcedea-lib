@@ -920,6 +920,8 @@ public class DEAProblem {
 	
 	/**
 	 * Gets the u0 weight (corresponding to the convexity constraint on variable models).
+	 * Note that this is the raw u0 weight value. I.e. there was no attempt to maximise
+	 * or minimise its value in order to find RTS.
 	 * @return the u0 weight
 	 * @throws ProblemNotSolvedProperlyException 
 	 * @throws MissingDataException 
@@ -930,6 +932,19 @@ public class DEAProblem {
 			throw new IncompatibleModelTypeException();
 		}
 		return this.solution.getU0Weight();
+	}
+
+	/**
+	 * Private method to test whether a model assumes General RTS, Increasing RTS or
+	 * Decreasing RTS.
+	 * @throws IncompatibleModelTypeException
+	 */
+	private void testModelTypeIsGenDecOrInc() throws IncompatibleModelTypeException {
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.DECREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.INCREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.GENERAL) {
+			throw new IncompatibleModelTypeException();
+		}
 	}
 	
 	/**
@@ -943,11 +958,7 @@ public class DEAProblem {
 	 */
 	public double getlBConvexityConstraintWeight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
-		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.DECREASING &&
-				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.INCREASING &&
-				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.GENERAL) {
-			throw new IncompatibleModelTypeException();
-		}
+		testModelTypeIsGenDecOrInc();
 		return this.solution.getlBConvexityConstraintWeight();
 	}
 	
@@ -962,11 +973,7 @@ public class DEAProblem {
 	 */
 	public double getuBConvexityConstraintWeight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
-		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.DECREASING &&
-				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.INCREASING &&
-				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.GENERAL) {
-			throw new IncompatibleModelTypeException();
-		}
+		testModelTypeIsGenDecOrInc();
 		return this.solution.getuBConvexityConstraintWeight();
 	}
 

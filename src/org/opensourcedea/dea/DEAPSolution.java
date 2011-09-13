@@ -240,6 +240,18 @@ public class DEAPSolution {
 	}
 	
 	/**
+	 * Method to set the weights using the System.arraycopy method.
+	 * @param dmuIndex The DMU index to copy value for.
+	 * @param arrayToCopyFrom The weight array to copy weights from
+	 * @param positionToCopyFrom the position to copy from in arrayToCopyFrom
+	 * @param LengthToCopy the length to copy
+	 */
+	public void setWeightsArrayCopy(int dmuIndex, double[] arrayToCopyFrom, int positionToCopyFrom, 
+			int LengthToCopy)  {
+		System.arraycopy(arrayToCopyFrom, positionToCopyFrom, this.weights[dmuIndex], 0, LengthToCopy);
+	}
+	
+	/**
 	 * Sets the weight for a specific DMU and a specific variable.
 	 * @param dmuIndex The index of the DMU to set the weight for.
 	 * @param varIndex The index of the variable to set the weight for.

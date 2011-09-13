@@ -278,13 +278,16 @@ public class BCC extends Model {
 		}
 
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-			returnSol.setWeights(i, sol.Weights);
+			returnSol.setWeightsArrayCopy(i, sol.Weights, 1, deaP.getNumberOfVariables());
+			returnSol.setU0Weight(sol.Weights[0]);
+			//returnSol.setWeights(i, sol.Weights);
 		}
 		else {
-			returnSol.setWeights(i, new double[sol.Weights.length]);
-			for(int k = 0; k < sol.Weights.length; k++) {
-				returnSol.setWeight(i, k, sol.Weights[k] * -1);
+			//returnSol.setWeights(i, new double[sol.Weights.length]);
+			for(int k = 1; k < sol.Weights.length; k++) {
+				returnSol.setWeight(i, k - 1, sol.Weights[k] * -1);
 			}
+			returnSol.setU0Weight(sol.Weights[0] * -1);
 		}
 
 		SolverStatus.checkSolverStatus(returnSol, sol);
