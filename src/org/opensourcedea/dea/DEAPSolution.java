@@ -350,6 +350,8 @@ public class DEAPSolution {
 		return this.status;
 	}
 
+	
+	
 	/**
 	 * Sets the u0 weight (corresponding to the convexity constraint on variable models).
 	 * @param u0Weight
@@ -360,16 +362,23 @@ public class DEAPSolution {
 	
 	
 	/**
-	 * Gets the u0 weights (corresponding to the convexity constraint on variable models).
+	 * Gets the u0 weights for all DMUs (corresponding to the convexity constraint on variable models).
 	 * @return the u0 weights
 	 */
 	public double[] getU0Weights() {
 		return u0Weights;
 	}
 	
+	/**
+	 * Gets the u0 weight of a specific DMU (corresponding to the convexity constraint on variable models).
+	 * @param dmuIndex
+	 * @return
+	 */
 	public double getU0Weight(int dmuIndex) {
 		return u0Weights[dmuIndex];
 	}
+	
+	
 
 	
 	/**
@@ -377,38 +386,60 @@ public class DEAPSolution {
 	 * general, increasing and decreasing models.
 	 * @param lBConvexityConstraintWeight
 	 */
-	public void setlBConvexityConstraintWeight(double[] lBConvexityConstraintWeight) {
-		this.lBConvexityConstraintWeights = lBConvexityConstraintWeight;
+	public void setlBConvexityConstraintWeights(int dmuIndex, double lBConvexityConstraintWeight) {
+		this.lBConvexityConstraintWeights[dmuIndex] = lBConvexityConstraintWeight;
 	}
-
+	
 	
 	/**
 	 * Gets the weight corresponding to the lower bound convexity constraint on
-	 * general, increasing and decreasing models.
-	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 * general, increasing and decreasing models for a specific DMU.
+	 * @param dmuIndex
+	 * @return
 	 */
-	public double[] getlBConvexityConstraintWeight() {
+	public double getlBConvexityConstraintWeight(int dmuIndex) {
+		return lBConvexityConstraintWeights[dmuIndex];
+	}
+	
+	/**
+	 * Gets the weight corresponding to the lower bound convexity constraints on
+	 * general, increasing and decreasing models for all DMUs.
+	 * @return the weights corresponding to the Lower Bound Convexity Constraint
+	 */
+	public double[] getlBConvexityConstraintWeights() {
 		return lBConvexityConstraintWeights;
 	}
 
+	
+	
 	
 	/**
 	 * Sets the weight corresponding to the upper bound convexity constraint on
 	 * general, increasing and decreasing models.
 	 * @param uBConvexityConstraintWeight
 	 */
-	public void setuBConvexityConstraintWeight(double[] uBConvexityConstraintWeight) {
-		this.uBConvexityConstraintWeights = uBConvexityConstraintWeight;
+	public void setuBConvexityConstraintWeight(int dmuIndex, double uBConvexityConstraintWeight) {
+		this.uBConvexityConstraintWeights[dmuIndex] = uBConvexityConstraintWeight;
 	}
 
 	
 	/**
 	 * Gets the weight corresponding to the upper bound convexity constraint on
-	 * general, increasing and decreasing models.
+	 * general, increasing and decreasing models for all DMUs.
+	 * @return the weights corresponding to the Lower Bound Convexity Constraint
+	 */
+	public double[] getuBConvexityConstraintWeights() {
+		return uBConvexityConstraintWeights;
+	}
+	
+	/**
+	 * Gets the weight corresponding to the upper bound convexity constraint on
+	 * general, increasing and decreasing models for a specific DMU.
+	 * @param dmuIndex the index of the DMU to retrieve the weight of.
 	 * @return the weight corresponding to the Lower Bound Convexity Constraint
 	 */
-	public double[] getuBConvexityConstraintWeight() {
-		return uBConvexityConstraintWeights;
+	public double getuBConvexityConstraintWeight(int dmuIndex) {
+		return uBConvexityConstraintWeights[dmuIndex];
 	}
 
 	

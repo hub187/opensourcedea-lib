@@ -375,7 +375,10 @@ public class DEAProblem {
 	
 	
 	/**
+	 * #getDataMatrix()
+	 * <p>
 	 * Returns the matrix of values.
+	 * <p>
 	 * @return A double[NbDMUs] [NbVariables] corresponding to all values.
 	 */
 	public double[] [] getDataMatrix()
@@ -918,11 +921,12 @@ public class DEAProblem {
 	}
 	
 	
+	
 	/**
-	 * Gets the u0 weight (corresponding to the convexity constraint on variable models).
+	 * Gets the u0 weights for all the DMUs (corresponding to the convexity constraint on variable models).
 	 * Note that this is the raw u0 weight value. I.e. there was no attempt to maximise
 	 * or minimise its value in order to find RTS.
-	 * @return the u0 weight
+	 * @return the u0 weights
 	 * @throws ProblemNotSolvedProperlyException 
 	 * @throws MissingDataException 
 	 */
@@ -933,7 +937,28 @@ public class DEAProblem {
 		}
 		return this.solution.getU0Weights();
 	}
-
+	
+	/**
+	 * Gets the u0 weight for a specific DMU (corresponding to the convexity constraint on variable models).
+	 * Note that this is the raw u0 weight value. I.e. there was no attempt to maximise
+	 * or minimise its value in order to find RTS.
+	 * @param dmuIndex the index of the DMU to get the u0 weight for
+	 * @return the u0 weight
+	 * @throws IncompatibleModelTypeException
+	 * @throws ProblemNotSolvedProperlyException
+	 */
+	public double getU0Weight(int dmuIndex) throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.VARIABLE) {
+			throw new IncompatibleModelTypeException();
+		}
+		return this.solution.getU0Weight(dmuIndex);
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Private method to test whether a model assumes General RTS, Increasing RTS or
 	 * Decreasing RTS.
@@ -947,37 +972,74 @@ public class DEAProblem {
 		}
 	}
 	
+	
+	
 	/**
-	 * Gets the weight corresponding to the lower bound convexity constraint on
-	 * general, increasing and decreasing models.
+	 * Gets the weights corresponding to the lower bound convexity constraint on
+	 * general, increasing and decreasing models for all DMUs.
 	 * Not aware of any DEA application that would use this but this is part of the solution so
 	 * should be made available.
-	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 * @return the weights corresponding to the Lower Bound Convexity Constraint
 	 * @throws IncompatibleModelTypeException 
 	 * @throws ProblemNotSolvedProperlyException 
 	 */
-	public double getlBConvexityConstraintWeight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+	public double[] getlBConvexityConstraintWeights() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
 		testModelTypeIsGenDecOrInc();
-		return this.solution.getlBConvexityConstraintWeight();
+		return this.solution.getlBConvexityConstraintWeights();
+	}
+	
+	/**
+	 * Gets the weight corresponding to the lower bound convexity constraint on
+	 * general, increasing and decreasing models for a speific DMU.
+	 * Not aware of any DEA application that would use this but this is part of the solution so
+	 * should be made available.
+	 * @param dmuIndex
+	 * @return the weight corresponding to the Lower Bound Convexity Constraint
+	 * @throws IncompatibleModelTypeException
+	 * @throws ProblemNotSolvedProperlyException
+	 */
+	public double getlBConvexityConstraintWeight(int dmuIndex) throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		testModelTypeIsGenDecOrInc();
+		return this.solution.getlBConvexityConstraintWeight(dmuIndex);
+	}
+	
+	
+	
+	
+	/**
+	 * Gets the weights corresponding to the upper bound convexity constraint on
+	 * general, increasing and decreasing models for all DMUs.
+	 * Not aware of any DEA application that would use this but this is part of the solution so
+	 * should be made available.
+	 * @return the weights corresponding to the Lower Bound Convexity Constraint
+	 * @throws IncompatibleModelTypeException 
+	 * @throws ProblemNotSolvedProperlyException 
+	 */
+	public double[] getuBConvexityConstraintWeights() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		testModelTypeIsGenDecOrInc();
+		return this.solution.getuBConvexityConstraintWeights();
 	}
 	
 	/**
 	 * Gets the weight corresponding to the upper bound convexity constraint on
-	 * general, increasing and decreasing models.
+	 * general, increasing and decreasing models for a specific DMU.
 	 * Not aware of any DEA application that would use this but this is part of the solution so
 	 * should be made available.
+	 * @param dmuIndex the index of the DMU to get the u0 weight for
 	 * @return the weight corresponding to the Lower Bound Convexity Constraint
-	 * @throws IncompatibleModelTypeException 
-	 * @throws ProblemNotSolvedProperlyException 
+	 * @throws IncompatibleModelTypeException
+	 * @throws ProblemNotSolvedProperlyException
 	 */
-	public double getuBConvexityConstraintWeight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+	public double getuBConvexityConstraintWeight(int dmuIndex) throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
 		testModelTypeIsGenDecOrInc();
-		return this.solution.getuBConvexityConstraintWeight();
+		return this.solution.getuBConvexityConstraintWeight(dmuIndex);
 	}
-
-
+	
+	
 
 }
 

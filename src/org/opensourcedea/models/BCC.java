@@ -278,17 +278,37 @@ public class BCC extends Model {
 		}
 
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+			if(deaP.getModelRTS() == ReturnToScale.VARIABLE){
+				//1 extra row for the convexity constraint
 			returnSol.setWeightsArrayCopy(i, sol.Weights, 1, deaP.getNumberOfVariables());
-			returnSol.setU0Weight(sol.Weights[0]);
+			returnSol.setU0Weight(i, sol.Weights[0]);
 			//returnSol.setWeights(i, sol.Weights);
+			}
+			else {
+				//2 extra rows for the 2 convexity constraints
+				returnSol.setWeightsArrayCopy(i, sol.Weights, 2, deaP.getNumberOfVariables());
+				returnSol.setuBConvexityConstraintWeight(i, sol.Weights[0]);
+				returnSol.setlBConvexityConstraintWeights(i, sol.Weights[1]);
+				
+			}
 		}
 		else {
 			//returnSol.setWeights(i, new double[sol.Weights.length]);
-			for(int k = 1; k < sol.Weights.length; k++) {
-				returnSol.setWeight(i, k - 1, sol.Weights[k] * -1);
+			if(deaP.getModelRTS() == ReturnToScale.VARIABLE){
+				for(int k = 1; k < sol.Weights.length; k++) {
+					returnSol.setWeight(i, k - 1, sol.Weights[k] * -1);
+				}
+				returnSol.setU0Weight(i, sol.Weights[0] * -1);
 			}
-			returnSol.setU0Weight(sol.Weights[0] * -1);
+			else {
+				for(int k = 2; k < sol.Weights.length; k++) {
+					returnSol.setWeight(i, k - 2, sol.Weights[k] * -1);
+				}
+				returnSol.setuBConvexityConstraintWeight(i, sol.Weights[0] * -1);
+				returnSol.setlBConvexityConstraintWeights(i, sol.Weights[1] * -1);
+			}
 		}
+			
 
 		SolverStatus.checkSolverStatus(returnSol, sol);
 	}
