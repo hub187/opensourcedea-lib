@@ -926,12 +926,12 @@ public class DEAProblem {
 	 * @throws ProblemNotSolvedProperlyException 
 	 * @throws MissingDataException 
 	 */
-	public double getU0Weight() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
+	public double[] getU0Weights() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
 		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.VARIABLE) {
 			throw new IncompatibleModelTypeException();
 		}
-		return this.solution.getU0Weight();
+		return this.solution.getU0Weights();
 	}
 
 	/**

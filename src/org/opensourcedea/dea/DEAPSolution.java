@@ -39,9 +39,9 @@ public class DEAPSolution {
 	private double[] [] slacks;
 	private ArrayList<NonZeroLambda>[] referenceSet;
 	private double[] [] weights;
-	private double u0Weight;
-	private double lBConvexityConstraintWeight;
-	private double uBConvexityConstraintWeight;
+	private double[] u0Weights;
+	private double[] lBConvexityConstraintWeights;
+	private double[] uBConvexityConstraintWeights;
 	private double[] [] projections;
 	private SolverReturnStatus status;
 
@@ -63,7 +63,10 @@ public class DEAPSolution {
 		setWeights(new double[nbDMUs] [nbVariables]);
 		setProjections(new double[nbDMUs] [nbVariables]);
 		setStatus(SolverReturnStatus.NOT_SOLVED);
-
+		u0Weights = new double[nbDMUs];
+		lBConvexityConstraintWeights = new double[nbDMUs];
+		uBConvexityConstraintWeights = new double[nbDMUs];
+		
 	}
 
 	
@@ -351,17 +354,21 @@ public class DEAPSolution {
 	 * Sets the u0 weight (corresponding to the convexity constraint on variable models).
 	 * @param u0Weight
 	 */
-	public void setU0Weight(double u0Weight) {
-		this.u0Weight = u0Weight;
+	public void setU0Weight(int dmuIndex, double u0Weight) {
+		this.u0Weights[dmuIndex] = u0Weight;
 	}
-
+	
 	
 	/**
-	 * Gets the u0 weight (corresponding to the convexity constraint on variable models).
-	 * @return the u0 weight
+	 * Gets the u0 weights (corresponding to the convexity constraint on variable models).
+	 * @return the u0 weights
 	 */
-	public double getU0Weight() {
-		return u0Weight;
+	public double[] getU0Weights() {
+		return u0Weights;
+	}
+	
+	public double getU0Weight(int dmuIndex) {
+		return u0Weights[dmuIndex];
 	}
 
 	
@@ -370,8 +377,8 @@ public class DEAPSolution {
 	 * general, increasing and decreasing models.
 	 * @param lBConvexityConstraintWeight
 	 */
-	public void setlBConvexityConstraintWeight(double lBConvexityConstraintWeight) {
-		this.lBConvexityConstraintWeight = lBConvexityConstraintWeight;
+	public void setlBConvexityConstraintWeight(double[] lBConvexityConstraintWeight) {
+		this.lBConvexityConstraintWeights = lBConvexityConstraintWeight;
 	}
 
 	
@@ -380,8 +387,8 @@ public class DEAPSolution {
 	 * general, increasing and decreasing models.
 	 * @return the weight corresponding to the Lower Bound Convexity Constraint
 	 */
-	public double getlBConvexityConstraintWeight() {
-		return lBConvexityConstraintWeight;
+	public double[] getlBConvexityConstraintWeight() {
+		return lBConvexityConstraintWeights;
 	}
 
 	
@@ -390,8 +397,8 @@ public class DEAPSolution {
 	 * general, increasing and decreasing models.
 	 * @param uBConvexityConstraintWeight
 	 */
-	public void setuBConvexityConstraintWeight(double uBConvexityConstraintWeight) {
-		this.uBConvexityConstraintWeight = uBConvexityConstraintWeight;
+	public void setuBConvexityConstraintWeight(double[] uBConvexityConstraintWeight) {
+		this.uBConvexityConstraintWeights = uBConvexityConstraintWeight;
 	}
 
 	
@@ -400,8 +407,8 @@ public class DEAPSolution {
 	 * general, increasing and decreasing models.
 	 * @return the weight corresponding to the Lower Bound Convexity Constraint
 	 */
-	public double getuBConvexityConstraintWeight() {
-		return uBConvexityConstraintWeight;
+	public double[] getuBConvexityConstraintWeight() {
+		return uBConvexityConstraintWeights;
 	}
 
 	
