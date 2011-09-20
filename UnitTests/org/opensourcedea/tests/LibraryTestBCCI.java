@@ -99,78 +99,71 @@ public class LibraryTestBCCI {
 		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
 		
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(6, 0.45389563426871143));
-		refSet.add(new NonZeroLambda(11, 0.1814837920184306));
+		refSet.add(new NonZeroLambda(6, 0.3592576353691921));
+		refSet.add(new NonZeroLambda(11, 0.26573073609165077));
+		refSet.add(new NonZeroLambda(16, 0.010203198439188862));
+		refSet.add(new NonZeroLambda(18, 0.3648084300999693));
 		referenceSets[0] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(5, 0.5012046138367214));
-		refSet.add(new NonZeroLambda(6, 0.37557620277414655));
-		refSet.add(new NonZeroLambda(11, 0.18062137613361373));
+		refSet.add(new NonZeroLambda(5, 0.8226707583517102));
+		refSet.add(new NonZeroLambda(11, 0.15445950249432536));
+		refSet.add(new NonZeroLambda(18, 0.022869739153964914));
 		referenceSets[1] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(11, 0.5213064189239172));
-		referenceSets[10] = refSet;
+		refSet.add(new NonZeroLambda(11, 1));
+		referenceSets[11] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(6, 0.14842196337893057));
-		refSet.add(new NonZeroLambda(11, 0.8756787544797552));
-		referenceSets[12] = refSet;
+		refSet.add(new NonZeroLambda(5, 0.4626039193502596));
+		refSet.add(new NonZeroLambda(18, 0.5373960806495911));
+		referenceSets[17] = refSet;
 		
 		return referenceSets;
 	}
 	
 	private double[] [] getTestSlackValues() {
 		double[] [] slackValues = new double[20] [4];
-		slackValues[3] [1] = 55.2814039460805;
-		slackValues[10] [1] = 34.76422770241286;
-		slackValues[10] [3] = 10.64529572318176;
-		slackValues[17] [2] = 691.0201118459736;
+		slackValues[3] [3] = 761.103111023872;
+		slackValues[9] [1] = 26.83096330525018;
+		slackValues[12] [0] = 444.3317907476238;
+		slackValues[17] [0] = 88.34920839504281;
+		slackValues[17] [2] = 1732.7945541424235;
 		return slackValues;
 	}
 	
 	private double[] [] getTestProjectionValues() {
 		double[] [] projectionValues = new double[20] [4];
-		projectionValues[0] [0] = 155.60891695644722;
-		projectionValues[0] [1] = 49.10718884990946;
+		projectionValues[0] [0] = 233.26232150557206;
+		projectionValues[0] [1] = 47.0870264974645;
 		projectionValues[0] [2] = 1877.18;
 		projectionValues[0] [3] = 1345.27;
 		
-		projectionValues[3] [0] = 97.69806659514718;
-		projectionValues[3] [1] = 27.718596053919498;
+		projectionValues[3] [0] = 163.5625034014968;
+		projectionValues[3] [1] = 37.605783330538046;
 		projectionValues[3] [2] = 1250.71;
-		projectionValues[3] [3] = 151.94;
+		projectionValues[3] [3] = 913.0431110238719;
 		
-		projectionValues[10] [0] = 108.90612397739538;
-		projectionValues[10] [1] = 30.23577229758714;
+		projectionValues[10] [0] = 199.07421912864586;
+		projectionValues[10] [1] = 33.684388722506064;
 		projectionValues[10] [2] = 1409.55;
-		projectionValues[10] [3] = 21.90529572318176;
+		projectionValues[10] [3] = 553.347581631604;
 		
 		return projectionValues;
 	}
 	
 	private double[] [] getTestWeightValues() {
 		double[] [] weightValues = new double[20] [4];
-		weightValues[0] [0] = 0.0024320840528248653;
-		weightValues[0] [1] = 0;
-		weightValues[0] [2] = 1.8760659962299453E-4;
-		weightValues[0] [3] = 1.953705109519351E-5;
+		weightValues[0] [0] = 9.352402077983277E-4;
+		weightValues[0] [1] = 0.0074151479971031435;
+		weightValues[0] [2] = 1.7184879747594143E-4;
+		weightValues[0] [3] = 6.439390561199946E-5;
 		
-		weightValues[3] [0] = 0.002770083102493075;
-		weightValues[3] [1] = 0;
-		weightValues[3] [2] = 2.1367923979774694E-4;
-		weightValues[3] [3] = 2.225221412412952E-5;
-		
-		weightValues[10] [0] = 0.0026031565876782187;
-		weightValues[10] [1] = 0;
-		weightValues[10] [2] = 2.011278025400005E-4;
-		weightValues[10] [3] = 0;
-		
-		weightValues[14] [0] = 0.0030557677616501163;
-		weightValues[14] [1] = 0.037278961525586345;
-		weightValues[14] [2] = 0;
-		weightValues[14] [3] = 0.0010927857282834158;
+		weightValues[3] [0] = 0.0012931131969351071;
+		weightValues[3] [1] = 0.006423929348270198;
+		weightValues[3] [2] = 1.3050809836249983E-4;
+		weightValues[3] [3] = 0;
 		
 		return weightValues;
 	}
@@ -215,8 +208,8 @@ public class LibraryTestBCCI {
 			ArrayList<Integer> l = new ArrayList<Integer>();
 			l.add(0);
 			l.add(1);
-			l.add(10);
-			l.add(12);
+			l.add(11);
+			l.add(17);
 			for(Integer i : l){
 				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
 				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
@@ -229,7 +222,8 @@ public class LibraryTestBCCI {
 			//SLACKS
 			l.clear();
 			l.add(3);
-			l.add(10);
+			l.add(9);
+			l.add(12);
 			l.add(17);
 			for(Integer i : l){
 				double[] slackValues = getTestSlackValues()[i];
@@ -256,8 +250,6 @@ public class LibraryTestBCCI {
 			l.clear();
 			l.add(0);
 			l.add(3);
-			l.add(10);
-			l.add(14);
 			for(Integer i : l){
 				double[] weightValues = getTestWeightValues()[i];
 				for(int wIndex = 0; wIndex < weightValues.length; wIndex++) {
