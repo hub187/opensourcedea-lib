@@ -590,7 +590,7 @@ public class DEAProblem {
 	 * @return The DEAReturnToScale of the DEA Problem.
 	 * @throws MissingDataException Thrown if the ModelType is not set. 
 	 */
-	public ReturnToScale getModelRTS() throws MissingDataException {
+	public ReturnsToScale getModelRTS() throws MissingDataException {
 		if(this.getModelType() != null) {
 			return this.getModelType().getReturnToScale();
 		}
@@ -638,7 +638,7 @@ public class DEAProblem {
 			throw new InconsistentNoOfDMUsException();
 		}
 		
-		if(this.getModelType().getReturnToScale() == ReturnToScale.GENERAL) {
+		if(this.getModelType().getReturnToScale() == ReturnsToScale.GENERAL) {
 			if(this.modelDetails.getRTSUpperBound() == 0 ||
 					this.modelDetails.getRTSUpperBound() < this.modelDetails.getRTSLowerBound()) {
 				throw new MissingDataException("RTS Bounds not set correctly!");
@@ -932,7 +932,7 @@ public class DEAProblem {
 	 */
 	public double[] getU0Weights() throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
-		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.VARIABLE) {
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnsToScale.VARIABLE) {
 			throw new IncompatibleModelTypeException();
 		}
 		return this.solution.getU0Weights();
@@ -949,7 +949,7 @@ public class DEAProblem {
 	 */
 	public double getU0Weight(int dmuIndex) throws IncompatibleModelTypeException, ProblemNotSolvedProperlyException {
 		testProblemSolvedProperly();
-		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.VARIABLE) {
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnsToScale.VARIABLE) {
 			throw new IncompatibleModelTypeException();
 		}
 		return this.solution.getU0Weight(dmuIndex);
@@ -965,9 +965,9 @@ public class DEAProblem {
 	 * @throws IncompatibleModelTypeException
 	 */
 	private void testModelTypeIsGenDecOrInc() throws IncompatibleModelTypeException {
-		if(this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.DECREASING &&
-				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.INCREASING &&
-				this.modelDetails.getModelType().getReturnToScale() != ReturnToScale.GENERAL) {
+		if(this.modelDetails.getModelType().getReturnToScale() != ReturnsToScale.DECREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnsToScale.INCREASING &&
+				this.modelDetails.getModelType().getReturnToScale() != ReturnsToScale.GENERAL) {
 			throw new IncompatibleModelTypeException();
 		}
 	}

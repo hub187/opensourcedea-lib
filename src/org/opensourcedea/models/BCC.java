@@ -48,7 +48,7 @@ public class BCC extends Model {
 		/* IF WAS: deaP.getModelType() == ModelType.BCC_I ||
 		 * deaP.getModelType() == ModelType.BCC_O
 		 * TO DELETE when all BCC models are implemented.*/
-		if(deaP.getModelRTS() == ReturnToScale.VARIABLE){
+		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE){
 			rhs1 = new double [nbVariables + 1]; //RHS Phase I
 			solverEqualityType1 = new int[nbVariables + 1];
 		}
@@ -71,7 +71,7 @@ public class BCC extends Model {
 		 * - change the Objective Function accordingly (all 1 on Slacks, all others coeff = 0).*/
 		
 		//Instantiate the rhs2 and solverEqualityType2 arrays
-		if(deaP.getModelRTS() == ReturnToScale.VARIABLE) {
+		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
 			/*+1 row for convexity constraints, + 1 row for theta*/
 			rhs2 = new double[nbVariables + 2];
 			solverEqualityType2 = new int[nbVariables + 2];
@@ -228,7 +228,7 @@ public class BCC extends Model {
 				
 		
 		//Changing RHS & SolverEqTypes
-		if(deaP.getModelRTS() == ReturnToScale.VARIABLE) {
+		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
 			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
 			RHS2[NbVariables + 1] = Sol.getObjective(dmuIndex);
 			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
@@ -278,7 +278,7 @@ public class BCC extends Model {
 		}
 
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-			if(deaP.getModelRTS() == ReturnToScale.VARIABLE){
+			if(deaP.getModelRTS() == ReturnsToScale.VARIABLE){
 				//1 extra row for the convexity constraint
 			returnSol.setWeightsArrayCopy(i, sol.Weights, 1, deaP.getNumberOfVariables());
 			returnSol.setU0Weight(i, sol.Weights[0]);
@@ -294,7 +294,7 @@ public class BCC extends Model {
 		}
 		else {
 			//returnSol.setWeights(i, new double[sol.Weights.length]);
-			if(deaP.getModelRTS() == ReturnToScale.VARIABLE){
+			if(deaP.getModelRTS() == ReturnsToScale.VARIABLE){
 				for(int k = 1; k < sol.Weights.length; k++) {
 					returnSol.setWeight(i, k - 1, sol.Weights[k] * -1);
 				}
@@ -400,7 +400,7 @@ public class BCC extends Model {
 		for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
 			constraintRow[VarIndex] = 1;
 		}
-		if(deaP.getModelRTS() == ReturnToScale.VARIABLE) {
+		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
 			constraints.add(constraintRow);
 			rhs1[nbVariables] = 1;
 			solverEqualityType1[nbVariables] = LpSolve.EQ;

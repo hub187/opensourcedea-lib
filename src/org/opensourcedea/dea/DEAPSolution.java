@@ -37,7 +37,7 @@ public class DEAPSolution {
 	
 	private double[] objectives;
 	private double[] [] slacks;
-	private ArrayList<NonZeroLambda>[] referenceSet;
+	private ArrayList<NonZeroLambda>[] referenceSets;
 	private double[] [] weights;
 	private double[] u0Weights;
 	private double[] lBConvexityConstraintWeights;
@@ -182,7 +182,7 @@ public class DEAPSolution {
 	 * @param referenceSets The reference sets for all DMUs.
 	 */
 	public void setReferenceSets(ArrayList<NonZeroLambda>[] referenceSets) {
-		this.referenceSet = referenceSets;
+		this.referenceSets = referenceSets;
 	}
 	
 	/**
@@ -191,7 +191,7 @@ public class DEAPSolution {
 	 * @param referenceSet The reference set of the DMU.
 	 */
 	public void setReferenceSet(int dmuIndex, ArrayList<NonZeroLambda> referenceSet) {
-		this.referenceSet[dmuIndex] = referenceSet;
+		this.referenceSets[dmuIndex] = referenceSet;
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class DEAPSolution {
 	 * @param nonZeroLambda The NonZeroLambda to add to the reference set.
 	 */
 	public void addNonZeroLambdaToReferenceSet(int dmuIndex, NonZeroLambda nonZeroLambda) {
-		this.referenceSet[dmuIndex].add(nonZeroLambda);
+		this.referenceSets[dmuIndex].add(nonZeroLambda);
 	}
 	
 	/**
@@ -208,7 +208,7 @@ public class DEAPSolution {
 	 * @return The reference sets of all DMUs.
 	 */
 	public ArrayList<NonZeroLambda>[] getReferenceSet() {
-		return this.referenceSet;
+		return this.referenceSets;
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class DEAPSolution {
 	 * @return The reference set for the specified DMU.
 	 */
 	public ArrayList<NonZeroLambda> getReferenceSet(int dmuIndex) {
-		return this.referenceSet[dmuIndex];
+		return this.referenceSets[dmuIndex];
 	}
 	
 

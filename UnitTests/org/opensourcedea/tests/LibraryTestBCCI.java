@@ -93,6 +93,21 @@ public class LibraryTestBCCI {
 		return ranks;
 	}
 	
+
+	
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+		
+		
+		tester.setModelType(ModelType);
+
+		//tester.setModelOrientation(ModelOrientation);
+		tester.setVariableNames(TestData.createTestVariableNames());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setDataMatrix(TestData.createTestDataMatrix());
+		tester.setDMUNames(TestData.createTestDMUNames());
+
+	}
+	
 	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
 		
 		@SuppressWarnings("unchecked")
@@ -168,19 +183,6 @@ public class LibraryTestBCCI {
 		return weightValues;
 	}
 	
-	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
-		
-		
-		tester.setModelType(ModelType);
-
-		//tester.setModelOrientation(ModelOrientation);
-		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableOrientations(TestData.createTestVariableOrientation());
-		tester.setDataMatrix(TestData.createTestDataMatrix());
-		tester.setDMUNames(TestData.createTestDMUNames());
-
-	}
-	
 	
 	@Test
 	public void testBCCI() {
@@ -228,7 +230,9 @@ public class LibraryTestBCCI {
 			for(Integer i : l){
 				double[] slackValues = getTestSlackValues()[i];
 				for(int sIndex = 0; sIndex < slackValues.length; sIndex++) {
-					assertEquals(slackValues[sIndex], tester.getSlacks(i)[sIndex], 0.1);
+					if(slackValues[sIndex] != 0) {
+						assertEquals(slackValues[sIndex], tester.getSlacks(i)[sIndex], 0.1);
+					}
 				}
 			}
 			

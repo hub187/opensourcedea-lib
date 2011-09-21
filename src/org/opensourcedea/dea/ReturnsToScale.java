@@ -29,6 +29,6 @@ package org.opensourcedea.dea;
  * @author Hubert Virtos
  *
  */
-public enum ReturnToScale {
+public enum ReturnsToScale {
 	CONSTANT, VARIABLE, GENERAL, INCREASING, DECREASING;
 }

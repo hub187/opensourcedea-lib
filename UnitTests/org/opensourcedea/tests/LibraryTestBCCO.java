@@ -5,6 +5,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 //import java.util.ArrayList;
 
 //import static org.junit.Assert.assertEquals;
@@ -106,8 +108,84 @@ public class LibraryTestBCCO {
 	}
 	
 	
+
+	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
+		
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(5, 0.5913084277951042));
+		refSet.add(new NonZeroLambda(6, 0.39884358251321156));
+		refSet.add(new NonZeroLambda(18, 0.009847989691684267));
+		referenceSets[0] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(5, 1.0000000000000009));
+		referenceSets[1] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(11, 0.9999999999999999));
+		referenceSets[11] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(5, 0.4691358024691359));
+		refSet.add(new NonZeroLambda(18, 0.5308641975308643));
+		referenceSets[17] = refSet;
+		
+		return referenceSets;
+	}
+	
+	private double[] [] getTestSlackValues() {
+		double[] [] slackValues = new double[20] [4];
+		slackValues[3] [3] = 3035.6857752332667;
+		slackValues[9] [1] = 40.855189209441754;
+		slackValues[12] [0] = 657.5300000000001;
+		slackValues[17] [0] = 92.50938271604942;
+		slackValues[17] [2] = 1757.3511385617753;
+		return slackValues;
+	}
+	
+	private double[] [] getTestProjectionValues() {
+		double[] [] projectionValues = new double[20] [4];
+		projectionValues[0] [0] = 411.17;
+		projectionValues[0] [1] = 83.0;
+		projectionValues[0] [2] = 5915.43784880282;
+		projectionValues[0] [3] = 4954.551252153717;
+		
+		projectionValues[3] [0] = 361.0;
+		projectionValues[3] [1] = 83.0;
+		projectionValues[3] [2] = 6161.415675068601;
+		projectionValues[3] [3] = 3440.391588755202;
+		
+		projectionValues[10] [0] = 384.149;
+		projectionValues[10] [1] = 65.0;
+		projectionValues[10] [2] = 5103.978118365497;
+		projectionValues[10] [3] = 2683.9476133274666;
+		
+		return projectionValues;
+	}
+	
+	private double[] [] getTestWeightValues() {
+		double[] [] weightValues = new double[20] [4];
+		weightValues[0] [0] = 0.0015297275502017802;
+		weightValues[0] [1] = 0.004064832236932274;
+		weightValues[0] [2] = 5.32713964563867E-4;
+		weightValues[0] [3] = 0;
+		
+		weightValues[3] [0] = 0.002295955067669916;
+		weightValues[3] [1] = 0.00610087212744616;
+		weightValues[3] [2] = 7.995458579520284E-4;
+		weightValues[3] [3] = 0;
+		
+		return weightValues;
+	}
+	
+	
 	@Test
-	public void testBCCO() {
+	public void testBCCI() {
+				
+		
 		
 		buildDEAProblem(ModelType.BCC_O); //, DEAModelOrientation.NonOriented);
 		
@@ -118,14 +196,68 @@ public class LibraryTestBCCO {
 			System.out.println(e.toString());
 		}
 		
-		DEAPSolution CheckedSol = getModelResults();
-		
 		try {
+			DEAPSolution CheckedSol = getModelResults();
+			
+			
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
 			
-			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
+			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 7), createSolRanks());
 			
-//			assertEquals(getTestReferenceSet(),tester.getReferenceSet());
+			//REFERENCE SET
+			ArrayList<Integer> l = new ArrayList<Integer>();
+			l.add(0);
+			l.add(1);
+			l.add(11);
+			l.add(17);
+			for(Integer i : l){
+				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
+				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
+					assertEquals(refSet.get(nzlIndex).getDMUIndex(), tester.getReferenceSet(i).get(nzlIndex).getDMUIndex());
+					assertEquals(refSet.get(nzlIndex).getLambdaValue(),
+							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
+				}
+			}
+			
+			//SLACKS
+			l.clear();
+			l.add(3);
+			l.add(9);
+			l.add(12);
+			l.add(17);
+			for(Integer i : l){
+				double[] slackValues = getTestSlackValues()[i];
+				for(int sIndex = 0; sIndex < slackValues.length; sIndex++) {
+					if(slackValues[sIndex] != 0) {
+						assertEquals(slackValues[sIndex], tester.getSlacks(i)[sIndex], 0.1);
+					}
+				}
+			}
+			
+			//PROJECTIONS
+			l.clear();
+			l.add(0);
+			l.add(3);
+			l.add(10);
+			for(Integer i : l){
+				double[] projValues = getTestProjectionValues()[i];
+				for(int pIndex = 0; pIndex < projValues.length; pIndex++) {
+					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
+				}
+			}
+			
+			
+			
+			//WEIGHTS
+			l.clear();
+			l.add(0);
+			l.add(3);
+			for(Integer i : l){
+				double[] weightValues = getTestWeightValues()[i];
+				for(int wIndex = 0; wIndex < weightValues.length; wIndex++) {
+					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
+				}
+			}
 			
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}

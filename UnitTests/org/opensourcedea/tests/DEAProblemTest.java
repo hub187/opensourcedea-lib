@@ -367,7 +367,7 @@ public class DEAProblemTest {
 		
 		
 		for (ModelType mt : ModelType.values())
-			if(mt.getReturnToScale() == ReturnToScale.GENERAL) {
+			if(mt.getReturnToScale() == ReturnsToScale.GENERAL) {
 				try {
 					tester.setModelType(mt);
 					tester.solve();
@@ -409,7 +409,7 @@ public class DEAProblemTest {
 		tester.setModelType(ModelType.SBM);
 
 		try {
-			assertSame(tester.getModelRTS(), ReturnToScale.CONSTANT);
+			assertSame(tester.getModelRTS(), ReturnsToScale.CONSTANT);
 		} catch (MissingDataException e) {
 			e.printStackTrace();
 		}
