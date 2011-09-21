@@ -52,7 +52,7 @@ public enum ModelType {
 	BCC_I ("The Banker Charnes and Cooper Model called BCC." +
 			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model" +
 			"only assumed CONSTANT RTS). The only difference with the CCR model is the convexity constraint" +
-			"e*Lambdas = 1 / or uo in the multiplier form.",
+			"e*Lambdas = 1 corresponding to the uo weight in the multiplier form.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),

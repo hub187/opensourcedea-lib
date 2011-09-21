@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import org.junit.Test;
-import org.opensourcedea.dea.DEAPSolution;
 import org.opensourcedea.dea.DEAProblem;
 import org.opensourcedea.dea.ModelType;
 import org.opensourcedea.dea.NonZeroLambda;
@@ -27,16 +26,21 @@ public class LibraryTestBCCI {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution getModelResults() {
+	
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		
-		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
-		
-		DEAModelSol.setObjectives(createDEAModelObjectives());		
-		
-		return DEAModelSol;
-	}
+		tester.setModelType(ModelType);
 
+		//tester.setModelOrientation(ModelOrientation);
+		tester.setVariableNames(TestData.createTestVariableNames());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setDataMatrix(TestData.createTestDataMatrix());
+		tester.setDMUNames(TestData.createTestDMUNames());
+
+	}
+	
+	
 
 	private double[] createDEAModelObjectives() {
 		
@@ -94,20 +98,6 @@ public class LibraryTestBCCI {
 	}
 	
 
-	
-	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
-		
-		
-		tester.setModelType(ModelType);
-
-		//tester.setModelOrientation(ModelOrientation);
-		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableOrientations(TestData.createTestVariableOrientation());
-		tester.setDataMatrix(TestData.createTestDataMatrix());
-		tester.setDMUNames(TestData.createTestDMUNames());
-
-	}
-	
 	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
 		
 		@SuppressWarnings("unchecked")
@@ -199,10 +189,8 @@ public class LibraryTestBCCI {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = getModelResults();
 			
-			
-			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
 			

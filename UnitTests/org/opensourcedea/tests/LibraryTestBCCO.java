@@ -28,16 +28,18 @@ public class LibraryTestBCCO {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution getModelResults() {
-		
-		
-		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
-		
-		DEAModelSol.setObjectives(createDEAModelObjectives());		
-		
-		return DEAModelSol;
-	}
+	
+	public void buildDEAProblem(ModelType ModelType) {
+				
+		tester.setModelType(ModelType);
+		tester.setVariableNames(TestData.createTestVariableNames());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setDataMatrix(TestData.createTestDataMatrix());
+		tester.setDMUNames(TestData.createTestDMUNames());
 
+	}
+	
+	
 
 	private double[] createDEAModelObjectives() {
 		
@@ -93,20 +95,6 @@ public class LibraryTestBCCO {
 		
 		return ranks;
 	}
-	
-	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
-		
-		
-		tester.setModelType(ModelType);
-
-		//tester.setModelOrientation(ModelOrientation);
-		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableOrientations(TestData.createTestVariableOrientation());
-		tester.setDataMatrix(TestData.createTestDataMatrix());
-		tester.setDMUNames(TestData.createTestDMUNames());
-
-	}
-	
 	
 
 	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
@@ -183,7 +171,7 @@ public class LibraryTestBCCO {
 	
 	
 	@Test
-	public void testBCCI() {
+	public void testBCCO() {
 				
 		
 		
@@ -197,10 +185,8 @@ public class LibraryTestBCCO {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = getModelResults();
-			
-			
-			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+						
+			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 7), createSolRanks());
 			
