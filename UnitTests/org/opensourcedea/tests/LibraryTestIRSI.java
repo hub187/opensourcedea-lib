@@ -26,7 +26,7 @@ public class LibraryTestIRSI {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetModelResults() {
+	public DEAPSolution getModelResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -92,7 +92,7 @@ public class LibraryTestIRSI {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -106,15 +106,15 @@ public class LibraryTestIRSI {
 
 	
 	@Test
-	public void TestIRSI() {
+	public void testIRSI() {
 		
-		BuildDEAProblem(ModelType.IRS_I); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.IRS_I); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();
 
 			
-			DEAPSolution CheckedSol = GetModelResults();
+			DEAPSolution CheckedSol = getModelResults();
 			
 			
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

@@ -20,7 +20,7 @@ public class LibraryTestCCRO {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetCCROResults() {
+	public DEAPSolution getCCROResults() {
 		
 		
 		DEAPSolution CCRISol = new DEAPSolution(20, 4);
@@ -82,7 +82,7 @@ public class LibraryTestCCRO {
 	}
 	
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		
 		tester.setModelType(ModelType);
@@ -95,9 +95,9 @@ public class LibraryTestCCRO {
 	}
 	
 	@Test
-	public void TestCCRO() throws Exception {
+	public void testCCRO() throws Exception {
 		
-		BuildDEAProblem(ModelType.CCR_O);  //, DEAModelOrientation.OutputOriented);
+		buildDEAProblem(ModelType.CCR_O);  //, DEAModelOrientation.OutputOriented);
 		
 		
 		try {
@@ -109,7 +109,7 @@ public class LibraryTestCCRO {
 		
 		
 		
-		DEAPSolution CheckedSol = GetCCROResults();
+		DEAPSolution CheckedSol = getCCROResults();
 		
 		try {
 			//Test Objectives

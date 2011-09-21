@@ -52,8 +52,7 @@ public class ModelTemplate {
 			 * than calling the different methods several times.*/
 			int NbDMUs = deaP.getNumberOfDMUs();
 			int NbVariables = deaP.getNumberOfVariables();
-			double [] [] TransposedMatrix = new double [NbVariables] [NbDMUs];
-			TransposedMatrix = deaP.getTranspose(true);
+			double [] [] TransposedMatrix = deaP.getTranspose(true);
 			DEAPSolution ReturnSol = new DEAPSolution(deaP.getNumberOfDMUs(), deaP.getNumberOfVariables());
 			
 			
@@ -94,7 +93,7 @@ public class ModelTemplate {
 		
 		
 		//SOLVE PROBLEM
-		SolverResults Sol = new SolverResults();
+		SolverResults Sol;
 		
 		try {
 			Sol = Lpsolve.solveLPProblem(Constraints, ObjF, RHS, SolverObjDirection.MIN, SolverEqualityType);

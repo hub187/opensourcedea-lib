@@ -21,7 +21,7 @@ public class LibraryTestNDOGRS {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetModelResults() {
+	public DEAPSolution getModelResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -87,7 +87,7 @@ public class LibraryTestNDOGRS {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -190,9 +190,9 @@ public class LibraryTestNDOGRS {
 	
 	
 	@Test
-	public void TestNDOGRS() {
+	public void testNDOGRS() {
 		
-		BuildDEAProblem(ModelType.ND_O_GRS); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.ND_O_GRS); //, DEAModelOrientation.NonOriented);
 		
 		
 		
@@ -204,7 +204,7 @@ public class LibraryTestNDOGRS {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = GetModelResults();
+			DEAPSolution CheckedSol = getModelResults();
 			
 			//OBJECTIVES
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

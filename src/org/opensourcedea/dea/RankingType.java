@@ -44,7 +44,7 @@ public enum RankingType {
 	}
 	
 	//Method to access _ModelType
-	public String GetStatusDescription()
+	public String getStatusDescription()
 	{
 		return rankingDescription;
 	}

@@ -11,7 +11,7 @@ public class MiscStuff {
 	
 	DEAProblem tester;// = new DEAProblem(20, 4);
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -32,11 +32,11 @@ public class MiscStuff {
 	}
 	
 	@Test
-	public void CheckWeightArrayLength() throws Exception {
+	public void checkWeightArrayLength() throws Exception {
 		
 		for(ModelType modType : ModelType.values()) {
 			tester = new DEAProblem(20, 4);
-			BuildDEAProblem(modType);
+			buildDEAProblem(modType);
 			try {
 				//System.out.print("Solving: " + tester.getModelType().toString() + "\r\n");
 				tester.solve();

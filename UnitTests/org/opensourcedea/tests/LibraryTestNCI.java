@@ -25,7 +25,7 @@ public class LibraryTestNCI {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetModelResults() {
+	public DEAPSolution getModelResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -91,7 +91,7 @@ public class LibraryTestNCI {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -187,9 +187,9 @@ public class LibraryTestNCI {
 	
 	
 	@Test
-	public void TestNCI() {
+	public void testNCI() {
 		
-		BuildDEAProblem(ModelType.NC_I); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_I); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.setVariableTypes(TestData.createTestVariableTypes(VariableType.NON_CONTROLLABLE));
@@ -206,7 +206,7 @@ public class LibraryTestNCI {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = GetModelResults();
+			DEAPSolution CheckedSol = getModelResults();
 			
 			//OBJECTIVES
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

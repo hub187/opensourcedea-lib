@@ -78,7 +78,7 @@ public  class NC_ND extends Model {
 				constraints, objF, rhs1, solverEqualityType1);
 		
 		
-		SolverResults sol = new SolverResults();
+		SolverResults sol;
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 			sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN,
 					solverEqualityType1);

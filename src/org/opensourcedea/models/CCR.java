@@ -215,12 +215,9 @@ public class CCR extends Model {
 		
 		//Changing RHS & SolverEqTypes
 		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED){
-			RHS2[NbVariables] = Sol.getObjective(dmuIndex);
-		}
-		else {
-			RHS2[NbVariables] =/* 1 /*/ Sol.getObjective(dmuIndex);
-		}
+
+		RHS2[NbVariables] = Sol.getObjective(dmuIndex);
+
 		System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
 				SolverEqualityType1.length);
 		SolverEqualityType2[NbVariables] = LpSolve.EQ;

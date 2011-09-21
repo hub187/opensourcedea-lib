@@ -58,8 +58,7 @@ public class SBM_I extends Model {
 			 * than calling the different methods several times.*/
 			int nbDMUs = deaP.getNumberOfDMUs();
 			int nbVariables = deaP.getNumberOfVariables();
-			double [] [] transposedMatrix = new double [nbVariables] [nbDMUs];
-			transposedMatrix = deaP.getTranspose(false);
+			double [] [] transposedMatrix = deaP.getTranspose(false);
 			ArrayList<double[]> constraints = new ArrayList<double []>();
 			DEAPSolution returnSol = new DEAPSolution(nbDMUs, nbVariables);
 			
@@ -164,9 +163,7 @@ public class SBM_I extends Model {
 				solverEqualityType);
 		
 		
-		SolverResults Sol = new SolverResults();
-
-		Sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
+		SolverResults Sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
 
 		
 

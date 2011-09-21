@@ -26,7 +26,7 @@ public class LibraryTestIRSO {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetModelResults() {
+	public DEAPSolution getModelResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -92,7 +92,7 @@ public class LibraryTestIRSO {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -106,17 +106,17 @@ public class LibraryTestIRSO {
 
 	
 	@Test
-	public void TestIRSO() {
+	public void testIRSO() {
 		
 	
-		BuildDEAProblem(ModelType.IRS_O); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.IRS_O); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();
 			
 			
 			
-			DEAPSolution CheckedSol = GetModelResults();
+			DEAPSolution CheckedSol = getModelResults();
 			
 			
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

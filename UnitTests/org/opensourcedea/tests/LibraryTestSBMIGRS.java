@@ -26,7 +26,7 @@ public class LibraryTestSBMIGRS {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetSBMResults() {
+	public DEAPSolution getSBMResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -92,7 +92,7 @@ public class LibraryTestSBMIGRS {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -207,15 +207,15 @@ public class LibraryTestSBMIGRS {
 //	}
 	
 	@Test
-	public void TestSBMIGRS() {
+	public void testSBMIGRS() {
 		
-		BuildDEAProblem(ModelType.SBM_I_GRS); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.SBM_I_GRS); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();
 
 		
-		DEAPSolution CheckedSol = GetSBMResults();
+		DEAPSolution CheckedSol = getSBMResults();
 		
 		
 		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

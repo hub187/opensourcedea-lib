@@ -19,7 +19,7 @@ public class LibraryTestNDO {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetModelResults() {
+	public DEAPSolution getModelResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -85,7 +85,7 @@ public class LibraryTestNDO {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -185,9 +185,9 @@ public class LibraryTestNDO {
 	
 	
 	@Test
-	public void TestNDO() {
+	public void testNDO() {
 		
-		BuildDEAProblem(ModelType.ND_O); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.ND_O); //, DEAModelOrientation.NonOriented);
 		
 		
 		
@@ -200,7 +200,7 @@ public class LibraryTestNDO {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = GetModelResults();
+			DEAPSolution CheckedSol = getModelResults();
 			
 			//OBJECTIVES
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

@@ -61,8 +61,7 @@ public class SBM_O extends Model {
 			 * than calling the different methods several times.*/
 			int nbDMUs = deaP.getNumberOfDMUs();
 			int nbVariables = deaP.getNumberOfVariables();
-			double [] [] transposedMatrix = new double [nbVariables] [nbDMUs];
-			transposedMatrix = deaP.getTranspose(false);
+			double [] [] transposedMatrix =	deaP.getTranspose(false);
 			ArrayList<double[]> constraints = new ArrayList<double []>();
 			DEAPSolution returnSol = new DEAPSolution(nbDMUs, nbVariables);
 			

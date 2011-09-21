@@ -22,7 +22,7 @@ public class LibraryTestCCRI {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 	
-	public DEAPSolution GetCCRIResults() {
+	public DEAPSolution getCCRIResults() {
 		
 		
 		DEAPSolution CCRISol = new DEAPSolution(20, 4);
@@ -84,7 +84,7 @@ public class LibraryTestCCRI {
 	}
 	
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		
 		tester.setModelType(ModelType);
@@ -96,9 +96,9 @@ public class LibraryTestCCRI {
 	}
 	
 	@Test
-	public void TestCCRI() throws Exception {
+	public void testCCRI() throws Exception {
 		
-		BuildDEAProblem(ModelType.CCR_I);
+		buildDEAProblem(ModelType.CCR_I);
 
 		
 		try {
@@ -112,7 +112,7 @@ public class LibraryTestCCRI {
 			
 		}
 		
-		DEAPSolution CheckedSol = GetCCRIResults();
+		DEAPSolution CheckedSol = getCCRIResults();
 		
 		try {
 			//Test Objectives

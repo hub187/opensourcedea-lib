@@ -26,7 +26,7 @@ public class LibraryTestSBMI {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetSBMCResults() {
+	public DEAPSolution getSBMCResults() {
 		
 		
 		DEAPSolution SBMCSol = new DEAPSolution(20, 4);
@@ -92,7 +92,7 @@ public class LibraryTestSBMI {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -195,15 +195,15 @@ public class LibraryTestSBMI {
 //	}
 	
 	@Test
-	public void TestSBMI() {
+	public void testSBMI() {
 		
-		BuildDEAProblem(ModelType.SBM_I); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.SBM_I); //, DEAModelOrientation.NonOriented);
 		
 		try {
 			tester.solve();
 
 		
-		DEAPSolution CheckedSol = GetSBMCResults();
+		DEAPSolution CheckedSol = getSBMCResults();
 		
 		
 		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.00001);

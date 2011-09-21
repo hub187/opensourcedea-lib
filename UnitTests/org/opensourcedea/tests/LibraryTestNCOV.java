@@ -21,7 +21,7 @@ public class LibraryTestNCOV {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution GetModelResults() {
+	public DEAPSolution getModelResults() {
 		
 		
 		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
@@ -87,7 +87,7 @@ public class LibraryTestNCOV {
 		return ranks;
 	}
 	
-	public void BuildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
 		
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
@@ -186,9 +186,9 @@ public class LibraryTestNCOV {
 	
 	
 	@Test
-	public void TestNCOV() {
+	public void testNCOV() {
 		
-		BuildDEAProblem(ModelType.NC_O_V); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_O_V); //, DEAModelOrientation.NonOriented);
 		
 		
 		
@@ -200,7 +200,7 @@ public class LibraryTestNCOV {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = GetModelResults();
+			DEAPSolution CheckedSol = getModelResults();
 			
 			//OBJECTIVES
 			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);

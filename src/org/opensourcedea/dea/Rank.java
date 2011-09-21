@@ -141,7 +141,12 @@ public class Rank {
 	      int i = left, j = right;
 	      double tmp;
 	      int rankTmp;
-	      double pivot = arr[(left + right) / 2];
+	      double pivot = arr[(left + right) >>> 1];
+	      /* Equivalent to = arr[left + ((right - left)/2)];
+	       * or simply = arr[(left + right) / 2]; although this
+	       * implementation can overflow for high ints (i.e. if right + left is
+	       * bigger than an int).
+	       * */
 	     
 	      while (i <= j) {
 	            while (arr[i] < pivot)

@@ -71,8 +71,7 @@ public class SBM extends Model {
 		createModel(deaP, nbDMUs, nbVariables, transposedMatrix, dmuIndex,
 				constraints, objF, solverEqualityType, rhs);
 		
-		SolverResults sol = new SolverResults();
-		sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
+		SolverResults sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
 
 		storeSolution(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
 
