@@ -22,6 +22,8 @@
 
 package org.opensourcedea.dea;
 
+import org.opensourcedea.exception.InvalidPropertyValueException;
+
 /**
  * This class describes details of a DEA Model in terms of model type, and bounds.
  * If more information need to be added to a model, this is the right place to do it.

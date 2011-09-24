@@ -1,5 +1,9 @@
 package org.opensourcedea.dea;
 
+import org.opensourcedea.exception.DEASolverException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
+
 public class Model {
 	
 	/**

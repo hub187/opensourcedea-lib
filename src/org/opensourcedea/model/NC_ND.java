@@ -20,12 +20,15 @@
     @version 0.1 2011-02-04
 */
 
-package org.opensourcedea.models;
+package org.opensourcedea.model;
 
 
 import java.util.ArrayList;
 
 import org.opensourcedea.dea.*;
+import org.opensourcedea.exception.DEASolverException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.*;
 //import java.util.Arrays;
 //import java.util.Arrays;

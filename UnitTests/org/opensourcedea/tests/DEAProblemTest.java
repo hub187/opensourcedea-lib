@@ -10,6 +10,10 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.BeforeClass;
 import org.opensourcedea.dea.*;
+import org.opensourcedea.exception.DEAException;
+import org.opensourcedea.exception.InvalidPropertyValueException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 
 //import java.util.ArrayList;
 

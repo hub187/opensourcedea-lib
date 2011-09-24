@@ -7,16 +7,16 @@ import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opensourcedea.dea.DEAException;
 import org.opensourcedea.dea.DEAProblem;
-import org.opensourcedea.dea.InconsistentNoOfDMUsException;
-import org.opensourcedea.dea.InconsistentNoOfVariablesException;
-import org.opensourcedea.dea.MissingDataException;
 import org.opensourcedea.dea.ModelType;
 import org.opensourcedea.dea.NonZeroLambda;
-import org.opensourcedea.dea.ProblemNotSolvedProperlyException;
 import org.opensourcedea.dea.RankingType;
 import org.opensourcedea.dea.VariableOrientation;
+import org.opensourcedea.exception.DEAException;
+import org.opensourcedea.exception.InconsistentNoOfDMUsException;
+import org.opensourcedea.exception.InconsistentNoOfVariablesException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 
 
 /*

@@ -20,22 +20,27 @@
     
 */
 
+package org.opensourcedea.exception;
 
-package org.opensourcedea.dea;
 
 /**
- * General DEA Exception used in this library
+ * A DEAException thrown when number of variables or DMUs do not match between different element of the DEAProblem
+ * (e.g. 1050 VariableTypes but only 1040 VariableNames).
  * </br>
  * @author Hubert Virtos
  *
  */
-public class DEAException extends Exception {
+public class InconsistentDataException extends DEAException {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DEAException(String detailMsg) {
+	public InconsistentDataException() {
+		super("The data is inconsistent.");
+	}
+	public InconsistentDataException(String detailMsg) {
 		super(detailMsg);
 	}
 

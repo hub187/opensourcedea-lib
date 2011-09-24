@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 import org.opensourcedea.dea.*;
+import org.opensourcedea.exception.InvalidPropertyValueException;
 
 //import dea.DEAModelOrientation;
 

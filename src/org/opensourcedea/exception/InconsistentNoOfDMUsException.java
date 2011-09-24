@@ -20,25 +20,24 @@
     
 */
 
-package org.opensourcedea.dea;
+package org.opensourcedea.exception;
 
 /**
- * A DEAException thrown when number the DEAProblem has missing data.
+ * A DEAException extending InconsistentData thrown when number of DMUs do not match between different
+ * element of the DEAProblem.
  * </br>
  * @author Hubert Virtos
  *
  */
-public class MissingDataException extends DEAException {
+public class InconsistentNoOfDMUsException extends InconsistentDataException {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public MissingDataException() {
-		super("The DEAProblem is missing some data. Please check the DataMatrix, DMUNames," +
-				"ModelType, VariableNames and VariableTypes.");
+	public InconsistentNoOfDMUsException() {
+		super("The number of DMUs does not seem to match with the data. Please check the DMUNames and DataMatrix.");
 	}
-	public MissingDataException(String message) {
-		super(message);
-	}
+	
 }

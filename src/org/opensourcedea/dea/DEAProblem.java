@@ -26,7 +26,14 @@ package org.opensourcedea.dea;
 
 import java.util.ArrayList;
 
-import org.opensourcedea.models.*;
+import org.opensourcedea.exception.DEAException;
+import org.opensourcedea.exception.IncompatibleModelTypeException;
+import org.opensourcedea.exception.InconsistentNoOfDMUsException;
+import org.opensourcedea.exception.InconsistentNoOfVariablesException;
+import org.opensourcedea.exception.InvalidPropertyValueException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
+import org.opensourcedea.model.*;
 
 
 

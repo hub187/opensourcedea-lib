@@ -20,27 +20,28 @@
     
 */
 
-package org.opensourcedea.dea;
+package org.opensourcedea.exception;
+
 
 /**
- * A DEASolver exception. Used when the Lpsolve crashes. This should not happen has the check in the DEAProblem.solve() method
- * should throw an DEAException before bad data is sent to a model (e.g. throw MissingData DEAexception is there is no data in the
- * DEAProblem).
+ * A DEAException thrown when number of variables or DMUs do not match between different element of the DEAProblem
+ * (e.g. 1050 VariableTypes but only 1040 VariableNames).
  * </br>
  * @author Hubert Virtos
  *
  */
-public class DEASolverException extends DEAException {
+public class InvalidPropertyValueException extends DEAException {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DEASolverException() {
-		super("The linear solver lpsolve encountered an error. This is likely caused by inconsistencies in the data sent to the Lpsolve.solveLPProblem method.");
+	public InvalidPropertyValueException() {
+		super("The value entered is invalid.");
 	}
-	
-	public DEASolverException (String message) {
-		super(message);
+	public InvalidPropertyValueException(String detailMsg) {
+		super(detailMsg);
 	}
+
 }

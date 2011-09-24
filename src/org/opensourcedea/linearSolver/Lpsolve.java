@@ -24,10 +24,10 @@ package org.opensourcedea.linearSolver;
 
 import java.util.ArrayList;
 
-import org.opensourcedea.dea.DEASolverException;
-import org.opensourcedea.dea.ProblemNotSolvedProperlyException;
 import org.opensourcedea.dea.SolverObjDirection;
 import org.opensourcedea.dea.SolverReturnStatus;
+import org.opensourcedea.exception.DEASolverException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 
 import lpsolve.LpSolve;
 

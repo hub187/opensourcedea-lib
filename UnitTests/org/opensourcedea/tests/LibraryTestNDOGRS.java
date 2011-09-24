@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.opensourcedea.dea.*;
+import org.opensourcedea.exception.InvalidPropertyValueException;
 
 import java.util.ArrayList;
 

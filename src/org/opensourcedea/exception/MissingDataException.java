@@ -20,18 +20,26 @@
     
 */
 
-package org.opensourcedea.dea;
+package org.opensourcedea.exception;
 
-public class ProblemNotSolvedProperlyException extends DEAException {
 
+/**
+ * A DEAException thrown when number the DEAProblem has missing data.
+ * </br>
+ * @author Hubert Virtos
+ *
+ */
+public class MissingDataException extends DEAException {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
-	public ProblemNotSolvedProperlyException() {
-		super("The DEA Problem was not solved or at least one optimisation failed to find an optimum." +
-				"You cannot read a solution from a DEA Problem if not all optimisations were sucessfull.");
-	}
-	public ProblemNotSolvedProperlyException(String detailMsg) {
-		super(detailMsg);
-	}
 	
+	public MissingDataException() {
+		super("The DEAProblem is missing some data. Please check the DataMatrix, DMUNames," +
+				"ModelType, VariableNames and VariableTypes.");
+	}
+	public MissingDataException(String message) {
+		super(message);
+	}
 }

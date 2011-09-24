@@ -20,24 +20,23 @@
     
 */
 
-package org.opensourcedea.dea;
+
+package org.opensourcedea.exception;
 
 /**
- * A DEAException extending InconsistentData thrown when number of Variables do not match between
- * different element of the DEAProblem.
+ * General DEA Exception used in this library
  * </br>
  * @author Hubert Virtos
  *
  */
-public class InconsistentNoOfVariablesException extends InconsistentDataException {
-
+public class DEAException extends Exception {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public InconsistentNoOfVariablesException() {
-		super("The number of variables does not seem to match with the data. Please check the VariableNames, VariableTypes and DataMatrix.");
+
+	public DEAException(String detailMsg) {
+		super(detailMsg);
 	}
-	
+
 }

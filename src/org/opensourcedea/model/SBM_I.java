@@ -20,12 +20,15 @@
     
 */
 
-package org.opensourcedea.models;
+package org.opensourcedea.model;
 
 import lpsolve.LpSolve;
 import java.util.ArrayList;
 
 import org.opensourcedea.dea.*;
+import org.opensourcedea.exception.DEASolverException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.*;
 
 

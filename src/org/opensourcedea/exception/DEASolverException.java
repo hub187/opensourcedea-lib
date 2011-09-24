@@ -20,27 +20,28 @@
     
 */
 
-package org.opensourcedea.dea;
+package org.opensourcedea.exception;
+
 
 /**
- * A DEAException thrown when number of variables or DMUs do not match between different element of the DEAProblem
- * (e.g. 1050 VariableTypes but only 1040 VariableNames).
+ * A DEASolver exception. Used when the Lpsolve crashes. This should not happen has the check in the DEAProblem.solve() method
+ * should throw an DEAException before bad data is sent to a model (e.g. throw MissingData DEAexception is there is no data in the
+ * DEAProblem).
  * </br>
  * @author Hubert Virtos
  *
  */
-public class InconsistentDataException extends DEAException {
-
+public class DEASolverException extends DEAException {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public InconsistentDataException() {
-		super("The data is inconsistent.");
+	public DEASolverException() {
+		super("The linear solver lpsolve encountered an error. This is likely caused by inconsistencies in the data sent to the Lpsolve.solveLPProblem method.");
 	}
-	public InconsistentDataException(String detailMsg) {
-		super(detailMsg);
+	
+	public DEASolverException (String message) {
+		super(message);
 	}
-
 }

@@ -1,4 +1,4 @@
-package org.opensourcedea.models;
+package org.opensourcedea.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,14 +6,18 @@ import java.util.Arrays;
 import lpsolve.LpSolve;
 
 import org.opensourcedea.dea.*;
+import org.opensourcedea.exception.DEASolverException;
+import org.opensourcedea.exception.MissingDataException;
+import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.Lpsolve;
 import org.opensourcedea.linearSolver.SolverResults;
 
-public class BCC extends Model {
+public class CCR extends Model {
 
 	
 	/**
-	 * This method creates and solves BCC problems.
+	 * This method creates and solves the CCR problems. The CCRO solution is derived from
+	 * CCRI solution (the CCRO model is thus never built).
 	 * @param deaP The DEAProblem to solve.
 	 * @param nbDMUs The number of DMUs of the DEAProblem.
 	 * This information is already in the DEAProblem but it is more efficient to use call the method
@@ -45,17 +49,8 @@ public class BCC extends Model {
 		/////////////////////
 		
 		//Instantiate the rhs1 and solverEqualityType1 arrays
-		/* IF WAS: deaP.getModelType() == ModelType.BCC_I ||
-		 * deaP.getModelType() == ModelType.BCC_O
-		 * TO DELETE when all BCC models are implemented.*/
-		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE){
-			rhs1 = new double [nbVariables + 1]; //RHS Phase I
-			solverEqualityType1 = new int[nbVariables + 1];
-		}
-		else /* GRS, IRS, DRS, need one extra row for second convexity constraint*/ {
-			rhs1 = new double [nbVariables + 2]; //RHS Phase I
-			solverEqualityType1 = new int[nbVariables + 2];
-		}
+		rhs1 = new double [nbVariables]; //RHS Phase I
+		solverEqualityType1 = new int[nbVariables];
 		
 		solvePhaseI(deaP, nbDMUs, nbVariables, transposedMatrix, dmuIndex,
 					constraints, objF, rhs1, solverEqualityType1, returnSol, sol);
@@ -71,17 +66,8 @@ public class BCC extends Model {
 		 * - change the Objective Function accordingly (all 1 on Slacks, all others coeff = 0).*/
 		
 		//Instantiate the rhs2 and solverEqualityType2 arrays
-		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
-			/*+1 row for convexity constraints, + 1 row for theta*/
-			rhs2 = new double[nbVariables + 2];
-			solverEqualityType2 = new int[nbVariables + 2];
-		}
-		else {
-			/*+2 rows for convexity constraints (U & L), + 1 row for theta*/
-			rhs2 = new double[nbVariables + 3];
-			solverEqualityType2 = new int[nbVariables + 3];
-		}
-		
+		rhs2 = new double[nbVariables + 1];
+		solverEqualityType2 = new int[nbVariables + 1];
 		
 		solvePhaseII(deaP, nbDMUs, nbVariables, constraints, objF, rhs1,
 				rhs2, solverEqualityType1, solverEqualityType2, sol, returnSol, dmuIndex);
@@ -101,14 +87,8 @@ public class BCC extends Model {
 		createPhaseOneModel(deaP, nbDMUs, nbVariables, transposedMatrix, dmuIndex,
 				constraints, objF, rhs1, solverEqualityType1);
 
-		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-			sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN,
-					solverEqualityType1);
-		}
-		else {
-			sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MAX,
-					solverEqualityType1);
-		}
+		sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN,
+				solverEqualityType1);
 		
 		storePhaseOneInformation(deaP, returnSol, dmuIndex, sol);
 		
@@ -149,51 +129,60 @@ public class BCC extends Model {
 		
 		//Collect information from Phase II (Theta)
 	
+		//Collect information from Phase II (Theta)
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		for(int lambdaPos = 0; lambdaPos < nbDMUs; lambdaPos++) {
-			if(sol.VariableResult[lambdaPos + 1] != 0) {
-				refSet.add(new NonZeroLambda(lambdaPos, sol.VariableResult[lambdaPos + 1]));
+		if(deaP.getModelType() == ModelType.CCR_I) {
+			for(int lambdaPos = 0; lambdaPos < nbDMUs; lambdaPos++) {
+				if(sol.VariableResult[lambdaPos + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaPos, sol.VariableResult[lambdaPos + 1]));
+				}
+			}
+			returnSol.setReferenceSet(dmuIndex, refSet);
+			returnSol.setSlackArrayCopy(dmuIndex, sol.VariableResult, nbDMUs + 1, nbVariables);
+		}
+		else {
+			for(int lambdaIndex = 0; lambdaIndex < nbDMUs; lambdaIndex++) {
+				if(sol.VariableResult[lambdaIndex + 1] != 0) {
+					refSet.add(new NonZeroLambda(lambdaIndex,
+							sol.VariableResult[lambdaIndex + 1] / returnSol.getObjective(dmuIndex)));
+				}
+			}
+			returnSol.setReferenceSet(dmuIndex, refSet);
+			for(int varIndex = 0; varIndex < nbVariables; varIndex++) {
+				//setSlack(i, s, Sol.VariableResult[NbDMUs + 1 + s] * ReturnSol.getObjective(i));
+				returnSol.setSlack(dmuIndex, varIndex, sol.VariableResult[nbDMUs + 1 + varIndex] / returnSol.getObjective(dmuIndex));
 			}
 		}
-		returnSol.setReferenceSet(dmuIndex, refSet);
-		returnSol.setSlackArrayCopy(dmuIndex, sol.VariableResult, nbDMUs + 1, nbVariables);
-
-		for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
-				if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex, returnSol.getObjective(dmuIndex)
-								* deaP.getDataMatrix(dmuIndex, varIndex)
-								- returnSol.getSlack(dmuIndex, varIndex));
-					}
-					else {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex,
-								deaP.getDataMatrix(dmuIndex, varIndex)
-								+ returnSol.getSlack(dmuIndex, varIndex));
-					}
+		
+		if(deaP.getModelType() == ModelType.CCR_I) {
+			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
+				if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							returnSol.getObjective(dmuIndex) * deaP.getDataMatrix(dmuIndex, varIndex)
+							- returnSol.getSlack(dmuIndex, varIndex));
 				}
 				else {
-					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
-						//Projections
-						if(returnSol.getObjective(dmuIndex) != 0){
-							returnSol.setProjection(dmuIndex, varIndex,
-									(1 / returnSol.getObjective(dmuIndex))
-									* deaP.getDataMatrix(dmuIndex, varIndex)
-									+ returnSol.getSlack(dmuIndex, varIndex));
-						}
-						else {
-							returnSol.setProjection(dmuIndex, varIndex,
-									returnSol.getSlack(dmuIndex, varIndex));
-						}
-					}
-					else {
-						//Projections
-						returnSol.setProjection(dmuIndex, varIndex,
-								deaP.getDataMatrix(dmuIndex, varIndex)
-								- returnSol.getSlack(dmuIndex, varIndex));
-					}
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							deaP.getDataMatrix(dmuIndex, varIndex) + returnSol.getSlack(dmuIndex, varIndex));
 				}
+			}
+		}
+		else {
+			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
+				if(deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							(1 / returnSol.getObjective(dmuIndex)) * deaP.getDataMatrix(dmuIndex, varIndex)
+							+ returnSol.getSlack(dmuIndex, varIndex));
+				}
+				else {
+					//Projections
+					returnSol.setProjection(dmuIndex, varIndex,
+							deaP.getDataMatrix(dmuIndex, varIndex) - returnSol.getSlack(dmuIndex, varIndex));
+				}
+			}
 		}
 
 		SolverStatus.checkSolverStatus(returnSol, sol);
@@ -228,37 +217,22 @@ public class BCC extends Model {
 				
 		
 		//Changing RHS & SolverEqTypes
-		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
-			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-				RHS2[NbVariables + 1] = Sol.getObjective(dmuIndex);
-			}
-			else {
-				RHS2[NbVariables + 1] = 1 / Sol.getObjective(dmuIndex);
-			}
-			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
-					SolverEqualityType1.length);
-			SolverEqualityType2[NbVariables + 1] = LpSolve.EQ;
-		}
-		else {
-			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-				RHS2[NbVariables + 2] = Sol.getObjective(dmuIndex);
-			}
-			else {
-				RHS2[NbVariables + 2] = 1 / Sol.getObjective(dmuIndex);
-			}
-			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
-					SolverEqualityType1.length);
-			SolverEqualityType2[NbVariables + 2] = LpSolve.EQ;
-		}
+		System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
+
+		RHS2[NbVariables] = Sol.getObjective(dmuIndex);
+
+		System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
+				SolverEqualityType1.length);
+		SolverEqualityType2[NbVariables] = LpSolve.EQ;
+
 		
 	
 		//Change Objective Function
 		Arrays.fill(ObjF,0);
-		for (int j = NbDMUs + 1; j <= NbDMUs + NbVariables; j++) {
+		for (int j = NbDMUs + 1; j < NbDMUs + NbVariables; j++) {
 			ObjF[j] = 1;
 		}
+
 	}
 
 	/**
@@ -274,51 +248,18 @@ public class BCC extends Model {
 			DEAPSolution returnSol, int i, SolverResults sol) throws MissingDataException {
 
 		//Collect information from Phase I (Theta)	
-		
-		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-			returnSol.setObjective(i, sol.Objective);
-		}
-		else {
-			if(sol.Objective != 0) {
-				returnSol.setObjective(i, 1 / sol.Objective);
-			}
-			else {
-				returnSol.setObjective(i, 0);
-			}
-		}
+		returnSol.setObjective(i, sol.Objective);
+
 
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-			if(deaP.getModelRTS() == ReturnsToScale.VARIABLE){
-				//1 extra row for the convexity constraint
-			returnSol.setWeightsArrayCopy(i, sol.Weights, 1, deaP.getNumberOfVariables());
-			returnSol.setU0Weight(i, sol.Weights[0]);
-			//returnSol.setWeights(i, sol.Weights);
-			}
-			else {
-				//2 extra rows for the 2 convexity constraints
-				returnSol.setWeightsArrayCopy(i, sol.Weights, 2, deaP.getNumberOfVariables());
-				returnSol.setuBConvexityConstraintWeight(i, sol.Weights[0]);
-				returnSol.setlBConvexityConstraintWeights(i, sol.Weights[1]);
-				
-			}
+			returnSol.setWeights(i, sol.Weights);
 		}
 		else {
-			//returnSol.setWeights(i, new double[sol.Weights.length]);
-			if(deaP.getModelRTS() == ReturnsToScale.VARIABLE){
-				for(int k = 1; k < sol.Weights.length; k++) {
-					returnSol.setWeight(i, k - 1, sol.Weights[k] * -1);
-				}
-				returnSol.setU0Weight(i, sol.Weights[0] * -1);
-			}
-			else {
-				for(int k = 2; k < sol.Weights.length; k++) {
-					returnSol.setWeight(i, k - 2, sol.Weights[k] * -1);
-				}
-				returnSol.setuBConvexityConstraintWeight(i, sol.Weights[0] * -1);
-				returnSol.setlBConvexityConstraintWeights(i, sol.Weights[1] * -1);
+			returnSol.setWeights(i, new double[sol.Weights.length]);
+			for(int k = 0; k < sol.Weights.length; k++) {
+				returnSol.setWeight(i, k, sol.Weights[k] / sol.Objective);
 			}
 		}
-			
 
 		SolverStatus.checkSolverStatus(returnSol, sol);
 	}
@@ -347,22 +288,11 @@ public class BCC extends Model {
 			//Build the Constraint Matrix, row by row
 			constraintRow = new double[nbDMUs + nbVariables + 1];
 			//First column (input values for  DMU under observation (DMUIndex) * -1; 0 for outputs)
-				
-			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-					constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
-				}
-				else  {
-					constraintRow[0] = 0;
-				}
+			if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+				constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
 			}
-			else {
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
-					constraintRow[0] = transposedMatrix[varIndex] [dmuIndex] * -1;
-				}
-				else  {
-					constraintRow[0] = 0;
-				}
+			else  {
+				constraintRow[0] = 0;
 			}
 	
 			//Copy rest of the data matrix
@@ -380,54 +310,25 @@ public class BCC extends Model {
 			constraints.add(constraintRow);
 		
 			//Build RHS & SolverEqualityTypes
-			
-			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
-					rhs1[varIndex] = 0;
-					solverEqualityType1[varIndex] = LpSolve.EQ;
-				}
-				else {
-					rhs1[varIndex] = transposedMatrix[varIndex] [dmuIndex];
-					solverEqualityType1[varIndex] = LpSolve.EQ;
-				}
+			if (deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {
+				rhs1[varIndex] = 0;
+				solverEqualityType1[varIndex] = LpSolve.EQ;
 			}
 			else {
-				if (deaP.getVariableOrientation(varIndex) == VariableOrientation.OUTPUT) {
-					rhs1[varIndex] = 0;
-					solverEqualityType1[varIndex] = LpSolve.EQ;
-				}
-				else {
-					rhs1[varIndex] = transposedMatrix[varIndex] [dmuIndex];
-					solverEqualityType1[varIndex] = LpSolve.EQ;
-				}
+				rhs1[varIndex] = transposedMatrix[varIndex] [dmuIndex];
+				solverEqualityType1[varIndex] = LpSolve.EQ;
 			}
+
 
 		} //finished looping through all variables
 
 		
-		//Build the row corresponding to the convexity constraint
-		constraintRow = new double[nbDMUs + nbVariables + 1];
-		for(int VarIndex = 1; VarIndex <= nbDMUs; VarIndex++){
-			constraintRow[VarIndex] = 1;
-		}
-		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
-			constraints.add(constraintRow);
-			rhs1[nbVariables] = 1;
-			solverEqualityType1[nbVariables] = LpSolve.EQ;
-		}
-		else /*In this case the model is a general, increasing or decreasing model*/ {
-			constraints.add(constraintRow);
-			rhs1[nbVariables] = deaP.getRTSLowerBound();
-			solverEqualityType1[nbVariables] = LpSolve.GE;
-			constraints.add(constraintRow);
-			rhs1[nbVariables + 1] = deaP.getRTSUpperBound();
-			solverEqualityType1[nbVariables + 1] = LpSolve.LE;
-		}
-		
 		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).
 		objF[0] = 1;
+		
 	}
 
 	
+
 	
 }

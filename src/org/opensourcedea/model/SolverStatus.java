@@ -20,7 +20,7 @@
     
 */
 
-package org.opensourcedea.models;
+package org.opensourcedea.model;
 
 import org.opensourcedea.dea.DEAPSolution;
 import org.opensourcedea.dea.SolverReturnStatus;

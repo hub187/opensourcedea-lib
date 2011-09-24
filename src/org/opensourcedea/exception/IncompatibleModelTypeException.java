@@ -1,4 +1,5 @@
-package org.opensourcedea.dea;
+package org.opensourcedea.exception;
+
 
 public class IncompatibleModelTypeException extends DEAException {
 
