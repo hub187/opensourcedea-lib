@@ -230,14 +230,24 @@ public class BCC extends Model {
 		//Changing RHS & SolverEqTypes
 		if(deaP.getModelRTS() == ReturnsToScale.VARIABLE) {
 			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-			RHS2[NbVariables + 1] = Sol.getObjective(dmuIndex);
+			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+				RHS2[NbVariables + 1] = Sol.getObjective(dmuIndex);
+			}
+			else {
+				RHS2[NbVariables + 1] = 1 / Sol.getObjective(dmuIndex);
+			}
 			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
 					SolverEqualityType1.length);
 			SolverEqualityType2[NbVariables + 1] = LpSolve.EQ;
 		}
 		else {
 			System.arraycopy(RHS1, 0, RHS2, 0, RHS1.length);
-			RHS2[NbVariables + 2] = Sol.getObjective(dmuIndex);
+			if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
+				RHS2[NbVariables + 2] = Sol.getObjective(dmuIndex);
+			}
+			else {
+				RHS2[NbVariables + 2] = 1 / Sol.getObjective(dmuIndex);
+			}
 			System.arraycopy(SolverEqualityType1, 0, SolverEqualityType2, 0,
 					SolverEqualityType1.length);
 			SolverEqualityType2[NbVariables + 2] = LpSolve.EQ;

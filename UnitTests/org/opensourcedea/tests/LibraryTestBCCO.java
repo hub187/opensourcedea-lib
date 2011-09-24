@@ -103,13 +103,14 @@ public class LibraryTestBCCO {
 		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
 		
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(5, 0.5913084277951042));
-		refSet.add(new NonZeroLambda(6, 0.39884358251321156));
-		refSet.add(new NonZeroLambda(18, 0.009847989691684267));
+		refSet.add(new NonZeroLambda(5, 0.5960127451425468));
+		refSet.add(new NonZeroLambda(6, 0.3740622730161569));
+		refSet.add(new NonZeroLambda(11, 0.0299249818412961));
 		referenceSets[0] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(5, 1.0000000000000009));
+		refSet.add(new NonZeroLambda(2, 0.01538461538461519));
+		refSet.add(new NonZeroLambda(5, 0.984615384615385));
 		referenceSets[1] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
@@ -117,8 +118,8 @@ public class LibraryTestBCCO {
 		referenceSets[11] = refSet;
 		
 		refSet = new ArrayList<NonZeroLambda>();
-		refSet.add(new NonZeroLambda(5, 0.4691358024691359));
-		refSet.add(new NonZeroLambda(18, 0.5308641975308643));
+		refSet.add(new NonZeroLambda(5, 0.4691358024691351));
+		refSet.add(new NonZeroLambda(18, 0.5308641975308633));
 		referenceSets[17] = refSet;
 		
 		return referenceSets;
@@ -126,11 +127,11 @@ public class LibraryTestBCCO {
 	
 	private double[] [] getTestSlackValues() {
 		double[] [] slackValues = new double[20] [4];
-		slackValues[3] [3] = 3035.6857752332667;
-		slackValues[9] [1] = 40.855189209441754;
-		slackValues[12] [0] = 657.5300000000001;
-		slackValues[17] [0] = 92.50938271604942;
-		slackValues[17] [2] = 1757.3511385617753;
+		slackValues[3] [3] = 2595.381896325583;
+		slackValues[9] [1] = 36.85856593636426;
+		slackValues[12] [0] = 343.36076923045414;
+		slackValues[17] [0] = 92.50938271604993;
+		slackValues[17] [2] = 1755.6615459227132;
 		return slackValues;
 	}
 	
@@ -138,18 +139,19 @@ public class LibraryTestBCCO {
 		double[] [] projectionValues = new double[20] [4];
 		projectionValues[0] [0] = 411.17;
 		projectionValues[0] [1] = 83.0;
-		projectionValues[0] [2] = 5915.43784880282;
-		projectionValues[0] [3] = 4954.551252153717;
+		projectionValues[0] [2] = 3475.445094156343;
+		projectionValues[0] [3] = 3127.731191579121;
 		
 		projectionValues[3] [0] = 361.0;
 		projectionValues[3] [1] = 83.0;
-		projectionValues[3] [2] = 6161.415675068601;
-		projectionValues[3] [3] = 3440.391588755202;
+		projectionValues[3] [2] = 3331.3782284455688;
+		projectionValues[3] [3] = 3000.0877098475185;
 		
-		projectionValues[10] [0] = 384.149;
+		projectionValues[10] [0] = 295.0744000000002;
 		projectionValues[10] [1] = 65.0;
-		projectionValues[10] [2] = 5103.978118365497;
-		projectionValues[10] [3] = 2683.9476133274666;
+		projectionValues[10] [2] = 3004.7203999981034;
+		projectionValues[10] [3] = 981.1540000002891;
+		
 		
 		return projectionValues;
 	}

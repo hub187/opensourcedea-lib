@@ -125,6 +125,8 @@ public class Lpsolve {
 	        	
 	        	LpProb.setVerbose(0);
 	        	
+	        	
+	        	
 	        	//Solve the Linear Problem
 	        	ret = LpProb.solve();
 	        	if (ret == LpSolve.OPTIMAL) {

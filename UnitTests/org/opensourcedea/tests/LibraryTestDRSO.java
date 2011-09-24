@@ -5,6 +5,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 //import java.util.ArrayList;
 
 //import static org.junit.Assert.assertEquals;
@@ -26,14 +28,17 @@ public class LibraryTestDRSO {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution getModelResults() {
+	
+	public void buildDEAProblem(ModelType ModelType) {
 		
 		
-		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
-		
-		DEAModelSol.setObjectives(createDEAModelObjectives());		
-		
-		return DEAModelSol;
+		tester.setModelType(ModelType);
+		tester.setVariableNames(TestData.createTestVariableNames());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setDataMatrix(TestData.createTestDataMatrix());
+		tester.setDMUNames(TestData.createTestDMUNames());
+
+
 	}
 
 
@@ -91,42 +96,165 @@ public class LibraryTestDRSO {
 		
 		return ranks;
 	}
+
+	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
+		
+		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(5, 0.5960127451425468));
+		refSet.add(new NonZeroLambda(6, 0.3740622730161569));
+		refSet.add(new NonZeroLambda(11, 0.02992498184129616));
+		referenceSets[0] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(2, 0.015384615384615717));
+		refSet.add(new NonZeroLambda(5, 0.9846153846153832));
+		referenceSets[1] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(11, 0.9999999999999998));
+		referenceSets[11] = refSet;
+		
+		refSet = new ArrayList<NonZeroLambda>();
+		refSet.add(new NonZeroLambda(5, 0.4691358024691351));
+		refSet.add(new NonZeroLambda(18, 0.5308641975308633));
+		referenceSets[17] = refSet;
+		
+		return referenceSets;
+	}
 	
-	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
+	private double[] [] getTestSlackValues() {
+		double[] [] SlacksArray = new double[20] [4];
 		
+		SlacksArray[2] [3] = 7.686521357201955E-7;
+		SlacksArray[8] [1] = 2.054247299292464;
+		SlacksArray[9] [1] = 51.94181048433048;
+		SlacksArray[10] [3] = 957.1511964786159;
+		SlacksArray[12] [3] = 2018.5378679630871;
+		SlacksArray[13] [3] = 2042.8089839973368;
+		SlacksArray[14] [2] = 1255.9205125782103;
+		SlacksArray[17] [2] = 1755.6615459227132;
+		SlacksArray[19] [1] = 26.00265680881663;
 		
-		tester.setModelType(ModelType);
-
-		//tester.setModelOrientation(ModelOrientation);
-		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableOrientations(TestData.createTestVariableOrientation());
-		tester.setDataMatrix(TestData.createTestDataMatrix());
-		tester.setDMUNames(TestData.createTestDMUNames());
-
-
+		return SlacksArray;
+	}
+	
+	private double[] [] getTestProjectionValues() {
+		double[] [] projectionValues = new double[20] [4];
+		projectionValues[0] [0] = 411.17;
+		projectionValues[0] [1] = 83.0;
+		projectionValues[0] [2] = 3475.445094156343;
+		projectionValues[0] [3] = 3127.731191579121;
+		
+		projectionValues[3] [0] = 361.0;
+		projectionValues[3] [1] = 83.0;
+		projectionValues[3] [2] = 3331.378228445569;
+		projectionValues[3] [3] = 3000.087709847526;
+		
+		projectionValues[10] [0] = 295.0744000000004;
+		projectionValues[10] [1] = 65.0;
+		projectionValues[10] [2] = 3004.720399998104;
+		projectionValues[10] [3] = 981.1540000002921;
+		
+		return projectionValues;
+	}
+	
+	private double[] [] getTestWeightValues() {
+		double[] [] weightValues = new double[20] [4];
+		weightValues[0] [0] = 0.0015297275502017802;
+		weightValues[0] [1] = 0.0040648322369322785;
+		weightValues[0] [2] = 5.327139645638672E-4;
+		weightValues[0] [3] = 0;
+		
+		weightValues[3] [0] = 0.0022959550676699067;
+		weightValues[3] [1] = 0.006100872127446207;
+		weightValues[3] [2] = 7.995458579520284E-4;
+		weightValues[3] [3] = 0;
+		
+		return weightValues;
 	}
 	
 	
 	@Test
 	public void testDRSO() {
+				
 		
-		buildDEAProblem(ModelType.DRS_O); //, DEAModelOrientation.NonOriented);
+		
+		buildDEAProblem(ModelType.DRS_O);
 		
 		try {
 			tester.solve();
-
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
 		
-		DEAPSolution CheckedSol = getModelResults();
 		
 		
-		assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+		try {
 		
-		assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
-		
-//		assertEquals(getTestReferenceSet(),tester.getReferenceSet());
-		
-		assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
-		
+			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
+			
+			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 7), createSolRanks());
+			
+			//REFERENCE SET
+			ArrayList<Integer> l = new ArrayList<Integer>();
+			l.add(0);
+			l.add(1);
+			l.add(11);
+			l.add(17);
+			for(Integer i : l){
+				ArrayList<NonZeroLambda> refSet = getTestReferenceSet()[i];
+				for(int nzlIndex = 0; nzlIndex < refSet.size();nzlIndex++) {
+					assertEquals(refSet.get(nzlIndex).getDMUIndex(), tester.getReferenceSet(i).get(nzlIndex).getDMUIndex());
+					assertEquals(refSet.get(nzlIndex).getLambdaValue(),
+							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
+				}
+			}
+			
+			//SLACKS
+			l.clear();
+			l.add(3);
+			l.add(9);
+			l.add(12);
+			l.add(17);
+			for(Integer i : l){
+				double[] slackValues = getTestSlackValues()[i];
+				for(int sIndex = 0; sIndex < slackValues.length; sIndex++) {
+					if(slackValues[sIndex] != 0) {
+						assertEquals(slackValues[sIndex], tester.getSlacks(i)[sIndex], 0.1);
+					}
+				}
+			}
+			
+			//PROJECTIONS
+			l.clear();
+			l.add(0);
+			l.add(3);
+			l.add(10);
+			for(Integer i : l){
+				double[] projValues = getTestProjectionValues()[i];
+				for(int pIndex = 0; pIndex < projValues.length; pIndex++) {
+					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
+				}
+			}
+			
+			
+			
+			//WEIGHTS
+			l.clear();
+			l.add(0);
+			l.add(3);
+			for(Integer i : l){
+				double[] weightValues = getTestWeightValues()[i];
+				for(int wIndex = 0; wIndex < weightValues.length; wIndex++) {
+					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
+				}
+			}
+			
+			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
