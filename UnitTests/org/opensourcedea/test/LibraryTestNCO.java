@@ -129,14 +129,7 @@ public class LibraryTestNCO {
 		return referenceSets;
 	}
 	
-//	private double[] [] getTestSlackValues() {
-//		double[] [] slackValues = new double[20] [4];
-//		slackValues[3] [3] = 18.333333;
-//		slackValues[10] [3] = 103.9972;
-//		slackValues[13] [3] = 112.7358;
-//		return slackValues;
-//	}
-	
+
 	private double[] [] getTestProjectionValues() {
 		double[] [] projectionValues = new double[20] [4];
 		projectionValues[0] [0] = 411.17;
@@ -186,7 +179,7 @@ public class LibraryTestNCO {
 	@Test
 	public void testNCO() {
 		
-		buildDEAProblem(ModelType.NC_O); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_O);
 		
 		
 		

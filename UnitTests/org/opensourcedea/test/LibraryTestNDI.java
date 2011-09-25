@@ -174,7 +174,7 @@ public class LibraryTestNDI {
 	@Test
 	public void testNDI() {
 		
-		buildDEAProblem(ModelType.ND_I); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.ND_I);
 		
 		
 		

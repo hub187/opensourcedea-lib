@@ -183,7 +183,7 @@ public class LibraryTestNDIGRS {
 	@Test
 	public void testNDIGRS() {
 		
-		buildDEAProblem(ModelType.ND_I_GRS); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.ND_I_GRS);
 		
 		
 		

@@ -177,7 +177,7 @@ public class LibraryTestNDOV {
 	@Test
 	public void testNDOV() {
 		
-		buildDEAProblem(ModelType.ND_O_V); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.ND_O_V);
 		
 		
 		

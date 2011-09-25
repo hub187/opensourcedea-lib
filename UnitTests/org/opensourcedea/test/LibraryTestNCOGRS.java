@@ -123,9 +123,9 @@ public class LibraryTestNCOGRS {
 	
 	private double[] [] getTestSlackValues() {
 		double[] [] slackValues = new double[20] [4];
-//		slackValues[3] [3] = 18.333325421222444;
-//		slackValues[10] [3] = 103.99724870761032;
-//		slackValues[13] [3] = 112.73582426570167;
+		slackValues[1] [0] = 443.24386013394735;
+		slackValues[2] [0] = 114.42135774083252;
+		slackValues[12] [0] = 435.45313301785075;
 		return slackValues;
 	}
 	
@@ -178,7 +178,7 @@ public class LibraryTestNCOGRS {
 	@Test
 	public void testNCOGRS() {
 		
-		buildDEAProblem(ModelType.NC_O_GRS); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_O_GRS);
 		
 		try {
 			tester.setRTSLowerBound(0.8);

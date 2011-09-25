@@ -179,7 +179,7 @@ public class LibraryTestNCOV {
 	@Test
 	public void testNCOV() {
 		
-		buildDEAProblem(ModelType.NC_O_V); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_O_V);
 		
 		
 		

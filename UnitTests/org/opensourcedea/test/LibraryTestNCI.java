@@ -179,7 +179,7 @@ public class LibraryTestNCI {
 	@Test
 	public void testNCI() {
 		
-		buildDEAProblem(ModelType.NC_I); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_I);
 		
 		try {
 			tester.setVariableTypes(TestData.createTestVariableTypes(VariableType.NON_CONTROLLABLE));

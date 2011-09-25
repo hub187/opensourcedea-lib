@@ -177,7 +177,7 @@ public class LibraryTestNCIV {
 	@Test
 	public void testNCIV() {
 		
-		buildDEAProblem(ModelType.NC_I_V); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_I_V);
 		
 		
 		

@@ -178,7 +178,7 @@ public class LibraryTestNCIGRS {
 	@Test
 	public void testNCIGRS() {
 		
-		buildDEAProblem(ModelType.NC_I_GRS); //, DEAModelOrientation.NonOriented);
+		buildDEAProblem(ModelType.NC_I_GRS);
 		
 		try {
 			tester.setRTSLowerBound(0.8);
