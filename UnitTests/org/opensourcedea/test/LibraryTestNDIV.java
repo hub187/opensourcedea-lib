@@ -21,14 +21,16 @@ public class LibraryTestNDIV {
 	
 	DEAProblem tester = new DEAProblem(20, 4);
 
-	public DEAPSolution getModelResults() {
+	public void buildDEAProblem(ModelType ModelType) {
 		
+		tester.setModelType(ModelType);
+		tester.setVariableNames(TestData.createTestVariableNames());
+		tester.setVariableOrientations(TestData.createTestVariableOrientation());
+		tester.setVariableTypes(TestData.createTestVariableTypes(VariableType.NON_DISCRETIONARY));
+		tester.setDataMatrix(TestData.createTestDataMatrix());
+		tester.setDMUNames(TestData.createTestDMUNames());
+
 		
-		DEAPSolution DEAModelSol = new DEAPSolution(20, 4);
-		
-		DEAModelSol.setObjectives(createDEAModelObjectives());		
-		
-		return DEAModelSol;
 	}
 
 
@@ -87,18 +89,7 @@ public class LibraryTestNDIV {
 		return ranks;
 	}
 	
-	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
-		
-		tester.setModelType(ModelType);
-		//tester.setModelOrientation(ModelOrientation);
-		tester.setVariableNames(TestData.createTestVariableNames());
-		tester.setVariableOrientations(TestData.createTestVariableOrientation());
-		tester.setVariableTypes(TestData.createTestVariableTypes(VariableType.NON_DISCRETIONARY));
-		tester.setDataMatrix(TestData.createTestDataMatrix());
-		tester.setDMUNames(TestData.createTestDMUNames());
 
-		
-	}
 	
 	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
 		
@@ -199,10 +190,9 @@ public class LibraryTestNDIV {
 		}
 		
 		try {
-			DEAPSolution CheckedSol = getModelResults();
 			
 			//OBJECTIVES
-			assertArrayEquals(tester.getObjectives(), CheckedSol.getObjectives(),0.0001);
+			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
 			//RANKS
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
