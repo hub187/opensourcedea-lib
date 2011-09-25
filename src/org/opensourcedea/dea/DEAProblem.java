@@ -63,7 +63,7 @@ public class DEAProblem {
 	private ModelDetails modelDetails;
 	private Variable variable;
 	private DEAPSolution solution;
-	private Model model;
+
 	
 	
 	/**
@@ -134,11 +134,11 @@ public class DEAProblem {
 				this.getModelType() == ModelType.IRS_O ||
 				this.getModelType() == ModelType.DRS_I ||
 				this.getModelType() == ModelType.DRS_O) {
-			model = new BCC();
+			modelDetails.setModel(new BCC());
 		}
 		else if(this.getModelType() == ModelType.CCR_I ||
 			this.getModelType() == ModelType.CCR_O) {
-			model = new CCR();
+			modelDetails.setModel(new CCR());
 		}
 		else if(this.getModelType() == ModelType.NC_I ||
 				this.getModelType() == ModelType.NC_O ||
@@ -161,22 +161,22 @@ public class DEAProblem {
 				this.getModelType() == ModelType.ND_O_DRS ||
 				this.getModelType() == ModelType.ND_I_GRS ||
 				this.getModelType() == ModelType.ND_O_GRS) {
-			model = new NC_ND();
+			modelDetails.setModel(new NC_ND());
 		}
 		else if(this.getModelType() == ModelType.SBM ||
 				this.getModelType() == ModelType.SBM_V ||
 				this.getModelType() == ModelType.SBM_GRS){
-			model = new SBM();
+			modelDetails.setModel(new SBM());
 		}
 		else if(this.getModelType() == ModelType.SBM_I ||
 				this.getModelType() == ModelType.SBM_I_V ||
 				this.getModelType() == ModelType.SBM_I_GRS) {
-			model = new SBM_I();
+			modelDetails.setModel(new SBM_I());
 		}
 		else if(this.getModelType() == ModelType.SBM_O ||
 				this.getModelType() == ModelType.SBM_O_V ||
 				this.getModelType() == ModelType.SBM_O_GRS){
-			model = new SBM_O();
+			modelDetails.setModel(new SBM_O());
 		}
 
 	}
@@ -468,6 +468,16 @@ public class DEAProblem {
 		return this.modelDetails.getRTSUpperBound();
 	}
 	
+	
+	public void setModelName(String modName) {
+		modelDetails.setModelName(modName);
+	}
+	
+	public String getModelName() {
+		return modelDetails.getModelName();
+	}
+	
+	
 	 //////////////////////////////////////////////////////////////////////////
 	//						Mostly Internal Use								//
    //////////////////////////////////////////////////////////////////////////
@@ -621,8 +631,7 @@ public class DEAProblem {
 	public void solve() throws MissingDataException, InconsistentNoOfDMUsException, InconsistentNoOfVariablesException, DEAException {
 		
 		checkDataBeforeSolving();
-
-		this.solution = model.solve(this);
+		this.solution = modelDetails.getModel().solve(this);
 		
 	}
 

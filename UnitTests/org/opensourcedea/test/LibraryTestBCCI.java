@@ -27,16 +27,14 @@ public class LibraryTestBCCI {
 	DEAProblem tester = new DEAProblem(20, 4);
 
 	
-	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
-		
+	public void buildDEAProblem(ModelType ModelType) { 
 		
 		tester.setModelType(ModelType);
-
-		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableOrientations(TestData.createTestVariableOrientation());
 		tester.setDataMatrix(TestData.createTestDataMatrix());
 		tester.setDMUNames(TestData.createTestDMUNames());
+		tester.setModelName("BCC I Model Test");
 
 	}
 	
@@ -176,10 +174,8 @@ public class LibraryTestBCCI {
 	
 	@Test
 	public void testBCCI() {
-				
-		
-		
-		buildDEAProblem(ModelType.BCC_I); //, DEAModelOrientation.NonOriented);
+
+		buildDEAProblem(ModelType.BCC_I);
 		
 		try {
 			tester.solve();

@@ -36,7 +36,16 @@ public class ModelDetails {
 	private double rtsUpperBound;
 	private int nbDMUs;
 	private int nbVariables;
+	private Model model;
+	private String ModelName;
 	
+	public void setModel(Model mod) {
+		model = mod;
+	}
+	
+	public Model getModel() {
+		return model;
+	}
 	
 	/**
 	 * Gets the Model ModelType.
@@ -127,6 +136,17 @@ public class ModelDetails {
 	public int getNbVariables() {
 		return nbVariables;
 	}
+
+	public void setModelName(String modelName) {
+		ModelName = modelName;
+	}
+
+	public String getModelName() {
+		return ModelName;
+	}
+
+
+
 	
 	
 	
