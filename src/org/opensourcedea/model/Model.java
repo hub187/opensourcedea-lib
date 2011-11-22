@@ -1,5 +1,7 @@
-package org.opensourcedea.dea;
+package org.opensourcedea.model;
 
+import org.opensourcedea.dea.DEAPSolution;
+import org.opensourcedea.dea.DEAProblem;
 import org.opensourcedea.exception.DEASolverException;
 import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
