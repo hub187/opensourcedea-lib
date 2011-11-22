@@ -86,7 +86,8 @@ public class Model {
 			int nbVariables, double[][] transposedMatrix,
 			DEAPSolution returnSol, Integer dmuIndex)
 	throws ProblemNotSolvedProperlyException, DEASolverException, MissingDataException {
-		
+		throw new DEASolverException("The class of the problem you are trying to solve does not override" +
+				" the createAndSolve method. You need to review the source code or contact the person who gave you the code.");
 		
 	}
 	
