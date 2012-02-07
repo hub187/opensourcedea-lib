@@ -22,7 +22,7 @@
 
 package org.opensourcedea.dea;
 
-//import java.util.Arrays;
+import java.io.Serializable;
 
 /**
  * The Variables of a DEA Problem. This holds all the information relative to the 
@@ -30,7 +30,13 @@ package org.opensourcedea.dea;
  * @author Hubert.Virtos
  *
  */
-public class Variable {
+public class Variable implements Serializable {
+	/**
+	 * The serial version UID (auto generated)
+	 */
+	private static final long serialVersionUID = 4821189688327962633L;
+	
+	
 	private String[] variableName;
 	private VariableOrientation [] variableOrientation;
 	private VariableType[] variableType;

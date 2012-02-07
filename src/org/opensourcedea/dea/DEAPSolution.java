@@ -23,7 +23,7 @@
 package org.opensourcedea.dea;
 
 import java.util.ArrayList;
-
+import java.io.Serializable;
 
 
 /**
@@ -33,7 +33,12 @@ import java.util.ArrayList;
  * @author Hubert Virtos
  *
  */
-public class DEAPSolution {
+public class DEAPSolution implements Serializable {
+	
+	/**
+	 * The auto-generated serial version UID
+	 */
+	private static final long serialVersionUID = 2402167210320751288L;
 	
 	private double[] objectives;
 	private double[] [] slacks;
