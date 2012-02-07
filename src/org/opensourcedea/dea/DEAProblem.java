@@ -25,6 +25,7 @@ package org.opensourcedea.dea;
 //import java.util.Arrays;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import org.opensourcedea.exception.DEAException;
 import org.opensourcedea.exception.IncompatibleModelTypeException;
@@ -52,11 +53,18 @@ import org.opensourcedea.model.*;
  * <p>
  * @author Hubert Virtos
  * */
-public class DEAProblem {
+public class DEAProblem implements Serializable{
 	
-	 //////////////////////////////////////////////////////////////////////////
+	 /**
+	 * The serial version UID for the DEAProblem class (auto generated).
+	 */
+	private static final long serialVersionUID = -5913021075583556447L;
+	
+		
+	//////////////////////////////////////////////////////////////////////////
 	//				Properties of the DEAProblem Object						//
    //////////////////////////////////////////////////////////////////////////
+	
 	
 	private String[] dmuName;
 	private double [] [] dataMatrix;
