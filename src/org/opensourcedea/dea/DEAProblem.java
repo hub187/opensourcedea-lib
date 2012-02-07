@@ -80,11 +80,14 @@ public class DEAProblem implements Serializable{
 	 * @param nbVariables The number of variables in the DEA Problem to solve.
 	 */
 	public DEAProblem(int nbDMUs, int nbVariables) {
-		this.solution = new DEAPSolution(nbDMUs, nbVariables);
-		this.variable = new Variable(nbVariables);
+		this.dmuName = new String[nbDMUs];
+		this.dataMatrix = new double[nbDMUs][nbVariables];
 		this.modelDetails = new ModelDetails();
 		this.modelDetails.setNbDMUs(nbDMUs);
 		this.modelDetails.setNbVariables(nbVariables);
+		this.variable = new Variable(nbVariables);
+		this.solution = new DEAPSolution(nbDMUs, nbVariables);
+		
 	}
 	
 
