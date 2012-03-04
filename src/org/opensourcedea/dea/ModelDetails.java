@@ -137,16 +137,24 @@ public class ModelDetails implements Serializable {
 	
 	/**
 	 * Gets the number of Variable in the DEA Problem
-	 * @return
+	 * @return the number of variables of the DEA Problem
 	 */
 	public int getNbVariables() {
 		return nbVariables;
 	}
-
+	
+	/**
+	 * Sets the model name
+	 * @param modelName
+	 */
 	public void setModelName(String modelName) {
 		ModelName = modelName;
 	}
-
+	
+	/**
+	 * Gets the model name
+	 * @return the String of the model name
+	 */
 	public String getModelName() {
 		return ModelName;
 	}

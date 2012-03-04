@@ -377,7 +377,7 @@ public class DEAPSolution implements Serializable {
 	/**
 	 * Gets the u0 weight of a specific DMU (corresponding to the convexity constraint on variable models).
 	 * @param dmuIndex
-	 * @return
+	 * @return the u0 weight of the specific DMU
 	 */
 	public double getU0Weight(int dmuIndex) {
 		return u0Weights[dmuIndex];
@@ -400,7 +400,7 @@ public class DEAPSolution implements Serializable {
 	 * Gets the weight corresponding to the lower bound convexity constraint on
 	 * general, increasing and decreasing models for a specific DMU.
 	 * @param dmuIndex
-	 * @return
+	 * @return the weight corresponding to the lower bound convexity constraint
 	 */
 	public double getlBConvexityConstraintWeight(int dmuIndex) {
 		return lBConvexityConstraintWeights[dmuIndex];
