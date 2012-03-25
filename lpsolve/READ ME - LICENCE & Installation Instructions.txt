@@ -17,15 +17,17 @@ LPSOLVE AND THE LPSOLVE JAVA WRAPPER ARE DISTRIBUTED UNDER THE GNU LGPL.
 
 INSTALLATION INSTRUCTION
 
-To make the source code work:
+Necessary in order to run the code succesfully (the OSDEA library calls the lpsolve solver so lpsolve needs to be installed on your machine).
 
-1. Copy the two DLL corresponding to your system (lpsolve55.dll & lpsolve55j.dll,
-you can find them in the linearSolver.lpsolve folder if you unzip the jar) to:
-	a. /usr/lib for unix machines
-	b. C:\Windows\System32 for Windows machines
-	c. C:\Windows\SysWOW64 if you run a 32 bits DLL (and JRE) on a 64 bits machine)
-	
-2. Attach the JAR to your java Build Path
+1. Copy the two lpsolve library and the java stud in your systems folders.
+
+	a. On Windows copy the lpsolve55.dll & lpsolve55j.dll files for your system (win32 or win64) to:
+		i. C:\Windows\System32 for Windows machines
+		ii. C:\Windows\SysWOW64 if you run a 32 bits DLL (and JRE) on a 64 bits machine)
+	b. On linux, copy the liblpsolve55j.so library corresponding to your system (ux32 or ux64) to the directory that already contains liblpsolve55.so. Then run ldconfig.
+	c. On mac, use the build-osx build file with the liblpsolve55.dylib library.
+
+2. Attach the lpsolve55j.jar file to your java Build Path.
 	If you need to check whether the lpsolve55j.jar in isn Eclipse, you can proceed as follows:
 	 1) right clicking on your project,
 	 2) selecting Properties (you can also select your project in the package explorer and press Alt + Enter),
@@ -33,16 +35,13 @@ you can find them in the linearSolver.lpsolve folder if you unzip the jar) to:
 	 4) Check the JARs already attached.
 	 If none:
 	 5) clicking on Add External JARs,
-	 6) browsing to the lpsolve55j.jar and clicking OK.*/
+	 6) browsing to the lpsolve55j.jar and clicking OK.
 
-Should you have any problem running the code: email me! (contact@opensourcedea.org).
-
-
+Should you have any problem running the code: email me! (hubert.virtos@gmail.com).
 
 
 
-
-LGPL (Your rights) can be found below.
+The LGPL licence can be found below (Your rights) .
 
 
 GNU LESSER GENERAL PUBLIC LICENSE
