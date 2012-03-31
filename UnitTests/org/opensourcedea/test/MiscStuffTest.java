@@ -53,4 +53,15 @@ public class MiscStuffTest {
 		
 	}
 	
+	@Test
+	public void checkModelCharacteristics() {
+		
+		for(ModelType modType : ModelType.values()) {
+			System.out.println("The model name is: " + modType.getName() + ".");
+			System.out.println("The Model description is as follows:\n" + modType.getDescription() + "\n");
+
+		}
+				
+	}
+	
 }

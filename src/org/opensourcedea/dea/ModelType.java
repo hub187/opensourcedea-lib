@@ -39,75 +39,75 @@ package org.opensourcedea.dea;
  *
  */
 public enum ModelType {
-	CCR_I ("The Charnes Cooper and Rhodes Model called CCR." +
+	CCR_I ("The Charnes Cooper and Rhodes Model called CCR. " +
 			"This model was first introduced in 1978 and assumes CONSTANT RTS.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.CONSTANT),
-	CCR_O ("The Charnes Cooper and Rhodes Model called CCR." +
+	CCR_O ("The Charnes Cooper and Rhodes Model called CCR. " +
 			"This model was first introduced in 1978 and assumes CONSTANT RTS.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.CONSTANT),
-	BCC_I ("The Banker Charnes and Cooper Model called BCC." +
-			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model" +
-			"only assumed CONSTANT RTS). The only difference with the CCR model is the convexity constraint" +
+	BCC_I ("The Banker Charnes and Cooper Model called BCC. " +
+			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model " +
+			"only assumed CONSTANT RTS).\rThe only difference with the CCR model is the convexity constraint " +
 			"e*Lambdas = 1 corresponding to the uo weight in the multiplier form.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),
-	BCC_O ("The Banker Charnes and Cooper Model called BCC." +
-			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model" +
-			"only assumed CONSTANT RTS). The only difference with the CCR model is the convexity constraint" +
+	BCC_O ("The Banker Charnes and Cooper Model called BCC. " +
+			"This model was first introduced in 1984 to introduce VARIABLE Returns to Scale (the CCR model " +
+			"only assumed CONSTANT RTS).\rThe only difference with the CCR model is the convexity constraint " +
 			"e*Lambdas = 1 / or uo in the multiplier form.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),
-	GRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
-			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
-			"0 <= e*Lambdas <= Positive_Infinity." +
+	GRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed.\r" +
+			"The only difference with the BCCI model is the fact e*Lambdas are as follows: " +
+			"0 <= e*Lambdas <= Positive_Infinity. " +
 			"Setting e*Lambdas = 1 is equivalent to the BCC model.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.GENERAL),
-	GRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed." +
-			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
-			"0 <= e*Lambdas <= Positive_Infinity." +
+	GRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint can be relaxed.\r" +
+			"The only difference with the BCCO model is the fact e*Lambdas are as follows: " +
+			"0 <= e*Lambdas <= Positive_Infinity. " +
 			"Setting e*Lambdas = 1 is equivalent to the BCC model.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.GENERAL),
-	IRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
-			"allow INCREASING Returns to Scale." +
-			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
+	IRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only " +
+			"allow INCREASING Returns to Scale. " +
+			"\rThe only difference with the BCCI model is the fact e*Lambdas are as follows: " +
 			"1 <= e*Lambdas",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.INCREASING),
-	IRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
-			"allow INCREASING Returns to Scale." +
-			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
+	IRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only " +
+			"allow INCREASING Returns to Scale. " +
+			"\rThe only difference with the BCCO model is the fact e*Lambdas are as follows: " +
 			"1 <= e*Lambdas",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.INCREASING),
-	DRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
-			"allow DECREASING Returns to Scale." +
-			"The only difference with the BCCI model is the fact e*Lambdas are as follows:" +
+	DRS_I ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only " +
+			"allow DECREASING Returns to Scale. " +
+			"\rThe only difference with the BCCI model is the fact e*Lambdas are as follows: " +
 			"0 <= e*Lambdas <= 1.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.DECREASING),
-	DRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only" +
-			"allow DECREASING Returns to Scale." +
-			"The only difference with the BCCO model is the fact e*Lambdas are as follows:" +
+	DRS_O ("An extension of the Banker Charnes and Cooper Model (BCC) where the convexity constraint only " +
+			"allow DECREASING Returns to Scale. " +
+			"\rThe only difference with the BCCO model is the fact e*Lambdas are as follows: " +
 			"0 <= e*Lambdas <= 1.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.DECREASING),
 	SBM ("The Slack Based Model first (SBM) introduced by Tone (1997, 2001). " +
-			"The model assumes CONSTANT RTS and is non-oriented." +
-			"The model is also both unit invariant in respect to the unit of measurement and" +
+			"The model assumes CONSTANT RTS and is non-oriented. " +
+			"\rThe model is also both unit invariant in respect to the unit of measurement and " +
 			"monotone DECREASING in each input and output slack.",
 			ModelOrientation.NON_ORIENTED,
 			EfficiencyType.MIX,
@@ -116,7 +116,7 @@ public enum ModelType {
 			ModelOrientation.NON_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnsToScale.VARIABLE),
-	SBM_GRS ("The Non-Oriented version of the SBM model assuming GENERAL RTS." +
+	SBM_GRS ("The Non-Oriented version of the SBM model assuming GENERAL RTS. " +
 			"This model requires a set of two parameters Lower Limit and Upper Limit.",
 			ModelOrientation.NON_ORIENTED,
 			EfficiencyType.MIX,
@@ -145,153 +145,153 @@ public enum ModelType {
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.MIX,
 			ReturnsToScale.GENERAL),
-	NC_I ("The Non-Controllable Model in its Input Oriented version. This model does not allow" +
+	NC_I ("The Non-Controllable Model in its Input Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.CONSTANT),
-	NC_I_V ("The Non-Controllable Model in its Input Oriented version. +This model does not allow" +
+	NC_I_V ("The Non-Controllable Model in its Input Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),
-	NC_O ("The Non-Controllable Model in its Output Oriented version. This model does not allow" +
+	NC_O ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming CONSTANT RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.CONSTANT),
-	NC_O_V ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_O_V ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming VARIABLE RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),
-	NC_I_GRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_I_GRS ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming GENERAL RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.GENERAL),
-	NC_O_GRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_O_GRS ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming GENERAL RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.GENERAL),
-	NC_I_IRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_I_IRS ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming INCREASING RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.INCREASING),
-	NC_O_IRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_O_IRS ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming INCREASING RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.INCREASING),
-	NC_I_DRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_I_DRS ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming DECREASING RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.DECREASING),
-	NC_O_DRS ("The Non-Controllable Model in its Output Oriented version. +This model does not allow" +
+	NC_O_DRS ("The Non-Controllable Model in its Output Oriented version. This model does not allow " +
 			"any slacks on the Non-Controllable variables. The model is assuming DECREASING RTS." +
-			"Non-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT" +
+			"\rNon-Controllable variables needs to be set with type: NON_CONTROLLABLE_INPUT / OUTPUT " +
 			"accordingly. The model solves NC problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.DECREASING),
-	ND_I ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_I ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming CONSTANT RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"\rThe model is assuming CONSTANT RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.CONSTANT),
-	ND_I_V ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_I_V ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming VARIABLE RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"\rThe model is assuming VARIABLE RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),
-	ND_I_IRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_I_IRS ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming INCREASING RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"\rThe model is assuming INCREASING RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.INCREASING),
-	ND_I_DRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_I_DRS ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming DECREASING RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"\rThe model is assuming DECREASING RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.DECREASING),
-	ND_I_GRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_I_GRS ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming GENERAL RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"\rThe model is assuming GENERAL RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.INPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.GENERAL),
-	ND_O ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_O ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming CONSTANT RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
+			"\rThe model is assuming CONSTANT RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
 			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.CONSTANT),
-	ND_O_V ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_O_V ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming VARIABLE RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
-			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			"\rThe model is assuming VARIABLE RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE. ",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.VARIABLE),
-	ND_O_IRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_O_IRS ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming INCREASING RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
-			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			"\rThe model is assuming INCREASING RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE. ",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.INCREASING),
-	ND_O_DRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_O_DRS ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming DECREASING RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
-			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			"\rThe model is assuming DECREASING RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE. ",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.DECREASING),
-	ND_O_GRS ("The Non-Discretionary Model in its Input Oriented version. This model allows" +
+	ND_O_GRS ("The Non-Discretionary Model in its Input Oriented version. This model allows " +
 			"slacks on the Non-discretionary variables but these do not contribute to the score." +
-			"The model is assuming GENERAL RTS." +
-			"Non-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT" +
-			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE.",
+			"\rThe model is assuming GENERAL RTS." +
+			"\rNon-discretionary variables need to be set with type: NON_DISCRETIONARY_INPUT / OUTPUT " +
+			"accordingly. The model solves ND problems in ONE OPTIMISATION STAGE. ",
 			ModelOrientation.OUTPUT_ORIENTED,
 			EfficiencyType.TECH,
 			ReturnsToScale.GENERAL);
@@ -310,24 +310,52 @@ public enum ModelType {
 		this.rts = rts;
 	}
 
-
+	
+	/**
+	 * Returns the description of the ModelType.
+	 * @return The String corresponding to the description of the ModelType.
+	 */
 	public String getDescription()
 	{
 		return this.description;
 	}
 	
+	/**
+	 * Returns the Model Orientation of the ModelType (e.g. input oriented, output oriented).
+	 * @return The ModelOrientation corresponding to the ModelType
+	 */
 	public ModelOrientation getOrientation() {
 		return this.orientation;
 	}
 	
+	/**
+	 * Returns the Efficiency Type of the ModelType.
+	 * @return The EfficiencyType of the ModelType
+	 */
 	public EfficiencyType getEfficiencyType() {
 		return this.efficiencyType;
 	}
 	
+	/**
+	 * Returns the Return To Scale corresponding to the ModelType.
+	 * @return The ReturnToScale corresponding to the ModelType.
+	 */
 	public ReturnsToScale getReturnToScale() {
 		return this.rts;
 	}
 	
+	/**
+	 * Returns the name of the ModelType.
+	 * @return The String of the Name of the ModelType.
+	 */
+	public String getName() {
+		return this.name();		
+	}
+	
+	/**
+	 * Returns the number of ModelTypes (DEA Models) available in the OSDEA library.
+	 * @return The int corresponding to the number of ModelTypes.
+	 */
 	public static int getNumberOfModelsAvailable() {
 		int nbModels = ModelType.values().length;
 		return nbModels;
