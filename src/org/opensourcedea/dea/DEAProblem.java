@@ -650,7 +650,8 @@ public class DEAProblem implements Serializable{
 	private void checkDataBeforeSolving() throws MissingDataException,
 			InconsistentNoOfVariablesException, InconsistentNoOfDMUsException {
 		if(this.dataMatrix == null || this.dmuName == null || this.modelDetails.getModelType() == null ||
-				this.variable.getVariableNames() == null || this.variable.getVariableOrientations() == null) {
+				this.variable.getVariableNames() == null || this.variable.getVariableOrientations() == null ||
+				this.getVariableTypes() == null) {
 			//MissingData e = new MissingData("some text to describe the error");
 			throw new MissingDataException();
 		}

@@ -30,64 +30,68 @@ public class LibraryCallExample {
 	
 	
 	//Create some array for the DMU and Variable Names, types and the Data Matrix
-	static String[] TestDMUNames = new String[7];
-	static String[] TestVariableNames = new String [3];
-	static VariableOrientation[] TestVariableTypes = new VariableOrientation[3];
-	static double[] [] TestDataMatrix = new double[7] [3];
+	static String[] testDMUNames = new String[7];
+	static String[] testVariableNames = new String [3];
+	static VariableOrientation[] testVariableOrientations = new VariableOrientation[3];
+	static VariableType[] testVariableTypes = new VariableType[3];
+	static double[] [] testDataMatrix = new double[7] [3];
 
 	
 	@BeforeClass
 	public static void setUpBeforeClass()
 	{
 		//Set up the DMU Names
-		TestDMUNames[0] = "DMU A";
-		TestDMUNames[1] = "DMU B";
-		TestDMUNames[2] = "DMU C";
-		TestDMUNames[3] = "DMU D";
-		TestDMUNames[4] = "DMU E";
-		TestDMUNames[5] = "DMU F";
-		TestDMUNames[6] = "DMU G";
+		testDMUNames[0] = "DMU A";
+		testDMUNames[1] = "DMU B";
+		testDMUNames[2] = "DMU C";
+		testDMUNames[3] = "DMU D";
+		testDMUNames[4] = "DMU E";
+		testDMUNames[5] = "DMU F";
+		testDMUNames[6] = "DMU G";
 		
 		//Set up the Variable Names
-		TestVariableNames[0] = "Wood";
-		TestVariableNames[1] = "Twigs";
-		TestVariableNames[2] = "Fire";
+		testVariableNames[0] = "Wood";
+		testVariableNames[1] = "Twigs";
+		testVariableNames[2] = "Fire";
 		
 		//Set up the Data Matrix
-		TestDataMatrix [0] [0] = 4;
-		TestDataMatrix [0] [1] = 3;
-		TestDataMatrix [0] [2] = 1;
+		testDataMatrix [0] [0] = 4;
+		testDataMatrix [0] [1] = 3;
+		testDataMatrix [0] [2] = 1;
 		
-		TestDataMatrix [1] [0] = 7;
-		TestDataMatrix [1] [1] = 3;
-		TestDataMatrix [1] [2] = 1;
+		testDataMatrix [1] [0] = 7;
+		testDataMatrix [1] [1] = 3;
+		testDataMatrix [1] [2] = 1;
 		
-		TestDataMatrix [2] [0] = 8;
-		TestDataMatrix [2] [1] = 1;
-		TestDataMatrix [2] [2] = 1;
+		testDataMatrix [2] [0] = 8;
+		testDataMatrix [2] [1] = 1;
+		testDataMatrix [2] [2] = 1;
 		
-		TestDataMatrix [3] [0] = 4;
-		TestDataMatrix [3] [1] = 2;
-		TestDataMatrix [3] [2] = 1;
+		testDataMatrix [3] [0] = 4;
+		testDataMatrix [3] [1] = 2;
+		testDataMatrix [3] [2] = 1;
 		
-		TestDataMatrix [4] [0] = 2;
-		TestDataMatrix [4] [1] = 4;
-		TestDataMatrix [4] [2] = 1;
+		testDataMatrix [4] [0] = 2;
+		testDataMatrix [4] [1] = 4;
+		testDataMatrix [4] [2] = 1;
 
-		TestDataMatrix [5] [0] = 10;
-		TestDataMatrix [5] [1] = 1;
-		TestDataMatrix [5] [2] = 1;
+		testDataMatrix [5] [0] = 10;
+		testDataMatrix [5] [1] = 1;
+		testDataMatrix [5] [2] = 1;
 		
-		TestDataMatrix [6] [0] = 3;
-		TestDataMatrix [6] [1] = 7;
-		TestDataMatrix [6] [2] = 1;
+		testDataMatrix [6] [0] = 3;
+		testDataMatrix [6] [1] = 7;
+		testDataMatrix [6] [2] = 1;
 		
 		
 		//Set up the variable types
-		TestVariableTypes[0] = VariableOrientation.INPUT;
-		TestVariableTypes[1] = VariableOrientation.INPUT;
-		TestVariableTypes[2] = VariableOrientation.OUTPUT;
+		testVariableOrientations[0] = VariableOrientation.INPUT;
+		testVariableOrientations[1] = VariableOrientation.INPUT;
+		testVariableOrientations[2] = VariableOrientation.OUTPUT;
 		
+		testVariableTypes[0] = VariableType.STANDARD;
+		testVariableTypes[1] = VariableType.STANDARD;
+		testVariableTypes[2] = VariableType.STANDARD;
 
 	}
 	
@@ -102,20 +106,23 @@ public class LibraryCallExample {
 		tester.setModelType(ModelType.CCR_I);
 
 		
-		//Set the DEA Problem DMU Names where TestDMUName is a string[].
-		tester.setDMUNames(TestDMUNames);
+		//Set the DEA Problem DMU Names where testDMUName is a string[].
+		tester.setDMUNames(testDMUNames);
 
 		
-		//Set the DEA Problem Variable Names where TestVariableName is a String[].
-		tester.setVariableNames(TestVariableNames);
+		//Set the DEA Problem Variable Names where testVariableName is a String[].
+		tester.setVariableNames(testVariableNames);
 		
-		//Set the DEA Problem Variable Types where TestVariableType is a VariableType[].
-		tester.setVariableOrientations(TestVariableTypes);
+		//Set the DEA Problem Variable Orientations where testVariableOrientation is a VariableOrientation[].
+		tester.setVariableOrientations(testVariableOrientations);
 		
-		/* Set the DEA Problem Data Matrix where TestDataMatrix is a double[] [].
+		//Set the DEA Problem Variable Types where testVariableTypes is a VariableType[].
+		tester.setVariableTypes(testVariableTypes);
+		
+		/* Set the DEA Problem Data Matrix where testDataMatrix is a double[] [].
 		 * Each row of the Matrix corresponds to the DMU in the DMUNames array.
 		 * Each Column of the Matrix corresponds to the Variable in the Variables Arrays.*/
-		tester.setDataMatrix(TestDataMatrix);
+		tester.setDataMatrix(testDataMatrix);
 
 		
 		//Solve the DEA Problem
