@@ -46,7 +46,9 @@ public class MiscStuffTest {
 				e.printStackTrace();
 			}
 			if (tester.getWeight(0).length > 4) {
-				System.out.println("The model assumes: " + tester.getModelRTS().toString() + " RTS. The Model Type is: " + modType.toString() + " has: " + tester.getWeight(0).length + " weights");
+				System.out.println("The model assumes: " + tester.getModelRTS().toString() + " RTS. The Model Type is: " +
+			modType.toString() + " has: " + tester.getWeight(0).length + " weights. The Model Variables Type is: " +
+						tester.getModelVariableTypes().toString());
 			}
 		}
 		
@@ -58,7 +60,8 @@ public class MiscStuffTest {
 		
 		for(ModelType modType : ModelType.values()) {
 			System.out.println("The model name is: " + modType.getName() + ".");
-			System.out.println("The Model description is as follows:\n" + modType.getDescription() + "\n");
+			System.out.println("The Model description is as follows:\n" + modType.getDescription() + "\n" +
+			"The model Variables Type is: " + modType.getModelVariablesType().toString());
 
 		}
 				

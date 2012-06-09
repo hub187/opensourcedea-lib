@@ -627,6 +627,24 @@ public class DEAProblem implements Serializable{
 		}
 	}
 	
+	
+	/**
+	 * This method return the DEA Model RTS Type (e.g. Constant, Variable, Increasing...). This property cannot
+	 * be set as it is a inherent property of the ModelType of the DEA Problem. In order to set
+	 * the DEAReturnToScale property, it is necessary to set the corresponding ModelType.
+	 * @return The DEAReturnToScale of the DEA Problem.
+	 * @throws MissingDataException Thrown if the ModelType is not set. 
+	 */
+	public ModelVariablesType getModelVariableTypes() throws MissingDataException {
+		if(this.getModelType() != null) {
+			return this.getModelType().getModelVariablesType();
+		}
+		else {
+			throw new MissingDataException("The DEA Model Type is not set!");
+		}
+	}
+	
+	
 	 //////////////////////////////////////////////////////////////////////////
 	//								Solve Problem							//
    //////////////////////////////////////////////////////////////////////////

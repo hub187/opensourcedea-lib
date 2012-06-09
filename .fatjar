@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Sun Mar 25 18:09:25 BST 2012
+#Sat Jun 09 20:43:04 BST 2012
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=F\:\\My Documents Extended\\Work\\DEA site project\\Code\\Releases\\OSDEASolver-v0.262-f.jar
+jarname=F\:\\My Documents Extended\\Work\\DEA site project\\Code\\Releases\\OSDEASolver-v0.276-f.jar
 manifest.mergeall=true
 manifest.mainclass=
 manifest.file=<createnew>
