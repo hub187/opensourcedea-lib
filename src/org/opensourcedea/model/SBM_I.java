@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 import org.opensourcedea.dea.*;
 import org.opensourcedea.exception.DEASolverException;
+import org.opensourcedea.exception.InconsistentNoOfDMUsException;
+import org.opensourcedea.exception.InconsistentNoOfVariablesException;
 import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.*;
@@ -51,7 +53,7 @@ public class SBM_I extends Model {
 	 * @param deaP An instance of DEAProblem.
 	 * @throws MissingDataException, DEASolverException, ProblemNotSolvedProperlyException 
 	 */
-	public DEAPSolution solve(DEAProblem deaP) 
+	public void solveAll(DEAProblem deaP) 
 	throws MissingDataException, DEASolverException, ProblemNotSolvedProperlyException  {
 		
 		Integer dmuIndex = 0;
@@ -63,7 +65,7 @@ public class SBM_I extends Model {
 			int nbVariables = deaP.getNumberOfVariables();
 			double [] [] transposedMatrix = deaP.getTranspose(false);
 			ArrayList<double[]> constraints = new ArrayList<double []>();
-			DEAPSolution returnSol = new DEAPSolution(nbDMUs, nbVariables);
+			DEAPSolution returnSol = deaP.getSolution();
 			
 			/* Because the Constraint Matrix is identical for all optimisation,
 			 * let's build it here and re-use it for each optimisation. */
@@ -77,7 +79,6 @@ public class SBM_I extends Model {
 				createAndSolve(deaP, nbDMUs, nbVariables, constraints, transposedMatrix,
 						returnSol, i);
 			}		
-			return returnSol;
 		}
 		
 		catch (ProblemNotSolvedProperlyException e1) {
@@ -96,6 +97,13 @@ public class SBM_I extends Model {
 
 	}
 	
+	
+	public void solveOne(DEAProblem deaP, double[][] negativeTransposedM, int dmuIndex)
+			throws ProblemNotSolvedProperlyException, DEASolverException, MissingDataException {
+		
+		Integer dmuInd = dmuIndex;
+	
+	}
 	
 	private static void createConstraintMatrix(DEAProblem deaP, int nbDMUs,
 			int nbVariables, double[][] transposedMatrix,

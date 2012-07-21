@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 import org.opensourcedea.exception.DEAException;
+import org.opensourcedea.exception.DEASolverException;
 import org.opensourcedea.exception.IncompatibleModelTypeException;
 import org.opensourcedea.exception.InconsistentNoOfDMUsException;
 import org.opensourcedea.exception.InconsistentNoOfVariablesException;
@@ -132,7 +133,7 @@ public class DEAProblem implements Serializable{
 			}
 		}
 		catch (InvalidPropertyValueException e) {
-			//These values are fine and should never throw an error (or the setRTS methods are wrong).
+			//These values are fine and should never throw an error (or the setRTSx methods are wrong).
 			e.printStackTrace();
 		}
 
@@ -649,6 +650,7 @@ public class DEAProblem implements Serializable{
 	//								Solve Problem							//
    //////////////////////////////////////////////////////////////////////////
 	
+	
 	/**
 	 * Solves the specific DEA Problem.
 	 * <p> The Model needs to have all the required parameters in order for this to work.
@@ -656,15 +658,55 @@ public class DEAProblem implements Serializable{
 	 * <p> The switch in the solve() method call a separate method for each model. Each of these method 
 	 * returns a DEAPSolution object which is passed to this._Solution (and can then be accessed using the getSolutionItems
 	 * methods).
+	 * @throws MissingDataException
+	 * @throws InconsistentNoOfDMUsException
+	 * @throws InconsistentNoOfVariablesException
+	 * @throws DEAException
 	 */
 	public void solve() throws MissingDataException, InconsistentNoOfDMUsException, InconsistentNoOfVariablesException, DEAException {
 		
 		checkDataBeforeSolving();
-		this.solution = modelDetails.getModel().solve(this);
+		modelDetails.getModel().solveAll(this);
+	}
+	
+	
+	/**
+	 * Solves the DEA Problem for the given DMU Index (starts at 0).
+	 * <p>It is necessary (for optimisation reasons) to provide the negative transposed matrix of the data matrix
+	 * using the DEAProblem method getTranspose(true);. The method will still work if a null transposed matrix 
+	 * is sent, or if a positive transposed matrix is given instead although this will result in longer optimisation times!
+	 * @param dmuIndex
+	 * @throws InconsistentNoOfVariablesException
+	 * @throws InconsistentNoOfDMUsException
+	 * @throws MissingDataException
+	 * @throws ProblemNotSolvedProperlyException
+	 * @throws DEASolverException
+	 */
+	public void solveOne(int dmuIndex, double[][] negativeTransposedMatrix)
+			throws InconsistentNoOfVariablesException, InconsistentNoOfDMUsException, MissingDataException, ProblemNotSolvedProperlyException, DEASolverException {
 		
+		checkDataBeforeSolving();
+		
+		//Ugly but necessary check
+		if(dmuIndex <0) {
+			throw new MissingDataException("The DMU Index is negative.");
+		}
+		if(negativeTransposedMatrix == null) {
+			negativeTransposedMatrix = this.getTranspose(true);
+		}
+		else {
+			if(negativeTransposedMatrix[0][0] != -1*this.getDataMatrix(0, 0)) {
+				/* The matrix is NOT the negative transposed. Need to fix this before optimising
+				 * This is NOT optimal (if this method is called in a loop for all DMUs.*/
+				negativeTransposedMatrix = this.getTranspose(true);
+			}
+		}
+		
+		modelDetails.getModel().solveOne(this, negativeTransposedMatrix, dmuIndex);
 	}
 
-
+	
+	
 	private void checkDataBeforeSolving() throws MissingDataException,
 			InconsistentNoOfVariablesException, InconsistentNoOfDMUsException {
 		if(this.dataMatrix == null || this.dmuName == null || this.modelDetails.getModelType() == null ||
@@ -696,6 +738,15 @@ public class DEAProblem implements Serializable{
 	 //////////////////////////////////////////////////////////////////////////////
 	//						Get Problem Solution								//
  //////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Returns the problem solution. This exposes ALL the method solution so it is possible to access the setSolutionItem methods.
+	 * <p>Take extra care when calling this method of NOT corrupting a problem solution.
+	 * @return DEAPSolution The solution of the DEA Problem
+	 */
+	public DEAPSolution getSolution() {
+		return this.solution;
+	}
 	
 	/**
 	 * Returns the DEAProblem optimisation SolverReturnStatus. If only one optimisation for a single DMU did not return a status

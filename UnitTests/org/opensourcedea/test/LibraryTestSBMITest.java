@@ -174,21 +174,8 @@ public class LibraryTestSBMITest {
 	}
 	
 	
-	@Test
-	public void testSBMI() {
-				
-		
-		
-		buildDEAProblem(ModelType.SBM_I); //, DEAModelOrientation.NonOriented);
-		
-		try {
-			tester.solve();
-		}
-		catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		
-		try {
+	private void checkData() {
+try {
 			
 			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
@@ -260,6 +247,41 @@ public class LibraryTestSBMITest {
 			e.printStackTrace();
 			assertTrue(false);
 		}
+	}
+	
+	@Test
+	public void testSBMI() {
+				
+		
+		
+		buildDEAProblem(ModelType.SBM_I); //, DEAModelOrientation.NonOriented);
+		
+		try {
+			tester.solve();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		checkData();
+		
+		
+		tester = new DEAProblem(20, 4);
+		
+		buildDEAProblem(ModelType.SBM_I);
+		
+		try {
+			for(int i = 0 ; i < tester.getNumberOfDMUs(); i++){
+				tester.solveOne(i, tester.getTranspose(true));
+			}
+//			tester.solve();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		checkData();
+		
 	}
 	
 	
