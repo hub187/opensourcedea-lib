@@ -190,10 +190,30 @@ public class LibraryTestSBMOTest {
 			System.out.println(e.toString());
 		}
 		
+		checkData();
 		
+		
+		tester = new DEAProblem(20, 4);
+		buildDEAProblem(ModelType.SBM_O);
 		
 		try {
+			for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+				tester.solveOne(i);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
 		
+		checkData();
+		
+		
+		
+	}
+	
+	private void checkData() {
+		try {
+			
 			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 7), createSolRanks());

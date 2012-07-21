@@ -189,7 +189,30 @@ public class LibraryTestCCRITest {
 			System.out.println(e.toString());
 		}
 		
+		checkData();
+		
+		
+		
+		tester = new DEAProblem(20, 4);
+		buildDEAProblem(ModelType.CCR_I); //, DEAModelOrientation.NonOriented);
+		
 		try {
+			for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+				tester.solveOne(i);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		checkData();
+		
+		
+	}
+	
+	
+	private void checkData() {
+try {
 			
 			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
@@ -261,10 +284,7 @@ public class LibraryTestCCRITest {
 			e.printStackTrace();
 			assertTrue(false);
 		}
-		
 	}
-	
-	
 	
 	
 	

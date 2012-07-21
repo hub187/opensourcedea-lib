@@ -62,9 +62,9 @@ public class SolverStatus {
 					ReturnSol.setStatus(SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 				}
 				break;
-//		case NOT_SOLVED:
-//			ReturnSol.setStatus(SolverReturnStatus.NOT_SOLVED);
-//			break;
+		case NOT_SOLVED:
+			ReturnSol.setStatus(SolverReturnStatus.NOT_SOLVED);
+			break;
 		default:
 			break;
 		}

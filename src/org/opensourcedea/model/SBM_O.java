@@ -98,6 +98,62 @@ public class SBM_O extends Model {
 
 	}
 	
+	
+	
+	
+	/**
+	 * Solve SBM I problems for a given dmu index. Not as optimal as the solve all method as the constraint matrix is rebuilt
+	 * each time with this method.
+	 * @param deaP An instance of DEAProblem.
+	 * @param negativeTransposedM
+	 * @param dmuIndex
+	 * @throws MissingDataException, DEASolverException, ProblemNotSolvedProperlyException 
+	 */
+	public void solveOne(DEAProblem deaP, double[][] negativeTransposedM, int dmuIndex)
+			throws ProblemNotSolvedProperlyException, DEASolverException, MissingDataException {
+		
+		Integer dmuInd = dmuIndex;
+		
+		try {
+			/* Declare & Collect the variables that will often be used in the process (rather
+			 * than calling the different methods several times.*/
+			int nbDMUs = deaP.getNumberOfDMUs();
+			int nbVariables = deaP.getNumberOfVariables();
+			double [] [] transposedMatrix =	deaP.getTranspose(false);
+			ArrayList<double[]> constraints = new ArrayList<double []>();
+			DEAPSolution returnSol = deaP.getSolution();
+			
+			/* Because the Constraint Matrix is identical for all optimisation,
+			 * let's build it here and re-use it for each optimisation. */
+			createConstraintMatrix(deaP, nbDMUs, nbVariables, transposedMatrix,
+					constraints);
+			
+			/* As the SBM optimisation needs to be ran for all DMUs, 
+			 * the program will loop through all DMUs.*/
+			
+			for (int i = 0; i < nbDMUs; i++) {
+				createAndSolve(deaP, nbDMUs, nbVariables, constraints, transposedMatrix,
+						returnSol, i);
+			}		
+		}
+		
+		catch (ProblemNotSolvedProperlyException e1) {
+			throw new ProblemNotSolvedProperlyException("The problem could not be solved properly at DMU Index: "
+					+ dmuInd.toString()
+					+". The error was: " + e1.getMessage());
+		}
+		catch (DEASolverException e2) {
+			throw new DEASolverException("The problem could not be solved properly at DMU Index: "
+					+ dmuInd.toString()
+					+ ". The error was: " + e2.getMessage());
+		}
+		catch (MissingDataException e3) {
+			throw new MissingDataException("Some model data is missing.");
+		}	
+		
+	}
+	
+	
 
 	private static void createConstraintMatrix(DEAProblem deaP, int nbDMUs,
 			int nbVariables, double[][] transposedMatrix,

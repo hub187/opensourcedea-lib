@@ -671,7 +671,7 @@ public class DEAProblem implements Serializable{
 	
 	
 	/**
-	 * Solves the DEA Problem for the given DMU Index (starts at 0).
+	 * Solves the DEA Problem for the given DMU Index.
 	 * <p>It is necessary (for optimisation reasons) to provide the negative transposed matrix of the data matrix
 	 * using the DEAProblem method getTranspose(true);. The method will still work if a null transposed matrix 
 	 * is sent, or if a positive transposed matrix is given instead although this will result in longer optimisation times!
@@ -703,6 +703,22 @@ public class DEAProblem implements Serializable{
 		}
 		
 		modelDetails.getModel().solveOne(this, negativeTransposedMatrix, dmuIndex);
+	}
+	
+	
+	/**
+	 * Solves the DEA Problem for the given DMU Index.
+	 * <p>For better performance, create the negative transposed of the data matrix and call the SolveOne(int, double[][]) method).
+	 * @param dmuIndex
+	 * @throws InconsistentNoOfVariablesException
+	 * @throws InconsistentNoOfDMUsException
+	 * @throws MissingDataException
+	 * @throws ProblemNotSolvedProperlyException
+	 * @throws DEASolverException
+	 */
+	public void solveOne(int dmuIndex)
+			throws InconsistentNoOfVariablesException, InconsistentNoOfDMUsException, MissingDataException, ProblemNotSolvedProperlyException, DEASolverException {
+		solveOne(dmuIndex, this.getTranspose(true));
 	}
 
 	

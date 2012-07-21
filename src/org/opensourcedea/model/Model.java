@@ -41,7 +41,7 @@ public class Model {
 			 */
 
 			for(int i = 0; i < nbDMUs; i++) {
-				solveOne(deaP, transPosM, i); 
+				solveOne(deaP, transPosM, i);
 			}		
 		}
 
