@@ -33,10 +33,14 @@ import org.opensourcedea.model.Model;
  *
  */
 public class ModelDetails implements Serializable {
+	
 	/**
 	 * The auto-generated serial version UID
 	 */
 	private static final long serialVersionUID = -5181910125296431179L;
+
+	
+	
 	private ModelType modelType;
 	private double rtsLowerBound;
 	private double rtsUpperBound;

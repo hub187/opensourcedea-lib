@@ -31,10 +31,13 @@ import java.io.Serializable;
  *
  */
 public class Variable implements Serializable {
+
 	/**
 	 * The serial version UID (auto generated)
 	 */
 	private static final long serialVersionUID = 4821189688327962633L;
+
+
 	
 	
 	private String[] variableName;

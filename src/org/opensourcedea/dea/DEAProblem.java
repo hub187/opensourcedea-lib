@@ -56,10 +56,12 @@ import org.opensourcedea.model.*;
  * */
 public class DEAProblem implements Serializable{
 	
-	 /**
+	/**
 	 * The serial version UID for the DEAProblem class (auto generated).
 	 */
-	private static final long serialVersionUID = -5913021075583556447L;
+	private static final long serialVersionUID = 1818099081622176796L;
+
+
 	
 		
 	//////////////////////////////////////////////////////////////////////////

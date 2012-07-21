@@ -39,6 +39,8 @@ public class DEAPSolution implements Serializable {
 	 * The auto-generated serial version UID
 	 */
 	private static final long serialVersionUID = 2402167210320751288L;
+
+
 	
 	private double[] objectives;
 	private double[] [] slacks;
