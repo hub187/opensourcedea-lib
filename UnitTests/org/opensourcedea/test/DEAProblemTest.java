@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.BeforeClass;
 import org.opensourcedea.dea.*;
 import org.opensourcedea.exception.DEAException;
+import org.opensourcedea.exception.InconsistentNoOfDMUsException;
+import org.opensourcedea.exception.InconsistentNoOfVariablesException;
 import org.opensourcedea.exception.InvalidPropertyValueException;
 import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
@@ -292,11 +294,10 @@ public class DEAProblemTest {
 			tester.solve();
 		}
 		catch (DEAException e) {
-			assertSame(e.getMessage(), "The DEAProblem is missing some data. " +
-					"Please check the DataMatrix, DMUNames,ModelType, VariableNames and VariableTypes.");
+			assertSame(e.getMessage(), "The problem ModelType was not set!");
 		}
 		catch (Exception e2) {
-			e2.printStackTrace();
+//			e2.printStackTrace();
 		}
 		
 	}
@@ -419,6 +420,21 @@ public class DEAProblemTest {
 		}
 	}
 	
+	
+	@Test
+	public void testCheckDataBeforeSolving() {
+		DEAProblem tester2 = new DEAProblem(5,3);
+		try {
+			tester2.solve();
+		} catch (InconsistentNoOfDMUsException
+				| InconsistentNoOfVariablesException | MissingDataException  e) {
+//			e.printStackTrace();
+		}
+		catch (DEAException e2) {
+//			e2.printStackTrace();
+		}
+		
+	}
 	
 }
 

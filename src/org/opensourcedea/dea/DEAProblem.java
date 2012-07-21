@@ -661,9 +661,11 @@ public class DEAProblem implements Serializable{
 	 * @throws MissingDataException
 	 * @throws InconsistentNoOfDMUsException
 	 * @throws InconsistentNoOfVariablesException
+	 * @throws ProblemNotSolvedProperlyException 
+	 * @throws DEASolverException 
 	 * @throws DEAException
 	 */
-	public void solve() throws MissingDataException, InconsistentNoOfDMUsException, InconsistentNoOfVariablesException, DEAException {
+	public void solve() throws MissingDataException, InconsistentNoOfDMUsException, InconsistentNoOfVariablesException, DEASolverException, ProblemNotSolvedProperlyException {
 		
 		checkDataBeforeSolving();
 		modelDetails.getModel().solveAll(this);
@@ -725,29 +727,33 @@ public class DEAProblem implements Serializable{
 	
 	private void checkDataBeforeSolving() throws MissingDataException,
 			InconsistentNoOfVariablesException, InconsistentNoOfDMUsException {
-		if(this.dataMatrix == null || this.dmuName == null || this.modelDetails.getModelType() == null ||
-				this.variable.getVariableNames() == null || this.variable.getVariableOrientations() == null ||
-				this.getVariableTypes() == null) {
-			//MissingData e = new MissingData("some text to describe the error");
-			throw new MissingDataException();
+		
+		if(this.getModelType() == null) {
+			throw new MissingDataException("The problem ModelType was not set!");
+		}
+		else {
+			if(this.getModelType().getReturnToScale() == ReturnsToScale.GENERAL) {
+				if(this.modelDetails.getRTSUpperBound() == 0 ||
+						this.modelDetails.getRTSUpperBound() < this.modelDetails.getRTSLowerBound()) {
+					throw new MissingDataException("RTS Bounds not set correctly!");
+				}
+			}
 		}
 		
-		int lenX = this.dataMatrix[0].length;
-		if(lenX != this.variable.getVariableNames().length || lenX != this.variable.getVariableOrientations().length) {
+		
+		int lenY = this.getNumberOfDMUs();
+		int lenX = this.getNumberOfVariables();
+		
+		if(this.dataMatrix[0].length != lenX || this.variable.getVariableOrientations().length != lenX ||
+				this.getVariableNames().length != lenX || this.getVariableTypes().length != lenX) {
 			throw new InconsistentNoOfVariablesException();
 		}
 		
-		int lenY = this.dataMatrix.length;
-		if(lenY != this.dmuName.length) {
+		if(this.dmuName.length != lenY || this.getDataMatrix().length != lenY) {
 			throw new InconsistentNoOfDMUsException();
 		}
 		
-		if(this.getModelType().getReturnToScale() == ReturnsToScale.GENERAL) {
-			if(this.modelDetails.getRTSUpperBound() == 0 ||
-					this.modelDetails.getRTSUpperBound() < this.modelDetails.getRTSLowerBound()) {
-				throw new MissingDataException("RTS Bounds not set correctly!");
-			}
-		}
+
 	}
 	
 	
