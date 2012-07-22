@@ -22,12 +22,20 @@
 
 package org.opensourcedea.dea;
 
+import java.io.Serializable;
+
 /**
  * This class represents the Non Zero Lambda elements of a reference set.
  * @author Hubert.Virtos
  *
  */
-public class NonZeroLambda {
+public class NonZeroLambda implements Serializable {
+	
+	/**
+	 * The auto-generated serial version UID
+	 */
+	private static final long serialVersionUID = -6788465242305575325L;
+	
 	private int dmuIndex;
 	private double lambdaValue;
 	

@@ -15,7 +15,6 @@ public class Model {
 	 * example, the SBMI creates the constraint in the solve method as it
 	 * is the same for all the problems regardless of the DMU under examination (it thus more computer efficient to override this solve method).
 	 * @param deaP an instance of a DEAProblem
-	 * @return a DEAPSolution
 	 * @throws MissingDataException
 	 * @throws DEASolverException
 	 * @throws ProblemNotSolvedProperlyException
