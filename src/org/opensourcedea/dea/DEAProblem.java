@@ -817,6 +817,29 @@ public class DEAProblem implements Serializable{
 		return this.solution.getObjective(dmuNumber);
 
 	}
+	
+	
+	/**
+	 * Returns the efficiency status for all the DMUs.
+	 * @return An array of boolean. true if the DMU is efficient, false if the DMU is inefficient.
+	 * @throws ProblemNotSolvedProperlyException
+	 */
+	public boolean[] getEfficiencyStatus() throws ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		return this.getSolution().getEfficient();
+	}
+	
+	
+	/**
+	 * Returns the efficiency status for the specific DMU. 
+	 * @param dmuNumber
+	 * @return true if the DMU is efficient, false if the DMU is inefficient
+	 * @throws ProblemNotSolvedProperlyException
+	 */
+	public boolean getEfficiencyStatus(int dmuNumber) throws ProblemNotSolvedProperlyException {
+		testProblemSolvedProperly();
+		return this.getSolution().isEfficient(dmuNumber);
+	}
 		
 
 	

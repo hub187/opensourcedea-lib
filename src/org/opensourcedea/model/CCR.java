@@ -11,6 +11,8 @@ import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.Lpsolve;
 import org.opensourcedea.linearSolver.SolverResults;
+import org.opensourcedea.parameters.OSDEAParameters;
+import org.opensourcedea.utils.MathUtils;
 
 public class CCR extends Model {
 
@@ -127,7 +129,6 @@ public class CCR extends Model {
 	private static void storePhaseTwoInformation(DEAProblem deaP, int nbDMUs,
 			int nbVariables, DEAPSolution returnSol, int dmuIndex, SolverResults sol) throws MissingDataException {
 		
-		//Collect information from Phase II (Theta)
 	
 		//Collect information from Phase II (Theta)
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
@@ -153,6 +154,22 @@ public class CCR extends Model {
 				returnSol.setSlack(dmuIndex, varIndex, sol.VariableResult[nbDMUs + 1 + varIndex] / returnSol.getObjective(dmuIndex));
 			}
 		}
+		
+		
+		//efficiency - need to be done after slacks!
+		boolean isEfficient = true;
+		if(MathUtils.round(returnSol.getObjective(dmuIndex), OSDEAParameters.getNbDecimalsToEvaluateEfficiency()) == 1){
+			for(double slack : returnSol.getSlacks(dmuIndex)){
+				if(MathUtils.round(slack, OSDEAParameters.getNbDecimalsToEvaluateEfficiency()) > 0) {
+					isEfficient = false;
+				}
+			}
+		}
+		else {
+			isEfficient = false;
+		}
+		returnSol.setEfficient(dmuIndex, isEfficient);
+		
 		
 		if(deaP.getModelType() == ModelType.CCR_I) {
 			for (int varIndex = 0; varIndex < nbVariables; varIndex++) {

@@ -35,14 +35,15 @@ import java.io.Serializable;
  */
 public class DEAPSolution implements Serializable {
 	
+	
 	/**
 	 * The auto-generated serial version UID
 	 */
-	private static final long serialVersionUID = 2402167210320751288L;
-
+	private static final long serialVersionUID = 822173442138507824L;
 
 	
 	private double[] objectives;
+	private boolean[] efficient;
 	private double[] [] slacks;
 	private ArrayList<NonZeroLambda>[] referenceSets;
 	private double[] [] weights;
@@ -70,6 +71,7 @@ public class DEAPSolution implements Serializable {
 		setWeights(new double[nbDMUs] [nbVariables]);
 		setProjections(new double[nbDMUs] [nbVariables]);
 		setStatus(SolverReturnStatus.NOT_SOLVED);
+		setEfficient(new boolean[nbDMUs]);
 		u0Weights = new double[nbDMUs];
 		lBConvexityConstraintWeights = new double[nbDMUs];
 		uBConvexityConstraintWeights = new double[nbDMUs];
@@ -113,7 +115,44 @@ public class DEAPSolution implements Serializable {
 	
 	
 	
+	/**
+	 * Gets all the DMUs efficiency status. true if efficient, false if not efficient.
+	 * @return
+	 */
+	public boolean[] getEfficient() {
+		return efficient;
+	}
 	
+	/**
+	 * Sets all the DMUs efficiency status. Set true of DMU is efficient, false if DMU is not efficient
+	 * @param efficient
+	 */
+	public void setEfficient(boolean[] efficient) {
+		this.efficient = efficient;
+	}
+	
+	/**
+	 * Gets the efficiency status for the given DMU number.
+	 * @param i the dmu number
+	 * @return boolean: true if efficient, false if not efficient.
+	 */
+	public boolean isEfficient(int i) {
+		if(efficient[i]) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Sets the efficiency status for a given DMU number.
+	 * @param i the dmu number
+	 * @param efficiencyStatus the efficiency status of the DMU (true if efficient, false if not efficient)
+	 */
+	public void setEfficient(int i, boolean efficiencyStatus)
+	{
+		efficient[i] = efficiencyStatus;
+	}
+
 	/**
 	 * Set the Slack Values for all DMUs.
 	 * @param slackValues The Slack Values for all DMUs.
