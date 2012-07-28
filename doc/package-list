@@ -2,3 +2,5 @@ org.opensourcedea.dea
 org.opensourcedea.exception
 org.opensourcedea.linearSolver
 org.opensourcedea.model
+org.opensourcedea.parameters
+org.opensourcedea.utils
