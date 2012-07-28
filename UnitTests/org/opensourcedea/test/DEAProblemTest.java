@@ -427,7 +427,7 @@ public class DEAProblemTest {
 		try {
 			tester2.solve();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("checkDataBeforeSolving failed as per expected.");
 		}
 		
 	}
