@@ -11,6 +11,8 @@ import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.Lpsolve;
 import org.opensourcedea.linearSolver.SolverResults;
+import org.opensourcedea.parameters.OSDEAParameters;
+import org.opensourcedea.utils.MathUtils;
 
 public class BCC extends Model {
 
@@ -160,7 +162,23 @@ public class BCC extends Model {
 		}
 		returnSol.setReferenceSet(dmuIndex, refSet);
 		returnSol.setSlackArrayCopy(dmuIndex, sol.VariableResult, nbDMUs + 1, nbVariables);
-
+		
+		
+		//efficiency - need to be done after slacks!
+		boolean isEfficient = true;
+		if(MathUtils.round(returnSol.getObjective(dmuIndex), OSDEAParameters.getNbDecimalsToEvaluateEfficiency()) == 1){
+			for(double slack : returnSol.getSlacks(dmuIndex)){
+				if(MathUtils.round(slack, OSDEAParameters.getNbDecimalsToEvaluateEfficiency()) > 0) {
+					isEfficient = false;
+				}
+			}
+		}
+		else {
+			isEfficient = false;
+		}
+		returnSol.setEfficient(dmuIndex, isEfficient);
+		
+		
 		for (int varIndex = 0; varIndex < nbVariables; varIndex++) {
 				if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 					if(deaP.getVariableOrientation(varIndex) == VariableOrientation.INPUT) {

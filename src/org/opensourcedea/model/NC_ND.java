@@ -30,6 +30,8 @@ import org.opensourcedea.exception.DEASolverException;
 import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
 import org.opensourcedea.linearSolver.*;
+import org.opensourcedea.parameters.OSDEAParameters;
+import org.opensourcedea.utils.MathUtils;
 //import java.util.Arrays;
 //import java.util.Arrays;
 import lpsolve.LpSolve;
@@ -312,6 +314,20 @@ public  class NC_ND extends Model {
 					}
 				}
 		}
+		
+		//efficiency - need to be done after slacks!
+		boolean isEfficient = true;
+		if(MathUtils.round(returnSol.getObjective(dmuIndex), OSDEAParameters.getNbDecimalsToEvaluateEfficiency()) == 1){
+			for(double slack : returnSol.getSlacks(dmuIndex)){
+				if(MathUtils.round(slack, OSDEAParameters.getNbDecimalsToEvaluateEfficiency()) > 0) {
+					isEfficient = false;
+				}
+			}
+		}
+		else {
+			isEfficient = false;
+		}
+		returnSol.setEfficient(dmuIndex, isEfficient);
 
 		
 		SolverStatus.checkSolverStatus(returnSol, sol);

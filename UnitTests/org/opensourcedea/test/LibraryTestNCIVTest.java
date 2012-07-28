@@ -60,6 +60,34 @@ public class LibraryTestNCIVTest {
 		return Objectives;
 	}
 	
+	private boolean[] createEfficiencyValues() {
+
+		boolean[] efficiencies = new boolean[20];
+
+
+		efficiencies[0] = false;
+		efficiencies[1] = false;
+		efficiencies[2] = true;
+		efficiencies[3] = false;
+		efficiencies[4] = false;
+		efficiencies[5] = true;
+		efficiencies[6] = true;
+		efficiencies[7] = false;
+		efficiencies[8] = true;
+		efficiencies[9] = true;
+		efficiencies[10] = false;
+		efficiencies[11] = true;
+		efficiencies[12] = false;
+		efficiencies[13] = false;
+		efficiencies[14] = false;
+		efficiencies[15] = false;
+		efficiencies[16] = true;
+		efficiencies[17] = true;
+		efficiencies[18] = true;
+		efficiencies[19] = true;
+		return efficiencies;
+	}
+	
 	private int[] createSolRanks() {
 		int[] ranks = new int[20];
 		
@@ -177,21 +205,47 @@ public class LibraryTestNCIVTest {
 	@Test
 	public void testNCIV() {
 		
-		buildDEAProblem(ModelType.NC_I_V);
-		
-		
-		
+		buildDEAProblem(ModelType.NC_I_V); //, DEAModelOrientation.NonOriented);
+
 		try {
 			tester.solve();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
+
+		checkData();
+
+
+
+		tester = new DEAProblem(20, 4);
+		buildDEAProblem(ModelType.NC_I_V); //, DEAModelOrientation.NonOriented);
+
 		try {
+			for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+				tester.solveOne(i);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		checkData();
+		
+		
+	}
+	
+	
+	private void checkData() {
+try {
 			
 			//OBJECTIVES
 			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
+			
+			//EFFICIENCIES
+			for(int i = 0 ; i < 20; i++) {
+				assertTrue(tester.getEfficiencyStatus(i) == createEfficiencyValues()[i]);
+			}
 			
 			//RANKS
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 8), createSolRanks());
@@ -256,9 +310,7 @@ public class LibraryTestNCIVTest {
 			e.printStackTrace();
 			assertTrue(false);
 		}
-		
 	}
-	
 	
 	
 }

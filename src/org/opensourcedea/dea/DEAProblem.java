@@ -820,7 +820,14 @@ public class DEAProblem implements Serializable{
 	
 	
 	/**
-	 * Returns the efficiency status for all the DMUs.
+	 * Returns the efficiency status for all the DMUs. A DMU is efficient when:
+	 * <ol>
+	 * <li>The objective value is 1.</li>
+	 * <li>All slacks are 0.</li>
+	 * </ol>
+	 * Be aware that this method rounds the objectives and the slacks.
+	 * The default is 5 but you can specify a different rounding value before you call the solve methods
+	 * (OSDEAParameters.setNbDecimalsToEvaluateEfficiency(int).
 	 * @return An array of boolean. true if the DMU is efficient, false if the DMU is inefficient.
 	 * @throws ProblemNotSolvedProperlyException
 	 */
@@ -831,7 +838,14 @@ public class DEAProblem implements Serializable{
 	
 	
 	/**
-	 * Returns the efficiency status for the specific DMU. 
+	 * Returns the efficiency status for the specific DMU. A DMU is efficient when:
+	 * <ol>
+	 * <li>The objective value is 1.</li>
+	 * <li>All slacks are 0.</li>
+	 * </ol>
+	 * Be aware that this method rounds the objectives and the slacks.
+	 * The default is 5 but you can specify a different rounding value before you call the solve methods
+	 * (OSDEAParameters.setNbDecimalsToEvaluateEfficiency(int).
 	 * @param dmuNumber
 	 * @return true if the DMU is efficient, false if the DMU is inefficient
 	 * @throws ProblemNotSolvedProperlyException

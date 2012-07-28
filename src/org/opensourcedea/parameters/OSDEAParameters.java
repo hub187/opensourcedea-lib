@@ -2,7 +2,7 @@ package org.opensourcedea.parameters;
 
 public class OSDEAParameters {
 	
-	private static int nbDecimalsToEvaluateEfficiency = 8;
+	private static int nbDecimalsToEvaluateEfficiency = 5;
 	
 	
 	

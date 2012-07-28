@@ -22,15 +22,15 @@ import org.opensourcedea.dea.*;
 
 
 public class LibraryTestIRSITest {
-	
+
 	/* If this Unit Test fails, please read the instructions in the
 	 * Lpsolve class.*/
-	
+
 	DEAProblem tester = new DEAProblem(20, 4);
-	
-	
+
+
 	public void buildDEAProblem(ModelType ModelType) { //, DEAModelOrientation ModelOrientation) {
-		
+
 		tester.setModelType(ModelType);
 		//tester.setModelOrientation(ModelOrientation);
 		tester.setVariableNames(TestData.createTestVariableNames());
@@ -40,13 +40,13 @@ public class LibraryTestIRSITest {
 
 
 	}
-	
+
 
 	private double[] createDEAModelObjectives() {
-		
+
 		double[] Objectives = new double[20];
-		
-		
+
+
 		Objectives[0] = 0.567313572258633;
 		Objectives[1] = 0.872474445374321;
 		Objectives[2] = 0.549048143682244;
@@ -69,10 +69,39 @@ public class LibraryTestIRSITest {
 		Objectives[19] = 1;
 		return Objectives;
 	}
-	
+
+	private boolean[] createEfficiencyValues() {
+
+		boolean[] efficiencies = new boolean[20];
+
+
+		efficiencies[0] = false;
+		efficiencies[1] = false;
+		efficiencies[2] = false;
+		efficiencies[3] = false;
+		efficiencies[4] = false;
+		efficiencies[5] = true;
+		efficiencies[6] = true;
+		efficiencies[7] = false;
+		efficiencies[8] = false;
+		efficiencies[9] = false;
+		efficiencies[10] = false;
+		efficiencies[11] = true;
+		efficiencies[12] = false;
+		efficiencies[13] = false;
+		efficiencies[14] = false;
+		efficiencies[15] = false;
+		efficiencies[16] = true;
+		efficiencies[17] = false;
+		efficiencies[18] = true;
+		efficiencies[19] = true;
+		return efficiencies;
+	}
+
+
 	private int[] createSolRanks() {
 		int[] ranks = new int[20];
-		
+
 		ranks[0] = 15;
 		ranks[1] = 7;
 		ranks[2] = 17;
@@ -93,45 +122,45 @@ public class LibraryTestIRSITest {
 		ranks[17] = 12;
 		ranks[18] = 1;
 		ranks[19] = 1;
-		
+
 		return ranks;
 	}
-	
+
 
 
 	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
-		
+
 		@SuppressWarnings("unchecked")
 		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
-		
+
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(6, 0.35925763536919986));
 		refSet.add(new NonZeroLambda(11, 0.26573073609164544));
 		refSet.add(new NonZeroLambda(16, 0.010203198439172882));
 		refSet.add(new NonZeroLambda(18, 0.3648084300999731));
 		referenceSets[0] = refSet;
-		
+
 		refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(5, 0.2865352114316331));
 		refSet.add(new NonZeroLambda(11, 0.7654346275520056));
 		refSet.add(new NonZeroLambda(18, 2.5551112322974596));
 		referenceSets[1] = refSet;
-		
+
 		refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(11, 1));
 		referenceSets[11] = refSet;
-		
+
 		refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(16, 0.6801710356252257));
 		refSet.add(new NonZeroLambda(18, 1.1782713659083064));
 		referenceSets[17] = refSet;
-		
+
 		return referenceSets;
 	}
-	
+
 	private double[] [] getTestSlackValues() {
 		double[] [] slackValues = new double[20] [4];
-		
+
 		slackValues[1] [0] = 0.0;
 		slackValues[8] [1] = 0.0;
 		slackValues[9] [1] = 26.83096330525152;
@@ -144,63 +173,90 @@ public class LibraryTestIRSITest {
 
 		return slackValues;
 	}
-	
+
 	private double[] [] getTestProjectionValues() {
 		double[] [] projectionValues = new double[20] [4];
 		projectionValues[0] [0] = 233.26232150557283;
 		projectionValues[0] [1] = 47.087026497464656;
 		projectionValues[0] [2] = 1877.18;
 		projectionValues[0] [3] = 1345.27;
-		
+
 		projectionValues[3] [0] = 163.56250340149626;
 		projectionValues[3] [1] = 37.605783330537925;
 		projectionValues[3] [2] = 1250.71;
 		projectionValues[3] [3] = 913.0431110239376;
-		
+
 		projectionValues[10] [0] = 199.07421912864484;
 		projectionValues[10] [1] = 33.68438872250589;
 		projectionValues[10] [2] = 1409.55;
 		projectionValues[10] [3] = 553.3475816317231;
-		
+
 		return projectionValues;
 	}
-	
+
 	private double[] [] getTestWeightValues() {
 		double[] [] weightValues = new double[20] [4];
 		weightValues[0] [0] = 9.352402077983287E-4;
 		weightValues[0] [1] = 0.00741514799710315;
 		weightValues[0] [2] = 1.7184879747594165E-4;
 		weightValues[0] [3] = 6.439390561199953E-5;
-		
+
 		weightValues[3] [0] = 0.001293113196935107;
 		weightValues[3] [1] = 0.006423929348270199;
 		weightValues[3] [2] = 1.3050809836249994E-4;
 		weightValues[3] [3] = 0;
-		
+
 		return weightValues;
 	}
-	
-	
+
+
 	@Test
 	public void testIRSI() {
-				
-		
-		
+
+
+
 		buildDEAProblem(ModelType.IRS_I); //, DEAModelOrientation.NonOriented);
-		
+
 		try {
 			tester.solve();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
+
+		checkData();
+
+
+
+		tester = new DEAProblem(20, 4);
+		buildDEAProblem(ModelType.IRS_I); //, DEAModelOrientation.NonOriented);
+
 		try {
-			
+			for(int i = 0; i < tester.getNumberOfDMUs(); i++) {
+				tester.solveOne(i);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		checkData();
+
+
+	}
+
+
+	private void checkData() {
+		try {
+
 			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
-			
+
+			for(int i = 0 ; i < 20; i++) {
+				assertTrue(tester.getEfficiencyStatus(i) == createEfficiencyValues()[i]);
+			}
+
 			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
-			
+
 			//REFERENCE SET
 			ArrayList<Integer> l = new ArrayList<Integer>();
 			l.add(0);
@@ -215,7 +271,7 @@ public class LibraryTestIRSITest {
 							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
 				}
 			}
-			
+
 			//SLACKS
 			l.clear();
 			l.add(1);
@@ -235,7 +291,7 @@ public class LibraryTestIRSITest {
 					}
 				}
 			}
-			
+
 			//PROJECTIONS
 			l.clear();
 			l.add(0);
@@ -247,8 +303,8 @@ public class LibraryTestIRSITest {
 					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
 				}
 			}
-			
-			
+
+
 			//WEIGHTS
 			l.clear();
 			l.add(0);
@@ -259,7 +315,7 @@ public class LibraryTestIRSITest {
 					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
 				}
 			}
-			
+
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
@@ -268,7 +324,6 @@ public class LibraryTestIRSITest {
 			assertTrue(false);
 		}
 	}
-	
-	
-	
+
+
 }

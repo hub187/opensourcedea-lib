@@ -22,15 +22,15 @@ import org.opensourcedea.dea.*;
 
 
 public class LibraryTestSBMIVTest {
-	
+
 	/* If this Unit Test fails, please read the instructions in the
 	 * Lpsolve class.*/
-	
+
 	DEAProblem tester = new DEAProblem(20, 4);
-	
-	
+
+
 	public void buildDEAProblem(ModelType ModelType) {
-		
+
 		tester.setModelType(ModelType);
 		tester.setVariableNames(TestData.createTestVariableNames());
 		tester.setVariableOrientations(TestData.createTestVariableOrientation());
@@ -40,10 +40,10 @@ public class LibraryTestSBMIVTest {
 
 
 	private double[] createDEAModelObjectives() {
-		
+
 		double[] Objectives = new double[20];
-		
-		
+
+
 		Objectives[0] = 0.538022090458506;
 		Objectives[1] = 0.685898941154542;
 		Objectives[2] = 1;
@@ -66,11 +66,39 @@ public class LibraryTestSBMIVTest {
 		Objectives[19] = 1;
 		return Objectives;
 	}
-	
+
+
+	private boolean[] createEfficiencyValues() {
+
+		boolean[] efficiencies = new boolean[20];
+
+
+		efficiencies[0] = false;
+		efficiencies[1] = false;
+		efficiencies[2] = true;
+		efficiencies[3] = false;
+		efficiencies[4] = false;
+		efficiencies[5] = true;
+		efficiencies[6] = true;
+		efficiencies[7] = false;
+		efficiencies[8] = false;
+		efficiencies[9] = false;
+		efficiencies[10] = false;
+		efficiencies[11] = true;
+		efficiencies[12] = false;
+		efficiencies[13] = false;
+		efficiencies[14] = false;
+		efficiencies[15] = false;
+		efficiencies[16] = true;
+		efficiencies[17] = false;
+		efficiencies[18] = true;
+		efficiencies[19] = true;
+		return efficiencies;
+	}
 
 	private int[] createSolRanks() {
 		int[] ranks = new int[20];
-		
+
 		ranks[0] = 16;
 		ranks[1] = 14;
 		ranks[2] = 1;
@@ -91,45 +119,45 @@ public class LibraryTestSBMIVTest {
 		ranks[17] = 9;
 		ranks[18] = 1;
 		ranks[19] = 1;
-		
+
 		return ranks;
 	}
-	
+
 
 
 	private ArrayList<NonZeroLambda>[] getTestReferenceSet() {
-		
+
 		@SuppressWarnings("unchecked")
 		ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[20];
-		
+
 		ArrayList<NonZeroLambda> refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(6, 0.19849587157795248));
 		refSet.add(new NonZeroLambda(11, 0.3473142508074158));
 		refSet.add(new NonZeroLambda(16, 0.45418987761463175));
 		referenceSets[0] = refSet;
-		
+
 		refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(5, 0.8226707583502072));
 		refSet.add(new NonZeroLambda(11, 0.15445950249359));
 		refSet.add(new NonZeroLambda(18, 0.02286973915403348));
 		referenceSets[1] = refSet;
-		
+
 		refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(11, 1));
 		referenceSets[11] = refSet;
-		
+
 		refSet = new ArrayList<NonZeroLambda>();
 		refSet.add(new NonZeroLambda(5, 0.44400878518131115));
 		refSet.add(new NonZeroLambda(16, 0.05356022106027732));
 		refSet.add(new NonZeroLambda(18, 0.5024309937584118));
 		referenceSets[17] = refSet;
-		
+
 		return referenceSets;
 	}
-	
+
 	private double[] [] getTestSlackValues() {
 		double[] [] slackValues = new double[20] [4];
-		
+
 		slackValues[1] [0] = 561.3875588012145;
 		slackValues[8] [1] = 34.55777396779228;
 		slackValues[9] [1] = 44.20700908059031;
@@ -142,63 +170,90 @@ public class LibraryTestSBMIVTest {
 
 		return slackValues;
 	}
-	
+
 	private double[] [] getTestProjectionValues() {
 		double[] [] projectionValues = new double[20] [4];
 		projectionValues[0] [0] = 169.06486790060714;
 		projectionValues[0] [1] = 55.18397073554135;
 		projectionValues[0] [2] = 1877.18;
 		projectionValues[0] [3] = 1345.27;
-		
+
 		projectionValues[3] [0] = 128.09406057442834;
 		projectionValues[3] [1] = 44.74544957029353;
 		projectionValues[3] [2] = 1250.71;
 		projectionValues[3] [3] = 1220.0623512756804;
-		
+
 		projectionValues[10] [0] = 219.1378150928486;
 		projectionValues[10] [1] = 29.645661128736336;
 		projectionValues[10] [2] = 1409.55;
 		projectionValues[10] [3] = 379.6746064835641;
-		
+
 		return projectionValues;
 	}
-	
+
 	private double[] [] getTestWeightValues() {
 		double[] [] weightValues = new double[20] [4];
 		weightValues[0] [0] = 0.0012160420264121093;
 		weightValues[0] [1] = 0.006024096385539063;
 		weightValues[0] [2] = 1.6856606344169806E-4;
 		weightValues[0] [3] = 5.673215250554413E-5;
-		
+
 		weightValues[3] [0] = 0.0013850415512460935;
 		weightValues[3] [1] = 0.0060240963855390629;
 		weightValues[3] [2] = 1.3197363243319356E-4;
 		weightValues[3] [3] = 0;
-		
+
 		return weightValues;
 	}
-	
-	
+
+
 	@Test
 	public void testSBMIV() {
-				
-		
-		
-		buildDEAProblem(ModelType.SBM_I_V); //, DEAModelOrientation.NonOriented);
-		
+
+
+		buildDEAProblem(ModelType.SBM_I_V);
+
 		try {
 			tester.solve();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
+
+		checkData();
+
+
+		tester = new DEAProblem(20, 4);
+
+		buildDEAProblem(ModelType.SBM_I_V);
+
 		try {
-			
+			for(int i = 0 ; i < tester.getNumberOfDMUs(); i++){
+				tester.solveOne(i, tester.getTranspose(true));
+			}
+			//			tester.solve();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		checkData();
+
+	}
+
+
+	private void checkData() {
+		try {
+
 			assertArrayEquals(tester.getObjectives(), createDEAModelObjectives(),0.0001);
 			
-			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
+			//EFFICIENCIES
+			for(int i = 0 ; i < 20; i++) {
+				assertTrue(tester.getEfficiencyStatus(i) == createEfficiencyValues()[i]);
+			}
 			
+			assertArrayEquals(tester.getRanks(true, RankingType.STANDARD, 10), createSolRanks());
+
 			//REFERENCE SET
 			ArrayList<Integer> l = new ArrayList<Integer>();
 			l.add(0);
@@ -213,7 +268,7 @@ public class LibraryTestSBMIVTest {
 							tester.getReferenceSet(i).get(nzlIndex).getLambdaValue(), 0.0001);
 				}
 			}
-			
+
 			//SLACKS
 			l.clear();
 			l.add(1);
@@ -233,7 +288,7 @@ public class LibraryTestSBMIVTest {
 					}
 				}
 			}
-			
+
 			//PROJECTIONS
 			l.clear();
 			l.add(0);
@@ -245,8 +300,8 @@ public class LibraryTestSBMIVTest {
 					assertEquals(projValues[pIndex], tester.getProjections(i)[pIndex], 0.1);
 				}
 			}
-			
-			
+
+
 			//WEIGHTS
 			l.clear();
 			l.add(0);
@@ -257,7 +312,7 @@ public class LibraryTestSBMIVTest {
 					assertEquals(weightValues[wIndex], tester.getWeight(i)[wIndex],0.001);
 				}
 			}
-			
+
 			assertEquals(tester.getOptimisationStatus(),SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 		}
 		catch (Exception e) {
@@ -266,7 +321,6 @@ public class LibraryTestSBMIVTest {
 			assertTrue(false);
 		}
 	}
-	
-	
-	
+
+
 }
