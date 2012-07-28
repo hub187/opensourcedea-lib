@@ -426,12 +426,8 @@ public class DEAProblemTest {
 		DEAProblem tester2 = new DEAProblem(5,3);
 		try {
 			tester2.solve();
-		} catch (InconsistentNoOfDMUsException
-				| InconsistentNoOfVariablesException | MissingDataException  e) {
-//			e.printStackTrace();
-		}
-		catch (DEAException e2) {
-//			e2.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}
