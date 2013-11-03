@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.junit.BeforeClass;
 import org.opensourcedea.dea.*;
 import org.opensourcedea.exception.DEAException;
-import org.opensourcedea.exception.InconsistentNoOfDMUsException;
-import org.opensourcedea.exception.InconsistentNoOfVariablesException;
 import org.opensourcedea.exception.InvalidPropertyValueException;
 import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
