@@ -24,7 +24,8 @@ Necessary in order to run the code succesfully (the OSDEA library calls the lpso
 	a. On Windows copy the lpsolve55.dll & lpsolve55j.dll files for your system (win32 or win64) to:
 		i. C:\Windows\System32 for Windows machines
 		ii. C:\Windows\SysWOW64 if you run a 32 bits DLL (and JRE) on a 64 bits machine)
-	b. On linux, copy the liblpsolve55j.so library corresponding to your system (ux32 or ux64) to the directory that already contains liblpsolve55.so. Then run ldconfig.
+	b. On linux, copy both the liblpsolve55j.so and liblpsolve55.so to /usr/lib OR
+	b2. copy the liblpsolve55j.so library corresponding to your system (ux32 or ux64) to the directory that already contains liblpsolve55.so. Then run ldconfig.
 	c. On mac, use the build-osx build file with the liblpsolve55.dylib library.
 
 2. Attach the lpsolve55j.jar file to your java Build Path.
