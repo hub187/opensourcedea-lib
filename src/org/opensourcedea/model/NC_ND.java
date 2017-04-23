@@ -93,6 +93,7 @@ public  class NC_ND extends Model {
 					solverEqualityType1);
 		}
 		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
 		
 		storeInformation(deaP, returnSol, dmuIndex, sol);
 
@@ -226,7 +227,7 @@ public  class NC_ND extends Model {
 		int nbDMUs = deaP.getNumberOfDMUs();
 		int nbVariables = deaP.getNumberOfVariables();
 		
-		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		
 		//OBJECTIVES
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {

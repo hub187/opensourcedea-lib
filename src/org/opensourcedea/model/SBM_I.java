@@ -216,11 +216,11 @@ public class SBM_I extends Model {
 				solverEqualityType);
 		
 		
-		SolverResults Sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
+		SolverResults sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
 
-		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
 
-		storeSolution(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, Sol);
+		storeSolution(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
 
 	}
 

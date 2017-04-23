@@ -196,7 +196,7 @@ public class SBM_O extends Model {
 
 	}
 
-	private static void createAndSolve(DEAProblem deaP, int nbDMUs,
+	private void createAndSolve(DEAProblem deaP, int nbDMUs,
 			int nbVariables,  ArrayList<double[]> constraints, double[][] transposedMatrix,
 			DEAPSolution returnSol, Integer dmuIndex) throws DEASolverException, ProblemNotSolvedProperlyException, MissingDataException {
 		
@@ -246,7 +246,8 @@ public class SBM_O extends Model {
 		
 		SolverResults sol = new SolverResults();
 		
-
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		sol = Lpsolve.solveLPProblem(constraints, objF, rhs,
 					SolverObjDirection.MAX, solverEqualityType);
 

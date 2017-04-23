@@ -77,7 +77,9 @@ public class SBM extends Model {
 				constraints, objF, solverEqualityType, rhs);
 		
 		SolverResults sol = Lpsolve.solveLPProblem(constraints, objF, rhs, SolverObjDirection.MIN, solverEqualityType);
-
+		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		storeSolution(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
 
 	}
