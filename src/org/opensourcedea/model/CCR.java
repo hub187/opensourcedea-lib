@@ -92,6 +92,9 @@ public class CCR extends Model {
 		sol = Lpsolve.solveLPProblem(constraints, objF, rhs1, SolverObjDirection.MIN,
 				solverEqualityType1);
 		
+		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		storePhaseOneInformation(deaP, returnSol, dmuIndex, sol);
 		
 	}
@@ -108,7 +111,9 @@ public class CCR extends Model {
 		//Solve the Phase II Problem
 		sol = Lpsolve.solveLPProblem(constraints, objF, rhs2, SolverObjDirection.MAX,
 				solverEqualityType2);
-
+		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		storePhaseTwoInformation(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
 		
 	}
@@ -346,6 +351,12 @@ public class CCR extends Model {
 	}
 
 	
+	
+//	private void checkSolverStatus(SolverResults sol, Integer dmuIndex, String dmuName) {
+//		if(sol.Status == SolverReturnStatus.SOLUTION_FOUND_LOW_ACCURACY) {
+//			System.out.println("Low solver accuracy for DMU: " + dmuName + " (DMU Index: " + dmuIndex + ").");
+//		}
+//	}
 
 	
 }

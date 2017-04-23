@@ -62,6 +62,10 @@ public class SolverStatus {
 					ReturnSol.setStatus(SolverReturnStatus.OPTIMAL_SOLUTION_FOUND);
 				}
 				break;
+			case SOLUTION_FOUND_LOW_ACCURACY:
+					ReturnSol.setStatus(SolverReturnStatus.SOLUTION_FOUND_LOW_ACCURACY);
+				break;
+				
 		case NOT_SOLVED:
 			ReturnSol.setStatus(SolverReturnStatus.NOT_SOLVED);
 			break;

@@ -226,6 +226,8 @@ public  class NC_ND extends Model {
 		int nbDMUs = deaP.getNumberOfDMUs();
 		int nbVariables = deaP.getNumberOfVariables();
 		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		//OBJECTIVES
 		if(deaP.getModelOrientation() == ModelOrientation.INPUT_ORIENTED) {
 			returnSol.setObjective(dmuIndex, sol.Objective);

@@ -115,6 +115,8 @@ public class BCC extends Model {
 					solverEqualityType1);
 		}
 		
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		storePhaseOneInformation(deaP, returnSol, dmuIndex, sol);
 		
 	}
@@ -132,6 +134,8 @@ public class BCC extends Model {
 		sol = Lpsolve.solveLPProblem(constraints, objF, rhs2, SolverObjDirection.MAX,
 				solverEqualityType2);
 
+		checkSolverStatus(sol, dmuIndex, deaP.getDMUName(dmuIndex));
+		
 		storePhaseTwoInformation(deaP, nbDMUs, nbVariables, returnSol, dmuIndex, sol);
 		
 	}
@@ -448,7 +452,8 @@ public class BCC extends Model {
 		//Build Objective Function (Theta column is assigned the weight 1. All the other columns are left to 0).
 		objF[0] = 1;
 	}
-
+	
+	
 	
 	
 }

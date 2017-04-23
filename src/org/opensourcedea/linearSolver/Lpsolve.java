@@ -81,7 +81,11 @@ public class Lpsolve {
 			
 			
 			//Create Lpsolve linear problem
-			LpSolve LpProb = LpSolve.makeLp(0, NbColumns);			
+			LpSolve LpProb = LpSolve.makeLp(0, NbColumns);
+			
+
+
+        	
 	        if(LpProb.getLp() == 0) {
 	        	//Linear problem could not be constructed.
 	        	Sol.Status = SolverReturnStatus.MODEL_CREATION_FAILURE;
@@ -123,23 +127,85 @@ public class Lpsolve {
 	        		LpProb.setMinim();
 	        	}
 	        	
-	        	LpProb.setVerbose(0);
-	        	
-	        	
+	        	LpProb.setVerbose(1);
 	        	
 	        	//Solve the Linear Problem
 	        	ret = LpProb.solve();
-	        	if (ret == LpSolve.OPTIMAL) {
-	        		ret = 0;
-	        	}
-	        	else {
-	        		ret = 1;
-	        		Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND;
-	        		throw new ProblemNotSolvedProperlyException("The problem could not be solved properly.");
+	        	
+	        	
+	        	//DEALING WITH NUMERICAL FAILURE (5)
+	        	if (ret == 5) {
+	        		System.out.println("NUMERICAL ISSUES WITH PROBLEM - PRE-SOLVING TO TRY RE-SOLVING THE PROBLEM");
+	        		// There was a problem let's try solving it by pre-solving it
+	        		LpProb.resetBasis();
+	        		LpSolve LpProb2 = LpProb.copyLp();
+	        		LpProb2.setPresolve(LpSolve.PRESOLVE_BOUNDS | LpSolve.PRESOLVE_COLS, LpProb2.getPresolveloops());
+	        		
+	        		ret = LpProb2.solve();
+	        		
+	        		//If this does not work, try more pre-solving option
+	        		if (ret != LpSolve.OPTIMAL) {
+	        		LpProb.resetBasis();
+	        		LpProb2 = LpProb.copyLp();
+	        		LpProb2.setPresolve(LpSolve.PRESOLVE_BOUNDS | LpSolve.PRESOLVE_COLS |
+	            			LpSolve.PRESOLVE_ROWS |LpSolve.PRESOLVE_ROWDOMINATE | LpSolve.PRESOLVE_COLDOMINATE, LpProb2.getPresolveloops());
+	        		}
+	        		
+	        		ret = LpProb2.solve();
+	        		
+	        		LpProb = LpProb2;
 	        	}
 	        	
-	        	//Store Optimisation values
-	        	if (ret == 0) {
+	        	
+	        	//DEALING WITH ACCURACY FAILURE (25) NOTE THAT setBreakAcccuracy IS NOT AVAILABLE IN JAVA WRAPPER".
+	        	//See LpSolveMailing reply on this post:
+	        	//http://lp-solve.2324885.n4.nabble.com/lpsolve-error-set-break-numeric-accuracy-Unimplemented-td10318.html
+	        	if (ret == 25) {
+	        		System.out.println("ACCURACY ISSUES WITH PROBLEM - SET SCALING TO TRY RE-SOLVING THE PROBLEM");
+	        		// There was a problem let's try solving it by pre-solving it
+	        		LpProb.resetBasis();
+	        		LpSolve LpProb2 = LpProb.copyLp();
+	        		LpProb2.resetBasis();
+
+	        		LpProb2.setScaling(LpSolve.SCALE_GEOMETRIC | LpSolve.SCALE_INTEGERS);
+	        		
+	        		LpProb2.setPresolve(LpSolve.PRESOLVE_BOUNDS , LpProb2.getPresolveloops());
+	        		
+	        		ret = LpProb2.solve();
+	        		
+	        		LpProb = LpProb2;
+	        	}
+	        	
+	        	if (ret == LpSolve.OPTIMAL) {
+	        		ret = LpSolve.OPTIMAL;
+	        	}
+	        	else if(ret == 25) {
+	        		System.out.println("CANNOT RESOLVE WITH GOOD ACCURACY");
+	        	}
+	        	else {
+	        		
+	        		if (ret != LpSolve.OPTIMAL) {
+	        			String errorTxt = "";
+	        			switch (ret) {
+	        				case 1 : errorTxt = "Sub-optimal solution found";
+	        				case 2: errorTxt = "Problem is infeasible";
+	        				case 3: errorTxt = "Problem is inbounded";
+	        				case 4: errorTxt = "Problem degenerated";
+	        				case 5: errorTxt = "Numerical failure when trying to solve";
+	        				case 6: errorTxt = "User interuption";
+	        				case 7: errorTxt = "A timeout occured";
+	        				case 9: errorTxt = "Problem can be solved via presolve";
+	        				case 25: errorTxt = "Accuracy error encountered";
+	        				System.out.println(errorTxt);
+	        			}
+
+	        		Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_NOT_FOUND;
+	        		throw new ProblemNotSolvedProperlyException("The problem could not be solved properly." + " " + errorTxt);
+	        		}
+	        	}
+	        	
+	        	//Store Optimisation values (EVEN WHEN ACCURACY IS LOWER THAN DESIRED)
+	        	if (ret == LpSolve.OPTIMAL || ret == 25) {
 		            /* In order to optimise the code, it could be possible to return the solver solution
 		             * directly instead of a copy (weight/constraint results, objectives...).
 		             * This was not done for clarity purposes*/
@@ -165,7 +231,13 @@ public class Lpsolve {
 	        		Sol.Objective = Objective;
 	        		Sol.VariableResult = VariableResult;
 	        		Sol.Weights = Weights;
-	        		Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_FOUND;
+	        		
+	        		if(ret == LpSolve.OPTIMAL) {
+	        			Sol.Status = SolverReturnStatus.OPTIMAL_SOLUTION_FOUND;
+	        		}
+	        		else {
+	        			Sol.Status = SolverReturnStatus.SOLUTION_FOUND_LOW_ACCURACY;
+	        		}
 
 	        		
 	        	}

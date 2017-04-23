@@ -39,6 +39,7 @@ public enum SolverReturnStatus {
 	 * 	== SolverReturnStatus.NA).*/
 	MODEL_CREATION_FAILURE ("One or all the Linear Problems could not be created"),
 	OPTIMAL_SOLUTION_FOUND ("All the models could be created and optimal solutions were found each time."),
+	SOLUTION_FOUND_LOW_ACCURACY ("Problem could be solved but with lower solver accuracy."),
 	OPTIMAL_SOLUTION_NOT_FOUND ("One or all the Models could be created but an optimal solution was not found for one or several DEA problems."),
 	UNKNOWN_ERROR ("An unknown problem occured which unexpectedly stopped the optimisation process.");
 	

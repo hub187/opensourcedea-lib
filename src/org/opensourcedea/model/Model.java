@@ -2,9 +2,11 @@ package org.opensourcedea.model;
 
 import org.opensourcedea.dea.DEAPSolution;
 import org.opensourcedea.dea.DEAProblem;
+import org.opensourcedea.dea.SolverReturnStatus;
 import org.opensourcedea.exception.DEASolverException;
 import org.opensourcedea.exception.MissingDataException;
 import org.opensourcedea.exception.ProblemNotSolvedProperlyException;
+import org.opensourcedea.linearSolver.SolverResults;
 
 public class Model {
 
@@ -123,6 +125,13 @@ public class Model {
 		throw new DEASolverException("The class of the problem you are trying to solve does not override" +
 				" the createAndSolve method. You need to review the source code or contact the person who gave you the code.");
 
+	}
+	
+	
+	public void checkSolverStatus(SolverResults sol, Integer dmuIndex, String dmuName) {
+		if(sol.Status == SolverReturnStatus.SOLUTION_FOUND_LOW_ACCURACY) {
+			System.out.println("Low solver accuracy for DMU: " + dmuName + " (DMU Index: " + dmuIndex + ").");
+		}
 	}
 
 
